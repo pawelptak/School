@@ -3,210 +3,214 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
-	
-	public bool MovementLocked { get; set; }
-	public bool CameraLocked { get; set; }
-	
-	private Camera3D _camera;
-	private float _cameraPitch = 0.0f;
-	private Node3D _holdPoint;
-	private ThrowableObject? _heldObject;
-	private float _throwCharge;
-	private uint _heldCollisionLayer;
-	private uint _heldCollisionMask;
+    public const float Speed = 5.0f;
+    public const float JumpVelocity = 4.5f;
 
-	private const float MinThrowForce = 5.0f;
-	private const float MaxThrowForce = 20.0f;
-	private const float ThrowChargeSpeed = 15.0f;
-	
-	public override void _Ready()
-	{
-		Input.MouseMode = Input.MouseModeEnum.Captured;
-		_camera = GetNode<Camera3D>("Camera3D");
-		_holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
-	}
-	
-	public override void _Input(InputEvent @event)
-	{
-		if (CameraLocked)
-			return;
-	
-		if (@event is InputEventMouseMotion mouseMotion)
-		{
-			RotateY(-mouseMotion.Relative.X * 0.01f);
-			
-			_cameraPitch -= mouseMotion.Relative.Y * 0.01f;
-			_cameraPitch = Mathf.Clamp(
-				_cameraPitch,
-				Mathf.DegToRad(-80),
-				Mathf.DegToRad(80)
-			);
-			_camera.Rotation = new Vector3(_cameraPitch, 0, 0);
-		}
-	}
+    public bool MovementLocked { get; set; }
+    public bool CameraLocked { get; set; }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		if (MovementLocked)
-		{
-			Velocity = Vector3.Zero;
-			
-			return;
-		}
-		
-		Vector3 velocity = Velocity;
+    public event Action<ThrowableObject> ObjectPickedUp;
 
-		if (!IsOnFloor())
-		{
-			velocity += GetGravity() * (float)delta;
-		}
+    private Camera3D _camera;
+    private float _cameraPitch = 0.0f;
+    private Node3D _holdPoint;
+    private ThrowableObject? _heldObject;
+    private float _throwCharge;
+    private uint _heldCollisionLayer;
+    private uint _heldCollisionMask;
 
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-		{
-			velocity.Y = JumpVelocity;
-		}
+    private const float MinThrowForce = 5.0f;
+    private const float MaxThrowForce = 20.0f;
+    private const float ThrowChargeSpeed = 15.0f;
 
-		Vector2 inputDir = Input.GetVector(
-			"move_left",
-			"move_right",
-			"move_forward",
-			"move_backward"
-		);
+    public override void _Ready()
+    {
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+        _camera = GetNode<Camera3D>("Camera3D");
+        _holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
+    }
 
-		Vector3 direction = (
-			Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
-		).Normalized();
+    public override void _Input(InputEvent @event)
+    {
+        if (CameraLocked)
+            return;
 
-		if (direction != Vector3.Zero)
-		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
-		}
+        if (@event is InputEventMouseMotion mouseMotion)
+        {
+            RotateY(-mouseMotion.Relative.X * 0.01f);
 
-		Velocity = velocity;
-		MoveAndSlide();
-		
-		PushRigidBodies();
-	}
-	
-	public override void _Process(double delta)
-	{
-		if (Input.IsActionJustPressed("interact"))
-		{
-			if (_heldObject != null)
-			{
-				DropObject();
-			}
-			else
-			{
-				TryPickup();
-			}
-		}
-		
-		if (_heldObject != null)
-		{
-			_heldObject.GlobalPosition = _holdPoint.GlobalPosition;
+            _cameraPitch -= mouseMotion.Relative.Y * 0.01f;
+            _cameraPitch = Mathf.Clamp(
+                _cameraPitch,
+                Mathf.DegToRad(-80),
+                Mathf.DegToRad(80)
+            );
+            _camera.Rotation = new Vector3(_cameraPitch, 0, 0);
+        }
+    }
 
-			if (Input.IsActionJustPressed("throw"))
-			{
-				_throwCharge = MinThrowForce;
-			}
+    public override void _PhysicsProcess(double delta)
+    {
+        if (MovementLocked)
+        {
+            Velocity = Vector3.Zero;
 
-			if (Input.IsActionPressed("throw"))
-			{
-				_throwCharge = Mathf.MoveToward(
-					_throwCharge,
-					MaxThrowForce,
-					ThrowChargeSpeed * (float)delta
-				);
-			}
+            return;
+        }
 
-			if (Input.IsActionJustReleased("throw"))
-			{
-				ThrowObject();
-			}
-		}
-	}
-	
-	private void TryPickup()
-	{
-		var ray = GetNode<RayCast3D>("Camera3D/InteractRay");
+        Vector3 velocity = Velocity;
 
-		if (!ray.IsColliding())
-			return;
+        if (!IsOnFloor())
+        {
+            velocity += GetGravity() * (float)delta;
+        }
 
-		if (ray.GetCollider() is not ThrowableObject body)
-			return;
+        if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+        {
+            velocity.Y = JumpVelocity;
+        }
 
-		_heldObject = body;
-		
-		_heldCollisionLayer = body.CollisionLayer;
-		_heldCollisionMask = body.CollisionMask;
+        Vector2 inputDir = Input.GetVector(
+            "move_left",
+            "move_right",
+            "move_forward",
+            "move_backward"
+        );
 
-		body.Freeze = true;
-		body.CollisionLayer = 0;
-		body.CollisionMask = 0;
-		body.GlobalPosition = _holdPoint.GlobalPosition;
-	}
-	
-	private void ThrowObject()
-	{
-		var throwDirection = -_camera.GlobalTransform.Basis.Z;
+        Vector3 direction = (
+            Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
+        ).Normalized();
 
-		if (_heldObject is not ThrowableObject throwable)
-			return;
+        if (direction != Vector3.Zero)
+        {
+            velocity.X = direction.X * Speed;
+            velocity.Z = direction.Z * Speed;
+        }
+        else
+        {
+            velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+        }
 
-		throwable.ThrowForce = _throwCharge;
+        Velocity = velocity;
+        MoveAndSlide();
 
-		throwable.Freeze = false;
-		throwable.CollisionLayer = _heldCollisionLayer;
-		throwable.CollisionMask = _heldCollisionMask;
+        PushRigidBodies();
+    }
 
-		throwable.ApplyCentralImpulse(throwDirection * _throwCharge);
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("interact"))
+        {
+            if (_heldObject != null)
+            {
+                DropObject();
+            }
+            else
+            {
+                TryPickup();
+            }
+        }
 
-		_heldObject = null;
-		_throwCharge = 0;
-	}
-	
-	private void DropObject()
-	{
-		if (_heldObject is not ThrowableObject throwable)
-			return;
+        if (_heldObject != null)
+        {
+            _heldObject.GlobalPosition = _holdPoint.GlobalPosition;
 
-		throwable.Freeze = false;
-		throwable.CollisionLayer = _heldCollisionLayer;
-		throwable.CollisionMask = _heldCollisionMask;
+            if (Input.IsActionJustPressed("throw"))
+            {
+                _throwCharge = MinThrowForce;
+            }
 
-		_heldObject = null;
-		_throwCharge = 0;
-	}
-	
-	private void PushRigidBodies()
-	{
-		for (var i = 0; i < GetSlideCollisionCount(); i++)
-		{
-			var collision = GetSlideCollision(i);
-			var body = collision.GetCollider();
+            if (Input.IsActionPressed("throw"))
+            {
+                _throwCharge = Mathf.MoveToward(
+                    _throwCharge,
+                    MaxThrowForce,
+                    ThrowChargeSpeed * (float)delta
+                );
+            }
 
-			if (body is not RigidBody3D rigidBody)
-				continue;
+            if (Input.IsActionJustReleased("throw"))
+            {
+                ThrowObject();
+            }
+        }
+    }
 
-			var pushDirection = -collision.GetNormal();
-			pushDirection.Y = 0;
+    private void TryPickup()
+    {
+        var ray = GetNode<RayCast3D>("Camera3D/InteractRay");
 
-			if (pushDirection.LengthSquared() == 0)
-				continue;
+        if (!ray.IsColliding())
+            return;
 
-			pushDirection = pushDirection.Normalized();
+        if (ray.GetCollider() is not ThrowableObject body)
+            return;
 
-			rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
-		}
-	}
+        _heldObject = body;
+
+        _heldCollisionLayer = body.CollisionLayer;
+        _heldCollisionMask = body.CollisionMask;
+
+        body.Freeze = true;
+        body.CollisionLayer = 0;
+        body.CollisionMask = 0;
+        body.GlobalPosition = _holdPoint.GlobalPosition;
+
+        ObjectPickedUp?.Invoke(body);
+    }
+
+    private void ThrowObject()
+    {
+        var throwDirection = -_camera.GlobalTransform.Basis.Z;
+
+        if (_heldObject is not ThrowableObject throwable)
+            return;
+
+        throwable.ThrowForce = _throwCharge;
+
+        throwable.Freeze = false;
+        throwable.CollisionLayer = _heldCollisionLayer;
+        throwable.CollisionMask = _heldCollisionMask;
+
+        throwable.ApplyCentralImpulse(throwDirection * _throwCharge);
+
+        _heldObject = null;
+        _throwCharge = 0;
+    }
+
+    private void DropObject()
+    {
+        if (_heldObject is not ThrowableObject throwable)
+            return;
+
+        throwable.Freeze = false;
+        throwable.CollisionLayer = _heldCollisionLayer;
+        throwable.CollisionMask = _heldCollisionMask;
+
+        _heldObject = null;
+        _throwCharge = 0;
+    }
+
+    private void PushRigidBodies()
+    {
+        for (var i = 0; i < GetSlideCollisionCount(); i++)
+        {
+            var collision = GetSlideCollision(i);
+            var body = collision.GetCollider();
+
+            if (body is not RigidBody3D rigidBody)
+                continue;
+
+            var pushDirection = -collision.GetNormal();
+            pushDirection.Y = 0;
+
+            if (pushDirection.LengthSquared() == 0)
+                continue;
+
+            pushDirection = pushDirection.Normalized();
+
+            rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
+        }
+    }
 }

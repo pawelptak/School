@@ -36,7 +36,7 @@ public partial class Mate : InteractableCharacter
 		_dialogueUI.ShowDialogue(new string[]
 		{
 			GameText.MateThrowGood,
-			"Jeśli już się obudziłeś, podejdź do drzwi, bo spóźnimy się na polski."
+			GameText.MateGoToDoor
 		});
 	}
 }

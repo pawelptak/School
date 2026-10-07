@@ -2,31 +2,51 @@ using Godot;
 
 public partial class ClassroomTutorial : Node3D
 {
-	private Mate _mate;
-	private CutsceneController _cutsceneController;
+    private Mate _mate;
+    private Player _player;
+    private CutsceneController _cutsceneController;
+    private Node3D _objectiveMarker;
+    private ThrowableObject _backpack;
 
-	public override void _Ready()
-	{
-		_mate = GetNode<Mate>("Mate");
-		_cutsceneController = GetNode<CutsceneController>("CutsceneController");
+    public override void _Ready()
+    {
+        _mate = GetNode<Mate>("Mate");
+        _player = GetNode<Player>("Player");
+        _cutsceneController = GetNode<CutsceneController>("CutsceneController");
+        _objectiveMarker = GetNode<Node3D>("ObjectiveMarker");
+        _backpack = GetNode<ThrowableObject>("Backpack");
 
-		_cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
+        _objectiveMarker.Hide();
 
-		_cutsceneController.StartDialogue(
-			_mate,
-			new string[]
-			{
-				GameText.MateWakeUp,
-				GameText.MateLessonEnding,
-				GameText.MateBreakEnding,
-				GameText.MateWakeUpInstruction
-			},
-			true
-		);
-	}
+        _player.ObjectPickedUp += OnObjectPickedUp;
 
-	private void OnCinematicDialogueFinished()
-	{
-		_mate.IntroFinished = true;
-	}
+        _cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
+
+        _cutsceneController.StartDialogue(
+            _mate,
+            new string[]
+            {
+                GameText.MateWakeUp,
+                GameText.MateLessonEnding,
+                GameText.MateBreakEnding,
+                GameText.MateWakeUpInstruction,
+                GameText.MateTakeBackpackInstruction
+            },
+            true
+        );
+    }
+
+    private void OnCinematicDialogueFinished()
+    {
+        _mate.IntroFinished = true;
+        _objectiveMarker.Show();
+    }
+
+    private void OnObjectPickedUp(ThrowableObject objectPickedUp)
+    {
+        if (objectPickedUp != _backpack)
+            return;
+
+        _objectiveMarker.Hide();
+    }
 }
