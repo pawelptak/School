@@ -25,3 +25,6 @@ shape = SubResource("CapsuleShape3D_crm6m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=509559402]
 shape = SubResource("SphereShape3D_crm6m")
+
+[node name="DialogueLookAtPoint" type="Marker3D" parent="." unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)

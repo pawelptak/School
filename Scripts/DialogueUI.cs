@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class DialogueUI : Control
 {
@@ -6,6 +7,8 @@ public partial class DialogueUI : Control
 
 	private string[] _messages;
 	private int _currentMessage;
+
+	public event Action DialogueFinished;
 
 	public override void _Ready()
 	{
@@ -29,6 +32,7 @@ public partial class DialogueUI : Control
 		if (_currentMessage >= _messages.Length)
 		{
 			Hide();
+			DialogueFinished?.Invoke();
 			return;
 		}
 

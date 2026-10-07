@@ -4,28 +4,39 @@ public partial class Mate : InteractableCharacter
 {
 	private DialogueUI _dialogueUI;
 
+	public bool IntroFinished { get; set; }
+
 	public override void _Ready()
 	{
 		base._Ready();
 
 		_dialogueUI = GetTree().CurrentScene.GetNode<DialogueUI>("DialogueUI");
+
+		HitByThrowable += OnHitByThrowable;
 	}
 
 	protected override void OnInteraction()
 	{
-		if (_dialogueUI.IsVisible())
-		{
-			_dialogueUI.NextMessage();
-		}
-		else
+		if (!IntroFinished)
+			return;
+	}
+
+	private void OnHitByThrowable(float throwForce)
+	{
+		if (throwForce < 15.0f)
 		{
 			_dialogueUI.ShowDialogue(new string[]
 			{
-				GameText.MateWakeUp,
-				GameText.MateLessonEnding,
-				GameText.MateBreakEnding,
-				GameText.MateWakeUpInstruction
+				string.Format(GameText.MateThrowAgain, "LPM")
 			});
+
+			return;
 		}
+
+		_dialogueUI.ShowDialogue(new string[]
+		{
+			GameText.MateThrowGood,
+			"Jeśli już się obudziłeś, podejdź do drzwi, bo spóźnimy się na polski."
+		});
 	}
 }

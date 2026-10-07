@@ -10,6 +10,8 @@ public partial class ClassroomTutorial : Node3D
 		_mate = GetNode<Mate>("Mate");
 		_cutsceneController = GetNode<CutsceneController>("CutsceneController");
 
+		_cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
+
 		_cutsceneController.StartDialogue(
 			_mate,
 			new string[]
@@ -18,7 +20,13 @@ public partial class ClassroomTutorial : Node3D
 				GameText.MateLessonEnding,
 				GameText.MateBreakEnding,
 				GameText.MateWakeUpInstruction
-			}
+			},
+			true
 		);
+	}
+
+	private void OnCinematicDialogueFinished()
+	{
+		_mate.IntroFinished = true;
 	}
 }
