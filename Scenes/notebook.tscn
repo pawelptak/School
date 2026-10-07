@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cy2rcfad227ui"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_lc5oj")
+size = Vector3(1.1, 0.04, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gyrdu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7w7rb"]
+albedo_color = Color(0.9882218, 0.9882218, 0.9882218, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v70kj"]
+material = SubResource("StandardMaterial3D_7w7rb")
+size = Vector3(1, 0.025, 1.4)
+
+[node name="Notebook" type="Node3D" unique_id=1428873430]
+
+[node name="BackLeft" type="MeshInstance3D" parent="." unique_id=803779426]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="BackRight" type="MeshInstance3D" parent="." unique_id=1265740577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1195108, 0, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="PaperLeft" type="MeshInstance3D" parent="." unique_id=1219738779]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.048222065, 0.0120821, 0)
+material_override = SubResource("StandardMaterial3D_gyrdu")
+mesh = SubResource("BoxMesh_v70kj")
+
+[node name="PaperRight" type="MeshInstance3D" parent="." unique_id=1768627123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0704241, 0.0120821, 0)
+mesh = SubResource("BoxMesh_v70kj")
