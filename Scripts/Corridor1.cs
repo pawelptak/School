@@ -4,11 +4,13 @@ public partial class Corridor1 : Node3D
 {
     private Mate _mate;
     private DialogueUI _dialogueUI;
+    private ObjectiveMarker _objectiveMarker;
 
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
         _dialogueUI = GetNode<DialogueUI>("DialogueUI");
+        _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -22,6 +24,7 @@ public partial class Corridor1 : Node3D
         if (!_mate.PlayerInRange)
             return;
 
+        _objectiveMarker.Hide();
         StartMateDialogue();
 
         GetViewport().SetInputAsHandled();

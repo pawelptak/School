@@ -5,7 +5,7 @@ public partial class ClassroomTutorial : Node3D
     private Mate _mate;
     private Player _player;
     private CutsceneController _cutsceneController;
-    private Node3D _objectiveMarker;
+    private ObjectiveMarker _objectiveMarker;
     private Backpack _backpack;
     private bool _doorObjectiveActive;
     private Node3D _door;
@@ -15,7 +15,7 @@ public partial class ClassroomTutorial : Node3D
         _mate = GetNode<Mate>("Mate");
         _player = GetNode<Player>("Player");
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
-        _objectiveMarker = GetNode<Node3D>("ObjectiveMarker");
+        _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _backpack = GetNode<Backpack>("Backpack");
         _door = GetNode<Node3D>("Door");
 

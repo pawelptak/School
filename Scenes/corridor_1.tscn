@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="4_nul7m"]
 [ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="6_us0rg"]
 [ext_resource type="Script" uid="uid://bq6q8gni7pbng" path="res://Scripts/CutsceneController.cs" id="7_us0rg"]
+[ext_resource type="PackedScene" uid="uid://dj7xifh7nmt4o" path="res://Scenes/objective_marker.tscn" id="8_ole62"]
 
 [sub_resource type="Environment" id="Environment_axue6"]
 
@@ -27,6 +28,9 @@ uv1_scale = Vector3(20, 3, 5)
 
 [node name="Corridor1" type="Node3D" unique_id=64099720]
 script = ExtResource("1_64j8y")
+
+[node name="ObjectiveMarker" parent="." unique_id=1928698264 instance=ExtResource("8_ole62")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.448425, 2.93156, 1.7687824)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=252773854]
 environment = SubResource("Environment_axue6")
