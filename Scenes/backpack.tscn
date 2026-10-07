@@ -30,7 +30,6 @@ size = Vector3(0.08, 0.65, 0.06)
 size = Vector3(0.8, 1.2, 0.6)
 
 [node name="Backpack" type="RigidBody3D" unique_id=499470510]
-collision_layer = 4
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_l1ewb")

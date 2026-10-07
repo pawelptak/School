@@ -6,11 +6,9 @@ public partial class ClassroomTutorial : Node3D
     private Player _player;
     private CutsceneController _cutsceneController;
     private Node3D _objectiveMarker;
-    private ThrowableObject _backpack;
-    private Node3D _door;
-
-    private bool _backpackObjectiveActive;
+    private Backpack _backpack;
     private bool _doorObjectiveActive;
+    private Node3D _door;
 
     public override void _Ready()
     {
@@ -18,18 +16,18 @@ public partial class ClassroomTutorial : Node3D
         _player = GetNode<Player>("Player");
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<Node3D>("ObjectiveMarker");
-        _backpack = GetNode<ThrowableObject>("Backpack");
+        _backpack = GetNode<Backpack>("Backpack");
         _door = GetNode<Node3D>("Door");
+
+        _mate.GoToDoor += OnGoToDoor;
 
         _objectiveMarker.Hide();
 
-        _backpackObjectiveActive = false;
-        _doorObjectiveActive = false;
-
         _player.ObjectPickedUp += OnObjectPickedUp;
-        _mate.GoToDoor += OnGoToDoor;
 
         _cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
+
+        DisableBackpackCollisions();
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -38,11 +36,13 @@ public partial class ClassroomTutorial : Node3D
                 GameText.MateWakeUp,
                 GameText.MateLessonEnding,
                 GameText.MateBreakEnding,
-                GameText.MateWakeUpInstruction
+                GameText.MateWakeUpInstruction,
+                GameText.MateTakeBackpackInstruction
             },
             true
         );
     }
+
     public override void _Process(double delta)
     {
         if (!_doorObjectiveActive)
@@ -64,9 +64,6 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnCinematicDialogueFinished()
     {
-        _mate.IntroFinished = true;
-
-        _backpackObjectiveActive = true;
         _objectiveMarker.Show();
     }
 
@@ -75,7 +72,8 @@ public partial class ClassroomTutorial : Node3D
         if (objectPickedUp != _backpack)
             return;
 
-        _backpackObjectiveActive = false;
+        EnableBackpackCollisions();
+
         _objectiveMarker.Hide();
     }
 
@@ -87,5 +85,31 @@ public partial class ClassroomTutorial : Node3D
             _door.GlobalPosition + new Vector3(0, 2f, 0);
 
         _objectiveMarker.Show();
+    }
+
+    private void EnableBackpackCollisions()
+    {
+        _backpack.RemoveCollisionExceptionWith(_player);
+
+        foreach (var node in GetTree().GetNodesInGroup("chairs"))
+        {
+            if (node is PhysicsBody3D chair)
+            {
+                _backpack.RemoveCollisionExceptionWith(chair);
+            }
+        }
+    }
+
+    private void DisableBackpackCollisions()
+    {
+        _backpack.AddCollisionExceptionWith(_player);
+
+        foreach (var node in GetTree().GetNodesInGroup("chairs"))
+        {
+            if (node is PhysicsBody3D chair)
+            {
+                _backpack.AddCollisionExceptionWith(chair);
+            }
+        }
     }
 }

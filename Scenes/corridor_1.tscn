@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://c25px5x6yo6ad"]
 
+[ext_resource type="Script" uid="uid://bmk37yth4de1h" path="res://Scripts/Corridor1.cs" id="1_64j8y"]
 [ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://textures/wall.jpg" id="1_axue6"]
 [ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://Scenes/door.tscn" id="2_1wlac"]
 [ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://Scenes/player.tscn" id="3_ny66m"]
 [ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="4_nul7m"]
+[ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="6_us0rg"]
 
 [sub_resource type="Environment" id="Environment_axue6"]
 
@@ -23,6 +25,7 @@ albedo_texture = ExtResource("1_axue6")
 uv1_scale = Vector3(20, 3, 5)
 
 [node name="Corridor1" type="Node3D" unique_id=64099720]
+script = ExtResource("1_64j8y")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=252773854]
 environment = SubResource("Environment_axue6")
@@ -74,3 +77,5 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.78
 
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("4_nul7m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4695992, 1.0094546, 1.6776567)
+
+[node name="DialogueUI" parent="." unique_id=55497286 instance=ExtResource("6_us0rg")]

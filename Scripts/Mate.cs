@@ -7,8 +7,6 @@ public partial class Mate : InteractableCharacter
 
     private bool _waitingForDoorObjective;
 
-    public bool IntroFinished { get; set; }
-
     public event Action GoToDoor;
 
     public override void _Ready()
@@ -19,12 +17,6 @@ public partial class Mate : InteractableCharacter
 
         HitByThrowable += OnHitByThrowable;
         _dialogueUI.DialogueFinished += OnDialogueFinished;
-    }
-
-    protected override void OnInteraction()
-    {
-        if (!IntroFinished)
-            return;
     }
 
     private void OnHitByThrowable(float throwForce)

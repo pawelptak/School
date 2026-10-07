@@ -2,18 +2,18 @@ using Godot;
 
 public partial class Backpack : ThrowableObject
 {
-	public override void _Ready()
-	{
-		base._Ready();
+    public override void _Ready()
+    {
+        base._Ready();
 
-		BodyEntered += OnBackpackBodyEntered;
-	}
+        BodyEntered += OnBackpackBodyEntered;
+    }
 
-	private void OnBackpackBodyEntered(Node body)
-	{
-		if (body is InteractableCharacter character)
-		{
-			character.NotifyHitByThrowable(ThrowForce);
-		}
-	}
+    private void OnBackpackBodyEntered(Node body)
+    {
+        if (body is InteractableCharacter character)
+        {
+            character.NotifyHitByThrowable(ThrowForce);
+        }
+    }
 }
