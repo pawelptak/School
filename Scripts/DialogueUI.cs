@@ -3,9 +3,10 @@ using System;
 
 public partial class DialogueUI : Control
 {
+    private Label _speaker;
     private Label _text;
 
-    private string[] _messages;
+    private DialogueLine[] _messages;
     private int _currentMessage;
     private Action _onFinished;
 
@@ -14,11 +15,12 @@ public partial class DialogueUI : Control
     public override void _Ready()
     {
         _text = GetNode<Label>("Panel/Text");
+
         Hide();
     }
 
     public void ShowDialogue(
-        string[] messages,
+        DialogueLine[] messages,
         Action onFinished = null
     )
     {
@@ -26,7 +28,7 @@ public partial class DialogueUI : Control
         _currentMessage = 0;
         _onFinished = onFinished;
 
-        _text.Text = _messages[_currentMessage];
+        ShowCurrentMessage();
         Show();
     }
 
@@ -47,11 +49,18 @@ public partial class DialogueUI : Control
             return;
         }
 
-        _text.Text = _messages[_currentMessage];
+        ShowCurrentMessage();
     }
 
     public bool IsVisible()
     {
         return Visible;
+    }
+
+    private void ShowCurrentMessage()
+    {
+        var message = _messages[_currentMessage];
+
+        _text.Text = $"{message.SpeakerName}: {message.Text}";
     }
 }

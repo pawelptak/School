@@ -30,14 +30,32 @@ public partial class Corridor1 : Node3D
     private void StartMateDialogue()
     {
         _dialogueUI.ShowDialogue(
-            new string[]
+            new DialogueLine[]
             {
-            GameText.MateHomeWorkQuestion,
-            GameText.MateHomeWorkFollowup,
-            GameText.HomeworkPlayerResponse,
-            GameText.HomeworkPlayerRequest,
-            GameText.MatePlayerResponse1,
-            GameText.MatePlayerResponse2
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                Corridor1Text.MateHomeWorkQuestion
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                Corridor1Text.MateHomeWorkFollowup
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Player,
+                Corridor1Text.HomeworkPlayerResponse
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Player,
+                Corridor1Text.HomeworkPlayerRequest
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                Corridor1Text.MatePlayerResponse1
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                Corridor1Text.MatePlayerResponse2
+            )
             },
             StartHomeworkMinigame
         );

@@ -31,13 +31,28 @@ public partial class ClassroomTutorial : Node3D
 
         _cutsceneController.StartDialogue(
             _mate,
-            new string[]
+            new DialogueLine[]
             {
-                GameText.MateWakeUp,
-                GameText.MateLessonEnding,
-                GameText.MateBreakEnding,
-                GameText.MateWakeUpInstruction,
-                GameText.MateTakeBackpackInstruction
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateWakeUp
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateLessonEnding
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateBreakEnding
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateWakeUpInstruction
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateTakeBackpackInstruction
+                )
             },
             true
         );

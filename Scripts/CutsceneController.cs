@@ -36,7 +36,7 @@ public partial class CutsceneController : Node
 
     public void StartDialogue(
 		Node3D character,
-		string[] messages,
+		DialogueLine[] messages,
 		bool cinematic = false
 	)
 	{

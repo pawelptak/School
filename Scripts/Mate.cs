@@ -23,9 +23,12 @@ public partial class Mate : InteractableCharacter
     {
         if (throwForce < 15.0f)
         {
-            _dialogueUI.ShowDialogue(new string[]
+            _dialogueUI.ShowDialogue(new DialogueLine[]
             {
-                string.Format(GameText.MateThrowAgain, "LPM")
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    string.Format(TutorialText.MateThrowAgain, "LPM")
+                )
             });
 
             return;
@@ -33,10 +36,16 @@ public partial class Mate : InteractableCharacter
 
         _waitingForDoorObjective = true;
 
-        _dialogueUI.ShowDialogue(new string[]
+        _dialogueUI.ShowDialogue(new DialogueLine[]
         {
-            GameText.MateThrowGood,
-            GameText.MateGoToDoor
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                TutorialText.MateThrowGood
+            ),
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                TutorialText.MateGoToDoor
+            )
         });
     }
 
