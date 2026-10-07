@@ -8,12 +8,12 @@ public partial class Backpack : ThrowableObject
 
 		BodyEntered += OnBackpackBodyEntered;
 	}
-	
+
 	private void OnBackpackBodyEntered(Node body)
 	{
-		if (body is Mate mate)
+		if (body is InteractableCharacter character)
 		{
-			mate.OnHitByThrowable(ThrowForce);
+			character.NotifyHitByThrowable(ThrowForce);
 		}
 	}
 }

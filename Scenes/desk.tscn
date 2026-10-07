@@ -14,6 +14,9 @@ albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
 material = SubResource("StandardMaterial3D_r42xq")
 size = Vector3(0.1, 1, 0.1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(1.3653564, 1.0587158, 0.7069702)
+
 [node name="Desk" type="Node3D" unique_id=273984774]
 
 [node name="Desktop" type="MeshInstance3D" parent="." unique_id=1116063425]
@@ -35,3 +38,9 @@ mesh = SubResource("BoxMesh_4xgl2")
 [node name="Leg4" type="MeshInstance3D" parent="." unique_id=1983657170]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.5, 0.25)
 mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=765106868]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collision" unique_id=657075191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011291504, 0.5293579, 0.00088500977)
+shape = SubResource("BoxShape3D_crm6m")

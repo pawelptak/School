@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://d3bvvs1dxlpal"]
 
-[ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://player.tscn" id="1_ubwdy"]
-[ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://desk.tscn" id="3_6v6cd"]
-[ext_resource type="Texture2D" uid="uid://brm6q31qbick3" path="res://textures/wall.jpg" id="3_mh8we"]
-[ext_resource type="PackedScene" uid="uid://b2ndq1p8pd0wn" path="res://chair.tscn" id="4_mh8we"]
-[ext_resource type="PackedScene" uid="uid://c801eo5qrgxlo" path="res://blackboard.tscn" id="5_kppql"]
-[ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://door.tscn" id="6_7gvyr"]
-[ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://mate.tscn" id="7_7gvyr"]
-[ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://dialogue_ui.tscn" id="8_2jmul"]
-[ext_resource type="PackedScene" uid="uid://cqf3uxhtd4xdv" path="res://backpack.tscn" id="9_ubwdy"]
+[ext_resource type="Script" uid="uid://be2b1m6kw8mwa" path="res://Scripts/ClassroomTutorial.cs" id="1_obcr2"]
+[ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://Scenes/player.tscn" id="1_ubwdy"]
+[ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/desk.tscn" id="3_6v6cd"]
+[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://Textures/wall.jpg" id="3_mh8we"]
+[ext_resource type="PackedScene" uid="uid://b2ndq1p8pd0wn" path="res://Scenes/chair.tscn" id="4_mh8we"]
+[ext_resource type="PackedScene" uid="uid://c801eo5qrgxlo" path="res://Scenes/blackboard.tscn" id="5_kppql"]
+[ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://Scenes/door.tscn" id="6_7gvyr"]
+[ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="7_7gvyr"]
+[ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="8_2jmul"]
+[ext_resource type="PackedScene" uid="uid://cqf3uxhtd4xdv" path="res://Scenes/backpack.tscn" id="9_ubwdy"]
 
 [sub_resource type="Environment" id="Environment_4xgl2"]
 
@@ -28,6 +29,7 @@ material = SubResource("StandardMaterial3D_ubwdy")
 size = Vector3(10, 0.2, 10)
 
 [node name="ClassroomTutorial" type="Node3D" unique_id=513644933]
+script = ExtResource("1_obcr2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1096299740]
 environment = SubResource("Environment_4xgl2")
@@ -132,7 +134,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18120551, -9.536743e-07, -4
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.865631, 1.5, 0.930778)
 
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("7_7gvyr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9793653, 1.229096, -2.1278636)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9793653, 1.0094546, -2.1278636)
 
 [node name="DialogueUI" parent="." unique_id=55497286 instance=ExtResource("8_2jmul")]
 

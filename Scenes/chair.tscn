@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b2ndq1p8pd0wn"]
 
+[ext_resource type="Script" uid="uid://cryi8o067e3oh" path="res://Scripts/Chair.cs" id="1_nsp1p"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24m23"]
 albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
 
@@ -21,7 +23,14 @@ albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
 material = SubResource("StandardMaterial3D_58eu7")
 size = Vector3(0.45, 0.65, 0.1)
 
-[node name="Chair" type="Node3D" unique_id=1008635649]
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(0.42504883, 0.6114502, 0.46679688)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8l6st"]
+size = Vector3(0.42504883, 0.6114502, 0.104003906)
+
+[node name="Chair" type="RigidBody3D" unique_id=498573374]
+script = ExtResource("1_nsp1p")
 
 [node name="Seat" type="MeshInstance3D" parent="." unique_id=66208405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
@@ -46,3 +55,11 @@ mesh = SubResource("BoxMesh_4xgl2")
 [node name="Backrest" type="MeshInstance3D" parent="." unique_id=766169808]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.18)
 mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="SeatCollision" type="CollisionShape3D" parent="." unique_id=960230528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.3057251, 0.0029296875)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="BackrestCollision" type="CollisionShape3D" parent="." unique_id=2009236359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.91595, 0.18432617)
+shape = SubResource("BoxShape3D_8l6st")

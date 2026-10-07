@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://deotq436qbdtj"]
 
-[ext_resource type="Texture2D" uid="uid://c8qtvn6comguf" path="res://textures/mate.png" id="1_1cayv"]
-[ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Mate.cs" id="1_u6iyh"]
+[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Textures/mate.png" id="1_1cayv"]
+[ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Scripts/Mate.cs" id="1_u6iyh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
 radius = 0.35
@@ -13,6 +13,7 @@ radius = 1.0
 script = ExtResource("1_u6iyh")
 
 [node name="Sprite" type="Sprite3D" parent="." unique_id=274662881]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
 pixel_size = 0.004
 billboard = 2
 texture = ExtResource("1_1cayv")

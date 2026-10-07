@@ -79,13 +79,22 @@ public partial class Player : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+		
+		PushRigidBodies();
 	}
 	
 	public override void _Process(double delta)
 	{
 		if (Input.IsActionJustPressed("interact"))
 		{
-			TryPickup();
+			if (_heldObject != null)
+			{
+				DropObject();
+			}
+			else
+			{
+				TryPickup();
+			}
 		}
 		
 		if (_heldObject != null)
@@ -151,5 +160,40 @@ public partial class Player : CharacterBody3D
 
 		_heldObject = null;
 		_throwCharge = 0;
+	}
+	
+	private void DropObject()
+	{
+		if (_heldObject is not ThrowableObject throwable)
+			return;
+
+		throwable.Freeze = false;
+		throwable.CollisionLayer = _heldCollisionLayer;
+		throwable.CollisionMask = _heldCollisionMask;
+
+		_heldObject = null;
+		_throwCharge = 0;
+	}
+	
+	private void PushRigidBodies()
+	{
+		for (var i = 0; i < GetSlideCollisionCount(); i++)
+		{
+			var collision = GetSlideCollision(i);
+			var body = collision.GetCollider();
+
+			if (body is not RigidBody3D rigidBody)
+				continue;
+
+			var pushDirection = -collision.GetNormal();
+			pushDirection.Y = 0;
+
+			if (pushDirection.LengthSquared() == 0)
+				continue;
+
+			pushDirection = pushDirection.Normalized();
+
+			rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
+		}
 	}
 }
