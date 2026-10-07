@@ -171,7 +171,7 @@ public partial class Player : CharacterBody3D
 
         throwable.Freeze = false;
         throwable.CollisionLayer = _heldCollisionLayer;
-        throwable.CollisionMask = _heldCollisionMask;
+        throwable.CollisionMask = _heldCollisionMask | 2;
 
         throwable.ApplyCentralImpulse(throwDirection * _throwCharge);
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqf3uxhtd4xdv"]
 
-[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Backpack.cs" id="1_l1ewb"]
+[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Scripts/Backpack.cs" id="1_l1ewb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ewb"]
 albedo_color = Color(0.00044530572, 0.12725326, 0.505289, 1)
@@ -30,6 +30,7 @@ size = Vector3(0.08, 0.65, 0.06)
 size = Vector3(0.8, 1.2, 0.6)
 
 [node name="Backpack" type="RigidBody3D" unique_id=499470510]
+collision_layer = 4
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_l1ewb")

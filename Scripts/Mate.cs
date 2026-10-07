@@ -1,42 +1,60 @@
 using Godot;
+using System;
 
 public partial class Mate : InteractableCharacter
 {
-	private DialogueUI _dialogueUI;
+    private DialogueUI _dialogueUI;
 
-	public bool IntroFinished { get; set; }
+    private bool _waitingForDoorObjective;
 
-	public override void _Ready()
-	{
-		base._Ready();
+    public bool IntroFinished { get; set; }
 
-		_dialogueUI = GetTree().CurrentScene.GetNode<DialogueUI>("DialogueUI");
+    public event Action GoToDoor;
 
-		HitByThrowable += OnHitByThrowable;
-	}
+    public override void _Ready()
+    {
+        base._Ready();
 
-	protected override void OnInteraction()
-	{
-		if (!IntroFinished)
-			return;
-	}
+        _dialogueUI = GetTree().CurrentScene.GetNode<DialogueUI>("DialogueUI");
 
-	private void OnHitByThrowable(float throwForce)
-	{
-		if (throwForce < 15.0f)
-		{
-			_dialogueUI.ShowDialogue(new string[]
-			{
-				string.Format(GameText.MateThrowAgain, "LPM")
-			});
+        HitByThrowable += OnHitByThrowable;
+        _dialogueUI.DialogueFinished += OnDialogueFinished;
+    }
 
-			return;
-		}
+    protected override void OnInteraction()
+    {
+        if (!IntroFinished)
+            return;
+    }
 
-		_dialogueUI.ShowDialogue(new string[]
-		{
-			GameText.MateThrowGood,
-			GameText.MateGoToDoor
-		});
-	}
+    private void OnHitByThrowable(float throwForce)
+    {
+        if (throwForce < 15.0f)
+        {
+            _dialogueUI.ShowDialogue(new string[]
+            {
+                string.Format(GameText.MateThrowAgain, "LPM")
+            });
+
+            return;
+        }
+
+        _waitingForDoorObjective = true;
+
+        _dialogueUI.ShowDialogue(new string[]
+        {
+            GameText.MateThrowGood,
+            GameText.MateGoToDoor
+        });
+    }
+
+    private void OnDialogueFinished()
+    {
+        if (!_waitingForDoorObjective)
+            return;
+
+        _waitingForDoorObjective = false;
+
+        GoToDoor?.Invoke();
+    }
 }
