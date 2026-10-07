@@ -22,12 +22,29 @@ public partial class Corridor1 : Node3D
         if (!_mate.PlayerInRange)
             return;
 
-        _dialogueUI.ShowDialogue(new string[]
-        {
-            GameText.MateHomeWorkQuestion,
-            GameText.MateHomeWorkFollowup
-        });
+        StartMateDialogue();
 
         GetViewport().SetInputAsHandled();
+    }
+
+    private void StartMateDialogue()
+    {
+        _dialogueUI.ShowDialogue(
+            new string[]
+            {
+            GameText.MateHomeWorkQuestion,
+            GameText.MateHomeWorkFollowup,
+            GameText.HomeworkPlayerResponse,
+            GameText.HomeworkPlayerRequest,
+            GameText.MatePlayerResponse1,
+            GameText.MatePlayerResponse2
+            },
+            StartHomeworkMinigame
+        );
+    }
+
+    private void StartHomeworkMinigame()
+    {
+        GetTree().ChangeSceneToFile("res://Scenes/homework.tscn");
     }
 }
