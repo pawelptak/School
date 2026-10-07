@@ -1,15 +1,20 @@
 [gd_scene format=3 uid="uid://dj7xifh7nmt4o"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo1nh"]
-albedo_color = Color(0.6431373, 0, 0.043137256, 1)
+[ext_resource type="Script" uid="uid://c8jmaxnj8fax" path="res://Scripts/ObjectiveMarker.cs" id="1_5hg43"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo1nh"]
+transparency = 1
+albedo_color = Color(0.6431373, 0, 0.043137256, 0.6509804)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mo1nh"]
 material = SubResource("StandardMaterial3D_mo1nh")
-top_radius = 0.15
-bottom_radius = 0.15
-height = 0.05
+top_radius = 0.0
+bottom_radius = 0.1
+height = 0.3
 
 [node name="ObjectiveMarker" type="Node3D" unique_id=1928698264]
+script = ExtResource("1_5hg43")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1289156813]
-mesh = SubResource("CylinderMesh_lc5oj")
+[node name="ArrowHead" type="MeshInstance3D" parent="." unique_id=1061993225]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mo1nh")

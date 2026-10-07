@@ -97,7 +97,7 @@ public partial class ClassroomTutorial : Node3D
         _doorObjectiveActive = true;
 
         _objectiveMarker.GlobalPosition =
-            _door.GlobalPosition + new Vector3(0, 2f, 0);
+            _door.GlobalPosition + new Vector3(-0.5f, 1.5f, 0);
 
         _objectiveMarker.Show();
     }
