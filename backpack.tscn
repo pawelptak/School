@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cqf3uxhtd4xdv"]
+
+[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Backpack.cs" id="1_l1ewb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ewb"]
+albedo_color = Color(0.00044530572, 0.12725326, 0.505289, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
+material = SubResource("StandardMaterial3D_l1ewb")
+size = Vector3(0.5, 0.7, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(0.5, 0.7, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ynj3q"]
+albedo_color = Color(0.16147009, 0.3910172, 0.4014885, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xgl2"]
+material = SubResource("StandardMaterial3D_ynj3q")
+size = Vector3(0.4, 0.25, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0miv"]
+albedo_color = Color(0.16147009, 0.3910172, 0.4014885, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hwk1f"]
+material = SubResource("StandardMaterial3D_d0miv")
+size = Vector3(0.08, 0.65, 0.06)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xgl2"]
+size = Vector3(0.8, 1.2, 0.6)
+
+[node name="Backpack" type="RigidBody3D" unique_id=499470510]
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_l1ewb")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=353194973]
+mesh = SubResource("BoxMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=66918632]
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="FrontPocket" type="MeshInstance3D" parent="." unique_id=364040488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, -0.16)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="LeftStrap" type="MeshInstance3D" parent="." unique_id=792657132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0, 0.15)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="RightStrap" type="MeshInstance3D" parent="." unique_id=558666768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0, 0.15)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="PickupArea" type="Area3D" parent="." unique_id=1948668651]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea" unique_id=1334907021]
+shape = SubResource("BoxShape3D_4xgl2")

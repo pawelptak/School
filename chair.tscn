@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b2ndq1p8pd0wn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24m23"]
+albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
+material = SubResource("StandardMaterial3D_24m23")
+size = Vector3(0.45, 0.12, 0.45)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knj3a"]
+albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xgl2"]
+material = SubResource("StandardMaterial3D_knj3a")
+size = Vector3(0.08, 0.55, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58eu7"]
+albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hwk1f"]
+material = SubResource("StandardMaterial3D_58eu7")
+size = Vector3(0.45, 0.65, 0.1)
+
+[node name="Chair" type="Node3D" unique_id=1008635649]
+
+[node name="Seat" type="MeshInstance3D" parent="." unique_id=66208405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("BoxMesh_crm6m")
+
+[node name="Leg1" type="MeshInstance3D" parent="." unique_id=1642557667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17, 0.275, -0.17)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="Leg2" type="MeshInstance3D" parent="." unique_id=1596262968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17, 0.275, -0.17)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="Leg3" type="MeshInstance3D" parent="." unique_id=7077621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17, 0.275, 0.17)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="Leg4" type="MeshInstance3D" parent="." unique_id=2138357322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17, 0.275, 0.17)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="Backrest" type="MeshInstance3D" parent="." unique_id=766169808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.18)
+mesh = SubResource("BoxMesh_hwk1f")

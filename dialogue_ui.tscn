@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://c4et2c2f253u4"]
+
+[ext_resource type="Script" uid="uid://cvmoafwjl30nt" path="res://DialogueUI.cs" id="1_njptv"]
+
+[node name="DialogueUI" type="Control" unique_id=55497286]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_njptv")
+
+[node name="Panel" type="Panel" parent="." unique_id=2140505228]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Text" type="Label" parent="Panel" unique_id=600346087]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -30.0
+offset_right = 10.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hey, you're finally awake!"
