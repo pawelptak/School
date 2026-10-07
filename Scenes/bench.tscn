@@ -14,7 +14,7 @@ albedo_color = Color(0.45840502, 0.45840508, 0.45840502, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
 material = SubResource("StandardMaterial3D_ury2d")
-size = Vector3(0.1, 0.5, 0.1)
+size = Vector3(0.08, 0.5, 0.08)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
 size = Vector3(2.3904114, 0.57910156, 0.51342773)
@@ -39,19 +39,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24530846, -0.13804919)
 mesh = SubResource("BoxMesh_lc5oj")
 
 [node name="Leg1" type="MeshInstance3D" parent="." unique_id=451099767]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -0.045426056)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -0.106626034)
 mesh = SubResource("BoxMesh_u3w50")
 
 [node name="Leg2" type="MeshInstance3D" parent="." unique_id=1810693937]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0.22871919)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 0.25903994)
 mesh = SubResource("BoxMesh_u3w50")
 
 [node name="Leg3" type="MeshInstance3D" parent="." unique_id=1280551289]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9781867, 0, -0.045426056)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9781867, 0, -0.106626034)
 mesh = SubResource("BoxMesh_u3w50")
 
 [node name="Leg4" type="MeshInstance3D" parent="." unique_id=1065754746]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9781867, 0, 0.22871919)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9781867, 0, 0.25903994)
 mesh = SubResource("BoxMesh_u3w50")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=850865188]
