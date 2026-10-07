@@ -3,8 +3,7 @@ using System;
 
 public partial class DialogueUI : Control
 {
-    private Label _speaker;
-    private Label _text;
+    private RichTextLabel _text;
 
     private DialogueLine[] _messages;
     private int _currentMessage;
@@ -14,7 +13,7 @@ public partial class DialogueUI : Control
 
     public override void _Ready()
     {
-        _text = GetNode<Label>("Panel/Text");
+        _text = GetNode<RichTextLabel>("Panel/Text");
 
         Hide();
     }
@@ -61,6 +60,6 @@ public partial class DialogueUI : Control
     {
         var message = _messages[_currentMessage];
 
-        _text.Text = $"{message.SpeakerName}: {message.Text}";
+        _text.Text = $"[color=#ff9900]{message.SpeakerName}:[/color] {message.Text}";
     }
 }

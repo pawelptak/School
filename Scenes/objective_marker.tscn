@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dj7xifh7nmt4o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo1nh"]
+albedo_color = Color(0.6431373, 0, 0.043137256, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_mo1nh")
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.05
+
+[node name="ObjectiveMarker" type="Node3D" unique_id=1928698264]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1289156813]
+mesh = SubResource("CylinderMesh_lc5oj")
