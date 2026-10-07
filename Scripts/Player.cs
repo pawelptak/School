@@ -5,7 +5,10 @@ public partial class Player : CharacterBody3D
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
-
+	
+	public bool MovementLocked { get; set; }
+	public bool CameraLocked { get; set; }
+	
 	private Camera3D _camera;
 	private float _cameraPitch = 0.0f;
 	private Node3D _holdPoint;
@@ -27,6 +30,9 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Input(InputEvent @event)
 	{
+		if (CameraLocked)
+			return;
+	
 		if (@event is InputEventMouseMotion mouseMotion)
 		{
 			RotateY(-mouseMotion.Relative.X * 0.01f);
@@ -43,6 +49,13 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (MovementLocked)
+		{
+			Velocity = Vector3.Zero;
+			
+			return;
+		}
+		
 		Vector3 velocity = Velocity;
 
 		if (!IsOnFloor())

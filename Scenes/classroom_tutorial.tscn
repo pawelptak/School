@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="7_7gvyr"]
 [ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="8_2jmul"]
 [ext_resource type="PackedScene" uid="uid://cqf3uxhtd4xdv" path="res://Scenes/backpack.tscn" id="9_ubwdy"]
+[ext_resource type="Script" uid="uid://bq6q8gni7pbng" path="res://Scripts/CutsceneController.cs" id="11_tfknm"]
 
 [sub_resource type="Environment" id="Environment_4xgl2"]
 
@@ -140,3 +141,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9793653, 1.0094546, -2.127
 
 [node name="Backpack" parent="." unique_id=499470510 instance=ExtResource("9_ubwdy")]
 transform = Transform3D(0.33123294, 0, -0.94354904, 0, 1, 0, 0.94354904, 0, 0.33123294, 3.1698847, 0.35, -0.5543885)
+
+[node name="CutsceneController" type="Node" parent="." unique_id=148774009]
+script = ExtResource("11_tfknm")

@@ -3,43 +3,22 @@ using Godot;
 public partial class ClassroomTutorial : Node3D
 {
 	private Mate _mate;
-	private DialogueUI _dialogueUI;
+	private CutsceneController _cutsceneController;
 
 	public override void _Ready()
 	{
 		_mate = GetNode<Mate>("Mate");
-		_dialogueUI = GetNode<DialogueUI>("DialogueUI");
+		_cutsceneController = GetNode<CutsceneController>("CutsceneController");
 
-		_mate.HitByThrowable += OnMateHitByThrowable;
-	}
-
-	private void OnMateHitByThrowable(float throwForce)
-	{
-		if (throwForce < 20.0f)
-		{
-			var throwButton = GetThrowButtonName();
-
-			_dialogueUI.ShowDialogue(new string[]
+		_cutsceneController.StartDialogue(
+			_mate,
+			new string[]
 			{
-				string.Format(GameText.MateThrowAgain, throwButton)
-			});
-		}
-		else
-		{
-			_dialogueUI.ShowDialogue(new string[]
-			{
-				GameText.MateThrowGood
-			});
-		}
-	}
-
-	private string GetThrowButtonName()
-	{
-		var events = InputMap.ActionGetEvents("throw");
-
-		if (events.Count == 0)
-			return "LMB";
-
-		return events[0].AsText().Replace(" (Physical)", "");
+				GameText.MateWakeUp,
+				GameText.MateLessonEnding,
+				GameText.MateBreakEnding,
+				GameText.MateWakeUpInstruction
+			}
+		);
 	}
 }
