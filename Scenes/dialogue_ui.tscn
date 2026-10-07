@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://bgvm452vgs5pd"]
+[gd_scene format=3 uid="uid://c4et2c2f253u4"]
 
-[ext_resource type="Script" path="res://DialogueUI.cs" id="1_njptv"]
+[ext_resource type="Script" uid="uid://cvmoafwjl30nt" path="res://DialogueUI.cs" id="1_njptv"]
 
 [node name="DialogueUI" type="Control" unique_id=55497286]
 layout_mode = 3

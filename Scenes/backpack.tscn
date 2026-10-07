@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://7158nlxmd63w"]
+[gd_scene format=3 uid="uid://cqf3uxhtd4xdv"]
 
-[ext_resource type="Script" path="res://Backpack.cs" id="1_l1ewb"]
+[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Backpack.cs" id="1_l1ewb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ewb"]
 albedo_color = Color(0.00044530572, 0.12725326, 0.505289, 1)

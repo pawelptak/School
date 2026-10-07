@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://dp23w7attjlix"]
+[gd_scene format=3 uid="uid://cidjmjclqq54u"]
 
-[ext_resource type="Texture2D" uid="uid://bycny8lcexl0m" path="res://textures/floor.jpg" id="1_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://textures/wall.jpg" id="1_h2yge"]
-[ext_resource type="Script" path="res://Player.cs" id="1_ig7tw"]
-[ext_resource type="PackedScene" path="res://door.tscn" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://ufpbuoj0oa0c" path="res://textures/floor.jpg" id="1_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://brm6q31qbick3" path="res://textures/wall.jpg" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Player.cs" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://door.tscn" id="2_0xm2m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
 albedo_texture = ExtResource("1_1bvp3")
