@@ -9,16 +9,25 @@ public partial class Corridor1 : Node3D
     {
         _mate = GetNode<Mate>("Mate");
         _dialogueUI = GetNode<DialogueUI>("DialogueUI");
-
-        _mate.Interacted += OnMateInteracted;
     }
 
-    private void OnMateInteracted()
+    public override void _UnhandledInput(InputEvent @event)
     {
+        if (!@event.IsActionPressed("interact"))
+            return;
+
+        if (_dialogueUI.IsVisible())
+            return;
+
+        if (!_mate.PlayerInRange)
+            return;
+
         _dialogueUI.ShowDialogue(new string[]
         {
             GameText.MateHomeWorkQuestion,
             GameText.MateHomeWorkFollowup
         });
+
+        GetViewport().SetInputAsHandled();
     }
 }

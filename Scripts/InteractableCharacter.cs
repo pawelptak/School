@@ -3,10 +3,9 @@ using System;
 
 public partial class InteractableCharacter : CharacterBody3D
 {
-    protected bool PlayerInRange { get; private set; }
+    public bool PlayerInRange { get; private set; }
 
     public event Action<float> HitByThrowable;
-    public event Action Interacted;
 
     public override void _Ready()
     {
@@ -14,19 +13,6 @@ public partial class InteractableCharacter : CharacterBody3D
 
         interactionArea.BodyEntered += OnBodyEntered;
         interactionArea.BodyExited += OnBodyExited;
-    }
-
-    public override void _Process(double delta)
-    {
-        if (PlayerInRange && Input.IsActionJustPressed("interact"))
-        {
-            OnInteraction();
-        }
-    }
-
-    protected virtual void OnInteraction()
-    {
-        Interacted?.Invoke();
     }
 
     public void NotifyHitByThrowable(float throwForce)

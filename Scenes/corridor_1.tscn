@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://Scenes/player.tscn" id="3_ny66m"]
 [ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="4_nul7m"]
 [ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="6_us0rg"]
+[ext_resource type="Script" uid="uid://bq6q8gni7pbng" path="res://Scripts/CutsceneController.cs" id="7_us0rg"]
 
 [sub_resource type="Environment" id="Environment_axue6"]
 
@@ -79,3 +80,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.78
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4695992, 1.0094546, 1.6776567)
 
 [node name="DialogueUI" parent="." unique_id=55497286 instance=ExtResource("6_us0rg")]
+
+[node name="CutsceneController" type="Node" parent="." unique_id=2116338866]
+script = ExtResource("7_us0rg")

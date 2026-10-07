@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://deotq436qbdtj"]
 
-[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Textures/mate.png" id="1_1cayv"]
+[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://textures/mate.png" id="1_1cayv"]
 [ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Scripts/Mate.cs" id="1_u6iyh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
@@ -22,6 +22,7 @@ texture = ExtResource("1_1cayv")
 shape = SubResource("CapsuleShape3D_crm6m")
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=219048047]
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=509559402]
 shape = SubResource("SphereShape3D_crm6m")
