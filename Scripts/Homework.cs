@@ -14,6 +14,8 @@ public partial class Homework : Node3D
 		"A small bird landed on the old wooden fence.",
         "The weather outside was cold but surprisingly pleasant."
 	};
+	private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
+	private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
 
 	private int _textIndex;
 	private string _targetText = "";
@@ -23,6 +25,9 @@ public partial class Homework : Node3D
 
 	private int _correctWords;
 	private int _totalWords;
+	private const double GameDuration = 60.0;
+	private double _timeRemaining;
+	private bool _gameFinished;
 
 	public override void _Ready()
 	{
@@ -42,10 +47,31 @@ public partial class Homework : Node3D
 		StartText();
 
 		_textInput.GrabFocus();
+
+		_timeRemaining = GameDuration;
 	}
 
-	private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
-	private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
+	public override void _Process(double delta)
+	{
+		if (_gameFinished)
+			return;
+
+		_timeRemaining -= delta;
+
+		if (_timeRemaining <= 0)
+		{
+			_timeRemaining = 0;
+			FinishGame();
+		}
+	}
+
+	private void FinishGame()
+	{
+		_gameFinished = true;
+
+		GD.Print("Time's up!");
+		GD.Print($"Final score: {_correctWords}/{_totalWords}");
+	}
 
 	private void CreateTextViewports()
 	{
@@ -189,6 +215,9 @@ public partial class Homework : Node3D
 
 	public override void _Input(InputEvent @event)
 	{
+		if (_gameFinished)
+			return;
+
 		if (@event is not InputEventKey keyEvent ||
 			!keyEvent.Pressed ||
 			keyEvent.Echo)
@@ -229,10 +258,8 @@ public partial class Homework : Node3D
 				FinishText();
 		}
 
-		GD.Print(
-			$"Text: {_textIndex + 1}/{_texts.Length}, " +
-			$"Words: {_correctWords}/{_totalWords}");
+        FinishGame();
 
-		GetViewport().SetInputAsHandled();
+        GetViewport().SetInputAsHandled();
 	}
 }
