@@ -14,6 +14,7 @@ public partial class Homework : Node3D
 		"A small bird landed on the old wooden fence.",
         "The weather outside was cold but surprisingly pleasant."
 	};
+
 	private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
 	private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
 
@@ -25,10 +26,13 @@ public partial class Homework : Node3D
 
 	private int _correctWords;
 	private int _totalWords;
-	private const double GameDuration = 60.0;
+
+	private const double GameDuration = 10.0;
 	private double _timeRemaining;
 	private bool _gameFinished;
 	private double _score;
+
+	private RichTextLabel _timerLabel;
 
 	public override void _Ready()
 	{
@@ -50,6 +54,9 @@ public partial class Homework : Node3D
 		_textInput.GrabFocus();
 
 		_timeRemaining = GameDuration;
+
+		_timerLabel = GetNode<RichTextLabel>("Timer/Panel/Label");
+		_timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
 	}
 
 	public override void _Process(double delta)
@@ -62,8 +69,12 @@ public partial class Homework : Node3D
 		if (_timeRemaining <= 0)
 		{
 			_timeRemaining = 0;
+			_timerLabel.Text = "0";
 			FinishGame();
+			return;
 		}
+
+		_timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
 	}
 
 	private void FinishGame()
@@ -114,7 +125,6 @@ public partial class Homework : Node3D
 		};
 
 		_targetLabel.AddThemeFontSizeOverride("font_size", 60);
-
 		_targetLabel.AddThemeColorOverride("font_color", InkColor);
 
 		_targetViewport.AddChild(_targetLabel);
@@ -129,7 +139,6 @@ public partial class Homework : Node3D
 			RenderTargetUpdateMode = SubViewport.UpdateMode.Always
 		};
 
-		// Opaque paper-colored background so the ink text is readable on the 3D mesh.
 		var background = new ColorRect
 		{
 			Color = PaperColor,
@@ -214,8 +223,7 @@ public partial class Homework : Node3D
 		}
 		else
 		{
-			GD.Print("All texts finished!");
-			GD.Print($"Final score: {_correctWords}/{_totalWords}");
+			FinishGame();
 		}
 	}
 
