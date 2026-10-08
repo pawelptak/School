@@ -28,6 +28,7 @@ public partial class Homework : Node3D
 	private const double GameDuration = 60.0;
 	private double _timeRemaining;
 	private bool _gameFinished;
+	private double _score;
 
 	public override void _Ready()
 	{
@@ -69,8 +70,13 @@ public partial class Homework : Node3D
 	{
 		_gameFinished = true;
 
-		GD.Print("Time's up!");
+		_score = _totalWords > 0
+			? (double)_correctWords / _totalWords
+			: 0;
+
+		GD.Print("Game finished!");
 		GD.Print($"Final score: {_correctWords}/{_totalWords}");
+		GD.Print($"Score: {_score:P0}");
 	}
 
 	private void CreateTextViewports()
@@ -258,8 +264,6 @@ public partial class Homework : Node3D
 				FinishText();
 		}
 
-        FinishGame();
-
-        GetViewport().SetInputAsHandled();
+		GetViewport().SetInputAsHandled();
 	}
 }
