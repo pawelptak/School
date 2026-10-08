@@ -32,9 +32,14 @@ public partial class Homework : Node3D
 
     public override void _Input(InputEvent @event)
     {
-        // A standalone SubViewport receives no input, so keyboard events must be forwarded manually.
-        if (@event is InputEventKey)
+        if (@event is InputEventKey keyEvent)
         {
+            if (keyEvent.Keycode is Key.Backspace or Key.Delete)
+            {
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
             _textViewport.PushInput(@event);
             GetViewport().SetInputAsHandled();
         }
