@@ -54,7 +54,8 @@ public partial class Homework : Node3D
 		_textInput = new TextEdit
 		{
 			Position = new Vector2(40, 40),
-			Size = new Vector2(920, 620)
+			Size = new Vector2(920, 620),
+			WrapMode = TextEdit.LineWrappingMode.Boundary
 		};
 
 		_textInput.AddThemeStyleboxOverride(
@@ -67,7 +68,7 @@ public partial class Homework : Node3D
 
 		_textInput.AddThemeColorOverride("font_color", InkColor);
 		_textInput.AddThemeColorOverride("caret_color", InkColor);
-		_textInput.AddThemeFontSizeOverride("font_size", 32);
+		_textInput.AddThemeFontSizeOverride("font_size", 60);
 
 		_textViewport.AddChild(_textInput);
 
@@ -80,9 +81,7 @@ public partial class Homework : Node3D
 			AutowrapMode = TextServer.AutowrapMode.WordSmart
 		};
 
-		_targetLabel.AddThemeFontSizeOverride(
-			"font_size",
-			32);
+		_targetLabel.AddThemeFontSizeOverride("font_size", 60);
 
 		_targetLabel.AddThemeColorOverride("font_color", InkColor);
 
