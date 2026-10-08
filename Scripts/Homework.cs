@@ -116,7 +116,7 @@ public partial class Homework : Node3D
             true,
             () =>
             {
-                GetTree().ChangeSceneToFile("res://Scenes/polish_class.tscn");
+                GetTree().ChangeSceneToFile("res://Scenes/Levels/polish_class.tscn");
             }
         );
     }

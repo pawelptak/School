@@ -78,7 +78,7 @@ public partial class ClassroomTutorial : Node3D
         if (ray.GetCollider() != _door)
             return;
 
-        GetTree().ChangeSceneToFile("res://Scenes/corridor_1.tscn");
+        GetTree().ChangeSceneToFile("res://Scenes/Levels/corridor_1.tscn");
     }
 
     private void OnCinematicDialogueFinished()

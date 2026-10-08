@@ -1,18 +1,26 @@
 [gd_scene format=3 uid="uid://d3bvvs1dxlpal"]
 
 [ext_resource type="Script" uid="uid://be2b1m6kw8mwa" path="res://Scripts/ClassroomTutorial.cs" id="1_obcr2"]
-[ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://Scenes/player.tscn" id="1_ubwdy"]
-[ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/desk.tscn" id="3_6v6cd"]
-[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://textures/wall.jpg" id="3_mh8we"]
-[ext_resource type="PackedScene" uid="uid://b2ndq1p8pd0wn" path="res://Scenes/chair.tscn" id="4_mh8we"]
-[ext_resource type="PackedScene" uid="uid://c801eo5qrgxlo" path="res://Scenes/blackboard.tscn" id="5_kppql"]
-[ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://Scenes/door.tscn" id="6_7gvyr"]
-[ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="7_7gvyr"]
-[ext_resource type="PackedScene" uid="uid://cqf3uxhtd4xdv" path="res://Scenes/backpack.tscn" id="9_ubwdy"]
+[ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Models/player.tscn" id="1_ubwdy"]
+[ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Models/desk.tscn" id="3_6v6cd"]
+[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://Assets/Textures/wall.jpg" id="3_mh8we"]
+[ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Models/chair.tscn" id="4_mh8we"]
+[ext_resource type="PackedScene" uid="uid://d31o1hqaujmd4" path="res://Scenes/Models/blackboard.tscn" id="5_kppql"]
+[ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/Models/door.tscn" id="6_7gvyr"]
+[ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Models/mate.tscn" id="7_7gvyr"]
+[ext_resource type="PackedScene" uid="uid://bnxho1wft5j7f" path="res://Scenes/Models/backpack.tscn" id="9_ubwdy"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="11_tfknm"]
-[ext_resource type="PackedScene" uid="uid://dj7xifh7nmt4o" path="res://Scenes/objective_marker.tscn" id="12_me4gt"]
+[ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Models/objective_marker.tscn" id="12_me4gt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dm2mn"]
+
+[sub_resource type="Sky" id="Sky_tfknm"]
+sky_material = SubResource("ProceduralSkyMaterial_dm2mn")
 
 [sub_resource type="Environment" id="Environment_4xgl2"]
+background_mode = 2
+background_color = Color(0, 0, 0.9529412, 1)
+sky = SubResource("Sky_tfknm")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jmul"]
 albedo_texture = ExtResource("3_mh8we")
@@ -72,6 +80,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 shape = SubResource("BoxShape3D_crm6m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1303621828]
+mesh = SubResource("BoxMesh_crm6m")
+
+[node name="Ceiling" type="StaticBody3D" parent="." unique_id=1842022159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20393014, 2.8039978, 0)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1228032805]
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=1355936309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.084506035, 0, 0)
 mesh = SubResource("BoxMesh_crm6m")
 
 [node name="Desk1" parent="." unique_id=273984774 instance=ExtResource("3_6v6cd")]

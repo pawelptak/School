@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://deotq436qbdtj"]
+[gd_scene format=3 uid="uid://c6c72dv42b7eb"]
 
-[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://textures/mate.png" id="1_1cayv"]
+[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Assets/Textures/mate.png" id="1_1cayv"]
 [ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Scripts/Mate.cs" id="1_u6iyh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]

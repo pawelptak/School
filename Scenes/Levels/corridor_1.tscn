@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://c25px5x6yo6ad"]
 
 [ext_resource type="Script" uid="uid://bmk37yth4de1h" path="res://Scripts/Corridor1.cs" id="1_64j8y"]
-[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://textures/wall.jpg" id="1_axue6"]
-[ext_resource type="PackedScene" uid="uid://dbaauvldojryt" path="res://Scenes/door.tscn" id="2_1wlac"]
-[ext_resource type="PackedScene" uid="uid://oi0gjbe70jds" path="res://Scenes/player.tscn" id="3_ny66m"]
-[ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="4_nul7m"]
+[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://Assets/Textures/wall.jpg" id="1_axue6"]
+[ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/Models/door.tscn" id="2_1wlac"]
+[ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Models/player.tscn" id="3_ny66m"]
+[ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Models/mate.tscn" id="4_nul7m"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_us0rg"]
-[ext_resource type="PackedScene" uid="uid://dj7xifh7nmt4o" path="res://Scenes/objective_marker.tscn" id="8_ole62"]
-[ext_resource type="PackedScene" uid="uid://b8iec05o1hrno" path="res://Scenes/bench.tscn" id="9_e3gwq"]
+[ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Models/objective_marker.tscn" id="8_ole62"]
+[ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Models/bench.tscn" id="9_e3gwq"]
 
 [sub_resource type="Environment" id="Environment_axue6"]
 

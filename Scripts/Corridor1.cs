@@ -67,6 +67,6 @@ public partial class Corridor1 : Node3D
 
     private void StartHomeworkMinigame()
     {
-        GetTree().ChangeSceneToFile("res://Scenes/homework.tscn");
+        GetTree().ChangeSceneToFile("res://Scenes/Levels/homework.tscn");
     }
 }
