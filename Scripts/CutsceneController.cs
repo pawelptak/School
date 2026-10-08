@@ -21,20 +21,20 @@ public partial class CutsceneController : Node
 		_dialogueUI.DialogueFinished += OnDialogueFinished;
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (!@event.IsActionPressed("interact"))
-            return;
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!@event.IsActionPressed("interact"))
+			return;
 
-        if (!_dialogueUI.IsVisible())
-            return;
+		if (!_dialogueUI.IsVisible())
+			return;
 
-        _dialogueUI.NextMessage();
+		_dialogueUI.NextMessage();
 
-        GetViewport().SetInputAsHandled();
-    }
+		GetViewport().SetInputAsHandled();
+	}
 
-    public void StartDialogue(
+	public void StartDialogue(
 		Node3D character,
 		DialogueLine[] messages,
 		bool cinematic = false
