@@ -2,276 +2,276 @@ using Godot;
 
 public partial class Homework : Node3D
 {
-	private SubViewport _textViewport;
-	private TextEdit _textInput;
+    private SubViewport _textViewport;
+    private TextEdit _textInput;
 
-	private SubViewport _targetViewport;
-	private Label _targetLabel;
+    private SubViewport _targetViewport;
+    private Label _targetLabel;
 
-	private readonly string[] _texts =
-	{
-		"The quick brown fox jumps over the lazy dog.",
-		"A small bird landed on the old wooden fence.",
+    private readonly string[] _texts =
+    {
+        "The quick brown fox jumps over the lazy dog.",
+        "A small bird landed on the old wooden fence.",
         "The weather outside was cold but surprisingly pleasant."
-	};
+    };
 
-	private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
-	private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
+    private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
+    private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
 
-	private int _textIndex;
-	private string _targetText = "";
-	private int _wordIndex;
-	private string _currentWord = "";
-	private int _currentIndex;
+    private int _textIndex;
+    private string _targetText = "";
+    private int _wordIndex;
+    private string _currentWord = "";
+    private int _currentIndex;
 
-	private int _correctWords;
-	private int _totalWords;
+    private int _correctWords;
+    private int _totalWords;
 
-	private const double GameDuration = 10.0;
-	private double _timeRemaining;
-	private bool _gameFinished;
-	private double _score;
+    private const double GameDuration = 10.0;
+    private double _timeRemaining;
+    private bool _gameFinished;
+    private double _score;
 
-	private RichTextLabel _timerLabel;
+    private RichTextLabel _timerLabel;
 
-	public override void _Ready()
-	{
-		var playerPaper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
-		var matePaper = GetNode<MeshInstance3D>("MateNotebook/PaperRight");
+    public override void _Ready()
+    {
+        var playerPaper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
+        var matePaper = GetNode<MeshInstance3D>("MateNotebook/PaperRight");
 
-		CreateTextViewports();
+        CreateTextViewports();
 
-		CreateWritingSurface(
-			playerPaper,
-			_textViewport.GetTexture());
+        CreateWritingSurface(
+            playerPaper,
+            _textViewport.GetTexture());
 
-		CreateWritingSurface(
-			matePaper,
-			_targetViewport.GetTexture());
+        CreateWritingSurface(
+            matePaper,
+            _targetViewport.GetTexture());
 
-		StartText();
+        StartText();
 
-		_textInput.GrabFocus();
+        _textInput.GrabFocus();
 
-		_timeRemaining = GameDuration;
+        _timeRemaining = GameDuration;
 
-		_timerLabel = GetNode<RichTextLabel>("Timer/Panel/Label");
-		_timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
-	}
+        _timerLabel = GetNode<RichTextLabel>("Timer/Panel/Label");
+        _timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
+    }
 
-	public override void _Process(double delta)
-	{
-		if (_gameFinished)
-			return;
+    public override void _Process(double delta)
+    {
+        if (_gameFinished)
+            return;
 
-		_timeRemaining -= delta;
+        _timeRemaining -= delta;
 
-		if (_timeRemaining <= 0)
-		{
-			_timeRemaining = 0;
-			_timerLabel.Text = "0";
-			FinishGame();
-			return;
-		}
+        if (_timeRemaining <= 0)
+        {
+            _timeRemaining = 0;
+            _timerLabel.Text = "0";
+            FinishGame();
+            return;
+        }
 
-		_timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
-	}
+        _timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
+    }
 
-	private void FinishGame()
-	{
-		_gameFinished = true;
+    private void FinishGame()
+    {
+        _gameFinished = true;
 
-		_score = _totalWords > 0
-			? (double)_correctWords / _totalWords
-			: 0;
+        _score = _totalWords > 0
+            ? (double)_correctWords / _totalWords
+            : 0;
 
-		GD.Print("Game finished!");
-		GD.Print($"Final score: {_correctWords}/{_totalWords}");
-		GD.Print($"Score: {_score:P0}");
-	}
+        GD.Print("Game finished!");
+        GD.Print($"Final score: {_correctWords}/{_totalWords}");
+        GD.Print($"Score: {_score:P0}");
+    }
 
-	private void CreateTextViewports()
-	{
-		_textViewport = CreateTextViewport();
+    private void CreateTextViewports()
+    {
+        _textViewport = CreateTextViewport();
 
-		_textInput = new TextEdit
-		{
-			Position = new Vector2(40, 40),
-			Size = new Vector2(920, 620),
-			WrapMode = TextEdit.LineWrappingMode.Boundary
-		};
+        _textInput = new TextEdit
+        {
+            Position = new Vector2(40, 40),
+            Size = new Vector2(920, 620),
+            WrapMode = TextEdit.LineWrappingMode.Boundary
+        };
 
-		_textInput.AddThemeStyleboxOverride(
-			"normal",
-			new StyleBoxEmpty());
+        _textInput.AddThemeStyleboxOverride(
+            "normal",
+            new StyleBoxEmpty());
 
-		_textInput.AddThemeStyleboxOverride(
-			"focus",
-			new StyleBoxEmpty());
+        _textInput.AddThemeStyleboxOverride(
+            "focus",
+            new StyleBoxEmpty());
 
-		_textInput.AddThemeColorOverride("font_color", InkColor);
-		_textInput.AddThemeColorOverride("caret_color", InkColor);
-		_textInput.AddThemeFontSizeOverride("font_size", 60);
+        _textInput.AddThemeColorOverride("font_color", InkColor);
+        _textInput.AddThemeColorOverride("caret_color", InkColor);
+        _textInput.AddThemeFontSizeOverride("font_size", 60);
 
-		_textViewport.AddChild(_textInput);
+        _textViewport.AddChild(_textInput);
 
-		_targetViewport = CreateTextViewport();
+        _targetViewport = CreateTextViewport();
 
-		_targetLabel = new Label
-		{
-			Position = new Vector2(40, 40),
-			Size = new Vector2(920, 620),
-			AutowrapMode = TextServer.AutowrapMode.WordSmart
-		};
+        _targetLabel = new Label
+        {
+            Position = new Vector2(40, 40),
+            Size = new Vector2(920, 620),
+            AutowrapMode = TextServer.AutowrapMode.WordSmart
+        };
 
-		_targetLabel.AddThemeFontSizeOverride("font_size", 60);
-		_targetLabel.AddThemeColorOverride("font_color", InkColor);
+        _targetLabel.AddThemeFontSizeOverride("font_size", 60);
+        _targetLabel.AddThemeColorOverride("font_color", InkColor);
 
-		_targetViewport.AddChild(_targetLabel);
-	}
+        _targetViewport.AddChild(_targetLabel);
+    }
 
-	private SubViewport CreateTextViewport()
-	{
-		var viewport = new SubViewport
-		{
-			Size = new Vector2I(1000, 700),
-			TransparentBg = false,
-			RenderTargetUpdateMode = SubViewport.UpdateMode.Always
-		};
+    private SubViewport CreateTextViewport()
+    {
+        var viewport = new SubViewport
+        {
+            Size = new Vector2I(1000, 700),
+            TransparentBg = false,
+            RenderTargetUpdateMode = SubViewport.UpdateMode.Always
+        };
 
-		var background = new ColorRect
-		{
-			Color = PaperColor,
-			Size = new Vector2(1000, 700)
-		};
+        var background = new ColorRect
+        {
+            Color = PaperColor,
+            Size = new Vector2(1000, 700)
+        };
 
-		AddChild(viewport);
-		viewport.AddChild(background);
+        AddChild(viewport);
+        viewport.AddChild(background);
 
-		return viewport;
-	}
+        return viewport;
+    }
 
-	private void CreateWritingSurface(
-		MeshInstance3D paper,
-		Texture2D texture)
-	{
-		var paperBox = (BoxMesh)paper.Mesh;
+    private void CreateWritingSurface(
+        MeshInstance3D paper,
+        Texture2D texture)
+    {
+        var paperBox = (BoxMesh)paper.Mesh;
 
-		var writingSurface = new MeshInstance3D
-		{
-			Mesh = new PlaneMesh
-			{
-				Size = new Vector2(
-					paperBox.Size.X,
-					paperBox.Size.Z)
-			},
-			Position = new Vector3(
-				0,
-				paperBox.Size.Y / 2f + 0.001f,
-				0),
-			MaterialOverride = new StandardMaterial3D
-			{
-				AlbedoTexture = texture,
-				ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
-				TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
-			}
-		};
+        var writingSurface = new MeshInstance3D
+        {
+            Mesh = new PlaneMesh
+            {
+                Size = new Vector2(
+                    paperBox.Size.X,
+                    paperBox.Size.Z)
+            },
+            Position = new Vector3(
+                0,
+                paperBox.Size.Y / 2f + 0.001f,
+                0),
+            MaterialOverride = new StandardMaterial3D
+            {
+                AlbedoTexture = texture,
+                ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
+                TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
+            }
+        };
 
-		paper.AddChild(writingSurface);
-	}
+        paper.AddChild(writingSurface);
+    }
 
-	private void StartText()
-	{
-		_targetText = _texts[_textIndex];
+    private void StartText()
+    {
+        _targetText = _texts[_textIndex];
 
-		_wordIndex = 0;
-		_currentWord = "";
-		_currentIndex = 0;
+        _wordIndex = 0;
+        _currentWord = "";
+        _currentIndex = 0;
 
-		_textInput.Text = "";
-		_targetLabel.Text = _targetText;
-	}
+        _textInput.Text = "";
+        _targetLabel.Text = _targetText;
+    }
 
-	private void FinishWord()
-	{
-		var targetWords = _targetText.Split(' ');
+    private void FinishWord()
+    {
+        var targetWords = _targetText.Split(' ');
 
-		if (_wordIndex < targetWords.Length)
-		{
-			if (_currentWord == targetWords[_wordIndex])
-				_correctWords++;
+        if (_wordIndex < targetWords.Length)
+        {
+            if (_currentWord == targetWords[_wordIndex])
+                _correctWords++;
 
-			_totalWords++;
-		}
+            _totalWords++;
+        }
 
-		_wordIndex++;
-		_currentWord = "";
-	}
+        _wordIndex++;
+        _currentWord = "";
+    }
 
-	private void FinishText()
-	{
-		if (_currentWord.Length > 0)
-			FinishWord();
+    private void FinishText()
+    {
+        if (_currentWord.Length > 0)
+            FinishWord();
 
-		GD.Print($"Text {_textIndex + 1} finished.");
-		GD.Print($"Score: {_correctWords}/{_totalWords}");
+        GD.Print($"Text {_textIndex + 1} finished.");
+        GD.Print($"Score: {_correctWords}/{_totalWords}");
 
-		if (_textIndex + 1 < _texts.Length)
-		{
-			_textIndex++;
-			StartText();
-		}
-		else
-		{
-			FinishGame();
-		}
-	}
+        if (_textIndex + 1 < _texts.Length)
+        {
+            _textIndex++;
+            StartText();
+        }
+        else
+        {
+            FinishGame();
+        }
+    }
 
-	public override void _Input(InputEvent @event)
-	{
-		if (_gameFinished)
-			return;
+    public override void _Input(InputEvent @event)
+    {
+        if (_gameFinished)
+            return;
 
-		if (@event is not InputEventKey keyEvent ||
-			!keyEvent.Pressed ||
-			keyEvent.Echo)
-		{
-			return;
-		}
+        if (@event is not InputEventKey keyEvent ||
+            !keyEvent.Pressed ||
+            keyEvent.Echo)
+        {
+            return;
+        }
 
-		if (keyEvent.Keycode is Key.Backspace or Key.Delete)
-		{
-			GetViewport().SetInputAsHandled();
-			return;
-		}
+        if (keyEvent.Keycode is Key.Backspace or Key.Delete)
+        {
+            GetViewport().SetInputAsHandled();
+            return;
+        }
 
-		if (keyEvent.Unicode == 0)
-			return;
+        if (keyEvent.Unicode == 0)
+            return;
 
-		var character = char.ConvertFromUtf32(
-			(int)keyEvent.Unicode);
+        var character = char.ConvertFromUtf32(
+            (int)keyEvent.Unicode);
 
-		if (_currentIndex >= _targetText.Length)
-			return;
+        if (_currentIndex >= _targetText.Length)
+            return;
 
-		if (character == " ")
-		{
-			FinishWord();
+        if (character == " ")
+        {
+            FinishWord();
 
-			_textViewport.PushInput(@event);
-			_currentIndex++;
-		}
-		else
-		{
-			_currentWord += character;
+            _textViewport.PushInput(@event);
+            _currentIndex++;
+        }
+        else
+        {
+            _currentWord += character;
 
-			_textViewport.PushInput(@event);
-			_currentIndex++;
+            _textViewport.PushInput(@event);
+            _currentIndex++;
 
-			if (_currentIndex == _targetText.Length)
-				FinishText();
-		}
+            if (_currentIndex == _targetText.Length)
+                FinishText();
+        }
 
-		GetViewport().SetInputAsHandled();
-	}
+        GetViewport().SetInputAsHandled();
+    }
 }

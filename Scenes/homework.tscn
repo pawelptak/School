@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dejs5miilg3oh" path="res://Scripts/Homework.cs" id="1_gyrdu"]
 [ext_resource type="PackedScene" uid="uid://b8iec05o1hrno" path="res://Scenes/bench.tscn" id="1_vapn8"]
 [ext_resource type="PackedScene" uid="uid://cy2rcfad227ui" path="res://Scenes/notebook.tscn" id="2_gyrdu"]
+[ext_resource type="PackedScene" uid="uid://b6e213j4mo55p" path="res://Scenes/popup.tscn" id="2_ofhnx"]
 [ext_resource type="PackedScene" uid="uid://y2itf3b2yk3w" path="res://Scenes/timer.tscn" id="4_ya72l"]
 
 [sub_resource type="Environment" id="Environment_vapn8"]
@@ -32,3 +33,5 @@ transform = Transform3D(0.9927932, 0, 0.11983993, 0, 1, 0, -0.11983993, 0, 0.992
 environment = SubResource("Environment_vapn8")
 
 [node name="Timer" parent="." unique_id=399202004 instance=ExtResource("4_ya72l")]
+
+[node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("2_ofhnx")]
