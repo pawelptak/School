@@ -77,14 +77,14 @@ transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.
 transform = Transform3D(0.99824804, 0, 0.05916829, 0, 1, 0, -0.05916829, 0, 0.99824804, -3.5811396, 0, -2.6097665)
 
 [node name="Chair2" parent="." unique_id=662460025 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5811396, 0, -2.252252)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5811396, 0, -2.4630153)
 collision_mask = 1
 
 [node name="Desk3" parent="." unique_id=319635515 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -2.6097665)
 
 [node name="Chair3" parent="." unique_id=1827209728 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(0.9952714, 0, 0.097133175, 0, 1, 0, -0.097133175, 0, 0.9952714, 1.310907, 0, -2.156345)
+transform = Transform3D(0.9952714, 0, 0.097133175, 0, 1, 0, -0.097133175, 0, 0.9952714, 1.310907, 0, -2.3303323)
 collision_mask = 1
 
 [node name="Chair13" parent="." unique_id=498573374 groups=["chairs"] instance=ExtResource("4_mh8we")]
@@ -98,25 +98,25 @@ transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.
 transform = Transform3D(0.9986891, 0, -0.05118739, 0, 1, 0, 0.05118739, 0, 0.9986891, -3.5811396, 0, 2.0312047)
 
 [node name="Chair11" parent="." unique_id=981332455 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, -3.5811396, 1.8204558, 2.265734)
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, -3.5811396, 1.5179498, 2.265734)
 collision_mask = 1
 
 [node name="Desk12" parent="." unique_id=1885447156 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, 2.0312047)
 
 [node name="Chair12" parent="." unique_id=189132677 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(0.9952714, 0, 0.097133175, 0, 1, 0, -0.097133175, 0, 0.9952714, 1.310907, 0, 2.4846263)
+transform = Transform3D(0.9952714, 0, 0.097133175, 0, 1, 0, -0.097133175, 0, 0.9952714, 1.310907, 0, 2.3151703)
 collision_mask = 1
 
 [node name="Chair14" parent="." unique_id=1616135801 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(0.99811, 0, -0.061455105, 0, 1, 0, 0.061455105, 0, 0.99811, -1.2104882, 0, 2.3939064)
+transform = Transform3D(0.99811, 0, -0.061455105, 0, 1, 0, 0.061455105, 0, 0.99811, -1.2104882, 0, 2.2814207)
 collision_mask = 1
 
 [node name="Desk4" parent="." unique_id=1818997483 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(0.99884886, 0, 0.047968436, 0, 1, 0, -0.047968436, 0, 0.99884886, -0.9617218, 0, -0.33565062)
 
 [node name="Chair4" parent="." unique_id=186145847 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, 0.04377979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -0.06167662)
 collision_mask = 1
 
 [node name="Desk5" parent="." unique_id=385217726 instance=ExtResource("3_6v6cd")]
@@ -130,28 +130,28 @@ collision_mask = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -0.26238602)
 
 [node name="Chair6" parent="." unique_id=1786291844 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -0.00055247545)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, 0.04455352)
 collision_mask = 1
 
 [node name="Desk7" parent="." unique_id=1633584090 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -5.065106)
 
 [node name="Chair7" parent="." unique_id=633354446 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -4.2651057)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -4.8651447)
 collision_mask = 1
 
 [node name="Desk8" parent="." unique_id=2001969534 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(0.9961684, 0, 0.087456055, 0, 1, 0, -0.087456055, 0, 0.9961684, -3.5811396, 0, -5.065106)
 
 [node name="Chair8" parent="." unique_id=379411025 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(0.9494173, 0, -0.31401712, 0, 1, 0, 0.31401712, 0, 0.9494173, -3.5811396, 0, -4.635276)
+transform = Transform3D(0.9494173, 0, -0.31401712, 0, 1, 0, 0.31401712, 0, 0.9494173, -3.5811396, 0, -4.8146815)
 collision_mask = 1
 
 [node name="Desk9" parent="." unique_id=202158330 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -5.065106)
 
 [node name="Chair9" parent="." unique_id=1614511557 groups=["chairs"] instance=ExtResource("4_mh8we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -4.2651057)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -4.8216734)
 collision_mask = 1
 
 [node name="Blackboard" parent="." unique_id=1589772872 instance=ExtResource("5_kppql")]

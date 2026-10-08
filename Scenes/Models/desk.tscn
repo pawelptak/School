@@ -5,17 +5,31 @@ albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 material = SubResource("StandardMaterial3D_28tt4")
-size = Vector3(1.4, 0.12, 0.7)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r42xq"]
-albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_4xgl2"]
-material = SubResource("StandardMaterial3D_r42xq")
-size = Vector3(0.1, 1, 0.1)
+size = Vector3(1.5, 0.03, 0.7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
-size = Vector3(1.3653564, 1.0587158, 0.7069702)
+size = Vector3(1.4998779, 0.03036499, 0.7069702)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al31o"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_al31o")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2m13q"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_al31o"]
+material = SubResource("StandardMaterial3D_2m13q")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.036071777, 1, 1)
 
 [node name="Desk" type="RigidBody3D" unique_id=1876954106]
 mass = 10.0
@@ -24,22 +38,38 @@ mass = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Leg1" type="MeshInstance3D" parent="." unique_id=91813332]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.5, -0.25)
-mesh = SubResource("BoxMesh_4xgl2")
-
-[node name="Leg2" type="MeshInstance3D" parent="." unique_id=64934783]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.5, -0.25)
-mesh = SubResource("BoxMesh_4xgl2")
-
-[node name="Leg3" type="MeshInstance3D" parent="." unique_id=98599366]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.5, 0.25)
-mesh = SubResource("BoxMesh_4xgl2")
-
-[node name="Leg4" type="MeshInstance3D" parent="." unique_id=1983657170]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.5, 0.25)
-mesh = SubResource("BoxMesh_4xgl2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=657075191]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011291504, 0.5293579, 0.00088500977)
+[node name="DesktopCollision" type="CollisionShape3D" parent="." unique_id=657075191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00048828125, 1.0006256, 0.00088500977)
 shape = SubResource("BoxShape3D_crm6m")
+
+[node name="MetalLeg1" type="MeshInstance3D" parent="." unique_id=1593373094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.5, -0.25)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="MetalLeg2" type="MeshInstance3D" parent="." unique_id=1909510920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.5, 0.2502699)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Horizontal1" type="MeshInstance3D" parent="." unique_id=1459153137]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.6, 0.7329254, 0.0049586296)
+mesh = SubResource("CylinderMesh_al31o")
+
+[node name="MetalLeg3" type="MeshInstance3D" parent="." unique_id=2014194846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6021613, 0.5, -0.25)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="MetalLeg4" type="MeshInstance3D" parent="." unique_id=2095315919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6021613, 0.5, 0.2502699)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Horizontal2" type="MeshInstance3D" parent="." unique_id=1878664581]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.6021613, 0.7329254, 0.0049586296)
+mesh = SubResource("CylinderMesh_al31o")
+
+[node name="CollisionShapeLegs1" type="CollisionShape3D" parent="." unique_id=286340490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6008666, 0.5, 0.047)
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="CollisionShapeLegs2" type="CollisionShape3D" parent="." unique_id=1043861971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5970161, 0.5, 0.047)
+shape = SubResource("BoxShape3D_lc5oj")
