@@ -3,154 +3,176 @@ using System;
 
 public partial class CutsceneController : Node
 {
-	private Player _player;
-	private DialogueUI _dialogueUI;
+    private Camera3D _camera;
+    private Player _player;
+    private DialogueUI _dialogueUI;
 
-	private Vector3 _originalCameraPosition;
-	private Vector3 _originalCameraRotation;
+    private Vector3 _originalCameraPosition;
+    private Vector3 _originalCameraRotation;
 
-	private bool _cinematicDialogueActive;
+    private bool _cinematicDialogueActive;
 
-	public event Action CinematicDialogueFinished;
+    public bool IsDialogueVisible => _dialogueUI.Visible;
 
-	public override void _Ready()
-	{
-		_player = GetTree().CurrentScene.GetNode<Player>("Player");
-		_dialogueUI = GetTree().CurrentScene.GetNode<DialogueUI>("DialogueUI");
+    public event Action DialogueFinished;
+    public event Action CinematicDialogueFinished;
 
-		_dialogueUI.DialogueFinished += OnDialogueFinished;
-	}
+    public override void _Ready()
+    {
+        _dialogueUI = GetNode<DialogueUI>("DialogueUI");
+        _dialogueUI.DialogueFinished += OnDialogueFinished;
+    }
 
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (!@event.IsActionPressed("interact"))
-			return;
+    public void SetCamera(Camera3D camera)
+    {
+        _camera = camera;
+    }
 
-		if (!_dialogueUI.IsVisible())
-			return;
+    public void SetPlayer(Player player)
+    {
+        _player = player;
+    }
 
-		_dialogueUI.NextMessage();
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (_dialogueUI == null)
+            return;
 
-		GetViewport().SetInputAsHandled();
-	}
+        if (!@event.IsActionPressed("interact"))
+            return;
 
-	public void StartDialogue(
-		Node3D character,
-		DialogueLine[] messages,
-		bool cinematic = false
-	)
-	{
-		_cinematicDialogueActive = cinematic;
+        if (!_dialogueUI.IsVisible())
+            return;
 
-		_dialogueUI.ShowDialogue(messages);
+        GetViewport().SetInputAsHandled();
 
-		if (!cinematic)
-			return;
+        _dialogueUI.NextMessage();
+    }
 
-		_player.MovementLocked = true;
-		_player.CameraLocked = true;
+    public void StartDialogue(
+        Node3D character,
+        DialogueLine[] messages,
+        bool cinematic = false,
+        Action onFinished = null)
+    {
+        _dialogueUI.ShowDialogue(messages, onFinished);
 
-		var camera = _player.GetNode<Camera3D>("Camera3D");
+        if (!cinematic)
+            return;
 
-		_originalCameraPosition = camera.GlobalPosition;
-		_originalCameraRotation = camera.GlobalRotation;
+        _cinematicDialogueActive = true;
 
-		var lookAtPoint =
-			character.GetNodeOrNull<Marker3D>("DialogueLookAtPoint");
+        if (_player != null)
+        {
+            _player.MovementLocked = true;
+            _player.CameraLocked = true;
+        }
 
-		if (lookAtPoint == null)
-		{
-			GD.PrintErr(
-				$"Nie znaleziono DialogueLookAtPoint w {character.Name}!"
-			);
+        _originalCameraPosition = _camera.GlobalPosition;
+        _originalCameraRotation = _camera.GlobalRotation;
 
-			return;
-		}
+        var lookAtPoint =
+            character.GetNodeOrNull<Marker3D>("DialogueLookAtPoint");
 
-		var directionFromCharacterToPlayer =
-			_player.GlobalPosition - character.GlobalPosition;
+        if (lookAtPoint == null)
+        {
+            GD.PrintErr(
+                $"Nie znaleziono DialogueLookAtPoint w {character.Name}!"
+            );
 
-		directionFromCharacterToPlayer.Y = 0;
+            return;
+        }
 
-		if (directionFromCharacterToPlayer.LengthSquared() == 0)
-		{
-			GD.PrintErr("Gracz i rozmówca są w tej samej pozycji.");
-			return;
-		}
+        var directionFromCharacterToCamera =
+            _camera.GlobalPosition - character.GlobalPosition;
 
-		directionFromCharacterToPlayer =
-			directionFromCharacterToPlayer.Normalized();
+        directionFromCharacterToCamera.Y = 0;
 
-		var targetPosition =
-			character.GlobalPosition
-			+ directionFromCharacterToPlayer * 0.9f;
+        if (directionFromCharacterToCamera.LengthSquared() == 0)
+        {
+            GD.PrintErr(
+                "Kamera i rozmówca są w tej samej pozycji."
+            );
 
-		targetPosition.Y = lookAtPoint.GlobalPosition.Y;
+            return;
+        }
 
-		var targetRotation = camera.GlobalTransform
-			.LookingAt(
-				lookAtPoint.GlobalPosition,
-				Vector3.Up
-			)
-			.Basis
-			.GetEuler();
+        directionFromCharacterToCamera =
+            directionFromCharacterToCamera.Normalized();
 
-		var tween = CreateTween();
+        var targetPosition =
+            character.GlobalPosition
+            + directionFromCharacterToCamera * 0.9f;
 
-		tween.SetParallel();
+        targetPosition.Y = lookAtPoint.GlobalPosition.Y;
 
-		tween.TweenProperty(
-			camera,
-			"global_position",
-			targetPosition,
-			0.4
-		);
+        var targetRotation = _camera.GlobalTransform
+            .LookingAt(
+                lookAtPoint.GlobalPosition,
+                Vector3.Up
+            )
+            .Basis
+            .GetEuler();
 
-		tween.TweenProperty(
-			camera,
-			"global_rotation",
-			targetRotation,
-			0.4
-		);
-	}
+        var tween = CreateTween();
 
-	private void OnDialogueFinished()
-	{
-		if (!_cinematicDialogueActive)
-			return;
+        tween.SetParallel();
 
-		_cinematicDialogueActive = false;
+        tween.TweenProperty(
+            _camera,
+            "global_position",
+            targetPosition,
+            0.4
+        );
 
-		var camera = _player.GetNode<Camera3D>("Camera3D");
+        tween.TweenProperty(
+            _camera,
+            "global_rotation",
+            targetRotation,
+            0.4
+        );
+    }
 
-		var tween = CreateTween();
+    private void OnDialogueFinished()
+    {
+        DialogueFinished?.Invoke();
 
-		tween.SetParallel();
+        if (!_cinematicDialogueActive)
+            return;
 
-		tween.TweenProperty(
-			camera,
-			"global_position",
-			_originalCameraPosition,
-			0.4
-		);
+        _cinematicDialogueActive = false;
 
-		tween.TweenProperty(
-			camera,
-			"global_rotation",
-			_originalCameraRotation,
-			0.4
-		);
+        var tween = CreateTween();
 
-		tween.SetParallel(false);
+        tween.SetParallel();
 
-		tween.TweenCallback(
-			Callable.From(() =>
-			{
-				_player.MovementLocked = false;
-				_player.CameraLocked = false;
+        tween.TweenProperty(
+            _camera,
+            "global_position",
+            _originalCameraPosition,
+            0.4
+        );
 
-				CinematicDialogueFinished?.Invoke();
-			})
-		);
-	}
+        tween.TweenProperty(
+            _camera,
+            "global_rotation",
+            _originalCameraRotation,
+            0.4
+        );
+
+        tween.SetParallel(false);
+
+        tween.TweenCallback(
+            Callable.From(() =>
+            {
+                if (_player != null)
+                {
+                    _player.MovementLocked = false;
+                    _player.CameraLocked = false;
+                }
+
+                CinematicDialogueFinished?.Invoke();
+            })
+        );
+    }
 }

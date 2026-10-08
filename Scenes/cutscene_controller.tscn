@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://bq6q8gni7pbng" path="res://Scripts/CutsceneController.cs" id="1_controller"]
+[ext_resource type="PackedScene" uid="uid://c4et2c2f253u4" path="res://Scenes/dialogue_ui.tscn" id="2_dialogue"]
+
+[node name="CutsceneController" type="Node"]
+script = ExtResource("1_controller")
+
+[node name="DialogueUI" parent="." instance=ExtResource("2_dialogue")]

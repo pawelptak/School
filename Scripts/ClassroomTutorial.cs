@@ -10,11 +10,15 @@ public partial class ClassroomTutorial : Node3D
     private bool _doorObjectiveActive;
     private Node3D _door;
 
+
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
         _player = GetNode<Player>("Player");
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
+        _cutsceneController.SetPlayer(_player);
+        _cutsceneController.SetCamera(_player.GetNode<Camera3D>("Camera3D"));
+
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _backpack = GetNode<Backpack>("Backpack");
         _door = GetNode<Node3D>("Door");

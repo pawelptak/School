@@ -7,6 +7,7 @@ public partial class Homework : Node3D
 
     private SubViewport _targetViewport;
     private Label _targetLabel;
+    private CutsceneController _cutsceneController;
 
     private readonly string[] _texts =
     {
@@ -27,11 +28,12 @@ public partial class Homework : Node3D
     private int _correctWords;
     private int _totalWords;
 
-    private const double GameDuration = 60.0;
+    private const double GameDuration = 10.0; // 60 be default
     private double _timeRemaining;
     private bool _gameFinished;
     private double _score;
 
+    private Control _timerElement;
     private RichTextLabel _timerLabel;
 
     public override void _Ready()
@@ -43,6 +45,9 @@ public partial class Homework : Node3D
         var popupText = GetNode<RichTextLabel>("Popup/Panel/MarginContainer/VBoxContainer/Text");
         popupHeader.Text = HomeworkMinigameText.PopupHeader;
         popupText.Text = HomeworkMinigameText.PopupText;
+
+        _cutsceneController = GetNode<CutsceneController>("CutsceneController");
+        _cutsceneController.SetCamera(GetNode<Camera3D>("Camera3D"));
 
         CreateTextViewports();
 
@@ -58,7 +63,8 @@ public partial class Homework : Node3D
 
         _timeRemaining = GameDuration;
 
-        _timerLabel = GetNode<RichTextLabel>("Timer/MarginContainer/VBoxContainer/Time");
+        _timerElement = GetNode<Control>("Timer");
+        _timerLabel = _timerElement.GetNode<RichTextLabel>("MarginContainer/VBoxContainer/Time");
         _timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
     }
 
@@ -91,6 +97,28 @@ public partial class Homework : Node3D
         GD.Print("Game finished!");
         GD.Print($"Final score: {_correctWords}/{_totalWords}");
         GD.Print($"Score: {_score:P0}");
+
+        _timerElement.Hide();
+        StartEndCutscene();
+    }
+
+    private void StartEndCutscene()
+    {
+        _cutsceneController.StartDialogue(
+            GetNode<Node3D>("Mate"),
+            new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    HomeworkMinigameText.MateEndCutscene
+                )
+            },
+            true,
+            () =>
+            {
+                GetTree().ChangeSceneToFile("res://Scenes/polish_class.tscn");
+            }
+        );
     }
 
     private void CreateTextViewports()

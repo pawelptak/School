@@ -3,7 +3,7 @@ using System;
 
 public partial class Mate : InteractableCharacter
 {
-    private DialogueUI _dialogueUI;
+    private CutsceneController _cutsceneController;
 
     private bool _waitingForDoorObjective;
 
@@ -13,17 +13,17 @@ public partial class Mate : InteractableCharacter
     {
         base._Ready();
 
-        _dialogueUI = GetTree().CurrentScene.GetNode<DialogueUI>("DialogueUI");
+        _cutsceneController = GetTree().CurrentScene.GetNode<CutsceneController>("CutsceneController");
 
         HitByThrowable += OnHitByThrowable;
-        _dialogueUI.DialogueFinished += OnDialogueFinished;
+        _cutsceneController.DialogueFinished += OnDialogueFinished;
     }
 
     private void OnHitByThrowable(float throwForce)
     {
         if (throwForce < 15.0f)
         {
-            _dialogueUI.ShowDialogue(new DialogueLine[]
+            _cutsceneController.StartDialogue(this, new DialogueLine[]
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
@@ -36,7 +36,7 @@ public partial class Mate : InteractableCharacter
 
         _waitingForDoorObjective = true;
 
-        _dialogueUI.ShowDialogue(new DialogueLine[]
+        _cutsceneController.StartDialogue(this, new DialogueLine[]
         {
             new DialogueLine(
                 DialogueSpeaker.Mate,

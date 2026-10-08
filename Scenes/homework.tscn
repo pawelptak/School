@@ -5,10 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://cy2rcfad227ui" path="res://Scenes/notebook.tscn" id="2_gyrdu"]
 [ext_resource type="PackedScene" uid="uid://b6e213j4mo55p" path="res://Scenes/popup.tscn" id="2_ofhnx"]
 [ext_resource type="PackedScene" uid="uid://y2itf3b2yk3w" path="res://Scenes/timer.tscn" id="4_ya72l"]
+[ext_resource type="PackedScene" uid="uid://deotq436qbdtj" path="res://Scenes/mate.tscn" id="6_c1par"]
+[ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_hd6nd"]
 
 [sub_resource type="Environment" id="Environment_vapn8"]
 ambient_light_source = 2
 ambient_light_color = Color(0.9501192, 0.9501192, 0.9501191, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+size = Vector3(30, 0.5, 30)
 
 [node name="Homework" type="Node3D" unique_id=579107592]
 script = ExtResource("1_gyrdu")
@@ -35,3 +40,14 @@ environment = SubResource("Environment_vapn8")
 [node name="Timer" parent="." unique_id=399202004 instance=ExtResource("4_ya72l")]
 
 [node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("2_ofhnx")]
+
+[node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_c1par")]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.1493435, -2.312602, 3.4158916)
+
+[node name="CutsceneController" parent="." unique_id=1251273715 instance=ExtResource("7_hd6nd")]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=504603449]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=2114366534]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8066146, 0)
+mesh = SubResource("BoxMesh_lc5oj")

@@ -3,13 +3,13 @@ using Godot;
 public partial class Corridor1 : Node3D
 {
     private Mate _mate;
-    private DialogueUI _dialogueUI;
+    private CutsceneController _cutsceneController;
     private ObjectiveMarker _objectiveMarker;
 
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
-        _dialogueUI = GetNode<DialogueUI>("DialogueUI");
+        _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
     }
 
@@ -18,7 +18,7 @@ public partial class Corridor1 : Node3D
         if (!@event.IsActionPressed("interact"))
             return;
 
-        if (_dialogueUI.IsVisible())
+        if (_cutsceneController.IsDialogueVisible)
             return;
 
         if (!_mate.PlayerInRange)
@@ -32,7 +32,8 @@ public partial class Corridor1 : Node3D
 
     private void StartMateDialogue()
     {
-        _dialogueUI.ShowDialogue(
+        _cutsceneController.StartDialogue(
+            _mate,
             new DialogueLine[]
             {
             new DialogueLine(
@@ -60,7 +61,7 @@ public partial class Corridor1 : Node3D
                 Corridor1Text.MatePlayerResponse2
             )
             },
-            StartHomeworkMinigame
+            onFinished: StartHomeworkMinigame
         );
     }
 
