@@ -1,14 +1,99 @@
 [gd_scene format=3 uid="uid://d31o1hqaujmd4"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
+size = Vector3(0.05, 2, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ag4mv"]
+size = Vector3(0.05, 2, 0.12)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vyh3o"]
-albedo_color = Color(0.013200001, 0.22, 0.17519332, 1)
+albedo_color = Color(0.08579681, 0.21824148, 0.09732529, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 material = SubResource("StandardMaterial3D_vyh3o")
-size = Vector3(5, 2, 0.12)
+size = Vector3(3.5, 2, 0.12)
 
-[node name="blackboard" type="Node3D" unique_id=1589772872]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4mh8"]
+albedo_color = Color(0.08627451, 0.21960784, 0.09803922, 1)
 
-[node name="board" type="MeshInstance3D" parent="." unique_id=88474617]
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_l4mh8")
+size = Vector3(1.5, 2, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2pvo"]
+size = Vector3(1.5, 2, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lvy05"]
+size = Vector3(3.5, 0.02, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ury2d"]
+size = Vector3(3.5, 0.02, 0.3)
+
+[node name="Blackboard" type="Node3D" unique_id=1589772872]
+
+[node name="HingeLeft" type="StaticBody3D" parent="." unique_id=1453054124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7566558, 1.7, 0.0096517205)
+
+[node name="HingeJointLeft" type="HingeJoint3D" parent="HingeLeft" unique_id=168752935]
+transform = Transform3D(0.9593141, 0.28234145, -1.23415385e-08, 0, -4.371139e-08, -1.0000001, -0.28234148, 0.959314, -4.193295e-08, 0.010997772, 0.09239483, 0.0133879185)
+node_a = NodePath("..")
+node_b = NodePath("../../SideboardLeft")
+angular_limit/upper = -0.54803336
+angular_limit/lower = -1.001819
+
+[node name="HingeLeft" type="MeshInstance3D" parent="HingeLeft" unique_id=1972715012]
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HingeLeft" unique_id=415403691]
+shape = SubResource("BoxShape3D_ag4mv")
+
+[node name="HingeRight" type="StaticBody3D" parent="." unique_id=347414191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7346724, 1.7, 0.0096517205)
+
+[node name="HingeJointRight" type="HingeJoint3D" parent="HingeRight" unique_id=1150105551]
+transform = Transform3D(0.9593141, 0.28234145, -1.23415385e-08, 0, -4.371139e-08, -1.0000001, -0.28234148, 0.959314, -4.193295e-08, 0.010997772, 0.09239483, 0.0133879185)
+node_a = NodePath("..")
+node_b = NodePath("../../SideboardRight")
+angular_limit/upper = -0.54803336
+angular_limit/lower = -1.001819
+
+[node name="HingeRight" type="MeshInstance3D" parent="HingeRight" unique_id=1855587661]
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HingeRight" unique_id=247387123]
+shape = SubResource("BoxShape3D_ag4mv")
+
+[node name="Board" type="MeshInstance3D" parent="." unique_id=88474617]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 mesh = SubResource("BoxMesh_crm6m")
+
+[node name="SideboardLeft" type="RigidBody3D" parent="." unique_id=1141642004]
+transform = Transform3D(0.9593746, 0, 0.28213587, 0, 1, 0, -0.28213587, 0, 0.9593746, -2.8640416, 1.7, -1.1404978)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideboardLeft" unique_id=2065714736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SideboardLeft" unique_id=1499814563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
+shape = SubResource("BoxShape3D_b2pvo")
+
+[node name="SideboardRight" type="RigidBody3D" parent="." unique_id=811829417]
+transform = Transform3D(0.8220513, 0, 0.5694137, 0, 1, 0, -0.5694137, 0, 0.8220513, 0.35526168, 1.7, -0.701517)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideboardRight" unique_id=1631832133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SideboardRight" unique_id=279457118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
+shape = SubResource("BoxShape3D_b2pvo")
+
+[node name="Shelf" type="StaticBody3D" parent="." unique_id=1482161452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7065687, 0.17683685)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shelf" unique_id=71096460]
+shape = SubResource("BoxShape3D_lvy05")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Shelf" unique_id=1376240108]
+mesh = SubResource("BoxMesh_ury2d")

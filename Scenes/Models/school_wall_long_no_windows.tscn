@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b0aeb8lptgoi4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
+albedo_color = Color(0.6117647, 0.74509805, 0.18431373, 1)
+
+[node name="SchoolWall" type="Node3D" unique_id=1370939349]
+
+[node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
+use_collision = true
+size = Vector3(15, 4, 0.5)
+material = SubResource("StandardMaterial3D_lc5oj")

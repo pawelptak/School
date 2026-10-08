@@ -8,4 +8,5 @@ public static class TutorialText
     public const string MateThrowAgain = "Jeszcze raz. Mocniej! Przytrzymaj [color=#77777d]{0}[/color] aby naładować rzut.";
     public const string MateThrowGood = "Ała, jak mnie wszystko boli!";
     public const string MateGoToDoor = "Jeśli już się obudziłeś, podejdź do [color=#d10412]drzwi[/color], bo spóźnimy się na polski.";
+    public const string MateThrowWrongItem = "Nie tym! Plecakiem!";
 }

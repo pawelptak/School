@@ -15,5 +15,10 @@ public partial class ThrowableObject : RigidBody3D
 	private void OnBodyEntered(Node body)
 	{
 		GD.Print($"Throwable hit: {body.Name}");
+
+		if (body is InteractableCharacter character)
+		{
+			character.NotifyHitByThrowable(this, ThrowForce);
+		}
 	}
 }

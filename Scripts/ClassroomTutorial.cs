@@ -23,7 +23,7 @@ public partial class ClassroomTutorial : Node3D
         _backpack = GetNode<Backpack>("Backpack");
         _door = GetNode<Node3D>("Door");
 
-        _mate.GoToDoor += OnGoToDoor;
+        _mate.HitReactionOverride = TryHandleMateHit;
 
         _objectiveMarker.Hide();
 
@@ -94,6 +94,64 @@ public partial class ClassroomTutorial : Node3D
         EnableBackpackCollisions();
 
         _objectiveMarker.Hide();
+    }
+
+    private bool TryHandleMateHit(ThrowableObject throwable, float throwForce)
+    {
+        if (throwable != _backpack)
+        {
+            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateThrowWrongItem
+                )
+            });
+
+            return true;
+        }
+
+        if (_doorObjectiveActive)
+            return false;
+
+        if (throwForce < 15.0f)
+        {
+            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    string.Format(TutorialText.MateThrowAgain, "LPM")
+                )
+            });
+
+            return true;
+        }
+
+        _cutsceneController.StartDialogue(
+            _mate,
+            new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateThrowGood
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateGoToDoor
+                )
+            },
+            onFinished: OnGoToDoor
+        );
+
+        return true;
+    }
+
+    public override void _ExitTree()
+    {
+        if (GodotObject.IsInstanceValid(_mate))
+        {
+            _mate.HitReactionOverride = null;
+        }
     }
 
     private void OnGoToDoor()
