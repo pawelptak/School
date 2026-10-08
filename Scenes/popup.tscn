@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://2yl0d0ao6ap0" path="res://Scripts/Popup.cs" id="1_2nprw"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qml6d"]
+bg_color = Color(0.10872076, 0.10872077, 0.10872071, 1)
+
+[sub_resource type="Theme" id="Theme_kksav"]
+
 [node name="Popup" type="Control" unique_id=1416079734]
 layout_mode = 3
 anchors_preset = 15
@@ -49,6 +54,7 @@ horizontal_alignment = 1
 [node name="Text" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer" unique_id=1050312440]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 fit_content = true
 

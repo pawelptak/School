@@ -39,6 +39,11 @@ public partial class Homework : Node3D
         var playerPaper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
         var matePaper = GetNode<MeshInstance3D>("MateNotebook/PaperRight");
 
+        var popupHeader = GetNode<Label>("Popup/Panel/MarginContainer/VBoxContainer/Header");
+        var popupText = GetNode<RichTextLabel>("Popup/Panel/MarginContainer/VBoxContainer/Text");
+        popupHeader.Text = HomeworkMinigameText.PopupHeader;
+        popupText.Text = HomeworkMinigameText.PopupText;
+
         CreateTextViewports();
 
         CreateWritingSurface(
