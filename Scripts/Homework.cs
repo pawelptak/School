@@ -10,9 +10,9 @@ public partial class Homework : Node3D
 
     private readonly string[] _texts =
     {
-        "The quick brown fox jumps over the lazy dog.",
-        "A small bird landed on the old wooden fence.",
-        "The weather outside was cold but surprisingly pleasant."
+        HomeworkMinigameText.Text1,
+        HomeworkMinigameText.Text2,
+        HomeworkMinigameText.Text3
     };
 
     private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
@@ -27,7 +27,7 @@ public partial class Homework : Node3D
     private int _correctWords;
     private int _totalWords;
 
-    private const double GameDuration = 10.0;
+    private const double GameDuration = 60.0;
     private double _timeRemaining;
     private bool _gameFinished;
     private double _score;
@@ -271,10 +271,10 @@ public partial class Homework : Node3D
 
             _textInput.InsertTextAtCaret(character);
             _currentIndex++;
-
-            if (_currentIndex == _targetText.Length)
-                FinishText();
         }
+
+        if (_currentIndex == _targetText.Length)
+            FinishText();
 
         GetViewport().SetInputAsHandled();
     }
