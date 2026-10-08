@@ -2,153 +2,238 @@ using Godot;
 
 public partial class Homework : Node3D
 {
-    private SubViewport _textViewport;
-    private TextEdit _textInput;
+	private SubViewport _textViewport;
+	private TextEdit _textInput;
 
-    private readonly string[] _texts =
-    {
-        "The quick brown fox jumps over the lazy dog.",
-        "A small bird landed on the old wooden fence.",
+	private SubViewport _targetViewport;
+	private Label _targetLabel;
+
+	private readonly string[] _texts =
+	{
+		"The quick brown fox jumps over the lazy dog.",
+		"A small bird landed on the old wooden fence.",
         "The weather outside was cold but surprisingly pleasant."
-    };
+	};
 
-    private int _textIndex;
-    private string _targetText = "";
-    private int _wordIndex;
-    private string _currentWord = "";
-    private int _currentIndex;
+	private int _textIndex;
+	private string _targetText = "";
+	private int _wordIndex;
+	private string _currentWord = "";
+	private int _currentIndex;
 
-    private int _correctWords;
-    private int _totalWords;
+	private int _correctWords;
+	private int _totalWords;
 
-    public override void _Ready()
-    {
-        var paper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
-        _textViewport = GetNode<SubViewport>("UI/TextViewport");
-        _textInput = GetNode<TextEdit>("UI/TextViewport/TextInput");
+	public override void _Ready()
+	{
+		var playerPaper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
+		var matePaper = GetNode<MeshInstance3D>("MateNotebook/PaperRight");
 
-        var paperBox = (BoxMesh)paper.Mesh;
+		CreateTextViewports();
 
-        var writingSurface = new MeshInstance3D
-        {
-            Mesh = new PlaneMesh
-            {
-                Size = new Vector2(paperBox.Size.X, paperBox.Size.Z)
-            },
-            Position = new Vector3(
-                0,
-                paperBox.Size.Y / 2f + 0.001f,
-                0
-            ),
-            MaterialOverride = new StandardMaterial3D
-            {
-                AlbedoTexture = _textViewport.GetTexture(),
-                ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
-                TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
-            }
-        };
+		CreateWritingSurface(
+			playerPaper,
+			_textViewport.GetTexture());
 
-        paper.AddChild(writingSurface);
+		CreateWritingSurface(
+			matePaper,
+			_targetViewport.GetTexture());
 
-        StartText();
-        _textInput.GrabFocus();
-    }
+		StartText();
 
-    private void StartText()
-    {
-        _targetText = _texts[_textIndex];
+		_textInput.GrabFocus();
+	}
 
-        _wordIndex = 0;
-        _currentWord = "";
-        _currentIndex = 0;
+	private static readonly Color PaperColor = new(0.9882218f, 0.9882218f, 0.9882218f, 1);
+	private static readonly Color InkColor = new(0.05f, 0.1f, 0.4f, 1);
 
-        _textInput.Text = "";
-    }
+	private void CreateTextViewports()
+	{
+		_textViewport = CreateTextViewport();
 
-    private void FinishWord()
-    {
-        var targetWords = _targetText.Split(' ');
+		_textInput = new TextEdit
+		{
+			Position = new Vector2(40, 40),
+			Size = new Vector2(920, 620)
+		};
 
-        if (_wordIndex < targetWords.Length)
-        {
-            if (_currentWord == targetWords[_wordIndex])
-                _correctWords++;
+		_textInput.AddThemeStyleboxOverride(
+			"normal",
+			new StyleBoxEmpty());
 
-            _totalWords++;
-        }
+		_textInput.AddThemeStyleboxOverride(
+			"focus",
+			new StyleBoxEmpty());
 
-        _wordIndex++;
-        _currentWord = "";
-    }
+		_textInput.AddThemeColorOverride("font_color", InkColor);
+		_textInput.AddThemeColorOverride("caret_color", InkColor);
+		_textInput.AddThemeFontSizeOverride("font_size", 32);
 
-    private void FinishText()
-    {
-        if (_currentWord.Length > 0)
-            FinishWord();
+		_textViewport.AddChild(_textInput);
 
-        GD.Print($"Text {_textIndex + 1} finished.");
-        GD.Print($"Score: {_correctWords}/{_totalWords}");
+		_targetViewport = CreateTextViewport();
 
-        if (_textIndex + 1 < _texts.Length)
-        {
-            _textIndex++;
-            StartText();
-        }
-        else
-        {
-            GD.Print("All texts finished!");
-            GD.Print($"Final score: {_correctWords}/{_totalWords}");
-        }
-    }
+		_targetLabel = new Label
+		{
+			Position = new Vector2(40, 40),
+			Size = new Vector2(920, 620),
+			AutowrapMode = TextServer.AutowrapMode.WordSmart
+		};
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is not InputEventKey keyEvent ||
-            !keyEvent.Pressed ||
-            keyEvent.Echo)
-        {
-            return;
-        }
+		_targetLabel.AddThemeFontSizeOverride(
+			"font_size",
+			32);
 
-        if (keyEvent.Keycode is Key.Backspace or Key.Delete)
-        {
-            GetViewport().SetInputAsHandled();
-            return;
-        }
+		_targetLabel.AddThemeColorOverride("font_color", InkColor);
 
-        if (keyEvent.Unicode == 0)
-            return;
+		_targetViewport.AddChild(_targetLabel);
+	}
 
-        var character = char.ConvertFromUtf32((int)keyEvent.Unicode);
+	private SubViewport CreateTextViewport()
+	{
+		var viewport = new SubViewport
+		{
+			Size = new Vector2I(1000, 700),
+			TransparentBg = false,
+			RenderTargetUpdateMode = SubViewport.UpdateMode.Always
+		};
 
-        if (_currentIndex >= _targetText.Length)
-            return;
+		// Opaque paper-colored background so the ink text is readable on the 3D mesh.
+		var background = new ColorRect
+		{
+			Color = PaperColor,
+			Size = new Vector2(1000, 700)
+		};
 
-        if (character == " ")
-        {
-            FinishWord();
+		AddChild(viewport);
+		viewport.AddChild(background);
 
-            _textViewport.PushInput(@event);
-            _currentIndex++;
-        }
-        else
-        {
-            _currentWord += character;
+		return viewport;
+	}
 
-            _textViewport.PushInput(@event);
-            _currentIndex++;
+	private void CreateWritingSurface(
+		MeshInstance3D paper,
+		Texture2D texture)
+	{
+		var paperBox = (BoxMesh)paper.Mesh;
 
-            if (_currentIndex == _targetText.Length)
-            {
-                FinishText();
-            }
-        }
+		var writingSurface = new MeshInstance3D
+		{
+			Mesh = new PlaneMesh
+			{
+				Size = new Vector2(
+					paperBox.Size.X,
+					paperBox.Size.Z)
+			},
+			Position = new Vector3(
+				0,
+				paperBox.Size.Y / 2f + 0.001f,
+				0),
+			MaterialOverride = new StandardMaterial3D
+			{
+				AlbedoTexture = texture,
+				ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
+				TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
+			}
+		};
 
-        GD.Print(
-            $"Text: {_textIndex + 1}/{_texts.Length}, " +
-            $"Words: {_correctWords}/{_totalWords}"
-        );
+		paper.AddChild(writingSurface);
+	}
 
-        GetViewport().SetInputAsHandled();
-    }
+	private void StartText()
+	{
+		_targetText = _texts[_textIndex];
+
+		_wordIndex = 0;
+		_currentWord = "";
+		_currentIndex = 0;
+
+		_textInput.Text = "";
+		_targetLabel.Text = _targetText;
+	}
+
+	private void FinishWord()
+	{
+		var targetWords = _targetText.Split(' ');
+
+		if (_wordIndex < targetWords.Length)
+		{
+			if (_currentWord == targetWords[_wordIndex])
+				_correctWords++;
+
+			_totalWords++;
+		}
+
+		_wordIndex++;
+		_currentWord = "";
+	}
+
+	private void FinishText()
+	{
+		if (_currentWord.Length > 0)
+			FinishWord();
+
+		GD.Print($"Text {_textIndex + 1} finished.");
+		GD.Print($"Score: {_correctWords}/{_totalWords}");
+
+		if (_textIndex + 1 < _texts.Length)
+		{
+			_textIndex++;
+			StartText();
+		}
+		else
+		{
+			GD.Print("All texts finished!");
+			GD.Print($"Final score: {_correctWords}/{_totalWords}");
+		}
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is not InputEventKey keyEvent ||
+			!keyEvent.Pressed ||
+			keyEvent.Echo)
+		{
+			return;
+		}
+
+		if (keyEvent.Keycode is Key.Backspace or Key.Delete)
+		{
+			GetViewport().SetInputAsHandled();
+			return;
+		}
+
+		if (keyEvent.Unicode == 0)
+			return;
+
+		var character = char.ConvertFromUtf32(
+			(int)keyEvent.Unicode);
+
+		if (_currentIndex >= _targetText.Length)
+			return;
+
+		if (character == " ")
+		{
+			FinishWord();
+
+			_textViewport.PushInput(@event);
+			_currentIndex++;
+		}
+		else
+		{
+			_currentWord += character;
+
+			_textViewport.PushInput(@event);
+			_currentIndex++;
+
+			if (_currentIndex == _targetText.Length)
+				FinishText();
+		}
+
+		GD.Print(
+			$"Text: {_textIndex + 1}/{_texts.Length}, " +
+			$"Words: {_correctWords}/{_totalWords}");
+
+		GetViewport().SetInputAsHandled();
+	}
 }

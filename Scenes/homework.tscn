@@ -8,13 +8,6 @@
 ambient_light_source = 2
 ambient_light_color = Color(0.9501192, 0.9501192, 0.9501191, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_paper"]
-content_margin_left = 40.0
-content_margin_top = 40.0
-content_margin_right = 40.0
-content_margin_bottom = 40.0
-bg_color = Color(0.9882218, 0.9882218, 0.9882218, 1)
-
 [node name="Homework" type="Node3D" unique_id=579107592]
 script = ExtResource("1_gyrdu")
 
@@ -36,19 +29,3 @@ transform = Transform3D(0.9927932, 0, 0.11983993, 0, 1, 0, -0.11983993, 0, 0.992
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1683120153]
 environment = SubResource("Environment_vapn8")
-
-[node name="UI" type="CanvasLayer" parent="." unique_id=1823544098]
-
-[node name="TextViewport" type="SubViewport" parent="UI" unique_id=1105274133]
-size = Vector2i(1000, 1400)
-render_target_update_mode = 4
-
-[node name="TextInput" type="TextEdit" parent="UI/TextViewport" unique_id=1837174223]
-offset_right = 1000.0
-offset_bottom = 1400.0
-theme_override_colors/caret_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0.05, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 48
-theme_override_styles/normal = SubResource("StyleBoxFlat_paper")
-theme_override_styles/focus = SubResource("StyleBoxFlat_paper")
-wrap_mode = 1
