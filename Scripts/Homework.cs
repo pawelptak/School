@@ -56,11 +56,9 @@ public partial class Homework : Node3D
 
         StartText();
 
-        _textInput.GrabFocus();
-
         _timeRemaining = GameDuration;
 
-        _timerLabel = GetNode<RichTextLabel>("Timer/Panel/Label");
+        _timerLabel = GetNode<RichTextLabel>("Timer/MarginContainer/VBoxContainer/Time");
         _timerLabel.Text = $"{Mathf.CeilToInt((float)_timeRemaining)}";
     }
 
@@ -141,6 +139,7 @@ public partial class Homework : Node3D
         {
             Size = new Vector2I(1000, 700),
             TransparentBg = false,
+            GuiDisableInput = false,
             RenderTargetUpdateMode = SubViewport.UpdateMode.Always
         };
 
@@ -263,14 +262,14 @@ public partial class Homework : Node3D
         {
             FinishWord();
 
-            _textViewport.PushInput(@event);
+            _textInput.InsertTextAtCaret(character);
             _currentIndex++;
         }
         else
         {
             _currentWord += character;
 
-            _textViewport.PushInput(@event);
+            _textInput.InsertTextAtCaret(character);
             _currentIndex++;
 
             if (_currentIndex == _targetText.Length)

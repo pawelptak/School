@@ -13,7 +13,7 @@ public partial class DialogueUI : Control
 
 	public override void _Ready()
 	{
-		_text = GetNode<RichTextLabel>("Panel/Text");
+		_text = GetNode<RichTextLabel>("MarginContainer/Text");
 
 		Hide();
 	}

@@ -11,32 +11,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_njptv")
 
-[node name="Panel" type="Panel" parent="." unique_id=2140505228]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1444319854]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -236.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 100
 
-[node name="Text" type="RichTextLabel" parent="Panel" unique_id=114454460]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = -80.0
-offset_right = 50.0
-offset_bottom = -45.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Text" type="RichTextLabel" parent="MarginContainer" unique_id=114454460]
+layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
-theme_override_font_sizes/normal_font_size = 26
-theme_override_font_sizes/bold_font_size = 26
-theme_override_font_sizes/bold_italics_font_size = 26
-theme_override_font_sizes/italics_font_size = 26
-theme_override_font_sizes/mono_font_size = 26
+theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "Hey, you're finally awake!"
+fit_content = true
+horizontal_alignment = 1
