@@ -4,6 +4,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24m23"]
 albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
+roughness = 0.7
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 material = SubResource("StandardMaterial3D_24m23")
@@ -11,6 +12,7 @@ size = Vector3(0.45, 0.01, 0.45)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58eu7"]
 albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
+roughness = 0.7
 
 [sub_resource type="BoxMesh" id="BoxMesh_hwk1f"]
 material = SubResource("StandardMaterial3D_58eu7")
@@ -35,7 +37,7 @@ height = 1.000205
 material = SubResource("StandardMaterial3D_u3w50")
 top_radius = 0.015
 bottom_radius = 0.015
-height = 0.5101123
+height = 0.5415906
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_re0kw"]
 material = SubResource("StandardMaterial3D_u3w50")
@@ -72,11 +74,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19050276, 0.48260254, 0.19
 mesh = SubResource("CylinderMesh_ytk5l")
 
 [node name="MetalLeg2" type="MeshInstance3D" parent="." unique_id=773642910]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19147187, 0.23755616, -0.22569835)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19147187, 0.2532953, -0.22569835)
 mesh = SubResource("CylinderMesh_udww1")
 
-[node name="MetalLeg4" type="MeshInstance3D" parent="." unique_id=2045892364]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19182804, 0.23755616, -0.22569835)
+[node name="MetalLeg3" type="MeshInstance3D" parent="." unique_id=1022416701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19169384, 0.2532953, -0.22569835)
 mesh = SubResource("CylinderMesh_udww1")
 
 [node name="Horizontal2" type="MeshInstance3D" parent="." unique_id=392055712]

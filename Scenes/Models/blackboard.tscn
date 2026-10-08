@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://d31o1hqaujmd4"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ag4mv"]
+albedo_color = Color(0.5796909, 0.57969093, 0.57969093, 1)
+metallic = 0.63
+roughness = 0.5
+
 [sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
+material = SubResource("StandardMaterial3D_ag4mv")
 size = Vector3(0.05, 2, 0.12)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ag4mv"]
@@ -8,6 +14,7 @@ size = Vector3(0.05, 2, 0.12)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vyh3o"]
 albedo_color = Color(0.08579681, 0.21824148, 0.09732529, 1)
+roughness = 0.95
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 material = SubResource("StandardMaterial3D_vyh3o")
@@ -15,6 +22,7 @@ size = Vector3(3.5, 2, 0.12)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4mh8"]
 albedo_color = Color(0.08627451, 0.21960784, 0.09803922, 1)
+roughness = 0.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
 material = SubResource("StandardMaterial3D_l4mh8")
@@ -26,7 +34,13 @@ size = Vector3(1.5, 2, 0.12)
 [sub_resource type="BoxShape3D" id="BoxShape3D_lvy05"]
 size = Vector3(3.5, 0.02, 0.3)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2pvo"]
+albedo_color = Color(0.5796909, 0.57969093, 0.57969093, 1)
+metallic = 0.63
+roughness = 0.5
+
 [sub_resource type="BoxMesh" id="BoxMesh_ury2d"]
+material = SubResource("StandardMaterial3D_b2pvo")
 size = Vector3(3.5, 0.02, 0.3)
 
 [node name="Blackboard" type="Node3D" unique_id=1589772872]

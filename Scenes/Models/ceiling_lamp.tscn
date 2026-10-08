@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://l2htoujkdksf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhauk"]
+albedo_color = Color(0.46358675, 0.46358675, 0.4635867, 1)
+metallic = 1.0
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_lhauk")
+size = Vector3(1.5, 0.2, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhauk"]
+size = Vector3(1.45, 0.15, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.45490196)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.45
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(1.4848633, 0.20080566, 0.29882813)
+
+[node name="CeilingLamp" type="StaticBody3D" unique_id=2054856090]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=326638305]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGMesh3D" unique_id=1272209376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.053072765, 0)
+operation = 2
+mesh = SubResource("BoxMesh_lhauk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2061078933]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, -0.057960957)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=973080756]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0.05417332)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=29101220]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5442118, -0.071903765, -0.053792104)
+light_energy = 0.3
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1700799993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4017831, -0.071903765, -0.053792104)
+light_energy = 0.3
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="." unique_id=1161696693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5442118, -0.071903765, 0.063309)
+light_energy = 0.3
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=405038740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031656906, -0.071903765, -0.053792104)
+light_energy = 0.3
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="." unique_id=893289908]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031656906, -0.071903765, 0.063309)
+light_energy = 0.3
+
+[node name="OmniLight3D8" type="OmniLight3D" parent="." unique_id=213314036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4017831, -0.071903765, 0.063309)
+light_energy = 0.3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1005847510]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0007324219, -0.0005493164, 0)
+shape = SubResource("BoxShape3D_lc5oj")

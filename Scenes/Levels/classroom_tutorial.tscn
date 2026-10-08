@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://be2b1m6kw8mwa" path="res://Scripts/ClassroomTutorial.cs" id="1_obcr2"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Models/player.tscn" id="1_ubwdy"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Models/desk.tscn" id="3_6v6cd"]
+[ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="3_o1t7o"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Models/chair.tscn" id="4_mh8we"]
 [ext_resource type="PackedScene" uid="uid://d31o1hqaujmd4" path="res://Scenes/Models/blackboard.tscn" id="5_kppql"]
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/Models/door.tscn" id="6_7gvyr"]
@@ -14,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c0of6gx3us0y3" path="res://Scenes/Models/school_wall_short_no_windows.tscn" id="13_yl8jl"]
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Models/sponge.tscn" id="14_o1t7o"]
 [ext_resource type="PackedScene" uid="uid://b0aeb8lptgoi4" path="res://Scenes/Models/school_wall_long_no_windows.tscn" id="14_yl8jl"]
+[ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/Models/ceiling_lamp.tscn" id="16_ineom"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dm2mn"]
 
@@ -23,18 +25,31 @@ sky_material = SubResource("ProceduralSkyMaterial_dm2mn")
 [sub_resource type="Environment" id="Environment_4xgl2"]
 background_mode = 2
 background_color = Color(0, 0, 0.9529412, 1)
+background_energy_multiplier = 1.3
 sky = SubResource("Sky_tfknm")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
 size = Vector3(10, 0.2, 14.840332)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfknm"]
-albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
-roughness = 0.8
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ineom"]
+albedo_color = Color(0.7401941, 0.48289847, 0.38338232, 1)
+albedo_texture = ExtResource("3_o1t7o")
+uv1_scale = Vector3(30, 30, 30)
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
-material = SubResource("StandardMaterial3D_tfknm")
+material = SubResource("StandardMaterial3D_ineom")
 size = Vector3(10, 0.2, 14.806641)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o1t7o"]
+size = Vector3(10.840698, 0.2, 16.588501)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfknm"]
+albedo_color = Color(0.7553861, 0.7553861, 0.7553859, 1)
+uv1_scale = Vector3(30, 30, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ineom"]
+material = SubResource("StandardMaterial3D_tfknm")
+size = Vector3(10.927612, 0.2, 15.665039)
 
 [node name="ClassroomTutorial" type="Node3D" unique_id=513644933]
 script = ExtResource("1_obcr2")
@@ -47,6 +62,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9547435, 1, -3.5710135)
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=404113648]
 transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 0, 0)
+visible = false
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1601597096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
@@ -61,14 +77,14 @@ mesh = SubResource("BoxMesh_crm6m")
 
 [node name="Ceiling" type="StaticBody3D" parent="." unique_id=1842022159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20393014, 2.8039978, 0)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1228032805]
-shape = SubResource("BoxShape3D_crm6m")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42034912, 1.0904305, -2.3483276)
+shape = SubResource("BoxShape3D_o1t7o")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=1355936309]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.084506035, 0, 0)
-mesh = SubResource("BoxMesh_crm6m")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5483122, 1.1099396, -2.7475586)
+mesh = SubResource("BoxMesh_ineom")
 
 [node name="Desk1" parent="." unique_id=273984774 instance=ExtResource("3_6v6cd")]
 transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.99984455, -0.9617218, 0, -2.6097665)
@@ -185,3 +201,12 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.20
 
 [node name="Sponge" parent="." unique_id=2001215072 instance=ExtResource("14_o1t7o")]
 transform = Transform3D(-0.036327273, 0, 0.99933994, 0, 1, 0, -0.99933994, 0, -0.036327273, -0.73456186, 1.3890588, -9.307571)
+
+[node name="CeilingLamp" parent="." unique_id=2054856090 instance=ExtResource("16_ineom")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, 0.958)
+
+[node name="CeilingLamp2" parent="." unique_id=1688870385 instance=ExtResource("16_ineom")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -1.9950695)
+
+[node name="CeilingLamp3" parent="." unique_id=604195323 instance=ExtResource("16_ineom")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.127489)

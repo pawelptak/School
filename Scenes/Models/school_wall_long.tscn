@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dd0hc6ejo10hf"]
 
+[ext_resource type="PackedScene" uid="uid://b0yy1fck4hgwx" path="res://Scenes/Models/window.tscn" id="1_5ei54"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
 albedo_color = Color(0.6117647, 0.74509805, 0.18431373, 1)
 
@@ -42,3 +44,12 @@ mesh = SubResource("BoxMesh_lc5oj")
 [node name="Sill3" type="CSGMesh3D" parent="Wall" unique_id=824426762]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5698023, -1.0829448, -0.12042189)
 mesh = SubResource("BoxMesh_u3w50")
+
+[node name="Window" parent="." unique_id=1580759604 instance=ExtResource("1_5ei54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.595652, 0.21705484, 0.06655908)
+
+[node name="Window2" parent="." unique_id=1049691620 instance=ExtResource("1_5ei54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12795919, 0.21705484, 0.06655908)
+
+[node name="Window3" parent="." unique_id=2056835693 instance=ExtResource("1_5ei54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.511522, 0.21705484, 0.06655908)
