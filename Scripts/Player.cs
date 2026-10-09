@@ -1,4 +1,3 @@
-
 using Godot;
 using System;
 
@@ -29,6 +28,7 @@ public partial class Player : CharacterBody3D
     private const float ThrowChargeSpeed = 15.0f;
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
+    private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
 
     public override void _Ready()
     {
@@ -137,7 +137,7 @@ public partial class Player : CharacterBody3D
         if (_heldObject == null)
             return;
 
-        _heldObject.GlobalPosition = _holdPoint.GlobalPosition;
+        _heldObject.GlobalPosition = GetSafeHoldPosition();
 
         if (Input.IsActionJustPressed("throw"))
         {
@@ -254,6 +254,10 @@ public partial class Player : CharacterBody3D
 
         _heldObject = body;
 
+        _heldObjectExclusions.Clear();
+        _heldObjectExclusions.Add(GetRid());
+        _heldObjectExclusions.Add(body.GetRid());
+
         _heldCollisionLayer = body.CollisionLayer;
         _heldCollisionMask = body.CollisionMask;
 
@@ -279,6 +283,7 @@ public partial class Player : CharacterBody3D
         _heldObject.CollisionMask = _heldCollisionMask | 2;
         _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
 
+        _heldObjectExclusions.Clear();
         _heldObject = null;
 
         ResetChargeBar();
@@ -293,6 +298,7 @@ public partial class Player : CharacterBody3D
         _heldObject.CollisionLayer = _heldCollisionLayer;
         _heldObject.CollisionMask = _heldCollisionMask;
 
+        _heldObjectExclusions.Clear();
         _heldObject = null;
 
         ResetChargeBar();
@@ -324,5 +330,62 @@ public partial class Player : CharacterBody3D
             pushDirection = pushDirection.Normalized();
             rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
         }
+    }
+
+
+
+    private Vector3 GetSafeHoldPosition()
+    {
+        Vector3 origin = _camera.GlobalPosition;
+        Vector3 target = _holdPoint.GlobalPosition;
+        Vector3 motion = target - _heldObject.GlobalPosition;
+
+        if (motion.LengthSquared() < 0.000001f)
+            return _heldObject.GlobalPosition;
+
+        var spaceState = GetWorld3D().DirectSpaceState;
+        var shapes = _heldObject.FindChildren(
+            "*",
+            "CollisionShape3D",
+            true,
+            false
+        );
+
+        float safeFraction = 1.0f;
+
+        foreach (Node node in shapes)
+        {
+            var collisionShape = node as CollisionShape3D;
+
+            if (collisionShape == null ||
+                collisionShape.Shape == null ||
+                collisionShape.Disabled)
+            {
+                continue;
+            }
+
+            Transform3D relativeTransform =
+                _heldObject.GlobalTransform.AffineInverse()
+                * collisionShape.GlobalTransform;
+
+            var query = new PhysicsShapeQueryParameters3D
+            {
+                Shape = collisionShape.Shape,
+                Transform = new Transform3D(
+                    _heldObject.GlobalBasis,
+                    _heldObject.GlobalPosition
+                ) * relativeTransform,
+                Motion = motion,
+                CollisionMask = 1,
+                Exclude = _heldObjectExclusions
+            };
+
+            var result = spaceState.CastMotion(query);
+            safeFraction = Mathf.Min(safeFraction, result[0]);
+        }
+
+        safeFraction = Mathf.Max(0.0f, safeFraction - 0.02f);
+
+        return _heldObject.GlobalPosition + motion * safeFraction;
     }
 }
