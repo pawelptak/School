@@ -27,6 +27,8 @@ public partial class Player : CharacterBody3D
     private const float MinThrowForce = 5.0f;
     private const float MaxThrowForce = 20.0f;
     private const float ThrowChargeSpeed = 15.0f;
+    private CanvasLayer _throwChargeBarCanvas;
+    private ProgressBar _throwChargeBar;
 
     public override void _Ready()
     {
@@ -39,6 +41,10 @@ public partial class Player : CharacterBody3D
         _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
 
         _interactionLabel.Hide();
+
+        _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
+        _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
+        _throwChargeBarCanvas.Hide();
     }
 
     public override void _Input(InputEvent @event)
@@ -134,7 +140,10 @@ public partial class Player : CharacterBody3D
         _heldObject.GlobalPosition = _holdPoint.GlobalPosition;
 
         if (Input.IsActionJustPressed("throw"))
+        {
             _throwCharge = MinThrowForce;
+            _throwChargeBarCanvas.Show();
+        }
 
         if (Input.IsActionPressed("throw"))
         {
@@ -144,6 +153,14 @@ public partial class Player : CharacterBody3D
                 ThrowChargeSpeed * (float)delta
             );
         }
+
+        float chargePercent = Mathf.InverseLerp(
+            MinThrowForce,
+            MaxThrowForce,
+            _throwCharge
+        ) * 100.0f;
+
+        _throwChargeBar.Value = chargePercent;
 
         if (Input.IsActionJustReleased("throw"))
             ThrowObject();
@@ -251,10 +268,10 @@ public partial class Player : CharacterBody3D
 
     private void ThrowObject()
     {
-        var throwDirection = -_camera.GlobalTransform.Basis.Z;
-
         if (_heldObject == null)
             return;
+
+        var throwDirection = -_camera.GlobalTransform.Basis.Z;
 
         _heldObject.ThrowForce = _throwCharge;
         _heldObject.Freeze = false;
@@ -263,7 +280,8 @@ public partial class Player : CharacterBody3D
         _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
 
         _heldObject = null;
-        _throwCharge = 0;
+
+        ResetChargeBar();
     }
 
     private void DropObject()
@@ -276,7 +294,16 @@ public partial class Player : CharacterBody3D
         _heldObject.CollisionMask = _heldCollisionMask;
 
         _heldObject = null;
+
+        ResetChargeBar();
+    }
+
+    private void ResetChargeBar()
+    {
         _throwCharge = 0;
+        _throwChargeBar.Value = 0;
+        _throwChargeBarCanvas.Hide();
+
     }
 
     private void PushRigidBodies()

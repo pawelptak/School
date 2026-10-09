@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ctmaby078nvnr"]
+
+[node name="ThrowChargeBar" type="CanvasLayer" unique_id=520721496]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=149225536]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 80
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer" unique_id=579657668]
+layout_mode = 2
+offset_transform_position = Vector2(150, 0)
