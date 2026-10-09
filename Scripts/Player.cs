@@ -222,15 +222,15 @@ public partial class Player : CharacterBody3D
         if (_currentInteractable == null)
             return;
 
-        if (_currentInteractable is GodotObject obj
-            && !GodotObject.IsInstanceValid(obj))
+        var interactable = _currentInteractable;
+
+        if (!interactable.CanInteract(this))
             return;
 
-        if (!_currentInteractable.CanInteract(this))
-            return;
+        _currentInteractable = null;
+        _interactionLabel.Hide();
 
-        _currentInteractable.Interact(this);
-        UpdateInteractionTarget();
+        interactable.Interact(this);
     }
 
     public bool TryPickup(ThrowableObject body)

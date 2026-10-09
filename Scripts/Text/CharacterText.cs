@@ -4,5 +4,5 @@ public static class CharacterText
     public const string PlayerName = "Ty";
     public const string MateName = "Łysy";
 
-    public const string MateHitByObject = "Ej, uważaj! Nie rzucaj we mnie tym!";
+    public const string MateHitByObject = "Co ty odwalasz?!";
 }
