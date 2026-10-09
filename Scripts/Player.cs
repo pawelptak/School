@@ -29,6 +29,7 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
     private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
+    private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
 
     public override void _Ready()
     {
@@ -254,6 +255,15 @@ public partial class Player : CharacterBody3D
 
         _heldObject = body;
 
+        _heldShapes.Clear();
+        foreach (Node node in body.FindChildren("*", "CollisionShape3D", true, false))
+        {
+            if (node is CollisionShape3D shape && shape.Shape != null && !shape.Disabled)
+            {
+                _heldShapes.Add(shape);
+            }
+        }
+
         _heldObjectExclusions.Clear();
         _heldObjectExclusions.Add(GetRid());
         _heldObjectExclusions.Add(body.GetRid());
@@ -284,6 +294,7 @@ public partial class Player : CharacterBody3D
         _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
 
         _heldObjectExclusions.Clear();
+        _heldShapes.Clear();
         _heldObject = null;
 
         ResetChargeBar();
@@ -299,6 +310,7 @@ public partial class Player : CharacterBody3D
         _heldObject.CollisionMask = _heldCollisionMask;
 
         _heldObjectExclusions.Clear();
+        _heldShapes.Clear();
         _heldObject = null;
 
         ResetChargeBar();
@@ -309,7 +321,6 @@ public partial class Player : CharacterBody3D
         _throwCharge = 0;
         _throwChargeBar.Value = 0;
         _throwChargeBarCanvas.Hide();
-
     }
 
     private void PushRigidBodies()
@@ -332,37 +343,21 @@ public partial class Player : CharacterBody3D
         }
     }
 
-
-
     private Vector3 GetSafeHoldPosition()
     {
-        Vector3 origin = _camera.GlobalPosition;
         Vector3 target = _holdPoint.GlobalPosition;
         Vector3 motion = target - _heldObject.GlobalPosition;
 
-        if (motion.LengthSquared() < 0.000001f)
+        if (motion.LengthSquared() < 0.000001f || _heldShapes.Count == 0)
             return _heldObject.GlobalPosition;
 
         var spaceState = GetWorld3D().DirectSpaceState;
-        var shapes = _heldObject.FindChildren(
-            "*",
-            "CollisionShape3D",
-            true,
-            false
-        );
-
         float safeFraction = 1.0f;
 
-        foreach (Node node in shapes)
+        foreach (var collisionShape in _heldShapes)
         {
-            var collisionShape = node as CollisionShape3D;
-
-            if (collisionShape == null ||
-                collisionShape.Shape == null ||
-                collisionShape.Disabled)
-            {
+            if (!GodotObject.IsInstanceValid(collisionShape) || collisionShape.Disabled)
                 continue;
-            }
 
             Transform3D relativeTransform =
                 _heldObject.GlobalTransform.AffineInverse()
@@ -376,7 +371,7 @@ public partial class Player : CharacterBody3D
                     _heldObject.GlobalPosition
                 ) * relativeTransform,
                 Motion = motion,
-                CollisionMask = 1,
+                CollisionMask = _heldCollisionMask != 0 ? _heldCollisionMask : 1,
                 Exclude = _heldObjectExclusions
             };
 
