@@ -197,14 +197,24 @@ public partial class Player : CharacterBody3D
 
     private void UpdateLabelPosition(IInteractable interactable)
     {
-        if (interactable is not Node3D node || !GodotObject.IsInstanceValid(node))
+        if (interactable is not Node3D node ||
+            !GodotObject.IsInstanceValid(node))
         {
             _interactionLabel.Hide();
             return;
         }
 
-        _interactionLabel.GlobalPosition =
-            node.GlobalPosition + interactable.PromptOffset;
+        float eyeHeight = _camera.GlobalPosition.Y;
+        float objectHeight = node.GlobalPosition.Y
+            + interactable.PromptOffset.Y;
+
+        float labelHeight = Mathf.Min(objectHeight, eyeHeight);
+
+        _interactionLabel.GlobalPosition = new Vector3(
+            node.GlobalPosition.X + interactable.PromptOffset.X,
+            labelHeight,
+            node.GlobalPosition.Z + interactable.PromptOffset.Z
+        );
     }
 
     private void TryInteract()
