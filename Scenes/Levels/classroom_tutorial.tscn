@@ -179,7 +179,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.86
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24127889, 1.0094546, -5.2589436)
 
 [node name="Backpack" parent="." unique_id=499470510 instance=ExtResource("9_ubwdy")]
-transform = Transform3D(0.35656482, 0, 0.9342706, 0, 1, 0, -0.9342706, 0, 0.35656482, 2.6167233, 0.55296457, -4.2305717)
+transform = Transform3D(0.35656482, 0, 0.9342706, 0, 1, 0, -0.9342706, 0, 0.35656482, 2.6167233, 0.58765507, -4.2305717)
 
 [node name="ObjectiveMarker" parent="." unique_id=1928698264 instance=ExtResource("12_me4gt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5921943, 1.5567296, -4.2117515)

@@ -49,10 +49,14 @@ albedo_color = Color(0.55561996, 0.55561996, 0.55561996, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_acjc1"]
 material = SubResource("StandardMaterial3D_tplbe")
+size = Vector3(0.4, 0.01, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ln4h4"]
+material = SubResource("StandardMaterial3D_tplbe")
 size = Vector3(0.3, 0.01, 0.01)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
-size = Vector3(0.5588379, 0.80249023, 0.35375977)
+size = Vector3(0.5588379, 0.80249023, 0.41467285)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4xgl2"]
 size = Vector3(0.8, 1.2, 0.6)
@@ -115,8 +119,12 @@ mesh = SubResource("BoxMesh_tplbe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20335029, -0.090240665)
 mesh = SubResource("BoxMesh_acjc1")
 
+[node name="Zipper2" type="CSGMesh3D" parent="CSGMesh3D" unique_id=929604629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28115064, 0.18025783)
+mesh = SubResource("BoxMesh_ln4h4")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=66918632]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13117674, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13117674, -0.030456543)
 shape = SubResource("BoxShape3D_crm6m")
 
 [node name="PickupArea" type="Area3D" parent="." unique_id=1948668651]
@@ -126,15 +134,16 @@ visible = false
 shape = SubResource("BoxShape3D_4xgl2")
 
 [node name="PinJoint3D" type="PinJoint3D" parent="." unique_id=1900996853]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13888632, 0.0861397, -0.20794997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1310485, 0.08713076, -0.19661109)
 node_a = NodePath("..")
 node_b = NodePath("../RigidBody3D")
+params/impulse_clamp = 16.22
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1248963853]
-transform = Transform3D(1, 0, 0, 0, 0.9999145, -0.013072714, 0, 0.013072714, 0.9999145, -0.13964355, 0.06745638, -0.20471911)
+transform = Transform3D(1, 0, 0, 0, 0.9999145, -0.013072714, 0, 0.013072714, 0.9999145, -0.13407479, 0.059346393, -0.18822953)
 
 [node name="ZipHolder" type="CSGMesh3D" parent="RigidBody3D" unique_id=395890117]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.0000004, 9.313226e-10, 0, -9.313226e-10, 1.0000004, 0, -5.5782497e-05, -0.00426659)
 mesh = SubResource("PrismMesh_ln4h4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1983731609]
