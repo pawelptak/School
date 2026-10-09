@@ -3,16 +3,14 @@
 [ext_resource type="Script" uid="uid://cryi8o067e3oh" path="res://Scripts/Chair.cs" id="1_nsp1p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24m23"]
-albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
-roughness = 0.7
+albedo_color = Color(0.7721103, 0.50792676, 0.20979738, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 material = SubResource("StandardMaterial3D_24m23")
 size = Vector3(0.45, 0.01, 0.45)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58eu7"]
-albedo_color = Color(0.58, 0.37158668, 0.13340001, 1)
-roughness = 0.7
+albedo_color = Color(0.77254903, 0.50980395, 0.20784314, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hwk1f"]
 material = SubResource("StandardMaterial3D_58eu7")

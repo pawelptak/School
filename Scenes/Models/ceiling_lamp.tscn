@@ -45,26 +45,32 @@ mesh = SubResource("CylinderMesh_lc5oj")
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=29101220]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5442118, -0.071903765, -0.053792104)
+visible = false
 light_energy = 0.3
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1700799993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4017831, -0.071903765, -0.053792104)
+visible = false
 light_energy = 0.3
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="." unique_id=1161696693]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5442118, -0.071903765, 0.063309)
+visible = false
 light_energy = 0.3
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=405038740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031656906, -0.071903765, -0.053792104)
+visible = false
 light_energy = 0.3
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="." unique_id=893289908]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031656906, -0.071903765, 0.063309)
+visible = false
 light_energy = 0.3
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="." unique_id=213314036]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4017831, -0.071903765, 0.063309)
+visible = false
 light_energy = 0.3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1005847510]
