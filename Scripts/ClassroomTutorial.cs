@@ -2,191 +2,191 @@ using Godot;
 
 public partial class ClassroomTutorial : Node3D
 {
-	private Mate _mate;
-	private Player _player;
-	private CutsceneController _cutsceneController;
-	private ObjectiveMarker _objectiveMarker;
-	private Backpack _backpack;
-	private bool _doorObjectiveActive;
-	private Node3D _door;
+    private Mate _mate;
+    private Player _player;
+    private CutsceneController _cutsceneController;
+    private ObjectiveMarker _objectiveMarker;
+    private Backpack _backpack;
+    private bool _doorObjectiveActive;
+    private Node3D _door;
 
 
-	public override void _Ready()
-	{
-		_mate = GetNode<Mate>("Mate");
-		_player = GetNode<Player>("Player");
-		_cutsceneController = GetNode<CutsceneController>("CutsceneController");
-		_cutsceneController.SetPlayer(_player);
-		_cutsceneController.SetCamera(_player.GetNode<Camera3D>("Camera3D"));
+    public override void _Ready()
+    {
+        _mate = GetNode<Mate>("Mate");
+        _player = GetNode<Player>("Player");
+        _cutsceneController = GetNode<CutsceneController>("CutsceneController");
+        _cutsceneController.SetPlayer(_player);
+        _cutsceneController.SetCamera(_player.GetNode<Camera3D>("Camera3D"));
 
-		_objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
-		_backpack = GetNode<Backpack>("Backpack");
-		_door = GetNode<Node3D>("Door");
+        _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
+        _backpack = GetNode<Backpack>("Backpack");
+        _door = GetNode<Node3D>("Door");
 
-		_mate.HitReactionOverride = TryHandleMateHit;
+        _mate.HitReactionOverride = TryHandleMateHit;
 
-		_objectiveMarker.Hide();
+        _objectiveMarker.Hide();
 
-		_player.ObjectPickedUp += OnObjectPickedUp;
+        _player.ObjectPickedUp += OnObjectPickedUp;
 
-		_cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
+        _cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
 
-		DisableBackpackCollisions();
+        DisableBackpackCollisions();
 
-		_cutsceneController.StartDialogue(
-			_mate,
-			new DialogueLine[]
-			{
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateWakeUp
-				),
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateLessonEnding
-				),
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateBreakEnding
-				),
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateWakeUpInstruction
-				),
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateTakeBackpackInstruction
-				)
-			},
-			true
-		);
-	}
+        _cutsceneController.StartDialogue(
+            _mate,
+            new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateWakeUp
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateLessonEnding
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateBreakEnding
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateWakeUpInstruction
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    string.Format(TutorialText.MateTakeBackpackInstruction, "LPM")
+                )
+            },
+            true
+        );
+    }
 
-	public override void _Process(double delta)
-	{
-		if (!_doorObjectiveActive)
-			return;
+    public override void _Process(double delta)
+    {
+        if (!_doorObjectiveActive)
+            return;
 
-		if (!Input.IsActionJustPressed("interact"))
-			return;
+        if (!Input.IsActionJustPressed("interact"))
+            return;
 
-		var ray = _player.GetNode<RayCast3D>("Camera3D/InteractRay");
+        var ray = _player.GetNode<RayCast3D>("Camera3D/InteractRay");
 
-		if (!ray.IsColliding())
-			return;
+        if (!ray.IsColliding())
+            return;
 
-		if (ray.GetCollider() != _door)
-			return;
+        if (ray.GetCollider() != _door)
+            return;
 
-		GetTree().ChangeSceneToFile("res://Scenes/Levels/corridor_1.tscn");
-	}
+        GetTree().ChangeSceneToFile("res://Scenes/Levels/corridor_1.tscn");
+    }
 
-	private void OnCinematicDialogueFinished()
-	{
-		_objectiveMarker.Show();
-	}
+    private void OnCinematicDialogueFinished()
+    {
+        _objectiveMarker.Show();
+    }
 
-	private void OnObjectPickedUp(ThrowableObject objectPickedUp)
-	{
-		if (objectPickedUp != _backpack)
-			return;
+    private void OnObjectPickedUp(ThrowableObject objectPickedUp)
+    {
+        if (objectPickedUp != _backpack)
+            return;
 
-		EnableBackpackCollisions();
+        EnableBackpackCollisions();
 
-		_objectiveMarker.Hide();
-	}
+        _objectiveMarker.Hide();
+    }
 
-	private bool TryHandleMateHit(ThrowableObject throwable, float throwForce)
-	{
-		if (throwable != _backpack)
-		{
-			_cutsceneController.StartDialogue(_mate, new DialogueLine[]
-			{
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateThrowWrongItem
-				)
-			});
+    private bool TryHandleMateHit(ThrowableObject throwable, float throwForce)
+    {
+        if (throwable != _backpack)
+        {
+            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateThrowWrongItem
+                )
+            });
 
-			return true;
-		}
+            return true;
+        }
 
-		if (_doorObjectiveActive)
-			return false;
+        if (_doorObjectiveActive)
+            return false;
 
-		if (throwForce < 15.0f)
-		{
-			_cutsceneController.StartDialogue(_mate, new DialogueLine[]
-			{
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					string.Format(TutorialText.MateThrowAgain, "LPM")
-				)
-			});
+        if (throwForce < 15.0f)
+        {
+            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    string.Format(TutorialText.MateThrowAgain, "LPM")
+                )
+            });
 
-			return true;
-		}
+            return true;
+        }
 
-		_cutsceneController.StartDialogue(
-			_mate,
-			new DialogueLine[]
-			{
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateThrowGood
-				),
-				new DialogueLine(
-					DialogueSpeaker.Mate,
-					TutorialText.MateGoToDoor
-				)
-			},
-			onFinished: OnGoToDoor
-		);
+        _cutsceneController.StartDialogue(
+            _mate,
+            new DialogueLine[]
+            {
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateThrowGood
+                ),
+                new DialogueLine(
+                    DialogueSpeaker.Mate,
+                    TutorialText.MateGoToDoor
+                )
+            },
+            onFinished: OnGoToDoor
+        );
 
-		return true;
-	}
+        return true;
+    }
 
-	public override void _ExitTree()
-	{
-		if (GodotObject.IsInstanceValid(_mate))
-		{
-			_mate.HitReactionOverride = null;
-		}
-	}
+    public override void _ExitTree()
+    {
+        if (GodotObject.IsInstanceValid(_mate))
+        {
+            _mate.HitReactionOverride = null;
+        }
+    }
 
-	private void OnGoToDoor()
-	{
-		_doorObjectiveActive = true;
+    private void OnGoToDoor()
+    {
+        _doorObjectiveActive = true;
 
-		_objectiveMarker.GlobalPosition =
-			_door.GlobalPosition + new Vector3(-0.5f, 1.5f, 0);
+        _objectiveMarker.GlobalPosition =
+            _door.GlobalPosition + new Vector3(-0.5f, 1.5f, 0);
 
-		_objectiveMarker.Show();
-	}
+        _objectiveMarker.Show();
+    }
 
-	private void EnableBackpackCollisions()
-	{
-		_backpack.RemoveCollisionExceptionWith(_player);
+    private void EnableBackpackCollisions()
+    {
+        _backpack.RemoveCollisionExceptionWith(_player);
 
-		foreach (var node in GetTree().GetNodesInGroup("chairs"))
-		{
-			if (node is PhysicsBody3D chair)
-			{
-				_backpack.RemoveCollisionExceptionWith(chair);
-			}
-		}
-	}
+        foreach (var node in GetTree().GetNodesInGroup("chairs"))
+        {
+            if (node is PhysicsBody3D chair)
+            {
+                _backpack.RemoveCollisionExceptionWith(chair);
+            }
+        }
+    }
 
-	private void DisableBackpackCollisions()
-	{
-		_backpack.AddCollisionExceptionWith(_player);
+    private void DisableBackpackCollisions()
+    {
+        _backpack.AddCollisionExceptionWith(_player);
 
-		foreach (var node in GetTree().GetNodesInGroup("chairs"))
-		{
-			if (node is PhysicsBody3D chair)
-			{
-				_backpack.AddCollisionExceptionWith(chair);
-			}
-		}
-	}
+        foreach (var node in GetTree().GetNodesInGroup("chairs"))
+        {
+            if (node is PhysicsBody3D chair)
+            {
+                _backpack.AddCollisionExceptionWith(chair);
+            }
+        }
+    }
 }

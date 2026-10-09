@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://8ydauf77nf52"]
+
+[ext_resource type="Script" uid="uid://yywl1nd7c2o6" path="res://Scripts/TeacherChair.cs" id="1_8gkbs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(0.65722656, 0.57130814, 0.494812)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8l6st"]
+size = Vector3(0.58032227, 0.6049881, 0.043945313)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ytk5l"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.28066406
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8gkbs"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.0612915
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_udww1"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.5780246
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vshd4"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.28893888
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gkbs"]
+albedo_color = Color(0.11764706, 0.18431373, 0.4509804, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rbjd0"]
+material = SubResource("StandardMaterial3D_8gkbs")
+radius = 0.225
+height = 0.555
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vshd4"]
+albedo_color = Color(0.11764706, 0.18431373, 0.4509804, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8gkbs"]
+material = SubResource("StandardMaterial3D_vshd4")
+radius = 0.2
+height = 0.6
+radial_segments = 10
+
+[node name="TeacherChair" type="RigidBody3D" unique_id=498573374]
+script = ExtResource("1_8gkbs")
+
+[node name="SeatCollision" type="CollisionShape3D" parent="." unique_id=960230528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.28565407, -0.046844482)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="BackrestCollision" type="CollisionShape3D" parent="." unique_id=2009236359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.7928764, 0.19750977)
+shape = SubResource("BoxShape3D_8l6st")
+
+[node name="BackrestPipeRightLong" type="MeshInstance3D" parent="." unique_id=1005435331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16687092, 0.7250657, 0.20292488)
+mesh = SubResource("CylinderMesh_ytk5l")
+
+[node name="BackrestPipeRightShort" type="MeshInstance3D" parent="." unique_id=741404035]
+transform = Transform3D(1, 0, 0, 0, 0.93283826, -0.36029544, 0, 0.36029544, 0.93283826, -0.16687092, 0.562656, 0.19262081)
+mesh = SubResource("CylinderMesh_8gkbs")
+
+[node name="BackrestPipeLeftLong" type="MeshInstance3D" parent="." unique_id=1548424563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17202741, 0.7250657, 0.20292488)
+mesh = SubResource("CylinderMesh_ytk5l")
+
+[node name="BackrestPipeLeftShort" type="MeshInstance3D" parent="." unique_id=296246421]
+transform = Transform3D(1, 0, 0, 0, 0.93283826, -0.36029544, 0, 0.36029544, 0.93283826, 0.17202741, 0.562656, 0.19262081)
+mesh = SubResource("CylinderMesh_8gkbs")
+
+[node name="MetalLegRight1" type="MeshInstance3D" parent="." unique_id=1022416701]
+transform = Transform3D(1, 0, 0, 0, 0.980353, -0.19725096, 0, 0.19725096, 0.980353, -0.31372565, 0.2711544, -0.22210503)
+mesh = SubResource("CylinderMesh_udww1")
+
+[node name="MetalBarRight" type="MeshInstance3D" parent="." unique_id=278541948]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, -0.31372565, 0.554922, -0.04704263)
+mesh = SubResource("CylinderMesh_vshd4")
+
+[node name="MetalLegRight2" type="MeshInstance3D" parent="." unique_id=128880975]
+transform = Transform3D(-1, -1.7279751e-08, -8.569802e-08, 0, 0.9802711, -0.19765732, 8.742278e-08, -0.19765732, -0.9802711, -0.31372565, 0.2739773, 0.13082722)
+mesh = SubResource("CylinderMesh_udww1")
+
+[node name="MetalLegLeft1" type="MeshInstance3D" parent="." unique_id=1049225042]
+transform = Transform3D(1, 0, 0, 0, 0.980353, -0.19725096, 0, 0.19725096, 0.980353, 0.3096932, 0.2711544, -0.22210503)
+mesh = SubResource("CylinderMesh_udww1")
+
+[node name="MetalBarLeft" type="MeshInstance3D" parent="." unique_id=2065268266]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.3096932, 0.554922, -0.04704263)
+mesh = SubResource("CylinderMesh_vshd4")
+
+[node name="MetalLegLeft2" type="MeshInstance3D" parent="." unique_id=1357780917]
+transform = Transform3D(-1, -1.7279751e-08, -8.569802e-08, 0, 0.9802711, -0.19765732, 8.742278e-08, -0.19765732, -0.9802711, 0.3096932, 0.2739773, 0.13082722)
+mesh = SubResource("CylinderMesh_udww1")
+
+[node name="Backrest" type="MeshInstance3D" parent="." unique_id=230464964]
+transform = Transform3D(1.3724701, 0, 0, 0, 0.7, 0, 0, 0, 0.2, 0, 0.9015112, 0.18)
+mesh = SubResource("CapsuleMesh_rbjd0")
+
+[node name="Seat" type="MeshInstance3D" parent="." unique_id=681835184]
+transform = Transform3D(1.6129858, 0, 0, 0, -4.0751647e-08, -0.2, 0, 0.93228906, -8.742278e-09, 0, 0.5270535, -0.053055823)
+mesh = SubResource("CapsuleMesh_8gkbs")

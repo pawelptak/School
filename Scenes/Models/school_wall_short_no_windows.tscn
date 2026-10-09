@@ -3,9 +3,20 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
 albedo_color = Color(0.6117647, 0.74509805, 0.18431373, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_btmea"]
+albedo_color = Color(0.757661, 0.4805578, 0.28299633, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8rtoy"]
+material = SubResource("StandardMaterial3D_btmea")
+size = Vector3(10, 0.1, 0.03)
+
 [node name="SchoolWall" type="Node3D" unique_id=1370939349]
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
 use_collision = true
 size = Vector3(10, 4, 0.5)
 material = SubResource("StandardMaterial3D_lc5oj")
+
+[node name="Baseboard" type="MeshInstance3D" parent="." unique_id=917454580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9544133, -0.26449287)
+mesh = SubResource("BoxMesh_8rtoy")

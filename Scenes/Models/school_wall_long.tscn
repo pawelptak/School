@@ -11,6 +11,13 @@ size = Vector3(2.5, 2.5, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
 size = Vector3(2.6, 0.1, 0.8)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ei54"]
+albedo_color = Color(0.757661, 0.4805578, 0.28299633, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ury2d"]
+material = SubResource("StandardMaterial3D_5ei54")
+size = Vector3(15, 0.1, 0.03)
+
 [node name="SchoolWall" type="Node3D" unique_id=1370939349]
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
@@ -53,3 +60,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12795919, 0.21705484, 0.06
 
 [node name="Window3" parent="." unique_id=2056835693 instance=ExtResource("1_5ei54")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.511522, 0.21705484, 0.06655908)
+
+[node name="Baseboard" type="MeshInstance3D" parent="." unique_id=800031264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9544133, -0.26449287)
+mesh = SubResource("BoxMesh_ury2d")

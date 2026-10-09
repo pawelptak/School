@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dpko27iuigqae"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28tt4"]
+albedo_color = Color(0.77254903, 0.50980395, 0.20784314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
+material = SubResource("StandardMaterial3D_28tt4")
+size = Vector3(1.7, 0.03, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s3lc4"]
+size = Vector3(1.7, 0.03, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+albedo_color = Color(0.77254903, 0.50980395, 0.20784314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+size = Vector3(0.03, 1, 0.65)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xx4gg"]
+size = Vector3(0.03, 1, 0.65)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ury2d"]
+albedo_color = Color(0.77254903, 0.50980395, 0.20784314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
+material = SubResource("StandardMaterial3D_ury2d")
+size = Vector3(0.541626, 1, 0.65)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lopxt"]
+size = Vector3(0.541626, 1, 0.65)
+
+[node name="Desk" type="RigidBody3D" unique_id=1876954106]
+mass = 10.0
+
+[node name="Desktop" type="MeshInstance3D" parent="." unique_id=1116063425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1775198301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_s3lc4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1670324762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7997899, 0.5, -0.006093219)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1925186311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7997899, 0.5, -0.006093219)
+shape = SubResource("BoxShape3D_xx4gg")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1552374320]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5452175, 0.5, 0)
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=1299357288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5452175, 0.5, 0)
+shape = SubResource("BoxShape3D_lopxt")
