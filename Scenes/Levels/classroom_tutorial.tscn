@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://be2b1m6kw8mwa" path="res://Scripts/ClassroomTutorial.cs" id="1_obcr2"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Models/player.tscn" id="1_ubwdy"]
+[ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="2_qll2p"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Models/desk.tscn" id="3_6v6cd"]
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="3_o1t7o"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Models/chair.tscn" id="4_mh8we"]
@@ -17,10 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://b0aeb8lptgoi4" path="res://Scenes/Models/school_wall_long_no_windows.tscn" id="14_yl8jl"]
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/Models/ceiling_lamp.tscn" id="16_ineom"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dm2mn"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
+panorama = ExtResource("2_qll2p")
+filter = false
 
 [sub_resource type="Sky" id="Sky_tfknm"]
-sky_material = SubResource("ProceduralSkyMaterial_dm2mn")
+sky_material = SubResource("PanoramaSkyMaterial_2rxog")
 
 [sub_resource type="Environment" id="Environment_4xgl2"]
 background_mode = 2
