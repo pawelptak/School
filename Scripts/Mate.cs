@@ -12,4 +12,16 @@ public partial class Mate : InteractableCharacter
             )
         };
     }
+
+    protected override DialogueLine[] GetInteractionDialogue()
+    {
+        return new DialogueLine[]
+        {
+            new DialogueLine(
+                DialogueSpeaker.Mate,
+                CharacterText.MateInteraction
+            )
+        };
+
+    }
 }

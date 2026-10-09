@@ -5,4 +5,5 @@ public static class CharacterText
     public const string MateName = "Łysy";
 
     public const string MateHitByObject = "Co ty odwalasz?!";
+    public const string MateInteraction = "Co tam psie?";
 }

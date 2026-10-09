@@ -2,7 +2,7 @@
 using Godot;
 using System;
 
-public partial class InteractableCharacter : CharacterBody3D, IInteractable
+public abstract partial class InteractableCharacter : CharacterBody3D, IInteractable
 {
     public bool PlayerInRange { get; private set; }
 
@@ -31,7 +31,20 @@ public partial class InteractableCharacter : CharacterBody3D, IInteractable
 
     public void Interact(Player player)
     {
+        var dialogue = GetInteractionDialogue();
+
+        if (dialogue == null || dialogue.Length == 0)
+        {
+            GD.PushError($"{Name}: interaction dialogue is empty.");
+            return;
+        }
+
         InteractionRequested?.Invoke(player);
+
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        controller?.StartDialogue(this, dialogue);
     }
 
     public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
@@ -53,10 +66,9 @@ public partial class InteractableCharacter : CharacterBody3D, IInteractable
             controller.StartDialogue(this, dialogue);
     }
 
-    protected virtual DialogueLine[] GetHitReactionDialogue()
-    {
-        return Array.Empty<DialogueLine>();
-    }
+    protected abstract DialogueLine[] GetHitReactionDialogue();
+
+    protected abstract DialogueLine[] GetInteractionDialogue();
 
     private bool IsDialogueVisible()
     {

@@ -36,19 +36,9 @@ public partial class Player : CharacterBody3D
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
         _holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
 
-        _interactionLabel = new Label3D
-        {
-            Name = "InteractionLabel",
-            Billboard = BaseMaterial3D.BillboardModeEnum.Enabled,
-            NoDepthTest = true,
-            FontSize = 48,
-            PixelSize = 0.0015f,
-            OutlineSize = 8,
-            Modulate = Colors.White
-        };
+        _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
 
         _interactionLabel.Hide();
-        AddChild(_interactionLabel);
     }
 
     public override void _Input(InputEvent @event)
@@ -117,15 +107,19 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        UpdateInteractionTarget();
+        if (!IsDialogueVisible())
+            UpdateInteractionTarget();
 
         if (Input.IsActionJustPressed("interact"))
         {
+            if (IsDialogueVisible())
+                return;
+
             if (_heldObject != null)
             {
                 DropObject();
             }
-            else if (!MovementLocked && !IsDialogueVisible())
+            else if (!MovementLocked)
             {
                 TryInteract();
             }
