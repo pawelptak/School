@@ -20,6 +20,9 @@ roughness = 0.95
 material = SubResource("StandardMaterial3D_vyh3o")
 size = Vector3(3.5, 2, 0.12)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_at8km"]
+size = Vector3(3.5, 2, 0.12)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4mh8"]
 albedo_color = Color(0.08627451, 0.21960784, 0.09803922, 1)
 roughness = 0.5
@@ -32,7 +35,7 @@ size = Vector3(1.5, 2, 0.12)
 size = Vector3(1.5, 2, 0.12)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lvy05"]
-size = Vector3(3.5, 0.02, 0.3)
+size = Vector3(3.5, 0.02, 0.2754883)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2pvo"]
 albedo_color = Color(0.5796909, 0.57969093, 0.57969093, 1)
@@ -49,11 +52,9 @@ size = Vector3(3.5, 0.02, 0.3)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7566558, 1.7, 0.0096517205)
 
 [node name="HingeJointLeft" type="HingeJoint3D" parent="HingeLeft" unique_id=168752935]
-transform = Transform3D(0.9593141, 0.28234145, -1.23415385e-08, 0, -4.371139e-08, -1.0000001, -0.28234148, 0.959314, -4.193295e-08, 0.010997772, 0.09239483, 0.0133879185)
+transform = Transform3D(1.0000001, 0, 0, 0, -4.371139e-08, -1.0000001, 0, 1, -4.3711392e-08, 0.010997772, 0.09239483, 0.0133879185)
 node_a = NodePath("..")
 node_b = NodePath("../../SideboardLeft")
-angular_limit/upper = -0.54803336
-angular_limit/lower = -1.001819
 
 [node name="HingeLeft" type="MeshInstance3D" parent="HingeLeft" unique_id=1972715012]
 mesh = SubResource("BoxMesh_u3w50")
@@ -65,11 +66,9 @@ shape = SubResource("BoxShape3D_ag4mv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7346724, 1.7, 0.0096517205)
 
 [node name="HingeJointRight" type="HingeJoint3D" parent="HingeRight" unique_id=1150105551]
-transform = Transform3D(0.9593141, 0.28234145, -1.23415385e-08, 0, -4.371139e-08, -1.0000001, -0.28234148, 0.959314, -4.193295e-08, 0.010997772, 0.09239483, 0.0133879185)
+transform = Transform3D(1.0000001, 0, 0, 0, -4.371139e-08, -1.0000001, 0, 1, -4.3711392e-08, 0.010997772, 0.09239483, 0.0133879185)
 node_a = NodePath("..")
 node_b = NodePath("../../SideboardRight")
-angular_limit/upper = -0.54803336
-angular_limit/lower = -1.001819
 
 [node name="HingeRight" type="MeshInstance3D" parent="HingeRight" unique_id=1855587661]
 mesh = SubResource("BoxMesh_u3w50")
@@ -77,12 +76,18 @@ mesh = SubResource("BoxMesh_u3w50")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HingeRight" unique_id=247387123]
 shape = SubResource("BoxShape3D_ag4mv")
 
-[node name="Board" type="MeshInstance3D" parent="." unique_id=88474617]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=372471691]
+
+[node name="Board" type="MeshInstance3D" parent="StaticBody3D" unique_id=88474617]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 mesh = SubResource("BoxMesh_crm6m")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=62235382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+shape = SubResource("BoxShape3D_at8km")
+
 [node name="SideboardLeft" type="RigidBody3D" parent="." unique_id=1141642004]
-transform = Transform3D(0.9593746, 0, 0.28213587, 0, 1, 0, -0.28213587, 0, 0.9593746, -2.8640416, 1.7, -1.1404978)
+transform = Transform3D(0.8691153, 0, 0.49460983, 0, 1, 0, -0.49460983, 0, 0.8691153, -3.1519575, 1.7, -0.81530106)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SideboardLeft" unique_id=2065714736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
@@ -104,9 +109,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.400172)
 shape = SubResource("BoxShape3D_b2pvo")
 
 [node name="Shelf" type="StaticBody3D" parent="." unique_id=1482161452]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7065687, 0.17683685)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6782131, 0.17683685)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Shelf" unique_id=71096460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.012255862)
 shape = SubResource("BoxShape3D_lvy05")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Shelf" unique_id=1376240108]
