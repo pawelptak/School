@@ -1,16 +1,26 @@
+
 using Godot;
 using System;
 
-public partial class Door : AnimatableBody3D
+public partial class Door : AnimatableBody3D, IInteractable
 {
-    private Node3D _player;
-    private Node3D _hinge;
-    private bool _isOpen = false;
-    private float _targetRotation = 0.0f;
-    
-    public override void _Ready()
+    public bool InteractionEnabled { get; set; }
+
+    public string InteractionText => "Wejdź";
+    public Vector3 PromptOffset => new Vector3(0, 1.5f, 0);
+
+    public event Action Interacted;
+
+    public bool CanInteract(Player player)
     {
-        _player = GetTree().GetFirstNodeInGroup("player") as Node3D;
-        _hinge = GetNode<Node3D>("Hinge");
+        return InteractionEnabled && !player.MovementLocked;
+    }
+
+    public void Interact(Player player)
+    {
+        if (!CanInteract(player))
+            return;
+
+        Interacted?.Invoke();
     }
 }

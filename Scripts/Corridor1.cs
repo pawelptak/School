@@ -9,25 +9,15 @@ public partial class Corridor1 : Node3D
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
+        _mate.InteractionRequested += OnMateInteractionRequested;
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+    private void OnMateInteractionRequested(Player player)
     {
-        if (!@event.IsActionPressed("interact"))
-            return;
-
-        if (_cutsceneController.IsDialogueVisible)
-            return;
-
-        if (!_mate.PlayerInRange)
-            return;
-
         _objectiveMarker.Hide();
         StartMateDialogue();
-
-        GetViewport().SetInputAsHandled();
     }
 
     private void StartMateDialogue()

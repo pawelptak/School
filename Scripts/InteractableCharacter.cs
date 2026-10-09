@@ -1,11 +1,16 @@
+
 using Godot;
 using System;
 
-public partial class InteractableCharacter : CharacterBody3D
+public partial class InteractableCharacter : CharacterBody3D, IInteractable
 {
     public bool PlayerInRange { get; private set; }
 
+    public string InteractionText => "Rozmawiaj";
+    public Vector3 PromptOffset => new Vector3(0, 2.0f, 0);
+
     public event Action<ThrowableObject, float> HitByThrowable;
+    public event Action<Player> InteractionRequested;
 
     public Func<ThrowableObject, float, bool> HitReactionOverride { get; set; }
 
@@ -15,6 +20,18 @@ public partial class InteractableCharacter : CharacterBody3D
 
         interactionArea.BodyEntered += OnBodyEntered;
         interactionArea.BodyExited += OnBodyExited;
+    }
+
+    public bool CanInteract(Player player)
+    {
+        return PlayerInRange
+            && !player.MovementLocked
+            && !IsDialogueVisible();
+    }
+
+    public void Interact(Player player)
+    {
+        InteractionRequested?.Invoke(player);
     }
 
     public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
@@ -33,9 +50,7 @@ public partial class InteractableCharacter : CharacterBody3D
         var dialogue = GetHitReactionDialogue();
 
         if (controller != null && dialogue.Length > 0)
-        {
             controller.StartDialogue(this, dialogue);
-        }
     }
 
     protected virtual DialogueLine[] GetHitReactionDialogue()
@@ -43,19 +58,23 @@ public partial class InteractableCharacter : CharacterBody3D
         return Array.Empty<DialogueLine>();
     }
 
+    private bool IsDialogueVisible()
+    {
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        return controller?.IsDialogueVisible == true;
+    }
+
     private void OnBodyEntered(Node3D body)
     {
         if (body is Player)
-        {
             PlayerInRange = true;
-        }
     }
 
     private void OnBodyExited(Node3D body)
     {
         if (body is Player)
-        {
             PlayerInRange = false;
-        }
     }
 }

@@ -8,7 +8,7 @@ public partial class ClassroomTutorial : Node3D
     private ObjectiveMarker _objectiveMarker;
     private Backpack _backpack;
     private bool _doorObjectiveActive;
-    private Node3D _door;
+    private Door _door;
 
 
     public override void _Ready()
@@ -21,7 +21,9 @@ public partial class ClassroomTutorial : Node3D
 
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _backpack = GetNode<Backpack>("Backpack");
-        _door = GetNode<Node3D>("Door");
+        _door = GetNode<Door>("Door");
+        _door.InteractionEnabled = false;
+        _door.Interacted += OnDoorInteracted;
 
         _mate.HitReactionOverride = TryHandleMateHit;
 
@@ -62,22 +64,8 @@ public partial class ClassroomTutorial : Node3D
         );
     }
 
-    public override void _Process(double delta)
+    private void OnDoorInteracted()
     {
-        if (!_doorObjectiveActive)
-            return;
-
-        if (!Input.IsActionJustPressed("interact"))
-            return;
-
-        var ray = _player.GetNode<RayCast3D>("Camera3D/InteractRay");
-
-        if (!ray.IsColliding())
-            return;
-
-        if (ray.GetCollider() != _door)
-            return;
-
         GetTree().ChangeSceneToFile("res://Scenes/Levels/corridor_1.tscn");
     }
 
@@ -156,6 +144,8 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnGoToDoor()
     {
+        _door.InteractionEnabled = true;
+
         _doorObjectiveActive = true;
 
         _objectiveMarker.GlobalPosition =

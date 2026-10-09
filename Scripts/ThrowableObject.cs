@@ -1,24 +1,36 @@
+
 using Godot;
 
-public partial class ThrowableObject : RigidBody3D
+public partial class ThrowableObject : RigidBody3D, IInteractable
 {
-	public float ThrowForce { get; set; }
+    public float ThrowForce { get; set; }
 
-	public override void _Ready()
-	{
-		ContactMonitor = true;
-		MaxContactsReported = 4;
+    public string InteractionText => "Podnieś";
+    public Vector3 PromptOffset => new Vector3(0, 0.5f, 0);
 
-		BodyEntered += OnBodyEntered;
-	}
+    public bool CanInteract(Player player)
+    {
+        return !Freeze;
+    }
 
-	private void OnBodyEntered(Node body)
-	{
-		GD.Print($"Throwable hit: {body.Name}");
+    public void Interact(Player player)
+    {
+        player.TryPickup(this);
+    }
 
-		if (body is InteractableCharacter character)
-		{
-			character.NotifyHitByThrowable(this, ThrowForce);
-		}
-	}
+    public override void _Ready()
+    {
+        ContactMonitor = true;
+        MaxContactsReported = 4;
+
+        BodyEntered += OnBodyEntered;
+    }
+
+    private void OnBodyEntered(Node body)
+    {
+        GD.Print($"Throwable hit: {body.Name}");
+
+        if (body is InteractableCharacter character)
+            character.NotifyHitByThrowable(this, ThrowForce);
+    }
 }
