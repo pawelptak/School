@@ -61,6 +61,24 @@ public partial class Player : CharacterBody3D
         }
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (!@event.IsActionPressed("interact") || IsDialogueVisible())
+            return;
+
+        GetViewport().SetInputAsHandled();
+
+        if (_heldObject != null)
+        {
+            DropObject();
+        }
+        else if (!MovementLocked)
+        {
+            UpdateInteractionTarget();
+            TryInteract();
+        }
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         if (MovementLocked)
@@ -109,21 +127,6 @@ public partial class Player : CharacterBody3D
     {
         if (!IsDialogueVisible())
             UpdateInteractionTarget();
-
-        if (Input.IsActionJustPressed("interact"))
-        {
-            if (IsDialogueVisible())
-                return;
-
-            if (_heldObject != null)
-            {
-                DropObject();
-            }
-            else if (!MovementLocked)
-            {
-                TryInteract();
-            }
-        }
 
         if (_heldObject == null)
             return;
