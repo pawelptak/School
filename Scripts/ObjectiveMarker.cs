@@ -2,8 +2,13 @@ using Godot;
 
 public partial class ObjectiveMarker : Node3D
 {
-    private Node3D _arrowHead;
+    [Export]
+    public Node3D Target { get; set; }
 
+    [Export]
+    public Vector3 TargetOffset { get; set; } = new(0, 1.5f, 0);
+
+    private Node3D _arrowHead;
     private float _time;
 
     private const float MovementHeight = 0.15f;
@@ -25,5 +30,15 @@ public partial class ObjectiveMarker : Node3D
             -0.375f + offset,
             0
         );
+
+        if (GodotObject.IsInstanceValid(Target))
+        {
+            GlobalPosition = Target.GlobalTransform * TargetOffset;
+        }
+    }
+
+    public void SetTarget(Node3D target)
+    {
+        Target = target;
     }
 }

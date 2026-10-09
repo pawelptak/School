@@ -31,6 +31,11 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public void Interact(Player player)
     {
+        InteractionRequested?.Invoke(player);
+
+        if (IsDialogueVisible())
+            return;
+
         var dialogue = GetInteractionDialogue();
 
         if (dialogue == null || dialogue.Length == 0)
@@ -38,8 +43,6 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             GD.PushError($"{Name}: interaction dialogue is empty.");
             return;
         }
-
-        InteractionRequested?.Invoke(player);
 
         var controller = GetTree().CurrentScene
             ?.GetNodeOrNull<CutsceneController>("CutsceneController");

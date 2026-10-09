@@ -10,7 +10,6 @@ public partial class ClassroomTutorial : Node3D
     private bool _doorObjectiveActive;
     private Door _door;
 
-
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
@@ -32,8 +31,6 @@ public partial class ClassroomTutorial : Node3D
         _player.ObjectPickedUp += OnObjectPickedUp;
 
         _cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
-
-        DisableBackpackCollisions();
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -71,17 +68,16 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnCinematicDialogueFinished()
     {
+        _objectiveMarker.SetTarget(_backpack);
         _objectiveMarker.Show();
     }
 
     private void OnObjectPickedUp(ThrowableObject objectPickedUp)
     {
-        if (objectPickedUp != _backpack)
+        if (objectPickedUp != _backpack || _doorObjectiveActive)
             return;
 
-        EnableBackpackCollisions();
-
-        _objectiveMarker.Hide();
+        _objectiveMarker.SetTarget(_mate);
     }
 
     private bool TryHandleMateHit(ThrowableObject throwable, float throwForce)
@@ -114,6 +110,8 @@ public partial class ClassroomTutorial : Node3D
 
             return true;
         }
+
+        _objectiveMarker.Hide();
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -148,35 +146,9 @@ public partial class ClassroomTutorial : Node3D
 
         _doorObjectiveActive = true;
 
-        _objectiveMarker.GlobalPosition =
-            _door.GlobalPosition + new Vector3(-0.5f, 1.5f, 0);
+        _objectiveMarker.TargetOffset = new Vector3(0, 1, -0.6f);
+        _objectiveMarker.SetTarget(_door);
 
         _objectiveMarker.Show();
-    }
-
-    private void EnableBackpackCollisions()
-    {
-        _backpack.RemoveCollisionExceptionWith(_player);
-
-        foreach (var node in GetTree().GetNodesInGroup("chairs"))
-        {
-            if (node is PhysicsBody3D chair)
-            {
-                _backpack.RemoveCollisionExceptionWith(chair);
-            }
-        }
-    }
-
-    private void DisableBackpackCollisions()
-    {
-        _backpack.AddCollisionExceptionWith(_player);
-
-        foreach (var node in GetTree().GetNodesInGroup("chairs"))
-        {
-            if (node is PhysicsBody3D chair)
-            {
-                _backpack.AddCollisionExceptionWith(chair);
-            }
-        }
     }
 }

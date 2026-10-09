@@ -12,6 +12,7 @@ public partial class Corridor1 : Node3D
         _mate.InteractionRequested += OnMateInteractionRequested;
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
+        _objectiveMarker.SetTarget(_mate);
     }
 
     private void OnMateInteractionRequested(Player player)
