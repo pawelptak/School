@@ -18,9 +18,6 @@ public partial class CutsceneController : Node
 
     private bool _cinematicDialogueActive;
 
-    [Export(PropertyHint.Range, "0.5, 10, 0.5")]
-    public float NonCinematicDialogueDurationSeconds { get; set; } = 3.0f;
-
     public bool IsDialogueVisible => _dialogueUI.Visible;
     public bool IsCinematicDialogueActive => _cinematicDialogueActive;
 
@@ -242,10 +239,8 @@ public partial class CutsceneController : Node
             && dialogueSession == _dialogueSession
             && _dialogueUI.IsVisible())
         {
-            double duration = Mathf.Max(
-                NonCinematicDialogueDurationSeconds,
-                0.1f
-            );
+            double duration = _dialogueLines[_currentDialogueLine]
+                .DisplayDurationSeconds;
 
             await ToSignal(
                 GetTree().CreateTimer(duration),

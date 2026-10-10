@@ -38,23 +38,28 @@ public partial class ClassroomTutorial : Node3D
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.WakeUp
+                    MateText.WakeUp,
+                    3.5f
                 ),
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.LessonEnding
+                    MateText.LessonEnding,
+                    4.5f
                 ),
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.BreakEnding
+                    MateText.BreakEnding,
+                    3.5f
                 ),
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.WakeUpInstruction
+                    MateText.WakeUpInstruction,
+                    2.5f
                 ),
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    string.Format(MateText.TakeBackpackInstruction, "LPM")
+                    string.Format(MateText.TakeBackpackInstruction, "LPM"),
+                    6.0f
                 )
             },
             true
@@ -88,7 +93,8 @@ public partial class ClassroomTutorial : Node3D
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.ThrowWrongItem
+                    MateText.ThrowWrongItem,
+                    2.0f
                 )
             });
 
@@ -104,7 +110,8 @@ public partial class ClassroomTutorial : Node3D
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    string.Format(MateText.ThrowAgain, "LPM")
+                    string.Format(MateText.ThrowAgain, "LPM"),
+                    4.0f
                 )
             });
 
@@ -119,11 +126,13 @@ public partial class ClassroomTutorial : Node3D
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.ThrowGood
+                    MateText.ThrowGood,
+                    2.5f
                 ),
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.GoToDoor
+                    MateText.GoToDoor,
+                    4.5f
                 )
             },
             onFinished: OnGoToDoor

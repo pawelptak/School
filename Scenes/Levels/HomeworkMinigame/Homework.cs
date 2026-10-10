@@ -110,7 +110,8 @@ public partial class Homework : Node3D
             {
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.EndCutscene
+                    MateText.EndCutscene,
+                    3.5f
                 )
             },
             true,
