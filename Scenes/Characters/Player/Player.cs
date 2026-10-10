@@ -30,6 +30,7 @@ public partial class Player : CharacterBody3D
     private ProgressBar _throwChargeBar;
     private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
     private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
+    private const uint EnvironmentCollisionLayer = 1u << (7 - 1); // Layer 7 is used for the environment (walls, floors, etc.)
 
     public override void _Ready()
     {
@@ -383,7 +384,7 @@ public partial class Player : CharacterBody3D
                     _heldObject.GlobalPosition
                 ) * relativeTransform,
                 Motion = motion,
-                CollisionMask = _heldCollisionMask != 0 ? _heldCollisionMask : 1,
+                CollisionMask = EnvironmentCollisionLayer,
                 Exclude = _heldObjectExclusions
             };
 
@@ -391,7 +392,7 @@ public partial class Player : CharacterBody3D
             safeFraction = Mathf.Min(safeFraction, result[0]);
         }
 
-        safeFraction = Mathf.Max(0.0f, safeFraction - 0.02f);
+        safeFraction = Mathf.Max(0.0f, safeFraction - 0.05f);
 
         return _heldObject.GlobalPosition + motion * safeFraction;
     }

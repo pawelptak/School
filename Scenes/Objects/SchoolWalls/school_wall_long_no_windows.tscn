@@ -28,6 +28,7 @@ size = Vector3(15, 0.1, 0.03)
 [node name="SchoolWall" type="Node3D" unique_id=1370939349]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1656535474]
+collision_layer = 65
 
 [node name="Wall" type="MeshInstance3D" parent="StaticBody3D" unique_id=740282931]
 mesh = SubResource("ArrayMesh_y5ljv")

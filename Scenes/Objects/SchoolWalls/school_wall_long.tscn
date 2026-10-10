@@ -56,6 +56,7 @@ size = Vector3(1.6848907, 4, 0.49804688)
 [node name="SchoolWall" type="Node3D" unique_id=1370939349]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=683502198]
+collision_layer = 65
 
 [node name="Parapet1" type="CollisionShape3D" parent="StaticBody3D" unique_id=1861149510]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13580322, -1.0814605, -0.12194824)

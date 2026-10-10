@@ -76,6 +76,7 @@ visible = false
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1601597096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1465973791]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.420166)
@@ -87,6 +88,7 @@ mesh = SubResource("BoxMesh_crm6m")
 
 [node name="Ceiling" type="StaticBody3D" parent="." unique_id=1842022159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20393014, 2.8039978, 0)
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1228032805]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42034912, 1.0904305, -2.3483276)
