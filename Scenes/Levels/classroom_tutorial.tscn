@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="3_o1t7o"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Models/chair.tscn" id="4_mh8we"]
 [ext_resource type="PackedScene" uid="uid://d31o1hqaujmd4" path="res://Scenes/Models/blackboard.tscn" id="5_kppql"]
-[ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/Models/CSG/door_csg.tscn" id="6_7gvyr"]
 [ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Models/mate.tscn" id="7_7gvyr"]
+[ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Models/door.tscn" id="9_4w5vo"]
 [ext_resource type="PackedScene" uid="uid://cauxrqvdp5r8u" path="res://Scenes/Models/backpack.tscn" id="11_75d21"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="11_tfknm"]
 [ext_resource type="PackedScene" uid="uid://cf7xdt2v7c84o" path="res://Scenes/Models/school_wall_long.tscn" id="12_iamb7"]
@@ -171,7 +171,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -4.8216734)
 [node name="Blackboard" parent="." unique_id=1589772872 instance=ExtResource("5_kppql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7053503, 0.59747696, -9.511878)
 
-[node name="Door" parent="." unique_id=1410858223 instance=ExtResource("6_7gvyr")]
+[node name="Door" parent="." unique_id=519980075 instance=ExtResource("9_4w5vo")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.865631, 1.5, 0.930778)
 
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("7_7gvyr")]

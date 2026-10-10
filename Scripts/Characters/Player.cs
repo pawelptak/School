@@ -182,8 +182,9 @@ public partial class Player : CharacterBody3D
         if (!MovementLocked && !IsDialogueVisible() && _heldObject == null
             && _interactRay.IsColliding())
         {
-            if (_interactRay.GetCollider() is IInteractable interactable
-                && interactable.CanInteract(this))
+            var interactable = FindInteractable(_interactRay.GetCollider() as Node);
+
+            if (interactable != null && interactable.CanInteract(this))
             {
                 nextTarget = interactable;
             }
@@ -246,6 +247,17 @@ public partial class Player : CharacterBody3D
         _interactionLabel.Hide();
 
         interactable.Interact(this);
+    }
+
+    private static IInteractable FindInteractable(Node node)
+    {
+        for (Node current = node; current != null; current = current.GetParent())
+        {
+            if (current is IInteractable interactable)
+                return interactable;
+        }
+
+        return null;
     }
 
     public bool TryPickup(ThrowableObject body)

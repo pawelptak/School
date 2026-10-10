@@ -2,7 +2,7 @@
 using Godot;
 using System;
 
-public partial class Door : AnimatableBody3D, IInteractable
+public partial class Door : Node3D, IInteractable
 {
     public bool InteractionEnabled { get; set; }
 
