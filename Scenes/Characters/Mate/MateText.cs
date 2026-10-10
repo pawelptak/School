@@ -25,4 +25,7 @@ public static class MateText
     // Homework Minigame
     public const string EndCutscene = "Dobra, więcej nie żdążysz. Chodźmy do sali.";
 
+    // Polish Class
+    public const string PhysicalEdu = "Zapomniałem butów zmiennych. Chłop od wuefu się zesra.";
+
 }

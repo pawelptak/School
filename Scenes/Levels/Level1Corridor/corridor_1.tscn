@@ -115,4 +115,4 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.03
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5527244, 3.7067113, -0.011970043)
 
 [node name="Bully" parent="." unique_id=1834268325 instance=ExtResource("12_o4rxx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, 1.7132494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)

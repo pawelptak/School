@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cyduikec4p0a3"]
+
+[ext_resource type="Texture2D" uid="uid://dlid1cbw0iblc" path="res://Scenes/Characters/Crowd/ManRear/man_rear.png" id="1_ndsxq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
+radius = 0.35
+
+[node name="ManRear" type="CharacterBody3D" unique_id=664278660]
+
+[node name="Sprite" type="Sprite3D" parent="." unique_id=274662881]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
+pixel_size = 0.004
+billboard = 2
+texture_filter = 0
+texture = ExtResource("1_ndsxq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")

@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://jc7y5uprugm2"]
+
+[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Scenes/Objects/Backpack/Backpack.cs" id="1_fwhep"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(0.4189453, 0.4489746, 0.13769531)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xgl2"]
+size = Vector3(0.8, 1.2, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwhep"]
+albedo_color = Color(0.75686276, 0.2784314, 0.019607844, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_fwhep")
+size = Vector3(0.3, 0.45, 0.135)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isqwo"]
+albedo_color = Color(0.59848666, 0.2099953, 0.009543269, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c77en"]
+material = SubResource("StandardMaterial3D_isqwo")
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.04
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_np4wq"]
+material = SubResource("StandardMaterial3D_isqwo")
+top_radius = 0.05
+bottom_radius = 0.1
+height = 0.05
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_isqwo")
+top_radius = 0.06
+bottom_radius = 0.07
+height = 0.43
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cm4ln"]
+material = SubResource("StandardMaterial3D_isqwo")
+top_radius = 0.07
+bottom_radius = 0.07
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_cm4ln"]
+material = SubResource("StandardMaterial3D_isqwo")
+size = Vector3(0.2, 0.03, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c77en"]
+material = SubResource("StandardMaterial3D_isqwo")
+size = Vector3(0.2, 0.01, 0.11)
+
+[node name="Backpack" type="RigidBody3D" unique_id=499470510]
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_fwhep")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=66918632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3299072, 0.0015258789)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="PickupArea" type="Area3D" parent="." unique_id=1948668651]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea" unique_id=1334907021]
+shape = SubResource("BoxShape3D_4xgl2")
+
+[node name="Body" type="CSGMesh3D" parent="." unique_id=1095854880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32941753, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Handle2" type="CSGMesh3D" parent="Body" unique_id=1240324793]
+transform = Transform3D(-1, -8.742278e-08, 6.571921e-15, 0, -4.371139e-08, -1.719781, 8.742278e-08, -1, 7.5174015e-08, 0, 0.22956832, -0.037727248)
+mesh = SubResource("CylinderMesh_c77en")
+
+[node name="HandleHole" type="CSGMesh3D" parent="Body/Handle2" unique_id=346067057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0028030276, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_np4wq")
+
+[node name="Handle" type="CSGMesh3D" parent="Body" unique_id=990738429]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1.719781, 0, 1, -7.517402e-08, 0, 0.22956832, 0.041407615)
+mesh = SubResource("CylinderMesh_c77en")
+
+[node name="HandleHole" type="CSGMesh3D" parent="Body/Handle" unique_id=1939681083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0028030276, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_np4wq")
+
+[node name="SideHole" type="CSGMesh3D" parent="Body" unique_id=743701973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19110945, 0, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="TopHole" type="CSGMesh3D" parent="Body" unique_id=1108070192]
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 1, -4.371139e-08, -4.371139e-08, 0.00020867586, 0.28630212, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_cm4ln")
+
+[node name="SideHole2" type="CSGMesh3D" parent="Body" unique_id=1514698489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19261846, 0, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="FrontPocket" type="CSGMesh3D" parent="." unique_id=1983807029]
+transform = Transform3D(1, 0, 0, 0, 0.0884214, -0.99608314, 0, 0.99608314, 0.0884214, 0, -0.39910203, -0.06294152)
+mesh = SubResource("BoxMesh_cm4ln")
+
+[node name="FrontPocket2" type="CSGMesh3D" parent="." unique_id=1583099424]
+transform = Transform3D(1, 0, 0, 0, -0.18109834, -0.9834649, 0, 0.9834649, -0.18109834, 0, -0.353539, -0.09628895)
+mesh = SubResource("BoxMesh_c77en")

@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cv0ho75s5v7rt"]
+
+[ext_resource type="Script" uid="uid://dp7aharbxv5aj" path="res://Scenes/Characters/PolishTeacher/PolishTeacher.cs" id="1_i0ixg"]
+[ext_resource type="Texture2D" uid="uid://byf6g6bm7l0t6" path="res://Scenes/Characters/PolishTeacher/idle.png" id="2_i0wa2"]
+[ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="3_o44mt"]
+[ext_resource type="Texture2D" uid="uid://bykxlcmu4xh5u" path="res://Scenes/Characters/PolishTeacher/talk1.png" id="4_i0ixg"]
+[ext_resource type="Texture2D" uid="uid://cjyp12tyaw3s" path="res://Scenes/Characters/Mate/mate_hit.png" id="6_yi0et"]
+[ext_resource type="Texture2D" uid="uid://c4oihpmffftxe" path="res://Scenes/Characters/PolishTeacher/talk4.png" id="7_hrlym"]
+[ext_resource type="Texture2D" uid="uid://bkoct8gt2yege" path="res://Scenes/Characters/PolishTeacher/talk5.png" id="8_2u8s4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
+radius = 0.35
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_crm6m"]
+radius = 1.0
+
+[node name="PolishTeacher" type="CharacterBody3D" unique_id=664278660]
+script = ExtResource("1_i0ixg")
+
+[node name="Sprite" type="Sprite3D" parent="." unique_id=274662881]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
+pixel_size = 0.004
+billboard = 2
+texture_filter = 0
+texture = ExtResource("2_i0wa2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=219048047]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
+
+[node name="DialogueLookAtPoint" type="Marker3D" parent="." unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
+
+[node name="SpriteAnimator" type="Node" parent="." unique_id=23579993 node_paths=PackedStringArray("Sprite")]
+script = ExtResource("3_o44mt")
+Sprite = NodePath("../Sprite")
+TalkingFrames = Array[Texture2D]([ExtResource("8_2u8s4"), ExtResource("7_hrlym"), ExtResource("4_i0ixg")])
+TalkingFrameDuration = 0.15
+HitFrames = Array[Texture2D]([ExtResource("6_yi0et")])
+HitFrameDuration = 0.4

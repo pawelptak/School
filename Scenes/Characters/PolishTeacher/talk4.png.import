@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cauuyqh32c8my"
-path="res://.godot/imported/bully_talk_2.png-6bbb9ac943a426e0cb8f6085abb3a3f3.ctex"
+uid="uid://c4oihpmffftxe"
+path="res://.godot/imported/talk4.png-5665ef0f2cdfdaf33cc84b933320b908.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Characters/Bully/bully_talk_2.png"
-dest_files=["res://.godot/imported/bully_talk_2.png-6bbb9ac943a426e0cb8f6085abb3a3f3.ctex"]
+source_file="res://Scenes/Characters/PolishTeacher/talk4.png"
+dest_files=["res://.godot/imported/talk4.png-5665ef0f2cdfdaf33cc84b933320b908.ctex"]
 
 [params]
 

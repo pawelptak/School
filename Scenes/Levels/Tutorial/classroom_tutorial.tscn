@@ -187,10 +187,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5921943, 1.5567296, -4.2117
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -5.133, 2, -2.618)
 
 [node name="SchoolWall2" parent="." unique_id=1182609786 instance=ExtResource("14_506ri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07741266, 2.0010211, 4.635723)
+transform = Transform3D(0.7122973, 0, 0, 0, 1, 0, 0, 0, 1, 0.07741266, 2.0010211, 4.635723)
 
 [node name="SchoolWall4" parent="." unique_id=1092038756 instance=ExtResource("14_506ri")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.078, 2, -9.856)
+transform = Transform3D(-0.7190143, 0, -1.5099579e-07, 0, 1, 0, 1.0856814e-07, 0, -0.99999994, 0.078, 2, -9.856)
 
 [node name="SchoolWall3" parent="." unique_id=1644217364 instance=ExtResource("14_506ri")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.203, 2, -2.618)

@@ -1,4 +1,3 @@
-
 using Godot;
 using System;
 
@@ -11,12 +10,14 @@ public partial class CutsceneController : Node
     private DialogueLine[] _dialogueLines;
     private int _currentDialogueLine;
     private int _dialogueSession;
-    private bool _autoAdvanceDialogue;
+    private bool _autoAdvanceDialogue = true;
 
     private Vector3 _originalCameraPosition;
     private Vector3 _originalCameraRotation;
+    private bool _hasCapturedOriginalCamera = false;
 
     private bool _cinematicDialogueActive;
+    private bool _keepPlayerLockedOnFinish = false;
 
     public bool IsDialogueVisible => _dialogueUI.Visible;
     public bool IsCinematicDialogueActive => _cinematicDialogueActive;
@@ -66,8 +67,12 @@ public partial class CutsceneController : Node
         Node3D character,
         DialogueLine[] messages,
         bool cinematic = false,
-        Action onFinished = null)
+        Action onFinished = null,
+        bool keepPlayerLockedOnFinish = false,
+        Vector3? cameraReferencePosition = null)
     {
+        _keepPlayerLockedOnFinish = keepPlayerLockedOnFinish;
+
         if (_currentCharacter != null)
             _currentCharacter.SetTalking(false);
 
@@ -75,16 +80,12 @@ public partial class CutsceneController : Node
         _currentCharacter = character as InteractableCharacter;
         _dialogueLines = messages;
         _currentDialogueLine = 0;
-        _autoAdvanceDialogue = !cinematic;
+        _autoAdvanceDialogue = true;
         UpdateTalkingAnimation();
 
         _dialogueUI.ShowDialogue(messages, onFinished);
 
-        if (!cinematic)
-        {
-            StartAutoAdvanceDialogue(_dialogueSession);
-            return;
-        }
+        StartAutoAdvanceDialogue(_dialogueSession);
 
         _cinematicDialogueActive = true;
 
@@ -94,8 +95,12 @@ public partial class CutsceneController : Node
             _player.CameraLocked = true;
         }
 
-        _originalCameraPosition = _camera.GlobalPosition;
-        _originalCameraRotation = _camera.GlobalRotation;
+        if (!_hasCapturedOriginalCamera && _camera != null)
+        {
+            _originalCameraPosition = _camera.GlobalPosition;
+            _originalCameraRotation = _camera.GlobalRotation;
+            _hasCapturedOriginalCamera = true;
+        }
 
         var lookAtPoint =
             character.GetNodeOrNull<Marker3D>("DialogueLookAtPoint");
@@ -109,15 +114,17 @@ public partial class CutsceneController : Node
             return;
         }
 
+        var referencePosition = cameraReferencePosition ?? _originalCameraPosition;
+
         var directionFromCharacterToCamera =
-            _camera.GlobalPosition - character.GlobalPosition;
+            referencePosition - character.GlobalPosition;
 
         directionFromCharacterToCamera.Y = 0;
 
         if (directionFromCharacterToCamera.LengthSquared() == 0)
         {
             GD.PrintErr(
-                "Kamera i rozmówca są w tej samej pozycji."
+                "Kamera i punkt odniesienia są w tej samej pozycji co rozmówca."
             );
 
             return;
@@ -167,12 +174,19 @@ public partial class CutsceneController : Node
         _currentCharacter = null;
         _dialogueLines = null;
         _currentDialogueLine = 0;
-        _autoAdvanceDialogue = false;
 
         if (!_cinematicDialogueActive)
             return;
 
         _cinematicDialogueActive = false;
+
+        if (_keepPlayerLockedOnFinish)
+        {
+            CinematicDialogueFinished?.Invoke();
+            return;
+        }
+
+        _hasCapturedOriginalCamera = false;
 
         var tween = CreateTween();
 
@@ -213,10 +227,13 @@ public partial class CutsceneController : Node
         if (_currentCharacter == null || _dialogueLines == null)
             return;
 
-        bool playerIsSpeaking = _dialogueLines[_currentDialogueLine].Speaker
-            == DialogueSpeaker.Player;
+        var currentLine = _dialogueLines[_currentDialogueLine];
 
-        _currentCharacter.SetTalking(!playerIsSpeaking);
+        bool playerIsSpeaking = currentLine.Speaker == DialogueSpeaker.Player;
+
+        var textEmpty = string.IsNullOrWhiteSpace(currentLine.Text);
+
+        _currentCharacter.SetTalking(!playerIsSpeaking && !textEmpty);
     }
 
     private void NextDialogueLine()

@@ -30,39 +30,17 @@ public partial class ClassroomTutorial : Node3D
 
         _player.ObjectPickedUp += OnObjectPickedUp;
 
-        _cutsceneController.CinematicDialogueFinished += OnCinematicDialogueFinished;
-
         _cutsceneController.StartDialogue(
             _mate,
-            new DialogueLine[]
-            {
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.WakeUp,
-                    3.5f
-                ),
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.LessonEnding,
-                    4.5f
-                ),
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.BreakEnding,
-                    3.5f
-                ),
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.WakeUpInstruction,
-                    2.5f
-                ),
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    string.Format(MateText.TakeBackpackInstruction, "LPM"),
-                    6.0f
-                )
-            },
-            true
+            [
+                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUp, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.LessonEnding, 4.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.BreakEnding, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUpInstruction, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.TakeBackpackInstruction, "LPM"), 6.0f),
+            ],
+            cinematic: true,
+            onFinished: OnCinematicDialogueFinished
         );
     }
 
@@ -89,14 +67,7 @@ public partial class ClassroomTutorial : Node3D
     {
         if (throwable != _backpack)
         {
-            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
-            {
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.ThrowWrongItem,
-                    2.0f
-                )
-            });
+            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, MateText.ThrowWrongItem, 2.0f)]);
 
             return true;
         }
@@ -106,14 +77,7 @@ public partial class ClassroomTutorial : Node3D
 
         if (throwForce < 15.0f)
         {
-            _cutsceneController.StartDialogue(_mate, new DialogueLine[]
-            {
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    string.Format(MateText.ThrowAgain, "LPM"),
-                    4.0f
-                )
-            });
+            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.ThrowAgain, "LPM"), 4.0f)]);
 
             return true;
         }
@@ -122,19 +86,10 @@ public partial class ClassroomTutorial : Node3D
 
         _cutsceneController.StartDialogue(
             _mate,
-            new DialogueLine[]
-            {
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.ThrowGood,
-                    2.5f
-                ),
-                new DialogueLine(
-                    DialogueSpeaker.Mate,
-                    MateText.GoToDoor,
-                    4.5f
-                )
-            },
+            [
+                new DialogueLine(DialogueSpeaker.Mate, MateText.ThrowGood, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.GoToDoor, 4.5f)
+            ],
             onFinished: OnGoToDoor
         );
 
