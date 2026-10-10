@@ -10,13 +10,19 @@ public partial class CutsceneController : Node
     private InteractableCharacter _currentCharacter;
     private DialogueLine[] _dialogueLines;
     private int _currentDialogueLine;
+    private int _dialogueSession;
+    private bool _autoAdvanceDialogue;
 
     private Vector3 _originalCameraPosition;
     private Vector3 _originalCameraRotation;
 
     private bool _cinematicDialogueActive;
 
+    [Export(PropertyHint.Range, "0.5, 10, 0.5")]
+    public float NonCinematicDialogueDurationSeconds { get; set; } = 3.0f;
+
     public bool IsDialogueVisible => _dialogueUI.Visible;
+    public bool IsCinematicDialogueActive => _cinematicDialogueActive;
 
     public event Action DialogueFinished;
     public event Action CinematicDialogueFinished;
@@ -52,18 +58,11 @@ public partial class CutsceneController : Node
         if (!_dialogueUI.IsVisible())
             return;
 
+        if (_autoAdvanceDialogue)
+            return;
+
         GetViewport().SetInputAsHandled();
-
-        bool hasNextLine = _dialogueLines != null
-            && _currentDialogueLine < _dialogueLines.Length - 1;
-
-        _dialogueUI.NextMessage();
-
-        if (hasNextLine)
-        {
-            _currentDialogueLine++;
-            UpdateTalkingAnimation();
-        }
+        NextDialogueLine();
     }
 
     public void StartDialogue(
@@ -75,15 +74,20 @@ public partial class CutsceneController : Node
         if (_currentCharacter != null)
             _currentCharacter.SetTalking(false);
 
+        _dialogueSession++;
         _currentCharacter = character as InteractableCharacter;
         _dialogueLines = messages;
         _currentDialogueLine = 0;
+        _autoAdvanceDialogue = !cinematic;
         UpdateTalkingAnimation();
 
         _dialogueUI.ShowDialogue(messages, onFinished);
 
         if (!cinematic)
+        {
+            StartAutoAdvanceDialogue(_dialogueSession);
             return;
+        }
 
         _cinematicDialogueActive = true;
 
@@ -165,8 +169,8 @@ public partial class CutsceneController : Node
         _currentCharacter?.SetTalking(false);
         _currentCharacter = null;
         _dialogueLines = null;
-
         _currentDialogueLine = 0;
+        _autoAdvanceDialogue = false;
 
         if (!_cinematicDialogueActive)
             return;
@@ -216,5 +220,46 @@ public partial class CutsceneController : Node
             == DialogueSpeaker.Player;
 
         _currentCharacter.SetTalking(!playerIsSpeaking);
+    }
+
+    private void NextDialogueLine()
+    {
+        bool hasNextLine = _dialogueLines != null
+            && _currentDialogueLine < _dialogueLines.Length - 1;
+
+        _dialogueUI.NextMessage();
+
+        if (!hasNextLine)
+            return;
+
+        _currentDialogueLine++;
+        UpdateTalkingAnimation();
+    }
+
+    private async void StartAutoAdvanceDialogue(int dialogueSession)
+    {
+        while (_autoAdvanceDialogue
+            && dialogueSession == _dialogueSession
+            && _dialogueUI.IsVisible())
+        {
+            double duration = Mathf.Max(
+                NonCinematicDialogueDurationSeconds,
+                0.1f
+            );
+
+            await ToSignal(
+                GetTree().CreateTimer(duration),
+                SceneTreeTimer.SignalName.Timeout
+            );
+
+            if (!_autoAdvanceDialogue
+                || dialogueSession != _dialogueSession
+                || !_dialogueUI.IsVisible())
+            {
+                return;
+            }
+
+            NextDialogueLine();
+        }
     }
 }

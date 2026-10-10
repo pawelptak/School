@@ -70,7 +70,7 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (!@event.IsActionPressed("interact") || IsDialogueVisible())
+        if (!@event.IsActionPressed("interact") || IsCinematicDialogueActive())
             return;
 
         GetViewport().SetInputAsHandled();
@@ -132,7 +132,7 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        if (!IsDialogueVisible())
+        if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
         if (_heldObject == null)
@@ -167,19 +167,19 @@ public partial class Player : CharacterBody3D
             ThrowObject();
     }
 
-    private bool IsDialogueVisible()
+    private bool IsCinematicDialogueActive()
     {
         var controller = GetTree().CurrentScene
             ?.GetNodeOrNull<CutsceneController>("CutsceneController");
 
-        return controller?.IsDialogueVisible == true;
+        return controller?.IsCinematicDialogueActive == true;
     }
 
     private void UpdateInteractionTarget()
     {
         IInteractable nextTarget = null;
 
-        if (!MovementLocked && !IsDialogueVisible() && _heldObject == null
+        if (!MovementLocked && !IsCinematicDialogueActive() && _heldObject == null
             && _interactRay.IsColliding())
         {
             var interactable = FindInteractable(_interactRay.GetCollider() as Node);
