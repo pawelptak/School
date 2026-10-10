@@ -34,7 +34,7 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_crm6m")
 
 [node name="DialogueLookAtPoint" type="Marker3D" parent="." unique_id=1460371450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004154861, 0.7609645, 0.0004518032)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020729601, 0.7443898, -0.0036919117)
 
 [node name="SpriteAnimator" type="Node" parent="." unique_id=23579993 node_paths=PackedStringArray("Sprite")]
 script = ExtResource("3_o44mt")

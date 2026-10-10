@@ -402,10 +402,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.034, 0.63599586, -2.096)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7348375, 0.9215998, -7.274063)
 
 [node name="CustomCameraClose" type="Node3D" parent="." unique_id=243858672]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6209226, 1.1510559, -2.311376)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6209226, 1.2625248, -2.466542)
 
 [node name="CustomCameraFar" type="Node3D" parent="." unique_id=559754141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099766, 1.1510559, -2.1555264)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099766, 1.1510559, -2.393251)
 
 [editable path="Blackboard"]
 [editable path="Mate"]
