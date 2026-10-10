@@ -118,6 +118,8 @@ public partial class CutsceneController : Node
 
         if (cinematic)
         {
+            SetHudVisibility(false);
+
             if (_player != null)
             {
                 _player.MovementLocked = true;
@@ -217,6 +219,15 @@ public partial class CutsceneController : Node
         );
     }
 
+    private void SetHudVisibility(bool visible)
+    {
+        var hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
+        if (hud != null)
+        {
+            hud.Visible = visible;
+        }
+    }
+
     private void OnDialogueFinished()
     {
         _currentLineToken++;
@@ -270,7 +281,7 @@ public partial class CutsceneController : Node
                     _player.MovementLocked = false;
                     _player.CameraLocked = false;
                 }
-
+                SetHudVisibility(true);
                 CinematicDialogueFinished?.Invoke();
             })
         );

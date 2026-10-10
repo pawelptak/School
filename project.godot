@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="School"
-run/main_scene="uid://c25px5x6yo6ad"
+run/main_scene="uid://vgflhfghxaan"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 SceneTransition="*uid://cueht3wplbpc"
+Hud="*uid://pguuxp2w8q1t"
 
 [display]
 

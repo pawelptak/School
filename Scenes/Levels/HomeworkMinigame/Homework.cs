@@ -38,6 +38,9 @@ public partial class Homework : Node3D
 
     public override void _Ready()
     {
+        var hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
+        hud.Visible = false;
+
         var playerPaper = GetNode<MeshInstance3D>("PlayerNotebook/PaperLeft");
         var matePaper = GetNode<MeshInstance3D>("MateNotebook/PaperRight");
 
