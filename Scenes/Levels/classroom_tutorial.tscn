@@ -13,9 +13,8 @@
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="11_tfknm"]
 [ext_resource type="PackedScene" uid="uid://cf7xdt2v7c84o" path="res://Scenes/Models/school_wall_long.tscn" id="12_iamb7"]
 [ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Models/objective_marker.tscn" id="12_me4gt"]
-[ext_resource type="PackedScene" uid="uid://c0of6gx3us0y3" path="res://Scenes/Models/CSG/school_wall_short_no_windows_csg.tscn" id="13_yl8jl"]
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Models/sponge.tscn" id="14_o1t7o"]
-[ext_resource type="PackedScene" uid="uid://b0aeb8lptgoi4" path="res://Scenes/Models/CSG/school_wall_long_no_windows_csg.tscn" id="14_yl8jl"]
+[ext_resource type="PackedScene" uid="uid://3yygsbnnih8c" path="res://Scenes/Models/school_wall_long_no_windows.tscn" id="14_yl8jl"]
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/Models/CSG/ceiling_lamp_csg.tscn" id="16_ineom"]
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Models/teacher_desk.tscn" id="18_4w5vo"]
 [ext_resource type="PackedScene" uid="uid://8ydauf77nf52" path="res://Scenes/Models/teacher_chair.tscn" id="19_75d21"]
@@ -187,13 +186,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5921943, 1.5567296, -4.2117
 [node name="SchoolWall" parent="." unique_id=1370939349 instance=ExtResource("12_iamb7")]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -5.133, 2, -2.618)
 
-[node name="SchoolWall2" parent="." unique_id=2137837758 instance=ExtResource("13_yl8jl")]
+[node name="SchoolWall2" parent="." unique_id=1182609786 instance=ExtResource("14_yl8jl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07741266, 2.0010211, 4.635723)
 
-[node name="SchoolWall4" parent="." unique_id=836366116 instance=ExtResource("13_yl8jl")]
+[node name="SchoolWall4" parent="." unique_id=1092038756 instance=ExtResource("14_yl8jl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.078, 2, -9.856)
 
-[node name="SchoolWall3" parent="." unique_id=1731824645 instance=ExtResource("14_yl8jl")]
+[node name="SchoolWall3" parent="." unique_id=1644217364 instance=ExtResource("14_yl8jl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.203, 2, -2.618)
 
 [node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("11_tfknm")]
