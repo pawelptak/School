@@ -28,7 +28,7 @@ public partial class Homework : Node3D
     private int _correctWords;
     private int _totalWords;
 
-    private const double GameDuration = 10.0; // 60 be default
+    private const double GameDuration = 2.0; // 60 be default
     private double _timeRemaining;
     private bool _gameFinished;
     private double _score;
@@ -104,6 +104,8 @@ public partial class Homework : Node3D
 
     private void StartEndCutscene()
     {
+        var customCameraPosition = GetNode<Node3D>("CustomCamera").GlobalPosition;
+
         _cutsceneController.StartDialogue(
             GetNode<Node3D>("Mate"),
             new DialogueLine[]
@@ -118,7 +120,8 @@ public partial class Homework : Node3D
             () =>
             {
                 GetTree().ChangeSceneToFile("res://Scenes/Levels/PolishClass/polish_class.tscn");
-            }
+            },
+            cameraReferencePosition: customCameraPosition
         );
     }
 

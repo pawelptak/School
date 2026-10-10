@@ -30,19 +30,19 @@ public partial class ClassroomTutorial : Node3D
 
         _player.ObjectPickedUp += OnObjectPickedUp;
 
-        //_cutsceneController.StartDialogue(
-        //    _mate,
-        //    [
-        //        new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUp, 3.5f),
-        //        new DialogueLine(DialogueSpeaker.Mate, MateText.LessonEnding, 4.5f),
-        //        new DialogueLine(DialogueSpeaker.Mate, MateText.BreakEnding, 3.5f),
-        //        new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUpInstruction, 2.5f),
-        //        new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.TakeBackpackInstruction, "LPM"), 6.0f),
-        //    ],
-        //    cinematic: true,
-        //    onFinished: OnCinematicDialogueFinished,
-        //    delaySeconds: 2.0f
-        //);
+        _cutsceneController.StartDialogue(
+            _mate,
+            [
+                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUp, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.LessonEnding, 4.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.BreakEnding, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUpInstruction, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.TakeBackpackInstruction, "LPM"), 6.0f),
+            ],
+            cinematic: true,
+            onFinished: OnCinematicDialogueFinished,
+            delaySeconds: 2.0f
+        );
     }
 
     private void OnDoorInteracted()
@@ -85,13 +85,14 @@ public partial class ClassroomTutorial : Node3D
 
         _objectiveMarker.Hide();
 
+        OnGoToDoor();
+
         _cutsceneController.StartDialogue(
             _mate,
             [
                 new DialogueLine(DialogueSpeaker.Mate, MateText.ThrowGood, 2.5f),
                 new DialogueLine(DialogueSpeaker.Mate, MateText.GoToDoor, 4.5f)
-            ],
-            onFinished: OnGoToDoor
+            ]
         );
 
         return true;
