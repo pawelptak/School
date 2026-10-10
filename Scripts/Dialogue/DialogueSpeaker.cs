@@ -1,7 +1,8 @@
 public enum DialogueSpeaker
 {
     Player,
-    Mate
+    Mate,
+    Bully
 }
 
 public static class DialogueSpeakerExtensions
@@ -10,8 +11,9 @@ public static class DialogueSpeakerExtensions
     {
         return speaker switch
         {
-            DialogueSpeaker.Player => CharacterText.PlayerName,
-            DialogueSpeaker.Mate => CharacterText.MateName,
+            DialogueSpeaker.Player => PlayerText.Name,
+            DialogueSpeaker.Mate => MateText.Name,
+            DialogueSpeaker.Bully => BullyText.Name,
             _ => ""
         };
     }

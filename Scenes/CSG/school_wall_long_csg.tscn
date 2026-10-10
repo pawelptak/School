@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dd0hc6ejo10hf"]
+
+[ext_resource type="PackedScene" uid="uid://ma8dl2dn5y2k" path="res://Scenes/Objects/Window/window.tscn" id="1_lboxb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
+albedo_color = Color(0.6117647, 0.74509805, 0.18431373, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+size = Vector3(2.5, 2.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
+size = Vector3(2.6, 0.1, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ei54"]
+albedo_color = Color(0.757661, 0.4805578, 0.28299633, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ury2d"]
+material = SubResource("StandardMaterial3D_5ei54")
+size = Vector3(15, 0.1, 0.03)
+
+[node name="SchoolWall" type="Node3D" unique_id=1370939349]
+
+[node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
+use_collision = true
+size = Vector3(15, 4, 0.5)
+material = SubResource("StandardMaterial3D_lc5oj")
+
+[node name="WindowHole1" type="CSGMesh3D" parent="Wall" unique_id=816145440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.529712, 0.2016412, 0.058843374)
+operation = 2
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Sill1" type="CSGMesh3D" parent="Wall" unique_id=1855850353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.526187, -1.0829448, -0.12042189)
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="WindowHole2" type="CSGMesh3D" parent="Wall" unique_id=238473152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13416243, 0.2016412, 0.058843374)
+operation = 2
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Sill2" type="CSGMesh3D" parent="Wall" unique_id=116728127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13768768, -1.0829448, -0.12042189)
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="WindowHole3" type="CSGMesh3D" parent="Wall" unique_id=433114484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.566277, 0.2016412, 0.058843374)
+operation = 2
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Sill3" type="CSGMesh3D" parent="Wall" unique_id=824426762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5698023, -1.0829448, -0.12042189)
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="Window" parent="." unique_id=1580759604 instance=ExtResource("1_lboxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.595652, 0.21705484, 0.06655908)
+
+[node name="Window2" parent="." unique_id=1049691620 instance=ExtResource("1_lboxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12795919, 0.21705484, 0.06655908)
+
+[node name="Window3" parent="." unique_id=2056835693 instance=ExtResource("1_lboxb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.511522, 0.21705484, 0.06655908)
+
+[node name="Baseboard" type="MeshInstance3D" parent="." unique_id=800031264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9544133, -0.26449287)
+mesh = SubResource("BoxMesh_ury2d")

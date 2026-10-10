@@ -1,3 +1,4 @@
+
 using Godot;
 using System;
 
@@ -6,6 +7,9 @@ public partial class CutsceneController : Node
     private Camera3D _camera;
     private Player _player;
     private DialogueUI _dialogueUI;
+    private InteractableCharacter _currentCharacter;
+    private DialogueLine[] _dialogueLines;
+    private int _currentDialogueLine;
 
     private Vector3 _originalCameraPosition;
     private Vector3 _originalCameraRotation;
@@ -50,7 +54,16 @@ public partial class CutsceneController : Node
 
         GetViewport().SetInputAsHandled();
 
+        bool hasNextLine = _dialogueLines != null
+            && _currentDialogueLine < _dialogueLines.Length - 1;
+
         _dialogueUI.NextMessage();
+
+        if (hasNextLine)
+        {
+            _currentDialogueLine++;
+            UpdateTalkingAnimation();
+        }
     }
 
     public void StartDialogue(
@@ -59,6 +72,14 @@ public partial class CutsceneController : Node
         bool cinematic = false,
         Action onFinished = null)
     {
+        if (_currentCharacter != null)
+            _currentCharacter.SetTalking(false);
+
+        _currentCharacter = character as InteractableCharacter;
+        _dialogueLines = messages;
+        _currentDialogueLine = 0;
+        UpdateTalkingAnimation();
+
         _dialogueUI.ShowDialogue(messages, onFinished);
 
         if (!cinematic)
@@ -141,6 +162,12 @@ public partial class CutsceneController : Node
     {
         DialogueFinished?.Invoke();
 
+        _currentCharacter?.SetTalking(false);
+        _currentCharacter = null;
+        _dialogueLines = null;
+
+        _currentDialogueLine = 0;
+
         if (!_cinematicDialogueActive)
             return;
 
@@ -178,5 +205,16 @@ public partial class CutsceneController : Node
                 CinematicDialogueFinished?.Invoke();
             })
         );
+    }
+
+    private void UpdateTalkingAnimation()
+    {
+        if (_currentCharacter == null || _dialogueLines == null)
+            return;
+
+        bool playerIsSpeaking = _dialogueLines[_currentDialogueLine].Speaker
+            == DialogueSpeaker.Player;
+
+        _currentCharacter.SetTalking(!playerIsSpeaking);
     }
 }
