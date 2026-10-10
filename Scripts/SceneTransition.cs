@@ -1,11 +1,17 @@
+
 using Godot;
 
 public partial class SceneTransition : CanvasLayer
 {
     public static SceneTransition Instance { get; private set; }
 
+    [Signal]
+    public delegate void TransitionFinishedEventHandler();
+
     private ColorRect _colorRect;
     private bool _isTransitioning;
+
+    public bool IsTransitioning => _isTransitioning;
 
     public override void _Ready()
     {
@@ -45,9 +51,11 @@ public partial class SceneTransition : CanvasLayer
         if (error != Error.Ok)
         {
             GD.PrintErr($"Failed to change scene: {error}");
-            await FadeIn(duration);
-            _isTransitioning = false;
 
+            await FadeIn(duration);
+
+            _isTransitioning = false;
+            EmitSignal(SignalName.TransitionFinished);
             return;
         }
 
@@ -56,6 +64,7 @@ public partial class SceneTransition : CanvasLayer
         await FadeIn(duration);
 
         _isTransitioning = false;
+        EmitSignal(SignalName.TransitionFinished);
     }
 
     private async System.Threading.Tasks.Task FadeIn(float duration)
