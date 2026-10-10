@@ -121,7 +121,7 @@ public partial class SpriteAnimator : Node
         }
         else
         {
-            _currentFrames.Clear();
+            _currentFrames = new();
         }
     }
 
