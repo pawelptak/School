@@ -2,11 +2,11 @@ public partial class Bully : InteractableCharacter
 {
     protected override DialogueLine[] GetHitReactionDialogue()
     {
-        return [new DialogueLine(DialogueSpeaker.Mate, BullyText.Interaction)];
+        return [new DialogueLine(DialogueSpeaker.Bully, BullyText.HitByObject)];
     }
 
     protected override DialogueLine[] GetInteractionDialogue()
     {
-        return [new DialogueLine(DialogueSpeaker.Mate, BullyText.HitByObject)];
+        return [new DialogueLine(DialogueSpeaker.Bully, BullyText.Interaction)];
     }
 }

@@ -3,10 +3,13 @@
 [ext_resource type="Script" uid="uid://j7jp1uw4vav6" path="res://Scenes/Characters/Bully/Bully.cs" id="1_n33nh"]
 [ext_resource type="Texture2D" uid="uid://dycanx07f5wxv" path="res://Scenes/Characters/Bully/bully.png" id="2_tp2y2"]
 [ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="3_tp2y2"]
-[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="4_td31i"]
-[ext_resource type="Texture2D" uid="uid://7k17hyvt8dek" path="res://Scenes/Characters/Mate/mate_talk_1.png" id="5_rhor1"]
-[ext_resource type="Texture2D" uid="uid://jgmfcer62oo8" path="res://Scenes/Characters/Mate/mate_talk_2.png" id="6_eynki"]
-[ext_resource type="Texture2D" uid="uid://cjyp12tyaw3s" path="res://Scenes/Characters/Mate/mate_hit.png" id="7_rib6x"]
+[ext_resource type="Texture2D" uid="uid://b0xvru0gcgn3c" path="res://Scenes/Characters/Bully/idle2.png" id="4_td31i"]
+[ext_resource type="Texture2D" uid="uid://b767qowudx4i5" path="res://Scenes/Characters/Bully/idle3.png" id="5_eynki"]
+[ext_resource type="Texture2D" uid="uid://booyj4iiiyo6" path="res://Scenes/Characters/Bully/talk1.png" id="6_rib6x"]
+[ext_resource type="Texture2D" uid="uid://diovfdqf7h8gf" path="res://Scenes/Characters/Bully/talk2.png" id="7_kviak"]
+[ext_resource type="Texture2D" uid="uid://c8vqhvsyg3q5c" path="res://Scenes/Characters/Bully/talk3.png" id="8_mva3c"]
+[ext_resource type="Texture2D" uid="uid://m3sjp1yy5uh2" path="res://Scenes/Characters/Bully/talk4.png" id="9_36pyo"]
+[ext_resource type="Texture2D" uid="uid://40dfav2k68hh" path="res://Scenes/Characters/Bully/hurt.png" id="10_rib6x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
 radius = 0.35
@@ -39,6 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.0688
 [node name="SpriteAnimator" type="Node" parent="." unique_id=205470488 node_paths=PackedStringArray("Sprite")]
 script = ExtResource("3_tp2y2")
 Sprite = NodePath("../Sprite")
-IdleFrames = Array[Texture2D]([ExtResource("4_td31i")])
-TalkingFrames = Array[Texture2D]([ExtResource("5_rhor1"), ExtResource("6_eynki")])
-HitFrames = Array[Texture2D]([ExtResource("7_rib6x")])
+IdleFrames = Array[Texture2D]([ExtResource("2_tp2y2"), ExtResource("4_td31i"), ExtResource("5_eynki"), ExtResource("4_td31i")])
+IdleFrameDuration = 0.3
+TalkingFrames = Array[Texture2D]([ExtResource("6_rib6x"), ExtResource("7_kviak"), ExtResource("8_mva3c"), ExtResource("9_36pyo")])
+HitFrames = Array[Texture2D]([ExtResource("10_rib6x")])
