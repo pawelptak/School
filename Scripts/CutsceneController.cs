@@ -1,3 +1,4 @@
+
 using Godot;
 using System;
 
@@ -6,6 +7,7 @@ public partial class CutsceneController : Node
     private Camera3D _camera;
     private Player _player;
     private DialogueUI _dialogueUI;
+    private InteractableCharacter _currentCharacter;
 
     private Vector3 _originalCameraPosition;
     private Vector3 _originalCameraRotation;
@@ -49,7 +51,6 @@ public partial class CutsceneController : Node
             return;
 
         GetViewport().SetInputAsHandled();
-
         _dialogueUI.NextMessage();
     }
 
@@ -59,6 +60,12 @@ public partial class CutsceneController : Node
         bool cinematic = false,
         Action onFinished = null)
     {
+        if (_currentCharacter != null)
+            _currentCharacter.SetTalking(false);
+
+        _currentCharacter = character as InteractableCharacter;
+        _currentCharacter?.SetTalking(true);
+
         _dialogueUI.ShowDialogue(messages, onFinished);
 
         if (!cinematic)
@@ -140,6 +147,9 @@ public partial class CutsceneController : Node
     private void OnDialogueFinished()
     {
         DialogueFinished?.Invoke();
+
+        _currentCharacter?.SetTalking(false);
+        _currentCharacter = null;
 
         if (!_cinematicDialogueActive)
             return;

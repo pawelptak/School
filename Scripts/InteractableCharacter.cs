@@ -14,8 +14,11 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public Func<ThrowableObject, float, bool> HitReactionOverride { get; set; }
 
+    protected SpriteAnimator SpriteAnimator { get; private set; }
+
     public override void _Ready()
     {
+        SpriteAnimator = GetNode<SpriteAnimator>("SpriteAnimator");
         var interactionArea = GetNode<Area3D>("InteractionArea");
 
         interactionArea.BodyEntered += OnBodyEntered;
@@ -27,6 +30,11 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         return PlayerInRange
             && !player.MovementLocked
             && !IsDialogueVisible();
+    }
+
+    public void SetTalking(bool talking)
+    {
+        SpriteAnimator?.SetTalking(talking);
     }
 
     public void Interact(Player player)
@@ -59,6 +67,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         if (controller?.IsDialogueVisible == true)
             return;
+
+        SpriteAnimator?.PlayHit();
 
         if (HitReactionOverride?.Invoke(throwable, throwForce) == true)
             return;
