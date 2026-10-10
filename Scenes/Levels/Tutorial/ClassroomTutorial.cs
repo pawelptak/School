@@ -4,19 +4,26 @@ public partial class ClassroomTutorial : Node3D
 {
     private Mate _mate;
     private Player _player;
+    private Camera3D _camera;
     private CutsceneController _cutsceneController;
     private ObjectiveMarker _objectiveMarker;
     private Backpack _backpack;
     private bool _doorObjectiveActive;
     private Door _door;
+    private RigidBody3D _playerChair;
+    private RigidBody3D _playerDesk;
 
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
         _player = GetNode<Player>("Player");
+        _camera = _player.GetNode<Camera3D>("Camera3D");
+        _playerChair = GetNode<RigidBody3D>("PlayerChair");
+        _playerDesk = GetNode<RigidBody3D>("PlayerDesk");
+
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _cutsceneController.SetPlayer(_player);
-        _cutsceneController.SetCamera(_player.GetNode<Camera3D>("Camera3D"));
+        _cutsceneController.SetCamera(_camera);
 
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _backpack = GetNode<Backpack>("Backpack");
@@ -30,6 +37,68 @@ public partial class ClassroomTutorial : Node3D
 
         _player.ObjectPickedUp += OnObjectPickedUp;
 
+        _playerChair.Freeze = true;
+        _playerDesk.Freeze = true;
+        _player.MovementLocked = true;
+        _player.CameraLocked = true;
+
+        SetupInitialCamera();
+
+        PlayCameraIntroSequence();
+    }
+
+    private void SetupInitialCamera()
+    {
+        _camera.Position = new Vector3(0.0f, 0.205f, -1.07f);
+        _camera.Fov = 50.0f;
+        _camera.RotationDegrees = new Vector3(-42.0f, 0.0f, 0.0f);
+    }
+
+    private void PlayCameraIntroSequence()
+    {
+        var tween = CreateTween();
+        tween.SetProcessMode(Tween.TweenProcessMode.Idle);
+
+        // Waking up
+        tween.TweenProperty(_camera, "rotation_degrees", new Vector3(1.0f, 0.0f, 0.0f), 1.2f)
+            .SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+
+        // Looking left
+        tween.TweenProperty(_camera, "rotation_degrees", new Vector3(-0.6f, 34.2f, 2.3f), 1.5f)
+            .SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+
+        tween.TweenInterval(0.8f);
+
+        // Looking right
+        tween.TweenProperty(_camera, "rotation_degrees", new Vector3(-5.6f, -46.2f, -2.6f), 1.5f)
+            .SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+
+        tween.TweenInterval(0.3f);
+
+        // Looking up to Mate
+        tween.TweenProperty(_camera, "rotation_degrees", new Vector3(7.9f, -45.9f, 10.4f), 0.4f)
+            .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
+
+        // Standing up from the desk
+        tween.Parallel();
+        tween.TweenProperty(_camera, "position", new Vector3(0.0f, 0.7f, 0.0f), 0.6f);
+        tween.TweenProperty(_camera, "rotation_degrees", Vector3.Zero, 0.6f);
+        tween.TweenProperty(_camera, "fov", 75.0f, 0.6f);
+
+        tween.Finished += OnIntroFinished;
+    }
+
+    private void OnIntroFinished()
+    {
+        _playerChair.Freeze = false;
+        _playerDesk.Freeze = false;
+        _player.MovementLocked = false;
+        _player.CameraLocked = false;
+        StartDialogueAfterIntro();
+    }
+
+    private void StartDialogueAfterIntro()
+    {
         _cutsceneController.StartDialogue(
             _mate,
             [
@@ -41,7 +110,7 @@ public partial class ClassroomTutorial : Node3D
             ],
             cinematic: true,
             onFinished: OnCinematicDialogueFinished,
-            delaySeconds: 2.0f
+            delaySeconds: 0.2f
         );
     }
 

@@ -152,10 +152,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -0.26238602)
 [node name="Chair6" parent="." unique_id=1786291844 groups=["chairs"] instance=ExtResource("7_f3pb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, 0.04455352)
 
-[node name="Desk7" parent="." unique_id=1633584090 instance=ExtResource("6_pkwcm")]
+[node name="PlayerDesk" parent="." unique_id=1633584090 instance=ExtResource("6_pkwcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -5.065106)
 
-[node name="Chair7" parent="." unique_id=633354446 groups=["chairs"] instance=ExtResource("7_f3pb0")]
+[node name="PlayerChair" parent="." unique_id=633354446 groups=["chairs"] instance=ExtResource("7_f3pb0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -4.8651447)
 
 [node name="Desk8" parent="." unique_id=2001969534 instance=ExtResource("6_pkwcm")]
@@ -213,3 +213,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.1
 
 [node name="Desk" parent="." unique_id=1876954106 instance=ExtResource("18_wcjaj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2118897, 0, -6.779463)
+
+[editable path="Player"]
