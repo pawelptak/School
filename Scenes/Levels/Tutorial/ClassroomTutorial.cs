@@ -40,7 +40,8 @@ public partial class ClassroomTutorial : Node3D
                 new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.TakeBackpackInstruction, "LPM"), 6.0f),
             ],
             cinematic: true,
-            onFinished: OnCinematicDialogueFinished
+            onFinished: OnCinematicDialogueFinished,
+            delaySeconds: 2.0f
         );
     }
 

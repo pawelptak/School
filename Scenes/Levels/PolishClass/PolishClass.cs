@@ -19,19 +19,20 @@ public partial class PolishClass : Node3D
         _cutsceneController.StartDialogue(
             _teacher,
             [
-                //new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.Introduction, 3.5f),
-                //new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 3.5f)
-                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 1f)
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.Introduction, 3.5f),
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 3.5f),
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 3.5f)
             ],
             cinematic: true,
             onFinished: SwitchToMate,
-            keepPlayerLockedOnFinish: true
+            keepPlayerLockedOnFinish: true,
+            delaySeconds: 2.0f
         );
     }
 
     private void SwitchToMate()
     {
-        var customCameraPosition = GetNode<Node3D>("CameraMarker").GlobalPosition;
+        var customCameraPosition = GetNode<Node3D>("CustomCameraFar").GlobalPosition;
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -56,12 +57,15 @@ public partial class PolishClass : Node3D
 
     private void BackToMate()
     {
+        var customCameraPosition = GetNode<Node3D>("CustomCameraClose").GlobalPosition;
+
         _cutsceneController.StartDialogue(
             _mate,
             [new DialogueLine(DialogueSpeaker.Mate, string.Empty, 3.5f)],
             cinematic: true,
             onFinished: null,
-            keepPlayerLockedOnFinish: true
+            keepPlayerLockedOnFinish: true,
+            customCameraPosition
         );
     }
 }

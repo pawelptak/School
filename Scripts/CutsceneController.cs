@@ -12,12 +12,14 @@ public partial class CutsceneController : Node
     private int _dialogueSession;
     private bool _autoAdvanceDialogue = true;
 
-    private Vector3 _originalCameraPosition;
-    private Vector3 _originalCameraRotation;
+    private Transform3D _originalCameraTransform;
+    private float _originalCameraFov;
     private bool _hasCapturedOriginalCamera = false;
 
     private bool _cinematicDialogueActive;
     private bool _keepPlayerLockedOnFinish = false;
+
+    private const float CinematicFov = 50f;
 
     public bool IsDialogueVisible => _dialogueUI.Visible;
     public bool IsCinematicDialogueActive => _cinematicDialogueActive;
@@ -63,13 +65,14 @@ public partial class CutsceneController : Node
         NextDialogueLine();
     }
 
-    public void StartDialogue(
+    public async void StartDialogue(
         Node3D character,
         DialogueLine[] messages,
         bool cinematic = false,
         Action onFinished = null,
         bool keepPlayerLockedOnFinish = false,
-        Vector3? cameraReferencePosition = null)
+        Vector3? cameraReferencePosition = null,
+        float delaySeconds = 0f)
     {
         _keepPlayerLockedOnFinish = keepPlayerLockedOnFinish;
 
@@ -77,28 +80,47 @@ public partial class CutsceneController : Node
             _currentCharacter.SetTalking(false);
 
         _dialogueSession++;
+        int currentSession = _dialogueSession;
+
         _currentCharacter = character as InteractableCharacter;
         _dialogueLines = messages;
         _currentDialogueLine = 0;
         _autoAdvanceDialogue = true;
+
+        _cinematicDialogueActive = cinematic;
+
+        if (cinematic)
+        {
+            if (_player != null)
+            {
+                _player.MovementLocked = true;
+                _player.CameraLocked = true;
+            }
+
+            if (delaySeconds > 0f)
+            {
+                await ToSignal(
+                    GetTree().CreateTimer(delaySeconds),
+                    SceneTreeTimer.SignalName.Timeout
+                );
+
+                if (currentSession != _dialogueSession)
+                    return;
+            }
+        }
+
         UpdateTalkingAnimation();
 
         _dialogueUI.ShowDialogue(messages, onFinished);
-
         StartAutoAdvanceDialogue(_dialogueSession);
 
-        _cinematicDialogueActive = true;
-
-        if (_player != null)
-        {
-            _player.MovementLocked = true;
-            _player.CameraLocked = true;
-        }
+        if (!cinematic)
+            return;
 
         if (!_hasCapturedOriginalCamera && _camera != null)
         {
-            _originalCameraPosition = _camera.GlobalPosition;
-            _originalCameraRotation = _camera.GlobalRotation;
+            _originalCameraTransform = _camera.GlobalTransform;
+            _originalCameraFov = _camera.Fov;
             _hasCapturedOriginalCamera = true;
         }
 
@@ -114,54 +136,50 @@ public partial class CutsceneController : Node
             return;
         }
 
-        var referencePosition = cameraReferencePosition ?? _originalCameraPosition;
+        Vector3 targetPosition;
 
-        var directionFromCharacterToCamera =
-            referencePosition - character.GlobalPosition;
-
-        directionFromCharacterToCamera.Y = 0;
-
-        if (directionFromCharacterToCamera.LengthSquared() == 0)
+        if (cameraReferencePosition.HasValue)
         {
-            GD.PrintErr(
-                "Kamera i punkt odniesienia są w tej samej pozycji co rozmówca."
-            );
+            targetPosition = cameraReferencePosition.Value;
+        }
+        else
+        {
+            var referencePosition = _originalCameraTransform.Origin;
+            var directionFromCharacterToCamera = referencePosition - character.GlobalPosition;
+            directionFromCharacterToCamera.Y = 0;
 
-            return;
+            if (directionFromCharacterToCamera.LengthSquared() == 0)
+            {
+                directionFromCharacterToCamera = Vector3.Forward;
+            }
+
+            directionFromCharacterToCamera = directionFromCharacterToCamera.Normalized();
+
+            targetPosition = character.GlobalPosition + directionFromCharacterToCamera * 0.9f;
+            targetPosition.Y = lookAtPoint.GlobalPosition.Y;
         }
 
-        directionFromCharacterToCamera =
-            directionFromCharacterToCamera.Normalized();
-
-        var targetPosition =
-            character.GlobalPosition
-            + directionFromCharacterToCamera * 0.9f;
-
-        targetPosition.Y = lookAtPoint.GlobalPosition.Y;
-
-        var targetRotation = _camera.GlobalTransform
-            .LookingAt(
-                lookAtPoint.GlobalPosition,
-                Vector3.Up
-            )
-            .Basis
-            .GetEuler();
+        var targetTransform = new Transform3D();
+        targetTransform.Origin = targetPosition;
+        targetTransform = targetTransform.LookingAt(
+            lookAtPoint.GlobalPosition,
+            Vector3.Up
+        );
 
         var tween = CreateTween();
-
         tween.SetParallel();
 
         tween.TweenProperty(
             _camera,
-            "global_position",
-            targetPosition,
+            "global_transform",
+            targetTransform,
             0.4
         );
 
         tween.TweenProperty(
             _camera,
-            "global_rotation",
-            targetRotation,
+            "fov",
+            CinematicFov,
             0.4
         );
     }
@@ -189,20 +207,19 @@ public partial class CutsceneController : Node
         _hasCapturedOriginalCamera = false;
 
         var tween = CreateTween();
-
         tween.SetParallel();
 
         tween.TweenProperty(
             _camera,
-            "global_position",
-            _originalCameraPosition,
+            "global_transform",
+            _originalCameraTransform,
             0.4
         );
 
         tween.TweenProperty(
             _camera,
-            "global_rotation",
-            _originalCameraRotation,
+            "fov",
+            _originalCameraFov,
             0.4
         );
 

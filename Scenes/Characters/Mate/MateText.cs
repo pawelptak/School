@@ -13,12 +13,11 @@ public static class MateText
     public const string TakeBackpackInstruction = "Weź tamten [color=#d10412]plecak[/color] i ciśnij nim we mnie za pomocą [color=#77777d]{0}[/color]. Śmiało.";
     public const string ThrowAgain = "Jeszcze raz. Mocniej! Przytrzymaj [color=#77777d]{0}[/color] aby naładować rzut.";
     public const string ThrowGood = "Ała, jak mnie wszystko boli!";
-    public const string GoToDoor = "Jeśli już się obudziłeś, podejdź do [color=#d10412]drzwi[/color], bo spóźnimy się na polski.";
+    public const string GoToDoor = "Jeśli już się obudziłeś, wiesz gdzie są [color=#d10412]drzwi[/color]. Nie chcemy się spóźnić na polski.";
     public const string ThrowWrongItem = "Nie tym! Plecakiem!";
        
     // Level 1
-    public const string HomeWorkQuestion = "Ej, masz to wypracowanie z polskiego?";
-    public const string HomeWorkFollowup = "Szmata zaraz będzie zbierać.";
+    public const string HomeWorkQuestion = "Ej, o czym pisałeś wypracowanie z polskiego?";
     public const string PlayerResponse1 = "...";
     public const string PlayerResponse2 = "Dobra. Ale pozmieniaj tak, żeby się szmaciura nie pokapowała.";
     

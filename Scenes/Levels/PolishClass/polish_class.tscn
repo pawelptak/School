@@ -182,6 +182,7 @@ mesh = SubResource("BoxMesh_ineom")
 
 [node name="Desk1" parent="." unique_id=273984774 instance=ExtResource("5_nabnd")]
 transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.99984455, -0.9617218, 0, -2.6097665)
+freeze = true
 
 [node name="Desk2" parent="." unique_id=1101085720 instance=ExtResource("5_nabnd")]
 transform = Transform3D(0.99824804, 0, 0.05916829, 0, 1, 0, -0.05916829, 0, 0.99824804, -3.5811396, 0, -2.6097665)
@@ -199,6 +200,7 @@ transform = Transform3D(0.9952714, 0, 0.097133175, 0, 1, 0, -0.097133175, 0, 0.9
 
 [node name="Chair13" parent="." unique_id=1952317003 groups=["chairs"] instance=ExtResource("6_t0y5t")]
 transform = Transform3D(0.983402, 0, -0.18144, 0, 1, 0, 0.18144, 0, 0.983402, -0.9476317, 0, -2.156345)
+freeze = true
 
 [node name="Desk10" parent="." unique_id=711703365 instance=ExtResource("5_nabnd")]
 transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.99984455, -0.9617218, 0, 2.0312047)
@@ -394,12 +396,16 @@ region_enabled = true
 region_rect = Rect2(0, 0, 256, 287)
 
 [node name="Player" parent="." unique_id=195847836 instance=ExtResource("22_t0y5t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.034, 1.338, -2.096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.034, 0.63599586, -2.096)
 
 [node name="PolishTeacher" parent="." unique_id=810253095 instance=ExtResource("23_lxbj7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7348375, 0.9215998, -7.274063)
 
-[node name="CameraMarker" type="Node3D" parent="." unique_id=243858672]
+[node name="CustomCameraClose" type="Node3D" parent="." unique_id=243858672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6209226, 1.1510559, -2.311376)
+
+[node name="CustomCameraFar" type="Node3D" parent="." unique_id=559754141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099766, 1.1510559, -2.1555264)
 
 [editable path="Blackboard"]
 [editable path="Mate"]

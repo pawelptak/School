@@ -25,39 +25,13 @@ public partial class Corridor1 : Node3D
     {
         _cutsceneController.StartDialogue(
             _mate,
-            new DialogueLine[]
-            {
-            new DialogueLine(
-                DialogueSpeaker.Mate,
-                MateText.HomeWorkQuestion,
-                3.0f
-            ),
-            new DialogueLine(
-                DialogueSpeaker.Mate,
-                MateText.HomeWorkFollowup,
-                2.5f
-            ),
-            new DialogueLine(
-                DialogueSpeaker.Player,
-                PlayerText.HomeworkResponse,
-                2.5f
-            ),
-            new DialogueLine(
-                DialogueSpeaker.Player,
-                PlayerText.HomeworkRequest,
-                2.5f
-            ),
-            new DialogueLine(
-                DialogueSpeaker.Mate,
-                MateText.PlayerResponse1,
-                1.5f
-            ),
-            new DialogueLine(
-                DialogueSpeaker.Mate,
-                MateText.PlayerResponse2,
-                4.5f
-            )
-            },
+            [
+                new DialogueLine(DialogueSpeaker.Mate, MateText.HomeWorkQuestion, 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkResponse, 2.5f),
+                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkRequest, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, string.Empty, 2f),
+                new DialogueLine(DialogueSpeaker.Mate, MateText.PlayerResponse2, 4.5f)
+            ],
             onFinished: StartHomeworkMinigame
         );
     }
