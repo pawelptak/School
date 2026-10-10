@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vgflhfghxaan"]
 
-[ext_resource type="Script" uid="uid://dejs5miilg3oh" path="res://Scripts/Homework.cs" id="1_gyrdu"]
+[ext_resource type="Script" uid="uid://dejs5miilg3oh" path="res://Scripts/Levels/Homework.cs" id="1_gyrdu"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Models/bench.tscn" id="1_vapn8"]
 [ext_resource type="PackedScene" uid="uid://fj0bm87ekaxu" path="res://Scenes/Models/notebook.tscn" id="2_gyrdu"]
 [ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/popup.tscn" id="2_ofhnx"]

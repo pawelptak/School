@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://c1t5ws580fjk"]
 
-[ext_resource type="Script" uid="uid://c8jmaxnj8fax" path="res://Scripts/ObjectiveMarker.cs" id="1_5hg43"]
+[ext_resource type="Script" uid="uid://c8jmaxnj8fax" path="res://Scripts/Models/ObjectiveMarker.cs" id="1_5hg43"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo1nh"]
 transparency = 1

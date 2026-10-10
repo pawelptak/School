@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bs431iccjtwv8"]
 
-[ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Scripts/Player.cs" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Scripts/Characters/Player.cs" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/interaction_label.tscn" id="2_km8w0"]
 [ext_resource type="PackedScene" uid="uid://ctmaby078nvnr" path="res://Scenes/UI/throw_charge_bar.tscn" id="3_v3drb"]
 
@@ -11,7 +11,6 @@ height = 1.8
 [node name="Player" type="CharacterBody3D" unique_id=195847836 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_4flbx")
-ThrowChargeBarPath = NodePath("ThrowChargeBar")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1519013196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)

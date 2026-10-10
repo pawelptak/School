@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cwhjut61jyndn"]
 
-[ext_resource type="PackedScene" uid="uid://b0yy1fck4hgwx" path="res://Scenes/Models/window.tscn" id="1_51hny"]
+[ext_resource type="PackedScene" uid="uid://ma8dl2dn5y2k" path="res://Scenes/Models/window.tscn" id="1_spw2l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
 albedo_color = Color(0.71067166, 0.69505924, 0.52908987, 1)
@@ -34,7 +34,7 @@ mesh = SubResource("BoxMesh_lc5oj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13768768, -1.0829448, -0.12042189)
 mesh = SubResource("BoxMesh_u3w50")
 
-[node name="Window2" parent="." unique_id=1049691620 instance=ExtResource("1_51hny")]
+[node name="Window2" parent="." unique_id=1049691620 instance=ExtResource("1_spw2l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12795919, 0.21705484, 0.06655908)
 
 [node name="Baseboard" type="MeshInstance3D" parent="." unique_id=800031264]

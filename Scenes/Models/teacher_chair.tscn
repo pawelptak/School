@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://8ydauf77nf52"]
 
-[ext_resource type="Script" uid="uid://yywl1nd7c2o6" path="res://Scripts/TeacherChair.cs" id="1_8gkbs"]
+[ext_resource type="Script" uid="uid://yywl1nd7c2o6" path="res://Scripts/Models/TeacherChair.cs" id="1_8gkbs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
 size = Vector3(0.65722656, 0.57130814, 0.494812)

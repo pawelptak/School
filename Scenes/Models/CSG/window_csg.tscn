@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://b0yy1fck4hgwx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lw1c4"]
+size = Vector3(2.4990234, 1, 0.27001953)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lw1c4"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.29803923)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_lw1c4")
+size = Vector3(2.2873535, 2.2167969, 0.045898438)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oasqr"]
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_lw1c4"]
+material = SubResource("StandardMaterial3D_oasqr")
+size = Vector3(2.5, 2.5, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ma6ws"]
+size = Vector3(1, 2.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oasqr"]
+material = SubResource("StandardMaterial3D_oasqr")
+size = Vector3(2.3, 2.3, 0.2)
+
+[node name="Window" type="StaticBody3D" unique_id=1580759604]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=557508789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03930664)
+shape = SubResource("BoxShape3D_lw1c4")
+
+[node name="Glass" type="MeshInstance3D" parent="." unique_id=112882673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0070840567, -0.014131784, 0.007948875)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="WindowWall" type="CSGMesh3D" parent="." unique_id=192038843]
+operation = 2
+mesh = SubResource("BoxMesh_lw1c4")
+
+[node name="WindowHole1" type="CSGMesh3D" parent="WindowWall" unique_id=1620502499]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56644416, 0, 0.02027893)
+operation = 2
+mesh = SubResource("BoxMesh_ma6ws")
+
+[node name="WindowHole2" type="CSGMesh3D" parent="WindowWall" unique_id=1643834923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5567473, 0, 0.02027893)
+operation = 2
+mesh = SubResource("BoxMesh_ma6ws")
+
+[node name="WindowFrame" type="CSGMesh3D" parent="." unique_id=987948790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.07974005)
+operation = 2
+mesh = SubResource("BoxMesh_oasqr")
+
+[node name="WindowHole3" type="CSGMesh3D" parent="WindowFrame" unique_id=996868868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5567473, 0, -0.059461117)
+operation = 2
+mesh = SubResource("BoxMesh_ma6ws")
+
+[node name="WindowHole2" type="CSGMesh3D" parent="WindowFrame" unique_id=712299451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56644416, 0, -0.059461117)
+operation = 2
+mesh = SubResource("BoxMesh_ma6ws")

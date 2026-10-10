@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://bnxho1wft5j7f"]
+
+[ext_resource type="Script" uid="uid://b32abycqfrw4y" path="res://Scripts/Models/Backpack.cs" id="1_l1ewb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ewb"]
+albedo_color = Color(0.00044530572, 0.12725326, 0.505289, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ury2d"]
+material = SubResource("StandardMaterial3D_l1ewb")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0miv"]
+albedo_color = Color(0.16147009, 0.3910172, 0.4014885, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tplbe"]
+material = SubResource("StandardMaterial3D_d0miv")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.04
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_acjc1"]
+top_radius = 0.05
+bottom_radius = 0.1
+height = 0.05
+
+[sub_resource type="BoxMesh" id="BoxMesh_u3w50"]
+material = SubResource("StandardMaterial3D_l1ewb")
+size = Vector3(0.6, 0.4, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ln4h4"]
+material = SubResource("StandardMaterial3D_d0miv")
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.06
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j6c4f"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.06
+
+[sub_resource type="BoxMesh" id="BoxMesh_tplbe"]
+material = SubResource("StandardMaterial3D_d0miv")
+size = Vector3(0.4, 0.07, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tplbe"]
+albedo_color = Color(0.55561996, 0.55561996, 0.55561996, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_acjc1"]
+material = SubResource("StandardMaterial3D_tplbe")
+size = Vector3(0.4, 0.01, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ln4h4"]
+material = SubResource("StandardMaterial3D_tplbe")
+size = Vector3(0.3, 0.01, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(0.5588379, 0.80249023, 0.41467285)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xgl2"]
+size = Vector3(0.8, 1.2, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_acjc1"]
+albedo_color = Color(0.34906498, 0.34906504, 0.3490649, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_ln4h4"]
+material = SubResource("StandardMaterial3D_acjc1")
+size = Vector3(0.02, 0.03, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.02, 0.03, 0.008)
+
+[node name="Backpack" type="RigidBody3D" unique_id=499470510]
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_l1ewb")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=1059307343]
+transform = Transform3D(0.9, 0, 0, 0, -3.934025e-08, -0.9, 0, 0.9, -3.934025e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ury2d")
+
+[node name="Handle" type="CSGMesh3D" parent="CSGMesh3D" unique_id=1351027769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14726815, -0.28298104)
+mesh = SubResource("CylinderMesh_tplbe")
+
+[node name="HandleHole" type="CSGMesh3D" parent="CSGMesh3D/Handle" unique_id=1022318529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0028030276, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_acjc1")
+
+[node name="Bottom" type="CSGMesh3D" parent="CSGMesh3D" unique_id=1946088810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2923647)
+mesh = SubResource("BoxMesh_u3w50")
+
+[node name="LeftStrap" type="CSGMesh3D" parent="CSGMesh3D" unique_id=567434883]
+transform = Transform3D(-3.46479e-08, -1, 0, 0.7926516, -4.371139e-08, 0, 0, 0, 1.6508154, -0.15899158, 0.18171573, 0.15471119)
+mesh = SubResource("CylinderMesh_ln4h4")
+
+[node name="LeftStrapHole" type="CSGMesh3D" parent="CSGMesh3D/LeftStrap" unique_id=246261152]
+transform = Transform3D(1, 7.1054274e-15, 1.4210855e-14, 0, 1, -2.1175824e-22, 0, 0, 1, -0.03825803, 0, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_j6c4f")
+
+[node name="RightStrap" type="CSGMesh3D" parent="CSGMesh3D" unique_id=943440896]
+transform = Transform3D(-3.46479e-08, -1, 0, 0.7926516, -4.371139e-08, 0, 0, 0, 1.6508154, 0.18394184, 0.18171573, 0.15471122)
+mesh = SubResource("CylinderMesh_ln4h4")
+
+[node name="RightStrapHole" type="CSGMesh3D" parent="CSGMesh3D/RightStrap" unique_id=1382853960]
+transform = Transform3D(1, 7.1054274e-15, 1.4210855e-14, 0, 1, -2.1175824e-22, 0, 0, 1, -0.03825803, 0, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_j6c4f")
+
+[node name="FrontPocket" type="CSGMesh3D" parent="CSGMesh3D" unique_id=739934944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23129936, 0.29236475)
+mesh = SubResource("BoxMesh_tplbe")
+
+[node name="Zipper" type="CSGMesh3D" parent="CSGMesh3D" unique_id=886094281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20335029, -0.090240665)
+mesh = SubResource("BoxMesh_acjc1")
+
+[node name="Zipper2" type="CSGMesh3D" parent="CSGMesh3D" unique_id=929604629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28115064, 0.18025783)
+mesh = SubResource("BoxMesh_ln4h4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=66918632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13117674, -0.030456543)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="PickupArea" type="Area3D" parent="." unique_id=1948668651]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea" unique_id=1334907021]
+shape = SubResource("BoxShape3D_4xgl2")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="." unique_id=1900996853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1310485, 0.08713076, -0.19661109)
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody3D")
+params/impulse_clamp = 16.22
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1248963853]
+transform = Transform3D(1, 0, 0, 0, 0.9999145, -0.013072714, 0, 0.013072714, 0.9999145, -0.13407479, 0.059346393, -0.18822953)
+
+[node name="ZipHolder" type="CSGMesh3D" parent="RigidBody3D" unique_id=395890117]
+transform = Transform3D(1, 0, 0, 0, 1.0000004, 9.313226e-10, 0, -9.313226e-10, 1.0000004, 0, -5.5782497e-05, -0.00426659)
+mesh = SubResource("PrismMesh_ln4h4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1983731609]
+shape = SubResource("BoxShape3D_lc5oj")
