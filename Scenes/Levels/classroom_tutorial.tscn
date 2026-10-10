@@ -24,13 +24,13 @@
 panorama = ExtResource("2_qll2p")
 filter = false
 
-[sub_resource type="Sky" id="Sky_tfknm"]
+[sub_resource type="Sky" id="Sky_ghmdb"]
 sky_material = SubResource("PanoramaSkyMaterial_2rxog")
 
 [sub_resource type="Environment" id="Environment_4xgl2"]
 background_mode = 2
 background_color = Color(0, 0, 0.9529412, 1)
-sky = SubResource("Sky_tfknm")
+sky = SubResource("Sky_ghmdb")
 sdfgi_read_sky_light = false
 sdfgi_bounce_feedback = 1.61
 
@@ -178,7 +178,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.86
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("7_7gvyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24127889, 1.0094546, -5.2589436)
 
-[node name="Backpack" parent="." unique_id=499470510 instance=ExtResource("9_ubwdy")]
+[node name="Backpack_heavy" parent="." unique_id=499470510 instance=ExtResource("9_ubwdy")]
 transform = Transform3D(0.35656482, 0, 0.9342706, 0, 1, 0, -0.9342706, 0, 0.35656482, 2.6167233, 0.58765507, -4.2305717)
 
 [node name="ObjectiveMarker" parent="." unique_id=1928698264 instance=ExtResource("12_me4gt")]

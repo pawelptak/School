@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://c25px5x6yo6ad"]
 
 [ext_resource type="Script" uid="uid://bmk37yth4de1h" path="res://Scripts/Corridor1.cs" id="1_64j8y"]
-[ext_resource type="Texture2D" uid="uid://7p8iaygxtryi" path="res://Assets/Textures/wall.jpg" id="1_axue6"]
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/Models/door.tscn" id="2_1wlac"]
+[ext_resource type="PackedScene" uid="uid://b1kdypswbhvhb" path="res://Scenes/Models/corridor_wall_no_window.tscn" id="3_gmee5"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Models/player.tscn" id="3_ny66m"]
 [ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Models/mate.tscn" id="4_nul7m"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_us0rg"]
 [ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Models/objective_marker.tscn" id="8_ole62"]
+[ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="9_7tnmo"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Models/bench.tscn" id="9_e3gwq"]
-
-[sub_resource type="Environment" id="Environment_axue6"]
+[ext_resource type="PackedScene" uid="uid://cwhjut61jyndn" path="res://Scenes/Models/corridor_wall_window.tscn" id="10_gmee5"]
+[ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/Models/ceiling_lamp.tscn" id="11_erd82"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sbuws"]
-size = Vector3(10, 0.2, 5)
+size = Vector3(15.009766, 0.2, 9.904297)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
 albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
@@ -20,20 +21,31 @@ roughness = 0.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_axue6"]
 material = SubResource("StandardMaterial3D_ubwdy")
-size = Vector3(10, 0.2, 5)
+size = Vector3(15, 0.2, 10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1wlac"]
-albedo_texture = ExtResource("1_axue6")
-uv1_scale = Vector3(20, 3, 5)
+[sub_resource type="BoxMesh" id="BoxMesh_gmee5"]
+material = SubResource("StandardMaterial3D_ubwdy")
+size = Vector3(15, 0.2, 8.5)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gmee5"]
+panorama = ExtResource("9_7tnmo")
+filter = false
+
+[sub_resource type="Sky" id="Sky_tfknm"]
+sky_material = SubResource("PanoramaSkyMaterial_gmee5")
+
+[sub_resource type="Environment" id="Environment_erd82"]
+background_mode = 2
+background_color = Color(0, 0, 0.9529412, 1)
+sky = SubResource("Sky_tfknm")
+sdfgi_read_sky_light = false
+sdfgi_bounce_feedback = 1.61
 
 [node name="Corridor1" type="Node3D" unique_id=64099720]
 script = ExtResource("1_64j8y")
 
 [node name="ObjectiveMarker" parent="." unique_id=1928698264 instance=ExtResource("8_ole62")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.448425, 2.93156, 1.7687824)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=252773854]
-environment = SubResource("Environment_axue6")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.448425, 2.93156, 2.7783558)
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1533640994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
@@ -44,49 +56,59 @@ shape = SubResource("BoxShape3D_sbuws")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1046904526]
 mesh = SubResource("BoxMesh_axue6")
 
-[node name="WallSouth" type="CSGBox3D" parent="." unique_id=315952328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3866501, 2.3936589)
-use_collision = true
-size = Vector3(10, 3, 0.2)
-material = SubResource("StandardMaterial3D_1wlac")
+[node name="Ceiling" type="StaticBody3D" parent="." unique_id=1748208615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
 
-[node name="WallSouth2" type="CSGBox3D" parent="." unique_id=118258768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3866501, -2.3961084)
-use_collision = true
-size = Vector3(10, 3, 0.2)
-material = SubResource("StandardMaterial3D_1wlac")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1701199231]
+shape = SubResource("BoxShape3D_sbuws")
 
-[node name="WallSouth3" type="CSGBox3D" parent="." unique_id=1651749861]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.946281, 1.3866501, -0.006651163)
-use_collision = true
-size = Vector3(5, 3, 0.2)
-material = SubResource("StandardMaterial3D_1wlac")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=216239978]
+mesh = SubResource("BoxMesh_gmee5")
 
-[node name="WallSouth4" type="CSGBox3D" parent="." unique_id=1079250111]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.0080876, 1.3866501, -0.006651163)
-use_collision = true
-size = Vector3(5, 3, 0.2)
-material = SubResource("StandardMaterial3D_1wlac")
+[node name="WallSouth" parent="." unique_id=1370939349 instance=ExtResource("3_gmee5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3.6445372)
+
+[node name="WallSouth2" parent="." unique_id=552495209 instance=ExtResource("3_gmee5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -3.9792082)
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=695378119]
 transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 0, 0)
+visible = false
 
 [node name="TutorialDoor" parent="." unique_id=1410858223 instance=ExtResource("2_1wlac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5482433, 1.5, -2.2653723)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5482433, 1.5, -3.6673174)
 
 [node name="ObjectiveDoor" parent="." unique_id=2121851653 instance=ExtResource("2_1wlac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.381708, 1.5, 2.3617358)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.381708, 1.5, 3.3713093)
 
 [node name="Player" parent="." unique_id=195847836 instance=ExtResource("3_ny66m")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.7857947, 1, -1.6211004)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.7857947, 1, -3.0230455)
 
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("4_nul7m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4695992, 1.0094546, 1.6776567)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4695992, 1.0094546, 2.68723)
 
 [node name="CutsceneController" parent="." unique_id=2116338866 instance=ExtResource("7_us0rg")]
 
 [node name="Bench" parent="." unique_id=1804631136 instance=ExtResource("9_e3gwq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1976948, 0.3057264, -1.8741423)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.838889, 0.3057264, -3.2610345)
 
 [node name="Bench2" parent="." unique_id=1698028064 instance=ExtResource("9_e3gwq")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.3523493, 0.3057264, -0.049833357)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.5194016, 0.3057264, -0.17131406)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2008735818]
+environment = SubResource("Environment_erd82")
+
+[node name="SchoolWall" parent="." unique_id=911294983 instance=ExtResource("10_gmee5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.3419886, 2.0044143, -0.024910927)
+
+[node name="SchoolWall2" parent="." unique_id=1753431324 instance=ExtResource("10_gmee5")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.354212, 2.0044143, -0.024910927)
+
+[node name="CeilingLamp" parent="." unique_id=2054856090 instance=ExtResource("11_erd82")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.3501334, 3.7067113, -0.011970043)
+
+[node name="CeilingLamp2" parent="." unique_id=386696828 instance=ExtResource("11_erd82")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.032859325, 3.7067113, -0.011970043)
+
+[node name="CeilingLamp3" parent="." unique_id=1243256458 instance=ExtResource("11_erd82")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5527244, 3.7067113, -0.011970043)
