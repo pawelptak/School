@@ -167,6 +167,9 @@ public partial class CutsceneController : Node
         );
 
         var tween = CreateTween();
+        tween.SetTrans(Tween.TransitionType.Cubic);
+        tween.SetEase(Tween.EaseType.Out);
+
         tween.SetParallel();
 
         tween.TweenProperty(
