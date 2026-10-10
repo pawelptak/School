@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b1kdypswbhvhb" path="res://Scenes/CSG/corridor_wall_no_window_csg.tscn" id="3_4vx7a"]
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/CSG/door_csg.tscn" id="4_dvwus"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="5_t8jgm"]
+[ext_resource type="Script" uid="uid://corjvlmdfawd4" path="res://Scenes/Levels/Level1Corridor/TutorialAreaDoor.cs" id="5_xjq1u"]
 [ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Characters/Mate/mate.tscn" id="6_nemqh"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_q5orf"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="8_cpxmm"]
@@ -78,6 +79,7 @@ visible = false
 
 [node name="TutorialDoor" parent="." unique_id=1410858223 instance=ExtResource("4_dvwus")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5482433, 1.5, -3.6673174)
+script = ExtResource("5_xjq1u")
 
 [node name="ObjectiveDoor" parent="." unique_id=2121851653 instance=ExtResource("4_dvwus")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.381708, 1.5, 3.3713093)
