@@ -119,7 +119,7 @@ public partial class Homework : Node3D
             true,
             () =>
             {
-                GetTree().ChangeSceneToFile("res://Scenes/Levels/PolishClass/polish_class.tscn");
+                SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PolishClass/polish_class.tscn");
             },
             cameraReferencePosition: customCameraPosition
         );

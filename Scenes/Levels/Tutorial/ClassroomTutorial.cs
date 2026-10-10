@@ -116,7 +116,7 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnDoorInteracted()
     {
-        GetTree().ChangeSceneToFile("res://Scenes/Levels/Level1Corridor/corridor_1.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1.tscn");
     }
 
     private void OnCinematicDialogueFinished()

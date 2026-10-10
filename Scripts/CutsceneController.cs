@@ -11,6 +11,7 @@ public partial class CutsceneController : Node
     private int _currentDialogueLine;
     private int _dialogueSession;
     private bool _autoAdvanceDialogue = true;
+    private Tween _cameraTween;
 
     private Transform3D _originalCameraTransform;
     private float _originalCameraFov;
@@ -41,6 +42,28 @@ public partial class CutsceneController : Node
     public void SetPlayer(Player player)
     {
         _player = player;
+    }
+
+    public void StopForSceneTransition()
+    {
+        _dialogueSession++;
+        _autoAdvanceDialogue = false;
+        _cinematicDialogueActive = false;
+
+        _cameraTween?.Kill();
+        _cameraTween = null;
+
+        _currentCharacter?.SetTalking(false);
+        _currentCharacter = null;
+        _dialogueLines = null;
+
+        if (_player != null)
+        {
+            _player.MovementLocked = true;
+            _player.CameraLocked = true;
+        }
+
+        _dialogueUI.Hide();
     }
 
     public override void _Input(InputEvent @event)
@@ -166,7 +189,10 @@ public partial class CutsceneController : Node
             Vector3.Up
         );
 
-        var tween = CreateTween();
+        _cameraTween?.Kill();
+        _cameraTween = CreateTween();
+        var tween = _cameraTween;
+
         tween.SetTrans(Tween.TransitionType.Cubic);
         tween.SetEase(Tween.EaseType.Out);
 
@@ -209,7 +235,10 @@ public partial class CutsceneController : Node
 
         _hasCapturedOriginalCamera = false;
 
-        var tween = CreateTween();
+        _cameraTween?.Kill();
+        _cameraTween = CreateTween();
+        var tween = _cameraTween;
+
         tween.SetParallel();
 
         tween.TweenProperty(
