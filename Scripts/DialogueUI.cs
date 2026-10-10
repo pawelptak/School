@@ -60,6 +60,6 @@ public partial class DialogueUI : Control
 	{
 		var message = _messages[_currentMessage];
 
-		_text.Text = $"[color=#ff9900]{message.SpeakerName}:[/color] {message.Text}";
+        _text.Text = !string.IsNullOrWhiteSpace(message.Text) ? $"[color=#ff9900]{message.SpeakerName}:[/color] {message.Text}" : string.Empty;
 	}
 }
