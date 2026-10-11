@@ -10,6 +10,7 @@ public partial class NpcPatrol : Node
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
+    private SpriteAnimator _spriteAnimator;
     private Node3D _currentTarget;
     private bool _initialized;
 
@@ -17,6 +18,8 @@ public partial class NpcPatrol : Node
     {
         _npc = GetParent() as CharacterBody3D;
         _agent = _npc?.GetNodeOrNull<NavigationAgent3D>("NavigationAgent3D");
+
+        _spriteAnimator = _npc?.GetNodeOrNull<SpriteAnimator>("SpriteAnimator");
 
         if (_npc == null || _agent == null || PatrolPointA == null || PatrolPointB == null)
         {
@@ -35,6 +38,7 @@ public partial class NpcPatrol : Node
         _agent.TargetPosition = _currentTarget.GlobalPosition;
         _initialized = true;
 
+        GD.Print($"[DEBUG] Nawigacja gotowa. Pierwszy cel: {_currentTarget.GlobalPosition}");
     }
 
     public override void _PhysicsProcess(double dt)
@@ -52,14 +56,16 @@ public partial class NpcPatrol : Node
         }
 
         var path = _agent.GetCurrentNavigationPath();
-
         Vector3 nextWaypoint = (path.Length >= 2) ? path[1] : _currentTarget.GlobalPosition;
 
         Vector3 direction = nextWaypoint - _npc.GlobalPosition;
         direction.Y = 0;
 
+        bool isMoving = false; 
+
         if (direction.LengthSquared() > 0.001f)
         {
+            isMoving = true;
             direction = direction.Normalized();
 
             Vector3 velocity = _npc.Velocity;
@@ -90,6 +96,8 @@ public partial class NpcPatrol : Node
             velocity.Z = 0;
             _npc.Velocity = velocity;
         }
+
+        _spriteAnimator?.SetMoving(isMoving);
 
         _npc.MoveAndSlide();
     }
