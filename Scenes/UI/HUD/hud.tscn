@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://pguuxp2w8q1t"]
+
+[ext_resource type="Script" uid="uid://byci7io1rl3tr" path="res://Scenes/UI/HUD/Hud.cs" id="1_e0a1q"]
+[ext_resource type="Texture2D" uid="uid://dm4r0wqs0q5sg" path="res://Assets/Textures/crosshair.png" id="2_l566u"]
+
+[node name="HUD" type="CanvasLayer" unique_id=185172023]
+script = ExtResource("1_e0a1q")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1485926744]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="TextureRect" parent="CenterContainer" unique_id=1669767235]
+layout_mode = 2
+texture = ExtResource("2_l566u")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1855753459]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 1400
+theme_override_constants/margin_bottom = 100
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer" unique_id=1291265082]
+layout_mode = 2
+size_flags_vertical = 8

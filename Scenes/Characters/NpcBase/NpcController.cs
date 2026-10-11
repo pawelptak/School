@@ -16,6 +16,7 @@ public partial class NpcController : Node
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
     [Export] public float WaitTime { get; set; } = 2.0f;
     [Export] public float AttackDistance { get; set; } = 1.2f;
+    [Export] public float AttackCooldown { get; set; } = 1.5f; // Czas w sekundach między atakami
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -28,6 +29,8 @@ public partial class NpcController : Node
 
     private NpcState _currentState = NpcState.Patrol;
     private Node3D _chaseTarget;
+
+    private float _attackTimer = 0.0f; // Licznik czasu do kolejnego ataku
 
     public override async void _Ready()
     {
@@ -59,6 +62,12 @@ public partial class NpcController : Node
     {
         if (!_initialized || _agent == null || _npc == null)
             return;
+
+        // Aktualizujemy timer ataku w każdej klatce, jeśli jest większy od zera
+        if (_attackTimer > 0.0f)
+        {
+            _attackTimer -= (float)dt;
+        }
 
         switch (_currentState)
         {
@@ -115,15 +124,37 @@ public partial class NpcController : Node
         Vector3 targetFlat = _chaseTarget.GlobalPosition;
         targetFlat.Y = _npc.GlobalPosition.Y;
 
+        // Jeśli dotarliśmy na odległość ataku
         if (_npc.GlobalPosition.DistanceTo(targetFlat) <= AttackDistance)
         {
             ApplyGravityAndStop(dt);
             _spriteAnimator?.SetMoving(false);
-            // Tutaj w przyszłości wywołasz logikę ataku
+
+            // Sprawdzamy czy minął czas cooldownu
+            if (_attackTimer <= 0.0f)
+            {
+                AttackPlayer();
+                _attackTimer = AttackCooldown; // Resetujemy licznik
+            }
+
             return;
         }
 
         MoveTowardTarget(_chaseTarget.GlobalPosition, dt);
+    }
+
+    private void AttackPlayer()
+    {
+        var healthController = _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
+        if (healthController != null)
+        {
+            healthController.TakeDamage(10.0f);
+            GD.Print($"[COMBAT] {_npc.Name} attacks player for 10 damage!");
+        }
+        else
+        {
+            GD.PushWarning($"[COMBAT] {_npc.Name} tried to attack, but HealthController was not found on target!");
+        }
     }
 
     private void ProcessIdle(double dt)
@@ -207,6 +238,7 @@ public partial class NpcController : Node
     {
         _currentState = NpcState.Chase;
         _chaseTarget = target;
+        _attackTimer = 0.0f; // Pozwól zaatakować od razu po dobiegnięciu
         GD.Print($"[COMBAT] {_npc.Name} started chasing {target.Name}.");
     }
 

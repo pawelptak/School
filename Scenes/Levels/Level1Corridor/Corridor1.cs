@@ -8,6 +8,8 @@ public partial class Corridor1 : Node3D
     private CutsceneController _cutsceneController;
     private ObjectiveMarker _objectiveMarker;
 
+    private Player _player;
+
     public override void _Ready()
     {
         _mate = GetNode<Mate>("Mate");
@@ -20,6 +22,7 @@ public partial class Corridor1 : Node3D
         _student.InteractionRequested += OnStudentInteractionRequested;
 
         _studentController = GetNode<NpcController>("AsianStudentMale/NpcController");
+        _player = GetNode<Player>("Player");
     }
 
     private void OnMateInteractionRequested(Player player)
@@ -55,7 +58,7 @@ public partial class Corridor1 : Node3D
             [
                 new DialogueLine(DialogueSpeaker.AsianStudentMale, "O ty", 1.0f),
             ],
-            onFinished: () => _studentController.StartChase(_mate)
+            onFinished: () => _studentController.StartChase(_player)
         );
     }
 }
