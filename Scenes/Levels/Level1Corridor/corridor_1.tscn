@@ -6,13 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/CSG/door_csg.tscn" id="4_dvwus"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="5_t8jgm"]
 [ext_resource type="Script" uid="uid://corjvlmdfawd4" path="res://Scenes/Levels/Level1Corridor/TutorialAreaDoor.cs" id="5_xjq1u"]
-[ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Characters/Mate/mate.tscn" id="6_nemqh"]
+[ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="7_4vx7a"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_q5orf"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="8_cpxmm"]
 [ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="9_gxldj"]
 [ext_resource type="PackedScene" uid="uid://cwhjut61jyndn" path="res://Scenes/CSG/corridor_wall_window_csg.tscn" id="10_022ul"]
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="11_mwxxd"]
-[ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="12_o4rxx"]
+[ext_resource type="PackedScene" uid="uid://vyfqt5i8nyaf" path="res://Scenes/Characters/Bully/bully_inherited.tscn" id="13_4vx7a"]
 [ext_resource type="PackedScene" uid="uid://cv67ux1ekjam" path="res://Scenes/Characters/AsianStudentMale/asian_student_male.tscn" id="14_4vx7a"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4vx7a"]
@@ -98,7 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.381708, 1.5, 3.3713093)
 [node name="Player" parent="." unique_id=195847836 instance=ExtResource("5_t8jgm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.7857947, 1, -3.0230455)
 
-[node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_nemqh")]
+[node name="Mate" parent="." unique_id=664278660 instance=ExtResource("7_4vx7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4695992, 1.0094546, 2.68723)
 
 [node name="CutsceneController" parent="." unique_id=2116338866 instance=ExtResource("7_q5orf")]
@@ -127,11 +127,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.03
 [node name="CeilingLamp3" parent="." unique_id=1243256458 instance=ExtResource("11_mwxxd")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5527244, 3.7067113, -0.011970043)
 
-[node name="Bully" parent="." unique_id=1834268325 instance=ExtResource("12_o4rxx")]
+[node name="Bully" parent="." unique_id=1074598417 instance=ExtResource("13_4vx7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)
 
 [node name="AsianStudentMale" parent="." unique_id=1866947794 instance=ExtResource("14_4vx7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55336, 0.9215998, 2.0479054)
+
+[node name="DialogueLookAtPoint" parent="AsianStudentMale" index="3" unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
 
 [node name="NpcPatrolController" parent="AsianStudentMale" index="6" unique_id=1611051103 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
 PatrolPointA = NodePath("../../PatrolPointA")

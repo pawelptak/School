@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dg7gy1xp4uyo5"]
 
+[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="1_ut67d"]
 [ext_resource type="Script" uid="uid://d15q0r5gw66wh" path="res://Scenes/Characters/NpcBase/NpcPatrol.cs" id="2_q4r0h"]
 [ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="3_jxhs3"]
 
@@ -16,6 +17,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
 pixel_size = 0.004
 billboard = 2
 texture_filter = 0
+texture = ExtResource("1_ut67d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2073062423]
 shape = SubResource("CapsuleShape3D_crm6m")
@@ -27,7 +29,7 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_crm6m")
 
 [node name="DialogueLookAtPoint" type="Marker3D" parent="." unique_id=1460371450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0027945638, 0.75315595, 0.0024494529)
 
 [node name="SpriteAnimator" type="Node" parent="." unique_id=205470488 node_paths=PackedStringArray("Sprite")]
 script = ExtResource("3_jxhs3")

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bymnc5e5vfbpn"]
+
+[ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="2_re518"]
+[ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="3_wd4p8"]
+[ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="12_3q0to"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
+panorama = ExtResource("2_re518")
+filter = false
+
+[sub_resource type="Sky" id="Sky_ghmdb"]
+sky_material = SubResource("PanoramaSkyMaterial_2rxog")
+
+[sub_resource type="Environment" id="Environment_4xgl2"]
+background_mode = 2
+background_color = Color(0, 0, 0.9529412, 1)
+sky = SubResource("Sky_ghmdb")
+sdfgi_read_sky_light = false
+sdfgi_bounce_feedback = 1.61
+
+[node name="LevelBase" type="Node3D" unique_id=513644933]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1096299740]
+environment = SubResource("Environment_4xgl2")
+
+[node name="Player" parent="." unique_id=195847836 instance=ExtResource("3_wd4p8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.0687065, 1, 1.0880889)
+collision_layer = 3
+
+[node name="Light" type="DirectionalLight3D" parent="." unique_id=404113648]
+transform = Transform3D(0.8660254, 0.3535534, -0.3535534, 0, 0.7071068, 0.7071068, 0.5, -0.61237246, 0.61237246, 0, 0, 0)
+visible = false
+
+[node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("12_3q0to")]
+
+[editable path="Player"]

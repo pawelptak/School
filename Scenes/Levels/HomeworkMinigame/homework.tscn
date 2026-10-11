@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://fj0bm87ekaxu" path="res://Scenes/Objects/Notebook/notebook.tscn" id="3_25i35"]
 [ext_resource type="PackedScene" uid="uid://cteqtw5tay2r7" path="res://Scenes/UI/timer.tscn" id="4_6h1r0"]
 [ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/popup.tscn" id="5_2q1sh"]
-[ext_resource type="PackedScene" uid="uid://c6c72dv42b7eb" path="res://Scenes/Characters/Mate/mate.tscn" id="6_s2elu"]
+[ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="6_e76f7"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_sxbsr"]
 
 [sub_resource type="Environment" id="Environment_vapn8"]
@@ -41,7 +41,7 @@ environment = SubResource("Environment_vapn8")
 
 [node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("5_2q1sh")]
 
-[node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_s2elu")]
+[node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_e76f7")]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.1493435, -2.312602, 3.4158916)
 
 [node name="CutsceneController" parent="." unique_id=1251273715 instance=ExtResource("7_sxbsr")]
