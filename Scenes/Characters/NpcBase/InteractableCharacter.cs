@@ -89,7 +89,13 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         if (_isDefeated)
             return;
 
-        _healthController?.TakeDamage(throwable.Damage);
+        float damage = throwable.CalculateDamage();
+        _healthController?.TakeDamage(damage);
+
+        GD.Print(
+            $"[COMBAT] {Name} hit by {throwable.Name}. " +
+            $"ThrowForce={throwForce:F1}, Damage={damage:F1}"
+        );
 
         _npcController?.ApplyHitEffects(
             throwable,
