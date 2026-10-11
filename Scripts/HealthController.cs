@@ -21,7 +21,7 @@ public partial class HealthController : Node
 
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0.0f, MaxHealth);
 
-        GD.Print($"[PLAYER HEALTH] Otrzymano {amount} obrażeń! Pozostało HP: {CurrentHealth}/{MaxHealth}");
+        GD.Print($"[PLAYER HEALTH] {amount} damage taken! Remaining HP: {CurrentHealth}/{MaxHealth}");
         HealthChanged?.Invoke(CurrentHealth);
 
         if (CurrentHealth <= 0.0f)
@@ -32,6 +32,7 @@ public partial class HealthController : Node
 
     private void Die()
     {
+        GD.Print("[COMBAT] Player died.");
         Died?.Invoke();
     }
 }

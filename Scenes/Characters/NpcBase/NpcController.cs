@@ -16,7 +16,8 @@ public partial class NpcController : Node
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
     [Export] public float WaitTime { get; set; } = 2.0f;
     [Export] public float AttackDistance { get; set; } = 1.2f;
-    [Export] public float AttackCooldown { get; set; } = 1.5f; // Czas w sekundach między atakami
+    [Export] public float AttackCooldown { get; set; } = 1.5f;
+    [Export] public float AttackDamage { get; set; } = 50.0f; // 10.0 by default
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -148,8 +149,8 @@ public partial class NpcController : Node
         var healthController = _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
         if (healthController != null)
         {
-            healthController.TakeDamage(10.0f);
-            GD.Print($"[COMBAT] {_npc.Name} attacks player for 10 damage!");
+            healthController.TakeDamage(AttackDamage);
+            GD.Print($"[COMBAT] {_npc.Name} attacks player for {AttackDamage} damage!");
         }
         else
         {

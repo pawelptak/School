@@ -30,3 +30,41 @@ theme_override_constants/margin_bottom = 100
 [node name="HealthBar" type="ProgressBar" parent="MarginContainer" unique_id=1291265082]
 layout_mode = 2
 size_flags_vertical = 8
+
+[node name="DeathScreen" type="Control" parent="." unique_id=1868006012]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen" unique_id=2120341233]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21176471, 0, 0, 0.74509805)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen" unique_id=347495484]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="DeathScreen/VBoxContainer" unique_id=806720465]
+layout_mode = 2
+theme_override_font_sizes/font_size = 150
+text = "NIE ŻYJESZ."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="DeathScreen/VBoxContainer" unique_id=2091897991]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+text = "Życie to walka. Spróbuj ponownie."

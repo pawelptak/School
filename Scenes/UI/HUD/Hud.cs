@@ -3,46 +3,95 @@ using Godot;
 public partial class Hud : CanvasLayer
 {
     private ProgressBar _healthBar;
+    private HealthController _healthController;
+    private Control _deathScreen;
 
-    public override async void _Ready()
+    public override void _Ready()
     {
         _healthBar = GetNode<ProgressBar>("MarginContainer/HealthBar");
+        _deathScreen = GetNode<Control>("DeathScreen");
+        _deathScreen.Hide();
 
-        // Wait one frame to ensure the player and its components are fully initialized
-        await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+        var restartButton = _deathScreen.GetNodeOrNull<Button>("VBoxContainer/RestartButton");
+
+        if (restartButton != null)
+            restartButton.Pressed += OnRestartPressed;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_healthController != null && GodotObject.IsInstanceValid(_healthController))
+            return;
+
+        _healthController = null;
 
         var player = GetTree().GetFirstNodeInGroup("player");
-        var healthController = player?.GetNodeOrNull<HealthController>("HealthController");
+        var controller = player?.GetNodeOrNull<HealthController>("HealthController");
 
-        if (healthController != null)
-        {
-            _healthBar.MaxValue = healthController.MaxHealth;
-            _healthBar.Value = healthController.CurrentHealth;
+        if (controller == null)
+            return;
 
-            GD.Print($"[HUD] Initialized health bar: {healthController.CurrentHealth} / {healthController.MaxHealth}");
+        _healthController = controller;
+        _healthBar.MaxValue = controller.MaxHealth;
+        _healthBar.Value = controller.CurrentHealth;
 
-            healthController.HealthChanged += OnHealthChanged;
-        }
-        else
-        {
-            GD.PushWarning("[HUD] Player or HealthController not found!");
-        }
+        controller.HealthChanged += OnHealthChanged;
+        controller.Died += OnPlayerDied;
+
+        GD.Print("[HUD] HealthController connected.");
     }
 
     private void OnHealthChanged(float newHealth)
     {
-        if (_healthBar != null)
-            _healthBar.Value = newHealth;
+        _healthBar.Value = newHealth;
+    }
+
+    private void OnPlayerDied()
+    {
+        _deathScreen.Show();
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+
+        var player = GetTree().GetFirstNodeInGroup("player");
+
+        if (player != null)
+        {
+            player.SetProcess(false);
+            player.SetPhysicsProcess(false);
+            player.SetProcessInput(false);
+        }
+    }
+
+    private void OnRestartPressed()
+    {
+        _deathScreen.Hide();
+
+        if (_healthController != null && GodotObject.IsInstanceValid(_healthController))
+        {
+            _healthController.HealthChanged -= OnHealthChanged;
+            _healthController.Died -= OnPlayerDied;
+        }
+
+        _healthController = null;
+
+        GetTree().Paused = false;
+        GetTree().ReloadCurrentScene();
+
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+
+        CallDeferred(nameof(RefreshHealthController));
+    }
+
+    private void RefreshHealthController()
+    {
+        _healthController = null;
     }
 
     public override void _ExitTree()
     {
-        var player = GetTree().GetFirstNodeInGroup("Player");
-        var healthController = player?.GetNodeOrNull<HealthController>("HealthController");
-        
-        if (healthController != null)
+        if (_healthController != null && GodotObject.IsInstanceValid(_healthController))
         {
-            healthController.HealthChanged -= OnHealthChanged;
+            _healthController.HealthChanged -= OnHealthChanged;
+            _healthController.Died -= OnPlayerDied;
         }
     }
 }
