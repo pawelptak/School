@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv67ux1ekjam"]
 
-[ext_resource type="PackedScene" uid="uid://dg7gy1xp4uyo5" path="res://Scenes/Characters/NpcBase/npc_base.tscn" id="1_751tc"]
+[ext_resource type="PackedScene" uid="uid://djm0nowbi57x7" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_751tc"]
 [ext_resource type="Script" uid="uid://cvaagfsij72wv" path="res://Scenes/Characters/AsianStudentMale/AsianStudentMale.cs" id="2_htg4s"]
 [ext_resource type="Texture2D" uid="uid://cdvoxrbgosxvx" path="res://Scenes/Characters/AsianStudentMale/idle.png" id="3_jffg4"]
 [ext_resource type="Texture2D" uid="uid://d2huci0xu53o4" path="res://Scenes/Characters/AsianStudentMale/talk1.png" id="4_7pvp1"]

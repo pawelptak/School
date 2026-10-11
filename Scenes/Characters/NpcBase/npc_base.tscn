@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dg7gy1xp4uyo5"]
 
 [ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="1_ut67d"]
-[ext_resource type="Script" uid="uid://d15q0r5gw66wh" path="res://Scenes/Characters/NpcBase/NpcPatrol.cs" id="2_q4r0h"]
 [ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="3_jxhs3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
@@ -35,10 +34,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0027945638, 0.75315595, 0.0
 script = ExtResource("3_jxhs3")
 Sprite = NodePath("../Sprite")
 IdleFrameDuration = 0.3
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1875793349]
-path_desired_distance = 0.5
-target_desired_distance = 0.5
-
-[node name="NpcPatrolController" type="Node" parent="." unique_id=1611051103]
-script = ExtResource("2_q4r0h")

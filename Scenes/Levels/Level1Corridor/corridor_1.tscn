@@ -136,7 +136,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55336, 0.9215998, 2.0479054
 [node name="DialogueLookAtPoint" parent="AsianStudentMale" index="3" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
 
-[node name="NpcPatrolController" parent="AsianStudentMale" index="6" unique_id=1611051103 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
+[node name="NpcController" parent="AsianStudentMale" index="5" unique_id=991182570 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
 PatrolPointA = NodePath("../../PatrolPointA")
 PatrolPointB = NodePath("../../PatrolPointB")
 

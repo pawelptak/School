@@ -1,13 +1,21 @@
 using Godot;
 
-public partial class NpcPatrol : Node
+public partial class NpcController : Node
 {
+    public enum NpcState
+    {
+        Patrol,
+        Chase,
+        Idle
+    }
+
     [Export] public Node3D PatrolPointA { get; set; }
     [Export] public Node3D PatrolPointB { get; set; }
 
     [Export] public float Speed { get; set; } = 1.5f;
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
     [Export] public float WaitTime { get; set; } = 2.0f;
+    [Export] public float AttackDistance { get; set; } = 1.2f;
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -17,6 +25,9 @@ public partial class NpcPatrol : Node
 
     private bool _isWaiting;
     private float _waitTimer;
+
+    private NpcState _currentState = NpcState.Patrol;
+    private Node3D _chaseTarget;
 
     public override async void _Ready()
     {
@@ -46,29 +57,32 @@ public partial class NpcPatrol : Node
 
     public override void _PhysicsProcess(double dt)
     {
-        if (!_initialized || _agent == null || _npc == null || _currentTarget == null)
+        if (!_initialized || _agent == null || _npc == null)
             return;
 
+        switch (_currentState)
+        {
+            case NpcState.Patrol:
+                ProcessPatrol(dt);
+                break;
+
+            case NpcState.Chase:
+                ProcessChase(dt);
+                break;
+
+            case NpcState.Idle:
+                ProcessIdle(dt);
+                break;
+        }
+    }
+
+    private void ProcessPatrol(double dt)
+    {
         if (_isWaiting)
         {
             _waitTimer -= (float)dt;
-
-            Vector3 waitVelocity = _npc.Velocity;
-            waitVelocity.X = 0;
-            waitVelocity.Z = 0;
-
-            if (!_npc.IsOnFloor())
-            {
-                waitVelocity.Y -= 9.8f * (float)dt;
-            }
-            else
-            {
-                waitVelocity.Y = -0.1f;
-            }
-
-            _npc.Velocity = waitVelocity;
+            ApplyGravityAndStop(dt);
             _spriteAnimator?.SetMoving(false);
-            _npc.MoveAndSlide();
 
             if (_waitTimer <= 0.0f)
             {
@@ -89,8 +103,39 @@ public partial class NpcPatrol : Node
             return;
         }
 
+        MoveTowardTarget(_currentTarget.GlobalPosition, dt);
+    }
+
+    private void ProcessChase(double dt)
+    {
+        if (_chaseTarget == null) return;
+
+        _agent.TargetPosition = _chaseTarget.GlobalPosition;
+
+        Vector3 targetFlat = _chaseTarget.GlobalPosition;
+        targetFlat.Y = _npc.GlobalPosition.Y;
+
+        if (_npc.GlobalPosition.DistanceTo(targetFlat) <= AttackDistance)
+        {
+            ApplyGravityAndStop(dt);
+            _spriteAnimator?.SetMoving(false);
+            // Tutaj w przyszłości wywołasz logikę ataku
+            return;
+        }
+
+        MoveTowardTarget(_chaseTarget.GlobalPosition, dt);
+    }
+
+    private void ProcessIdle(double dt)
+    {
+        ApplyGravityAndStop(dt);
+        _spriteAnimator?.SetMoving(false);
+    }
+
+    private void MoveTowardTarget(Vector3 targetPos, double dt)
+    {
         var path = _agent.GetCurrentNavigationPath();
-        Vector3 nextWaypoint = (path.Length >= 2) ? path[1] : _currentTarget.GlobalPosition;
+        Vector3 nextWaypoint = (path.Length >= 2) ? path[1] : targetPos;
 
         Vector3 direction = nextWaypoint - _npc.GlobalPosition;
         direction.Y = 0;
@@ -125,14 +170,29 @@ public partial class NpcPatrol : Node
         }
         else
         {
-            Vector3 velocity = _npc.Velocity;
-            velocity.X = 0;
-            velocity.Z = 0;
-            _npc.Velocity = velocity;
+            ApplyGravityAndStop(dt);
         }
 
         _spriteAnimator?.SetMoving(isMoving);
+        _npc.MoveAndSlide();
+    }
 
+    private void ApplyGravityAndStop(double dt)
+    {
+        Vector3 velocity = _npc.Velocity;
+        velocity.X = 0;
+        velocity.Z = 0;
+
+        if (!_npc.IsOnFloor())
+        {
+            velocity.Y -= 9.8f * (float)dt;
+        }
+        else
+        {
+            velocity.Y = -0.1f;
+        }
+
+        _npc.Velocity = velocity;
         _npc.MoveAndSlide();
     }
 
@@ -141,5 +201,25 @@ public partial class NpcPatrol : Node
         _currentTarget = (_currentTarget == PatrolPointA) ? PatrolPointB : PatrolPointA;
         _agent.TargetPosition = _currentTarget.GlobalPosition;
         GD.Print($"[PATROL] Switching target to: {_currentTarget.Name}");
+    }
+
+    public void StartChase(Node3D target)
+    {
+        _currentState = NpcState.Chase;
+        _chaseTarget = target;
+        GD.Print($"[COMBAT] {_npc.Name} started chasing {target.Name}.");
+    }
+
+    public void SetIdleState()
+    {
+        _currentState = NpcState.Idle;
+        GD.Print($"[COMBAT] {_npc.Name} switched to Idle.");
+    }
+
+    public void ResumePatrol()
+    {
+        _currentState = NpcState.Patrol;
+        _agent.TargetPosition = _currentTarget.GlobalPosition;
+        GD.Print($"[PATROL] {_npc.Name} resumed patrolling.");
     }
 }

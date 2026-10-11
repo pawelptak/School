@@ -3,6 +3,8 @@ using Godot;
 public partial class Corridor1 : Node3D
 {
     private Mate _mate;
+    private NpcController _studentController;
+    private AsianStudentMale _student;
     private CutsceneController _cutsceneController;
     private ObjectiveMarker _objectiveMarker;
 
@@ -13,6 +15,11 @@ public partial class Corridor1 : Node3D
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _objectiveMarker.SetTarget(_mate);
+
+        _student = GetNode<AsianStudentMale>("AsianStudentMale");
+        _student.InteractionRequested += OnStudentInteractionRequested;
+
+        _studentController = GetNode<NpcController>("AsianStudentMale/NpcController");
     }
 
     private void OnMateInteractionRequested(Player player)
@@ -39,5 +46,16 @@ public partial class Corridor1 : Node3D
     private void StartHomeworkMinigame()
     {
         GetTree().ChangeSceneToFile("res://Scenes/Levels/HomeworkMinigame/homework.tscn");
+    }
+
+    private void OnStudentInteractionRequested(Player player)
+    {
+        _cutsceneController.StartDialogue(
+            _student,
+            [
+                new DialogueLine(DialogueSpeaker.AsianStudentMale, "O ty", 1.0f),
+            ],
+            onFinished: () => _studentController.StartChase(_mate)
+        );
     }
 }

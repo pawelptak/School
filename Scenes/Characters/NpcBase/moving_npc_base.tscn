@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://djm0nowbi57x7"]
+
+[ext_resource type="PackedScene" uid="uid://dg7gy1xp4uyo5" path="res://Scenes/Characters/NpcBase/npc_base.tscn" id="1_6egfp"]
+[ext_resource type="Script" uid="uid://d15q0r5gw66wh" path="res://Scenes/Characters/NpcBase/NpcController.cs" id="2_6egfp"]
+
+[node name="MovingNpcBase" unique_id=664278660 instance=ExtResource("1_6egfp")]
+
+[node name="NpcController" type="Node" parent="." index="5" unique_id=991182570]
+script = ExtResource("2_6egfp")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="6" unique_id=1207255180]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
