@@ -36,4 +36,15 @@ public partial class NpcHealthController : Node
         GD.Print($"[NPC HEALTH] {GetParent().Name} was defeated.");
         Died?.Invoke();
     }
+
+    public void RestoreHealth()
+    {
+        CurrentHealth = MaxHealth;
+        HealthChanged?.Invoke(CurrentHealth);
+
+        GD.Print(
+            $"[NPC HEALTH] {GetParent().Name} recovered. " +
+            $"HP: {CurrentHealth}/{MaxHealth}"
+        );
+    }
 }

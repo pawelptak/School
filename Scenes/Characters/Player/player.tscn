@@ -18,7 +18,7 @@ script = ExtResource("1_4flbx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
 [node name="HoldPoint" type="Marker3D" parent="Camera3D" unique_id=2106810589]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19999999, -0.77923715)
 
 [node name="InteractRay" type="RayCast3D" parent="Camera3D" unique_id=1232106511]
 target_position = Vector3(0, 0, -2)

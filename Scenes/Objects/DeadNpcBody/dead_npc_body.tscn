@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://8nrtfqpxn1hl"]
+
+[ext_resource type="Script" uid="uid://b1qik13rmbwam" path="res://Scripts/ThrowableObject.cs" id="1_7tcfe"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6dere"]
+friction = 0.06
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(1.2, 0.3, 0.5)
+
+[node name="DeadNpcBody" type="RigidBody3D" unique_id=1226804689]
+physics_material_override = SubResource("PhysicsMaterial_6dere")
+linear_damp = 2.0
+angular_damp = 2.0
+script = ExtResource("1_7tcfe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=513336888]
+shape = SubResource("BoxShape3D_lc5oj")

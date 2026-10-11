@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cobsxcep1x1ec" path="res://Scenes/Characters/AsianStudentMale/hit.png" id="6_jku7m"]
 [ext_resource type="Texture2D" uid="uid://dvkhmufnrd13r" path="res://Scenes/Characters/AsianStudentMale/walk1.png" id="7_7v1di"]
 [ext_resource type="Texture2D" uid="uid://tlp61use6aj" path="res://Scenes/Characters/AsianStudentMale/walk2.png" id="8_o6nuq"]
+[ext_resource type="Texture2D" uid="uid://c8yt8ywbugpsc" path="res://Scenes/Characters/AsianStudentMale/dead.png" id="9_7pvp1"]
 
 [node name="AsianStudentMale" unique_id=664278660 instance=ExtResource("1_751tc")]
 script = ExtResource("2_htg4s")
@@ -20,3 +21,4 @@ IdleFrames = Array[Texture2D]([ExtResource("3_jffg4")])
 TalkingFrames = Array[Texture2D]([ExtResource("4_7pvp1"), ExtResource("5_ojkem")])
 HitFrames = Array[Texture2D]([ExtResource("6_jku7m")])
 MovingFrames = Array[Texture2D]([ExtResource("7_7v1di"), ExtResource("8_o6nuq")])
+DeadTexture = ExtResource("9_7pvp1")

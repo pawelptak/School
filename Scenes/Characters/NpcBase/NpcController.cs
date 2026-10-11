@@ -18,6 +18,7 @@ public partial class NpcController : Node
     [Export] public float AttackDistance { get; set; } = 1.2f;
     [Export] public float AttackCooldown { get; set; } = 1.5f;
     [Export] public float AttackDamage { get; set; } = 50.0f; // 10.0 by default
+    [Export] public float KnockbackDeceleration { get; set; } = 12.0f;
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -35,6 +36,8 @@ public partial class NpcController : Node
 
     private NpcHealthController _healthController;
     private bool _isDefeated;
+    private Vector3 _knockbackVelocity;
+    private float _stunTimer;
 
     public override async void _Ready()
     {
@@ -83,6 +86,9 @@ public partial class NpcController : Node
         {
             _attackTimer -= (float)dt;
         }
+
+        if (ProcessHitEffects(dt))
+            return;
 
         switch (_currentState)
         {
@@ -285,6 +291,8 @@ public partial class NpcController : Node
         _currentState = NpcState.Idle;
         _chaseTarget = null;
         _isWaiting = false;
+        _knockbackVelocity = Vector3.Zero;
+        _stunTimer = 0.0f;
 
         _spriteAnimator?.SetMoving(false);
 
@@ -300,5 +308,99 @@ public partial class NpcController : Node
         {
             _healthController.Died -= OnNpcDied;
         }
+    }
+
+    public void ApplyHitEffects(
+    ThrowableObject throwable,
+    float knockback,
+    float stunDuration)
+    {
+        if (_isDefeated || _npc == null)
+            return;
+
+        Vector3 direction = _npc.GlobalPosition - throwable.GlobalPosition;
+        direction.Y = 0.0f;
+
+        if (direction.LengthSquared() > 0.001f && knockback > 0.0f)
+        {
+            direction = direction.Normalized();
+            _knockbackVelocity += direction * knockback;
+        }
+
+        _stunTimer = Mathf.Max(_stunTimer, stunDuration);
+
+        GD.Print(
+            $"[COMBAT] {_npc.Name} hit. " +
+            $"Knockback: {knockback}, Stun: {stunDuration}s"
+        );
+    }
+
+    private bool ProcessHitEffects(double dt)
+    {
+        if (_npc == null)
+            return false;
+
+        bool isStunned = _stunTimer > 0.0f;
+
+        if (isStunned)
+            _stunTimer = Mathf.Max(0.0f, _stunTimer - (float)dt);
+
+        // Zmniejszamy odrzut w czasie.
+        _knockbackVelocity = _knockbackVelocity.MoveToward(
+            Vector3.Zero,
+            KnockbackDeceleration * (float)dt
+        );
+
+        Vector3 velocity = _npc.Velocity;
+
+        velocity.X = _knockbackVelocity.X;
+        velocity.Z = _knockbackVelocity.Z;
+
+        if (!_npc.IsOnFloor())
+            velocity.Y -= 9.8f * (float)dt;
+        else if (velocity.Y < 0.0f)
+            velocity.Y = -0.1f;
+
+        _npc.Velocity = velocity;
+        _npc.MoveAndSlide();
+
+        bool isBeingKnockedBack = _knockbackVelocity.LengthSquared() > 0.01f;
+
+        if (!isStunned && !isBeingKnockedBack)
+        {
+            _knockbackVelocity = Vector3.Zero;
+            return false;
+        }
+
+        _spriteAnimator?.SetMoving(false);
+        return true;
+    }
+
+    public void RecoverFromDefeat()
+    {
+        if (_npc == null || _agent == null)
+            return;
+
+        _isDefeated = false;
+        _knockbackVelocity = Vector3.Zero;
+        _stunTimer = 0.0f;
+        _chaseTarget = null;
+        _isWaiting = false;
+        _waitTimer = 0.0f;
+        _attackTimer = 0.0f;
+
+        _currentState = NpcState.Patrol;
+
+        if (_currentTarget == null)
+            _currentTarget = PatrolPointA;
+
+        _agent.TargetPosition = _currentTarget.GlobalPosition;
+
+        _spriteAnimator?.SetMoving(false);
+        _spriteAnimator?.RecoverFromDead();
+
+        SetPhysicsProcess(true);
+
+        GD.Print($"[COMBAT] {_npc.Name} recovered and resumed patrol.");
     }
 }

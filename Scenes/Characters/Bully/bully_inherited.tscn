@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://diovfdqf7h8gf" path="res://Scenes/Characters/Bully/talk2.png" id="7_6dere"]
 [ext_resource type="Texture2D" uid="uid://c8vqhvsyg3q5c" path="res://Scenes/Characters/Bully/talk3.png" id="8_7pqec"]
 [ext_resource type="Texture2D" uid="uid://m3sjp1yy5uh2" path="res://Scenes/Characters/Bully/talk4.png" id="9_cxket"]
+[ext_resource type="Texture2D" uid="uid://02yotjx3fl1a" path="res://Scenes/Characters/Bully/dead.png" id="11_6dere"]
 
 [node name="Bully" unique_id=664278660 instance=ExtResource("1_ak2yu")]
 script = ExtResource("2_w3kjh")
+DefeatMode = 1
 
 [node name="Sprite" parent="." index="0" unique_id=274662881]
 texture = ExtResource("3_n1d47")
@@ -21,3 +23,4 @@ texture = ExtResource("3_n1d47")
 IdleFrames = Array[Texture2D]([ExtResource("3_n1d47"), ExtResource("4_lgs4l"), ExtResource("5_qajxs"), ExtResource("4_lgs4l")])
 TalkingFrames = Array[Texture2D]([ExtResource("6_8x3kp"), ExtResource("7_6dere"), ExtResource("8_7pqec"), ExtResource("9_cxket")])
 HitFrames = Array[Texture2D]([ExtResource("6_rmdhc")])
+DeadTexture = ExtResource("11_6dere")

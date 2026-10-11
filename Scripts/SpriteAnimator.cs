@@ -21,9 +21,18 @@ public partial class SpriteAnimator : Node
     [Export] public Godot.Collections.Array<Texture2D> MovingFrames { get; set; } = new();
     [Export] public float MovingFrameDuration { get; set; } = 0.12f;
 
+    [ExportGroup("Dead")]
+    [Export] public Texture2D DeadTexture { get; set; }
+
+    // Stałe przesunięcie sprite'a dla tymczasowo pokonanego NPC.
+    private const float TemporaryDeadOffsetY = -0.5f;
+
     private bool _isTalking;
     private bool _isMoving;
     private bool _isPlayingHit;
+    private bool _isDead;
+
+    private Vector3 _originalSpritePosition;
 
     private Godot.Collections.Array<Texture2D> _currentFrames = new();
     private float _currentFrameDuration;
@@ -40,12 +49,13 @@ public partial class SpriteAnimator : Node
             return;
         }
 
+        _originalSpritePosition = Sprite.Position;
         PlayBaseAnimation();
     }
 
     public override void _Process(double delta)
     {
-        if (_currentFrames.Count == 0 || _currentFrameDuration <= 0)
+        if (_isDead || _currentFrames.Count == 0 || _currentFrameDuration <= 0)
             return;
 
         _frameTimer += (float)delta;
@@ -71,9 +81,71 @@ public partial class SpriteAnimator : Node
         }
     }
 
+    public void PlayPermanentDead()
+    {
+        PlayDead();
+        Sprite.Position = _originalSpritePosition;
+    }
+
+    public void PlayTemporaryDead()
+    {
+        PlayDead();
+        Sprite.Position = _originalSpritePosition
+            + new Vector3(0, TemporaryDeadOffsetY, 0);
+    }
+
+    private void PlayDead()
+    {
+        if (Sprite == null)
+            return;
+
+        _isDead = true;
+        _isTalking = false;
+        _isMoving = false;
+        _isPlayingHit = false;
+
+        _currentFrames = new Godot.Collections.Array<Texture2D>();
+        _currentFrame = 0;
+        _frameTimer = 0.0f;
+        _currentFrameDuration = 0.0f;
+
+        SetProcess(false);
+
+        if (DeadTexture == null)
+        {
+            GD.PushWarning($"{Name}: DeadTexture not set.");
+            return;
+        }
+
+        Sprite.Texture = DeadTexture;
+    }
+
+    public void RecoverFromDead()
+    {
+        if (Sprite == null)
+            return;
+
+        _isDead = false;
+        _isTalking = false;
+        _isMoving = false;
+        _isPlayingHit = false;
+
+        // Przywrócenie pozycji sprzed pokonania.
+        Sprite.Position = _originalSpritePosition;
+
+        _currentFrames = new Godot.Collections.Array<Texture2D>();
+        _currentFrame = 0;
+        _frameTimer = 0.0f;
+        _currentFrameDuration = 0.0f;
+        _currentAnimationLoops = true;
+
+        SetProcess(true);
+        PlayBaseAnimation();
+    }
+
     public void SetTalking(bool talking)
     {
-        if (_isTalking == talking)
+        if (_isDead || _isTalking == talking)
             return;
 
         _isTalking = talking;
@@ -84,7 +156,7 @@ public partial class SpriteAnimator : Node
 
     public void SetMoving(bool moving)
     {
-        if (_isMoving == moving)
+        if (_isDead || _isMoving == moving)
             return;
 
         _isMoving = moving;
@@ -95,9 +167,12 @@ public partial class SpriteAnimator : Node
 
     public void PlayHit()
     {
+        if (_isDead)
+            return;
+
         if (HitFrames.Count == 0)
         {
-            GD.PushWarning($"{Name}: nie przypisano klatek animacji Hit.");
+            GD.PushWarning($"{Name}: HitFrames not set.");
             return;
         }
 
@@ -107,6 +182,9 @@ public partial class SpriteAnimator : Node
 
     private void PlayBaseAnimation()
     {
+        if (_isDead)
+            return;
+
         if (_isTalking && TalkingFrames.Count > 0)
         {
             PlayAnimation(TalkingFrames, TalkingFrameDuration, true);
@@ -121,7 +199,7 @@ public partial class SpriteAnimator : Node
         }
         else
         {
-            _currentFrames = new();
+            _currentFrames = new Godot.Collections.Array<Texture2D>();
         }
     }
 
@@ -137,7 +215,7 @@ public partial class SpriteAnimator : Node
         _currentFrameDuration = Mathf.Max(0.001f, frameDuration);
         _currentAnimationLoops = loops;
         _currentFrame = 0;
-        _frameTimer = 0;
+        _frameTimer = 0.0f;
 
         ApplyCurrentFrame();
     }
