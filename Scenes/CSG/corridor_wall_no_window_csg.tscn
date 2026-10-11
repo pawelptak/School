@@ -14,6 +14,7 @@ size = Vector3(15, 0.1, 0.03)
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
 use_collision = true
+collision_layer = 65
 size = Vector3(15, 4, 0.5)
 material = SubResource("StandardMaterial3D_lc5oj")
 

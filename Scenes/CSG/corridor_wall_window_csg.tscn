@@ -22,6 +22,7 @@ size = Vector3(10, 0.1, 0.03)
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=1302555879]
 use_collision = true
+collision_layer = 65
 size = Vector3(10, 4, 0.5)
 material = SubResource("StandardMaterial3D_lc5oj")
 
@@ -36,6 +37,7 @@ mesh = SubResource("BoxMesh_u3w50")
 
 [node name="Window2" parent="." unique_id=1049691620 instance=ExtResource("1_spw2l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12795919, 0.21705484, 0.06655908)
+collision_layer = 65
 
 [node name="Baseboard" type="MeshInstance3D" parent="." unique_id=800031264]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9544133, -0.26449287)

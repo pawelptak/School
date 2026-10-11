@@ -13,6 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://cwhjut61jyndn" path="res://Scenes/CSG/corridor_wall_window_csg.tscn" id="10_022ul"]
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="11_mwxxd"]
 [ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="12_o4rxx"]
+[ext_resource type="PackedScene" uid="uid://cv67ux1ekjam" path="res://Scenes/Characters/AsianStudentMale/asian_student_male.tscn" id="14_4vx7a"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4vx7a"]
+vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_radius = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sbuws"]
 size = Vector3(15.009766, 0.2, 9.904297)
@@ -46,20 +52,25 @@ sdfgi_bounce_feedback = 1.61
 [node name="Corridor1" type="Node3D" unique_id=64099720]
 script = ExtResource("1_hftl2")
 
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=804663565]
+navigation_mesh = SubResource("NavigationMesh_4vx7a")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1533640994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" unique_id=1174043626]
+shape = SubResource("BoxShape3D_sbuws")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" unique_id=1046904526]
+mesh = SubResource("BoxMesh_axue6")
+
 [node name="ObjectiveMarker" parent="." unique_id=1928698264 instance=ExtResource("2_xjq1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.448425, 2.93156, 2.7783558)
 
-[node name="Floor" type="StaticBody3D" parent="." unique_id=1533640994]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1174043626]
-shape = SubResource("BoxShape3D_sbuws")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1046904526]
-mesh = SubResource("BoxMesh_axue6")
-
 [node name="Ceiling" type="StaticBody3D" parent="." unique_id=1748208615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1701199231]
 shape = SubResource("BoxShape3D_sbuws")
@@ -118,3 +129,18 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5
 
 [node name="Bully" parent="." unique_id=1834268325 instance=ExtResource("12_o4rxx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)
+
+[node name="AsianStudentMale" parent="." unique_id=1866947794 instance=ExtResource("14_4vx7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55336, 0.9215998, 2.0479054)
+
+[node name="NpcPatrolController" parent="AsianStudentMale" index="6" unique_id=1611051103 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
+PatrolPointA = NodePath("../../PatrolPointA")
+PatrolPointB = NodePath("../../PatrolPointB")
+
+[node name="PatrolPointA" type="Marker3D" parent="." unique_id=1246575610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.164, 0.27974975, 0.929)
+
+[node name="PatrolPointB" type="Marker3D" parent="." unique_id=272857275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.957, 0.012534916, -0.751)
+
+[editable path="AsianStudentMale"]

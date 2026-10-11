@@ -27,6 +27,7 @@ material = SubResource("StandardMaterial3D_oasqr")
 size = Vector3(2.3, 2.3, 0.2)
 
 [node name="Window" type="StaticBody3D" unique_id=1580759604]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=557508789]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03930664)
