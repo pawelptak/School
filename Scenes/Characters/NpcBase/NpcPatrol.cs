@@ -7,6 +7,7 @@ public partial class NpcPatrol : Node
 
     [Export] public float Speed { get; set; } = 1.5f;
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
+    [Export] public float WaitTime { get; set; } = 2.0f;
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -14,16 +15,18 @@ public partial class NpcPatrol : Node
     private Node3D _currentTarget;
     private bool _initialized;
 
+    private bool _isWaiting;
+    private float _waitTimer;
+
     public override async void _Ready()
     {
         _npc = GetParent() as CharacterBody3D;
         _agent = _npc?.GetNodeOrNull<NavigationAgent3D>("NavigationAgent3D");
-
         _spriteAnimator = _npc?.GetNodeOrNull<SpriteAnimator>("SpriteAnimator");
 
         if (_npc == null || _agent == null || PatrolPointA == null || PatrolPointB == null)
         {
-            GD.PushError($"{Name}: Brak referencji do NPC, Agenta lub Punktów Patrolu!");
+            GD.PushError($"{Name}: Missing references to NPC, Agent, or Patrol Points!");
             SetPhysicsProcess(false);
             return;
         }
@@ -38,7 +41,7 @@ public partial class NpcPatrol : Node
         _agent.TargetPosition = _currentTarget.GlobalPosition;
         _initialized = true;
 
-        GD.Print($"[DEBUG] Nawigacja gotowa. Pierwszy cel: {_currentTarget.GlobalPosition}");
+        GD.Print($"[DEBUG] Navigation ready. First target: {_currentTarget.GlobalPosition}");
     }
 
     public override void _PhysicsProcess(double dt)
@@ -46,12 +49,43 @@ public partial class NpcPatrol : Node
         if (!_initialized || _agent == null || _npc == null || _currentTarget == null)
             return;
 
+        if (_isWaiting)
+        {
+            _waitTimer -= (float)dt;
+
+            Vector3 waitVelocity = _npc.Velocity;
+            waitVelocity.X = 0;
+            waitVelocity.Z = 0;
+
+            if (!_npc.IsOnFloor())
+            {
+                waitVelocity.Y -= 9.8f * (float)dt;
+            }
+            else
+            {
+                waitVelocity.Y = -0.1f;
+            }
+
+            _npc.Velocity = waitVelocity;
+            _spriteAnimator?.SetMoving(false);
+            _npc.MoveAndSlide();
+
+            if (_waitTimer <= 0.0f)
+            {
+                _isWaiting = false;
+                SwitchTarget();
+            }
+            return;
+        }
+
         Vector3 targetFlat = _currentTarget.GlobalPosition;
         targetFlat.Y = _npc.GlobalPosition.Y;
 
         if (_npc.GlobalPosition.DistanceTo(targetFlat) <= ArrivalDistance)
         {
-            SwitchTarget();
+            _isWaiting = true;
+            _waitTimer = WaitTime;
+            GD.Print($"[PATROL] Target reached: {_currentTarget.Name}. Waiting for {_waitTimer}s.");
             return;
         }
 
@@ -61,7 +95,7 @@ public partial class NpcPatrol : Node
         Vector3 direction = nextWaypoint - _npc.GlobalPosition;
         direction.Y = 0;
 
-        bool isMoving = false; 
+        bool isMoving = false;
 
         if (direction.LengthSquared() > 0.001f)
         {
@@ -106,6 +140,6 @@ public partial class NpcPatrol : Node
     {
         _currentTarget = (_currentTarget == PatrolPointA) ? PatrolPointB : PatrolPointA;
         _agent.TargetPosition = _currentTarget.GlobalPosition;
-        GD.Print($"[PATROL] Cel osiągnięty! Zmiana na: {_currentTarget.Name}");
+        GD.Print($"[PATROL] Switching target to: {_currentTarget.Name}");
     }
 }
