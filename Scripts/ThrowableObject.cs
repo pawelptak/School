@@ -5,6 +5,8 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
 {
     public float ThrowForce { get; set; }
 
+    [Export] public float Damage { get; set; } = 10.0f;
+
     public string InteractionText => "Podnieś";
     public Vector3 PromptOffset => new Vector3(0, 0.5f, 0);
 

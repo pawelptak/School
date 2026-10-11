@@ -15,10 +15,13 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     public Func<ThrowableObject, float, bool> HitReactionOverride { get; set; }
 
     protected SpriteAnimator SpriteAnimator { get; private set; }
+    private NpcHealthController _healthController;
 
     public override void _Ready()
     {
         SpriteAnimator = GetNode<SpriteAnimator>("SpriteAnimator");
+        _healthController = GetNodeOrNull<NpcHealthController>("NpcHealthController");
+
         var interactionArea = GetNode<Area3D>("InteractionArea");
 
         interactionArea.BodyEntered += OnBodyEntered;
@@ -60,6 +63,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
     {
+        _healthController?.TakeDamage(throwable.Damage);
+
         HitByThrowable?.Invoke(throwable, throwForce);
 
         var controller = GetTree().CurrentScene

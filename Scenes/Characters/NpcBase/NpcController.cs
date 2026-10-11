@@ -33,6 +33,9 @@ public partial class NpcController : Node
 
     private float _attackTimer = 0.0f; // Licznik czasu do kolejnego ataku
 
+    private NpcHealthController _healthController;
+    private bool _isDefeated;
+
     public override async void _Ready()
     {
         _npc = GetParent() as CharacterBody3D;
@@ -57,6 +60,17 @@ public partial class NpcController : Node
         _initialized = true;
 
         GD.Print($"[DEBUG] Navigation ready. First target: {_currentTarget.GlobalPosition}");
+
+        _healthController = _npc?.GetNodeOrNull<NpcHealthController>("NpcHealthController");
+
+        if (_healthController != null)
+        {
+            _healthController.Died += OnNpcDied;
+        }
+        else
+        {
+            GD.PushWarning($"{Name}: NpcHealthController was not found.");
+        }
     }
 
     public override void _PhysicsProcess(double dt)
@@ -237,6 +251,9 @@ public partial class NpcController : Node
 
     public void StartChase(Node3D target)
     {
+        if (_isDefeated)
+            return;
+
         _currentState = NpcState.Chase;
         _chaseTarget = target;
         _attackTimer = 0.0f; // Pozwól zaatakować od razu po dobiegnięciu
@@ -251,8 +268,37 @@ public partial class NpcController : Node
 
     public void ResumePatrol()
     {
+        if (_isDefeated)
+            return;
+
         _currentState = NpcState.Patrol;
         _agent.TargetPosition = _currentTarget.GlobalPosition;
         GD.Print($"[PATROL] {_npc.Name} resumed patrolling.");
+    }
+
+    private void OnNpcDied()
+    {
+        if (_isDefeated)
+            return;
+
+        _isDefeated = true;
+        _currentState = NpcState.Idle;
+        _chaseTarget = null;
+        _isWaiting = false;
+
+        _spriteAnimator?.SetMoving(false);
+
+        SetPhysicsProcess(false);
+
+        GD.Print($"[COMBAT] {_npc.Name} was defeated.");
+    }
+
+    public override void _ExitTree()
+    {
+        if (_healthController != null &&
+            GodotObject.IsInstanceValid(_healthController))
+        {
+            _healthController.Died -= OnNpcDied;
+        }
     }
 }

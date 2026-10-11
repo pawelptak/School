@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="1_ut67d"]
 [ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="3_jxhs3"]
+[ext_resource type="Script" uid="uid://caa5q6sded5qx" path="res://Scenes/Characters/NpcBase/NpcHealthController.cs" id="3_ut67d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
 radius = 0.35
@@ -34,3 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0027945638, 0.75315595, 0.0
 script = ExtResource("3_jxhs3")
 Sprite = NodePath("../Sprite")
 IdleFrameDuration = 0.3
+
+[node name="NpcHealthController" type="Node" parent="." unique_id=1138413887]
+script = ExtResource("3_ut67d")
