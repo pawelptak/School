@@ -12,6 +12,7 @@ public partial class HealthController : Node
     private bool _isRegenerating = false;
 
     public event Action<float> HealthChanged;
+    public event Action<float> TookDamage;
     public event Action Died;
 
     public override void _Ready()
@@ -47,11 +48,11 @@ public partial class HealthController : Node
             return;
 
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0.0f, MaxHealth);
-
         _timeSinceLastDamage = 0.0;
 
         GD.Print($"[PLAYER HEALTH] {amount} damage taken! Remaining HP: {CurrentHealth}/{MaxHealth}");
         HealthChanged?.Invoke(CurrentHealth);
+        TookDamage?.Invoke(amount);
 
         if (CurrentHealth <= 0.0f)
         {

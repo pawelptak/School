@@ -11,6 +11,7 @@ public partial class Vignette : ColorRect
         if (healthController != null)
         {
             healthController.HealthChanged += OnHealthChanged;
+            healthController.TookDamage += OnTookDamage;
         }
     }
 
@@ -19,6 +20,7 @@ public partial class Vignette : ColorRect
         if (healthController != null)
         {
             healthController.HealthChanged -= OnHealthChanged;
+            healthController.TookDamage -= OnTookDamage;
         }
     }
 
@@ -44,5 +46,23 @@ public partial class Vignette : ColorRect
             var tween = CreateTween();
             tween.TweenProperty(material, "shader_parameter/alpha", targetAlpha, 0.15);
         }
+    }
+
+    private void OnTookDamage(float amount)
+    {
+        PlayDamageFlash();
+    }
+
+    public void PlayDamageFlash()
+    {
+        var material = Material as ShaderMaterial;
+        if (material == null) return;
+
+        var tween = CreateTween();
+        tween.TweenProperty(material, "shader_parameter/alpha", 0.4f, 0.1f);
+        tween.TweenCallback(Callable.From(() => {
+            float currentPercent = healthController.CurrentHealth / healthController.MaxHealth;
+            UpdateVignette(currentPercent);
+        }));
     }
 }
