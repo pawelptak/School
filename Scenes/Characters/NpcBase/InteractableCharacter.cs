@@ -197,45 +197,31 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        var sourceShape = GetNodeOrNull<CollisionShape3D>(
-            "CollisionShape3D"
-        );
-
+        var sourceShape = GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
         var sprite = SpriteAnimator?.Sprite;
 
-        if (sourceShape?.Shape == null || sprite == null)
+        if (sprite == null)
         {
-            GD.PushError(
-                $"{Name}: missing CollisionShape3D or Sprite3D."
-            );
+            GD.PushError($"{Name}: missing Sprite3D.");
             return;
         }
 
         var deadBody = _deadBodyScene.Instantiate<ThrowableObject>();
 
-        var deadShape = deadBody.GetNodeOrNull<CollisionShape3D>(
-            "CollisionShape3D"
-        );
-
-        if (deadShape == null)
-        {
-            GD.PushError(
-                "CollisionShape3D needs to be child of DeadBodyScene."
-            );
-
-            deadBody.Free();
-            return;
-        }
-
-        deadShape.Shape = (Shape3D)sourceShape.Shape.Duplicate();
-        deadShape.Transform = sourceShape.Transform;
-
         var scene = GetTree().CurrentScene;
-
         scene.AddChild(deadBody);
         deadBody.GlobalTransform = GlobalTransform;
 
         sprite.Reparent(deadBody, true);
+
+        if (sourceShape != null)
+        {
+            sourceShape.QueueFree();
+        }
+
+        Hide();
+        SetProcess(false);
+        SetPhysicsProcess(false);
 
         GD.Print($"[NPC] {Name} became a throwable body.");
 
