@@ -1,11 +1,14 @@
+
 using Godot;
 using System;
 
 public partial class Player : CharacterBody3D
 {
     [ExportGroup("Melee")]
-    [Export] public float PunchDamage { get; set; } = 20.0f;
-    [Export] public float PunchRange { get; set; } = 1.6f;
+    [Export] public float AttackDamage { get; set; } = 20.0f;
+    [Export] public float AttackDistance { get; set; } = 1.8f;
+    [Export] public float AttackKnockback { get; set; } = 5.0f;
+
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
 
@@ -29,12 +32,17 @@ public partial class Player : CharacterBody3D
     private const float MinThrowForce = 5.0f;
     private const float MaxThrowForce = 20.0f;
     private const float ThrowChargeSpeed = 15.0f;
+
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
+
     private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
     private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
-    private const uint EnvironmentCollisionLayer = 1u << (7 - 1); // Layer 7 is used for the environment (walls, floors, etc.)
+
+    private const uint EnvironmentCollisionLayer = 1u << (7 - 1);
+
     private PunchingController _punchingController;
+
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -42,15 +50,17 @@ public partial class Player : CharacterBody3D
         _camera = GetNode<Camera3D>("Camera3D");
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
         _holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
+
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
         _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
-
         _interactionLabel.Hide();
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
-        _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
+        _throwChargeBar = _throwChargeBarCanvas
+            .GetNode<ProgressBar>("MarginContainer/ProgressBar");
+
         _throwChargeBarCanvas.Hide();
     }
 
@@ -199,15 +209,17 @@ public partial class Player : CharacterBody3D
     {
         IInteractable nextTarget = null;
 
-        if (!MovementLocked && !IsCinematicDialogueActive() && _heldObject == null
+        if (!MovementLocked
+            && !IsCinematicDialogueActive()
+            && _heldObject == null
             && _interactRay.IsColliding())
         {
-            var interactable = FindInteractable(_interactRay.GetCollider() as Node);
+            var interactable = FindInteractable(
+                _interactRay.GetCollider() as Node
+            );
 
             if (interactable != null && interactable.CanInteract(this))
-            {
                 nextTarget = interactable;
-            }
         }
 
         if (ReferenceEquals(nextTarget, _currentInteractable))
@@ -226,15 +238,17 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        _interactionLabel.Text = $"{_currentInteractable.InteractionText} [E]";
+        _interactionLabel.Text =
+            $"{_currentInteractable.InteractionText} [E]";
+
         UpdateLabelPosition(_currentInteractable);
         _interactionLabel.Show();
     }
 
     private void UpdateLabelPosition(IInteractable interactable)
     {
-        if (interactable is not Node3D node ||
-            !GodotObject.IsInstanceValid(node))
+        if (interactable is not Node3D node
+            || !GodotObject.IsInstanceValid(node))
         {
             _interactionLabel.Hide();
             return;
@@ -288,9 +302,13 @@ public partial class Player : CharacterBody3D
         _heldObject = body;
 
         _heldShapes.Clear();
-        foreach (Node node in body.FindChildren("*", "CollisionShape3D", true, false))
+
+        foreach (Node node in body.FindChildren(
+            "*", "CollisionShape3D", true, false))
         {
-            if (node is CollisionShape3D shape && shape.Shape != null && !shape.Disabled)
+            if (node is CollisionShape3D shape
+                && shape.Shape != null
+                && !shape.Disabled)
             {
                 _heldShapes.Add(shape);
             }
@@ -309,6 +327,7 @@ public partial class Player : CharacterBody3D
         body.GlobalPosition = _holdPoint.GlobalPosition;
 
         ObjectPickedUp?.Invoke(body);
+
         return true;
     }
 
@@ -323,6 +342,7 @@ public partial class Player : CharacterBody3D
         _heldObject.Freeze = false;
         _heldObject.CollisionLayer = _heldCollisionLayer;
         _heldObject.CollisionMask = _heldCollisionMask | 2;
+
         _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
 
         _heldObjectExclusions.Clear();
@@ -388,8 +408,11 @@ public partial class Player : CharacterBody3D
 
         foreach (var collisionShape in _heldShapes)
         {
-            if (!GodotObject.IsInstanceValid(collisionShape) || collisionShape.Disabled)
+            if (!GodotObject.IsInstanceValid(collisionShape)
+                || collisionShape.Disabled)
+            {
                 continue;
+            }
 
             Transform3D relativeTransform =
                 _heldObject.GlobalTransform.AffineInverse()
@@ -416,7 +439,6 @@ public partial class Player : CharacterBody3D
         return _heldObject.GlobalPosition + motion * safeFraction;
     }
 
-
     private bool CanStartPunch()
     {
         if (MovementLocked || _punchingController.IsPlaying)
@@ -435,13 +457,15 @@ public partial class Player : CharacterBody3D
 
         Vector3 origin = _camera.GlobalPosition;
         Vector3 direction = -_camera.GlobalTransform.Basis.Z;
-        Vector3 end = origin + direction * PunchRange;
+        Vector3 end = origin + direction * AttackDistance;
 
         var query = PhysicsRayQueryParameters3D.Create(origin, end);
+
         query.Exclude = new Godot.Collections.Array<Rid>
-    {
-        GetRid()
-    };
+        {
+            GetRid()
+        };
+
         query.CollideWithAreas = false;
 
         var result = GetWorld3D()
@@ -461,7 +485,19 @@ public partial class Player : CharacterBody3D
         if (interactable is not InteractableCharacter character)
             return;
 
-        character.NotifyHitByPunch(PunchDamage);
+        character.NotifyHitByPunch(
+            this,
+            AttackDamage,
+            AttackKnockback
+        );
     }
 
+    public override void _ExitTree()
+    {
+        if (_punchingController != null
+            && GodotObject.IsInstanceValid(_punchingController))
+        {
+            _punchingController.PunchHitFrame -= TryPunchTarget;
+        }
+    }
 }

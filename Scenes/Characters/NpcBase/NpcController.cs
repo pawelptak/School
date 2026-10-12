@@ -15,7 +15,7 @@ public partial class NpcController : Node
     [Export] public float Speed { get; set; } = 3f;
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
     [Export] public float WaitTime { get; set; } = 2.0f;
-    [Export] public float AttackDistance { get; set; } = 1.5f;
+    [Export] public float AttackDistance { get; set; } = 1.6f;
     [Export] public float AttackCooldown { get; set; } = 1.5f;
     [Export] public float AttackDamage { get; set; } = 10.0f; // 10.0 by default
     [Export] public float KnockbackDeceleration { get; set; } = 12.0f;
@@ -449,14 +449,26 @@ public partial class NpcController : Node
     }
 
     public void ApplyHitEffects(
-    ThrowableObject throwable,
-    float knockback,
-    float stunDuration)
+        ThrowableObject throwable,
+        float knockback,
+        float stunDuration)
+    {
+        if (throwable == null)
+            return;
+
+        Vector3 direction = _npc.GlobalPosition - throwable.GlobalPosition;
+
+        ApplyKnockback(direction, knockback, stunDuration);
+    }
+
+    public void ApplyKnockback(
+        Vector3 direction,
+        float knockback,
+        float stunDuration = 0.0f)
     {
         if (_isDefeated || _npc == null)
             return;
 
-        Vector3 direction = _npc.GlobalPosition - throwable.GlobalPosition;
         direction.Y = 0.0f;
 
         if (direction.LengthSquared() > 0.001f && knockback > 0.0f)
@@ -466,11 +478,6 @@ public partial class NpcController : Node
         }
 
         _stunTimer = Mathf.Max(_stunTimer, stunDuration);
-
-        GD.Print(
-            $"[COMBAT] {_npc.Name} hit. " +
-            $"Knockback: {knockback}, Stun: {stunDuration}s"
-        );
     }
 
     private bool ProcessHitEffects(double dt)

@@ -8,7 +8,7 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
     [Export] public float Damage { get; set; } = 10.0f;
     [Export] public float MinDamageMultiplier { get; set; } = 0.5f;
     [Export] public float MaxDamageMultiplier { get; set; } = 2.0f;
-    [Export] public float Knockback { get; set; } = 3.0f;
+    [Export] public float Knockback { get; set; } = 5.0f;
     [Export] public float StunDuration { get; set; } = 0.0f;
 
     private const float MinThrowForce = 5.0f;

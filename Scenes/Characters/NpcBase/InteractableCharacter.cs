@@ -25,11 +25,14 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     public Func<ThrowableObject, float, bool> HitReactionOverride { get; set; }
 
     protected SpriteAnimator SpriteAnimator { get; private set; }
+
     private NpcHealthController _healthController;
     private NpcController _npcController;
     private bool _isDefeated;
     private PackedScene _deadBodyScene;
-    private const string DeadBodyScenePath = "res://Scenes/Objects/DeadNpcBody/dead_npc_body.tscn";
+
+    private const string DeadBodyScenePath =
+        "res://Scenes/Objects/DeadNpcBody/dead_npc_body.tscn";
 
     public override void _Ready()
     {
@@ -86,7 +89,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
     {
-        if (_isDefeated)
+        if (_isDefeated || throwable == null)
             return;
 
         float damage = throwable.CalculateDamage();
@@ -118,7 +121,54 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         var dialogue = GetHitReactionDialogue();
 
-        if (controller != null && dialogue.Length > 0)
+        if (controller != null && dialogue != null && dialogue.Length > 0)
+            controller.StartDialogue(this, dialogue);
+    }
+
+    public void NotifyHitByPunch(Player player, float damage, float knockback)
+    {
+        if (player == null || _isDefeated)
+            return;
+
+        if (_healthController == null)
+        {
+            GD.PushWarning($"{Name}: NpcHealthController not found.");
+            return;
+        }
+
+        _healthController.TakeDamage(damage);
+
+        GD.Print(
+            $"[COMBAT] {Name} hit by player's punch. " +
+            $"Damage={damage:F1}, Knockback={knockback:F1}"
+        );
+
+        // Obrażenia mogły pokonać NPC.
+        if (_isDefeated)
+            return;
+
+        // Knockback pięści, bez stuna.
+        Vector3 direction = GlobalPosition - player.GlobalPosition;
+        direction.Y = 0.0f;
+
+        _npcController?.ApplyKnockback(direction, knockback);
+
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        // Nie przerywaj aktualnego dialogu.
+        if (controller?.IsDialogueVisible == true)
+            return;
+
+        SpriteAnimator?.PlayHit();
+
+        // Reakcja specjalna na pięść, jeśli postać ją obsługuje.
+        if (HitReactionOverride?.Invoke(null, 0.0f) == true)
+            return;
+
+        var dialogue = GetHitReactionDialogue();
+
+        if (controller != null && dialogue != null && dialogue.Length > 0)
             controller.StartDialogue(this, dialogue);
     }
 
@@ -197,17 +247,12 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        var sourceShape = GetNodeOrNull<CollisionShape3D>(
-            "CollisionShape3D"
-        );
-
+        var sourceShape = GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
         var sprite = SpriteAnimator?.Sprite;
 
         if (sourceShape?.Shape == null || sprite == null)
         {
-            GD.PushError(
-                $"{Name}: missing CollisionShape3D or Sprite3D."
-            );
+            GD.PushError($"{Name}: missing CollisionShape3D or Sprite3D.");
             return;
         }
 
@@ -234,9 +279,9 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         scene.AddChild(deadBody);
         deadBody.GlobalTransform = GlobalTransform;
+
         sourceShape.QueueFree();
         sprite.Reparent(deadBody, true);
-
 
         GD.Print($"[NPC] {Name} became a throwable body.");
 
@@ -251,44 +296,4 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             _healthController.Died -= OnCharacterDied;
         }
     }
-
-
-    public void NotifyHitByPunch(float damage)
-    {
-        if (_isDefeated)
-            return;
-
-        if (_healthController == null)
-        {
-            GD.PushWarning($"{Name}: NpcHealthController not found.");
-            return;
-        }
-
-        _healthController.TakeDamage(damage);
-
-        GD.Print(
-            $"[COMBAT] {Name} hit by player's punch. " +
-            $"Damage={damage:F1}"
-        );
-
-        if (_isDefeated)
-            return;
-
-        var controller = GetTree().CurrentScene
-            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
-
-        if (controller?.IsDialogueVisible == true)
-            return;
-
-        SpriteAnimator?.PlayHit();
-
-        if (HitReactionOverride?.Invoke(null, 0.0f) == true)
-            return;
-
-        var dialogue = GetHitReactionDialogue();
-
-        if (controller != null && dialogue.Length > 0)
-            controller.StartDialogue(this, dialogue);
-    }
-
 }
