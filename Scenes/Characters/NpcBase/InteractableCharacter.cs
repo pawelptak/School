@@ -239,6 +239,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         _isDefeated = false;
 
+        _cutsceneController.StartDialogue(this, GetRecoveryDialogue());
         _npcController?.RecoverFromDefeat();
 
         GD.Print($"[NPC] {Name} got back up.");
