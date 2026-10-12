@@ -56,9 +56,8 @@ public partial class Corridor1 : Node3D
         _cutsceneController.StartDialogue(
             _student,
             [
-                new DialogueLine(DialogueSpeaker.AsianStudentMale, "O ty", 1.0f),
-            ],
-            onFinished: () => _studentController.StartChase(_player)
+                new DialogueLine(DialogueSpeaker.AsianStudentMale, AsianStudentMaleText.InteractionLevel1, 3.0f),
+            ]
         );
     }
 }

@@ -24,8 +24,7 @@ public partial class SpriteAnimator : Node
     [ExportGroup("Dead")]
     [Export] public Texture2D DeadTexture { get; set; }
 
-    // Stałe przesunięcie sprite'a dla tymczasowo pokonanego NPC.
-    private const float TemporaryDeadOffsetY = -0.5f;
+    private const float TemporaryDeadOffsetY = -1f;
 
     private bool _isTalking;
     private bool _isMoving;
