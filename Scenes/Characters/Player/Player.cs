@@ -3,6 +3,9 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
+    [ExportGroup("Melee")]
+    [Export] public float PunchDamage { get; set; } = 20.0f;
+    [Export] public float PunchRange { get; set; } = 2.0f;
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
 
@@ -31,7 +34,7 @@ public partial class Player : CharacterBody3D
     private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
     private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
     private const uint EnvironmentCollisionLayer = 1u << (7 - 1); // Layer 7 is used for the environment (walls, floors, etc.)
-
+    private PunchingController _punchingController;
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -39,6 +42,8 @@ public partial class Player : CharacterBody3D
         _camera = GetNode<Camera3D>("Camera3D");
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
         _holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
+        _punchingController = GetNode<PunchingController>("Punching");
+        _punchingController.PunchHitFrame += TryPunchTarget;
 
         _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
 
@@ -71,6 +76,20 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        if (@event is InputEventMouseButton mouseButton
+            && mouseButton.ButtonIndex == MouseButton.Left
+            && mouseButton.Pressed
+            && !mouseButton.IsEcho())
+        {
+            if (_heldObject == null && CanStartPunch())
+            {
+                if (_punchingController.StartPunch())
+                    GetViewport().SetInputAsHandled();
+            }
+
+            return;
+        }
+
         if (!@event.IsActionPressed("interact") || IsCinematicDialogueActive())
             return;
 
@@ -396,4 +415,53 @@ public partial class Player : CharacterBody3D
 
         return _heldObject.GlobalPosition + motion * safeFraction;
     }
+
+
+    private bool CanStartPunch()
+    {
+        if (MovementLocked || _punchingController.IsPlaying)
+            return false;
+
+        return !IsCinematicDialogueActive();
+    }
+
+    private void TryPunchTarget()
+    {
+        if (MovementLocked || _heldObject != null)
+            return;
+
+        if (IsCinematicDialogueActive())
+            return;
+
+        Vector3 origin = _camera.GlobalPosition;
+        Vector3 direction = -_camera.GlobalTransform.Basis.Z;
+        Vector3 end = origin + direction * PunchRange;
+
+        var query = PhysicsRayQueryParameters3D.Create(origin, end);
+        query.Exclude = new Godot.Collections.Array<Rid>
+    {
+        GetRid()
+    };
+        query.CollideWithAreas = false;
+
+        var result = GetWorld3D()
+            .DirectSpaceState
+            .IntersectRay(query);
+
+        if (result.Count == 0)
+            return;
+
+        var collider = result["collider"].AsGodotObject() as Node;
+
+        if (collider == null)
+            return;
+
+        var interactable = FindInteractable(collider);
+
+        if (interactable is not InteractableCharacter character)
+            return;
+
+        character.NotifyHitByPunch(PunchDamage);
+    }
+
 }

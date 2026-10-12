@@ -24,7 +24,7 @@ public partial class SpriteAnimator : Node
     [ExportGroup("Dead")]
     [Export] public Texture2D DeadTexture { get; set; }
 
-    private const float TemporaryDeadOffsetY = -1f;
+    private const float TemporaryDeadOffsetY = -.8f;
 
     private bool _isTalking;
     private bool _isMoving;

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://c7do1x5mvdx2n"]
+
+[ext_resource type="Texture2D" uid="uid://by1j5wjsprcu7" path="res://Scenes/UI/Punching/9.png" id="1_c6faw"]
+[ext_resource type="Script" uid="uid://cmvwefjjq5b7u" path="res://Scenes/UI/Punching/PunchingController.cs" id="1_iipwh"]
+[ext_resource type="Texture2D" uid="uid://bq43w2gfdeev5" path="res://Scenes/UI/Punching/1.png" id="2_p3apa"]
+[ext_resource type="Texture2D" uid="uid://cj5hkqv835arq" path="res://Scenes/UI/Punching/2.png" id="3_eka2b"]
+[ext_resource type="Texture2D" uid="uid://dxo0jmkeuds03" path="res://Scenes/UI/Punching/3.png" id="4_ykmdm"]
+[ext_resource type="Texture2D" uid="uid://dod74foeedqr8" path="res://Scenes/UI/Punching/4.png" id="5_31s4t"]
+[ext_resource type="Texture2D" uid="uid://bfk3bm86btqp4" path="res://Scenes/UI/Punching/5.png" id="6_eijsa"]
+[ext_resource type="Texture2D" uid="uid://bgqlgbeqj8nvs" path="res://Scenes/UI/Punching/6.png" id="7_iqpyl"]
+[ext_resource type="Texture2D" uid="uid://cygpup413485p" path="res://Scenes/UI/Punching/7.png" id="8_ubi37"]
+[ext_resource type="Texture2D" uid="uid://bjmuh0lm6n4s4" path="res://Scenes/UI/Punching/8.png" id="9_3wqh6"]
+
+[node name="Punching" type="CanvasLayer" unique_id=355825912]
+script = ExtResource("1_iipwh")
+LeftFrames = Array[Texture2D]([ExtResource("2_p3apa"), ExtResource("3_eka2b"), ExtResource("4_ykmdm"), ExtResource("5_31s4t"), ExtResource("6_eijsa"), ExtResource("7_iqpyl"), ExtResource("8_ubi37"), ExtResource("9_3wqh6"), ExtResource("1_c6faw")])
+RightFrames = Array[Texture2D]([ExtResource("2_p3apa"), ExtResource("3_eka2b"), ExtResource("4_ykmdm"), ExtResource("5_31s4t"), ExtResource("6_eijsa"), ExtResource("7_iqpyl"), ExtResource("8_ubi37"), ExtResource("9_3wqh6"), ExtResource("1_c6faw")])
+HitFrameIndex = 8
+
+[node name="PunchLeft" type="MarginContainer" parent="." unique_id=40727117]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -600.0
+offset_right = 600.0
+grow_vertical = 0
+theme_override_constants/margin_left = 200
+
+[node name="TextureRect" type="TextureRect" parent="PunchLeft" unique_id=1627358379]
+custom_minimum_size = Vector2(1000, 1000)
+propagate_maximum_size = true
+layout_mode = 2
+texture = ExtResource("1_c6faw")
+
+[node name="PunchRight" type="MarginContainer" parent="." unique_id=1847947212]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1200.0
+offset_top = -1000.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 200
+
+[node name="TextureRect" type="TextureRect" parent="PunchRight" unique_id=1652705350]
+custom_minimum_size = Vector2(1000, 1000)
+propagate_maximum_size = true
+layout_mode = 2
+texture = ExtResource("1_c6faw")
+flip_h = true
