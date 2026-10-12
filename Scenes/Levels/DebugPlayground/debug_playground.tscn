@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://udsod2mwskel" path="res://Scenes/Levels/DebugPlayground/DebugPlayground.cs" id="2_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="3_vkp4y"]
 [ext_resource type="PackedScene" uid="uid://djhrbul0hlsa" path="res://Scenes/Characters/PolishTeacher/polish_teacher_inherited.tscn" id="5_vkp4y"]
+[ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="6_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://cauxrqvdp5r8u" path="res://Scenes/Objects/Backpack/backpack.tscn" id="6_y8sep"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="7_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Objects/Chair/chair.tscn" id="8_dhuea"]
@@ -45,52 +46,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.12
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 groups=["NPCs"] instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
 
-[node name="Backpack" parent="." index="7" unique_id=499470510 instance=ExtResource("6_y8sep")]
+[node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
+
+[node name="Backpack" parent="." index="8" unique_id=499470510 instance=ExtResource("6_y8sep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7392187, 0.5285047, -1.4641004)
 
-[node name="Bench" parent="." index="8" unique_id=1804631136 instance=ExtResource("7_s6ct2")]
+[node name="Bench" parent="." index="9" unique_id=1804631136 instance=ExtResource("7_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9720726, 0.25, 6.902945)
 
-[node name="Chair" parent="." index="9" unique_id=498573374 instance=ExtResource("8_dhuea")]
+[node name="Chair" parent="." index="10" unique_id=498573374 instance=ExtResource("8_dhuea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.800829, 0.017499983, 3.369291)
 
-[node name="Desk" parent="." index="10" unique_id=1876954106 instance=ExtResource("9_5gj1k")]
+[node name="Desk" parent="." index="11" unique_id=1876954106 instance=ExtResource("9_5gj1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3888183, 4.7683716e-07, -3.5816407)
 
-[node name="FemaleTeacherBag" parent="." index="11" unique_id=1739084391 instance=ExtResource("10_atrwb")]
+[node name="FemaleTeacherBag" parent="." index="12" unique_id=1739084391 instance=ExtResource("10_atrwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3958921, 0.5544175, -0.23244512)
 
-[node name="Sponge" parent="." index="12" unique_id=1898702954 instance=ExtResource("11_xactb")]
+[node name="Sponge" parent="." index="13" unique_id=1898702954 instance=ExtResource("11_xactb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.039832, 0.5837808, 6.9308004)
 
-[node name="TeacherChair" parent="." index="13" unique_id=225576235 instance=ExtResource("12_421x3")]
+[node name="TeacherChair" parent="." index="14" unique_id=225576235 instance=ExtResource("12_421x3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.888838, 0.015138438, 5.272296)
 
-[node name="Wall" type="CSGMesh3D" parent="." index="14" unique_id=2247746]
+[node name="Wall" type="CSGMesh3D" parent="." index="15" unique_id=2247746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2284107, 14)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall2" type="CSGMesh3D" parent="." index="15" unique_id=777048014]
+[node name="Wall2" type="CSGMesh3D" parent="." index="16" unique_id=777048014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2284107, -15.124615)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall3" type="CSGMesh3D" parent="." index="16" unique_id=1819969414]
+[node name="Wall3" type="CSGMesh3D" parent="." index="17" unique_id=1819969414]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14.531487, 2.2284107, -0.6325283)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall4" type="CSGMesh3D" parent="." index="17" unique_id=837584821]
+[node name="Wall4" type="CSGMesh3D" parent="." index="18" unique_id=837584821]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.283166, 2.2284107, -0.6325283)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="18" unique_id=912610293]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="19" unique_id=912610293]
 navigation_mesh = SubResource("NavigationMesh_crm6m")
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0" unique_id=1566813962]

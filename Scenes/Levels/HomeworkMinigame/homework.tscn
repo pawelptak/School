@@ -12,7 +12,13 @@
 ambient_light_source = 2
 ambient_light_color = Color(0.9501192, 0.9501192, 0.9501191, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_s1g48"]
+size = Vector3(1, 0.53027344, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+size = Vector3(30, 0.5, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e76f7"]
 size = Vector3(30, 0.5, 30)
 
 [node name="Homework" type="Node3D" unique_id=579107592]
@@ -42,7 +48,19 @@ environment = SubResource("Environment_vapn8")
 [node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("5_2q1sh")]
 
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_e76f7")]
-transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.1493435, -2.312602, 3.4158916)
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.149, 0, 3.416)
+
+[node name="Sprite" parent="Mate" index="0" unique_id=274662881]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0.27968308, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 210)
+
+[node name="CollisionShape3D" parent="Mate" index="1" unique_id=2073062423]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23486328, 0)
+shape = SubResource("BoxShape3D_s1g48")
+
+[node name="DialogueLookAtPoint" parent="Mate" index="3" unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014542282, 0.49833208, -0.032793105)
 
 [node name="CutsceneController" parent="." unique_id=1251273715 instance=ExtResource("7_sxbsr")]
 
@@ -52,5 +70,11 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.1493435, -2.312602, 3.41589
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8066146, 0)
 mesh = SubResource("BoxMesh_lc5oj")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=261414595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8066146, 0)
+shape = SubResource("BoxShape3D_e76f7")
+
 [node name="CustomCamera" type="Node3D" parent="." unique_id=562374628]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4701266, 1.9111004, -0.15275979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6562252, 2.6831415, 2.0808728)
+
+[editable path="Mate"]

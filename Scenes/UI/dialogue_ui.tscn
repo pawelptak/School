@@ -23,7 +23,7 @@ grow_vertical = 0
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 200
 theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_bottom = 150
 
 [node name="Text" type="RichTextLabel" parent="MarginContainer" unique_id=114454460]
 layout_mode = 2

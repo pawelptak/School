@@ -10,8 +10,8 @@
 [node name="Mate" unique_id=664278660 instance=ExtResource("1_tj4r4")]
 script = ExtResource("2_vgug4")
 
-[node name="Sprite" parent="." index="0" unique_id=274662881]
-texture = ExtResource("3_wgc55")
+[node name="DialogueLookAtPoint" parent="." index="3" unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014542162, 0.75315595, -0.032793105)
 
 [node name="SpriteAnimator" parent="." index="4" unique_id=205470488]
 IdleFrames = Array[Texture2D]([ExtResource("3_wgc55")])

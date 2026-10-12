@@ -17,7 +17,7 @@ public partial class NpcController : Node
 	[Export] public float WaitTime { get; set; } = 2.0f;
 	[Export] public float AttackDistance { get; set; } = 1.2f;
 	[Export] public float AttackCooldown { get; set; } = 1.5f;
-	[Export] public float AttackDamage { get; set; } = 50.0f; // 10.0 by default
+	[Export] public float AttackDamage { get; set; } = 10.0f; // 10.0 by default
 	[Export] public float KnockbackDeceleration { get; set; } = 12.0f;
 
 	private CharacterBody3D _npc;

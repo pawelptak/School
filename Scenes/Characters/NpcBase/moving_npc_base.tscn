@@ -1,13 +1,48 @@
 [gd_scene format=3 uid="uid://djm0nowbi57x7"]
 
-[ext_resource type="PackedScene" uid="uid://dg7gy1xp4uyo5" path="res://Scenes/Characters/NpcBase/npc_base.tscn" id="1_6egfp"]
+[ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="1_h4uqc"]
+[ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="2_0hgkt"]
 [ext_resource type="Script" uid="uid://d15q0r5gw66wh" path="res://Scenes/Characters/NpcBase/NpcController.cs" id="2_6egfp"]
+[ext_resource type="Script" uid="uid://caa5q6sded5qx" path="res://Scenes/Characters/NpcBase/NpcHealthController.cs" id="4_wxlht"]
 
-[node name="MovingNpcBase" unique_id=664278660 instance=ExtResource("1_6egfp")]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
+radius = 0.35
 
-[node name="NpcController" type="Node" parent="." index="5" unique_id=991182570]
+[sub_resource type="SphereShape3D" id="SphereShape3D_crm6m"]
+radius = 1.0
+
+[node name="MovingNpcBase" type="CharacterBody3D" unique_id=664278660]
+
+[node name="Sprite" type="Sprite3D" parent="." unique_id=274662881]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
+pixel_size = 0.004
+billboard = 2
+texture_filter = 0
+texture = ExtResource("1_h4uqc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=219048047]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
+
+[node name="DialogueLookAtPoint" type="Marker3D" parent="." unique_id=1460371450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0027945638, 0.75315595, 0.0024494529)
+
+[node name="SpriteAnimator" type="Node" parent="." unique_id=205470488 node_paths=PackedStringArray("Sprite")]
+script = ExtResource("2_0hgkt")
+Sprite = NodePath("../Sprite")
+IdleFrameDuration = 0.3
+
+[node name="NpcController" type="Node" parent="." unique_id=991182570]
 script = ExtResource("2_6egfp")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="6" unique_id=1207255180]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1207255180]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
+
+[node name="NpcHealthController" type="Node" parent="." unique_id=1138413887]
+script = ExtResource("4_wxlht")

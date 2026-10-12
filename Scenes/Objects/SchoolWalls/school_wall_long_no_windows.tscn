@@ -1,5 +1,7 @@
 [gd_scene format=4 uid="uid://3yygsbnnih8c"]
 
+[ext_resource type="Texture2D" uid="uid://cb1hpewofyux8" path="res://Assets/Textures/paint-basic-200.png" id="1_i3esb"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
 albedo_color = Color(0.6117647, 0.74509805, 0.18431373, 1)
 
@@ -14,6 +16,12 @@ _surfaces = [{
 "vertex_count": 36,
 "vertex_data": PackedByteArray("AADwwAAAAMAAAIA+AADwwAAAAMAAAIC+AADwwAAAAEAAAIC+AADwQAAAAMAAAIC+AADwwAAAAMAAAIC+AADwwAAAAMAAAIA+AADwwAAAAEAAAIC+AADwwAAAAMAAAIC+AADwQAAAAMAAAIC+AADwwAAAAEAAAIC+AADwwAAAAEAAAIA+AADwwAAAAMAAAIA+AADwwAAAAMAAAIA+AADwwAAAAEAAAIA+AADwQAAAAEAAAIA+AADwQAAAAEAAAIA+AADwwAAAAEAAAIA+AADwwAAAAEAAAIC+AADwwAAAAMAAAIA+AADwQAAAAMAAAIA+AADwQAAAAMAAAIC+AADwQAAAAEAAAIA+AADwQAAAAMAAAIA+AADwwAAAAMAAAIA+AADwQAAAAMAAAIC+AADwQAAAAMAAAIA+AADwQAAAAEAAAIA+AADwQAAAAMAAAIC+AADwQAAAAEAAAIC+AADwwAAAAEAAAIC+AADwwAAAAEAAAIC+AADwQAAAAEAAAIC+AADwQAAAAEAAAIA+AADwQAAAAEAAAIA+AADwQAAAAEAAAIC+AADwQAAAAMAAAIC+AAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
 }]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6045v"]
+albedo_texture = ExtResource("1_i3esb")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvadm"]
 size = Vector3(15, 4, 0.5)
@@ -32,6 +40,7 @@ collision_layer = 65
 
 [node name="Wall" type="MeshInstance3D" parent="StaticBody3D" unique_id=740282931]
 mesh = SubResource("ArrayMesh_y5ljv")
+surface_material_override/0 = SubResource("StandardMaterial3D_6045v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1272254907]
 shape = SubResource("BoxShape3D_yvadm")
