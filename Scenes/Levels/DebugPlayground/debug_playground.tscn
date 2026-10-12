@@ -36,17 +36,17 @@ size = Vector3(30, 0.2, 30)
 [node name="DebugPlayground" unique_id=513644933 instance=ExtResource("1_o172t")]
 script = ExtResource("2_s6ct2")
 
-[node name="CollisionShape3D" parent="Player" parent_id_path=PackedInt32Array(195847836) index="2" unique_id=634412986 groups=["NPCs"]]
+[node name="CollisionShape3D" parent="Player" parent_id_path=PackedInt32Array(195847836) index="3" unique_id=634412986 groups=["NPCs"]]
 
 [node name="AsianStudentMale" parent="." index="4" unique_id=559252500 groups=["NPCs"] instance=ExtResource("2_o6scy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132166)
 RecoveryTime = 2.0
 
-[node name="Mate" parent="." index="5" unique_id=2067851637 groups=["NPCs"] instance=ExtResource("3_vkp4y")]
+[node name="Mate" parent="." index="5" unique_id=2067851637 instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
 RecoveryTime = 2.0
 
-[node name="PolishTeacher" parent="." index="6" unique_id=664278660 groups=["NPCs"] instance=ExtResource("5_vkp4y")]
+[node name="PolishTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
 RecoveryTime = 2.0
 
@@ -60,24 +60,28 @@ AttackHitFrameIndex = 0
 
 [node name="Backpack" parent="." index="8" unique_id=499470510 instance=ExtResource("6_y8sep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7392187, 0.5285047, -1.4641004)
+Knockback = 3.0
 
 [node name="Bench" parent="." index="9" unique_id=1804631136 instance=ExtResource("7_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9720726, 0.25, 6.902945)
 
 [node name="Chair" parent="." index="10" unique_id=498573374 instance=ExtResource("8_dhuea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.800829, 0.017499983, 3.369291)
+Knockback = 3.0
 
 [node name="Desk" parent="." index="11" unique_id=1876954106 instance=ExtResource("9_5gj1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3888183, 4.7683716e-07, -3.5816407)
 
 [node name="FemaleTeacherBag" parent="." index="12" unique_id=1739084391 instance=ExtResource("10_atrwb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3958921, 0.5544175, -0.23244512)
+Knockback = 3.0
 
 [node name="Sponge" parent="." index="13" unique_id=1898702954 instance=ExtResource("11_xactb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.039832, 0.5837808, 6.9308004)
 
 [node name="TeacherChair" parent="." index="14" unique_id=225576235 instance=ExtResource("12_421x3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.888838, 0.015138438, 5.272296)
+Knockback = 3.0
 
 [node name="Wall" type="CSGMesh3D" parent="." index="15" unique_id=2247746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2284107, 14)
@@ -117,6 +121,7 @@ shape = SubResource("BoxShape3D_o172t")
 mesh = SubResource("BoxMesh_f5wrq")
 
 [editable path="Player"]
+[editable path="Player/LowHealth"]
 [editable path="AsianStudentMale"]
 [editable path="Mate"]
 [editable path="PolishTeacher"]

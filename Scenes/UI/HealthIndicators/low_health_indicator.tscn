@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bvlx8sd8gxpax"]
+
+[ext_resource type="Shader" uid="uid://d03episvbutjl" path="res://Scenes/UI/HealthIndicators/low_health.gdshader" id="1_nvkda"]
+[ext_resource type="Script" uid="uid://dvudu4ea6akmg" path="res://Scenes/UI/HealthIndicators/Vignette.cs" id="2_8u8hc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hoqd"]
+shader = ExtResource("1_nvkda")
+shader_parameter/vignette_color = Color(1, 0, 0, 1)
+shader_parameter/multiplier = 0.90000004275
+shader_parameter/softness = 0.50000002375
+shader_parameter/alpha = 0.0
+
+[node name="LowHealthIndicator" type="CanvasLayer" unique_id=1714133641]
+
+[node name="Vignette" type="ColorRect" parent="." unique_id=2093352124]
+material = SubResource("ShaderMaterial_1hoqd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_8u8hc")

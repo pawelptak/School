@@ -12,6 +12,7 @@ public partial class HealthController : Node
     public override void _Ready()
     {
         CurrentHealth = MaxHealth;
+        HealthChanged?.Invoke(CurrentHealth);
     }
 
     public void TakeDamage(float amount)
