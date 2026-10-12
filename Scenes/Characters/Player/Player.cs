@@ -5,7 +5,7 @@ public partial class Player : CharacterBody3D
 {
     [ExportGroup("Melee")]
     [Export] public float PunchDamage { get; set; } = 20.0f;
-    [Export] public float PunchRange { get; set; } = 2.0f;
+    [Export] public float PunchRange { get; set; } = 1.6f;
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
 

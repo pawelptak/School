@@ -12,10 +12,10 @@ public partial class NpcController : Node
     [Export] public Node3D PatrolPointA { get; set; }
     [Export] public Node3D PatrolPointB { get; set; }
 
-    [Export] public float Speed { get; set; } = 1.5f;
+    [Export] public float Speed { get; set; } = 3f;
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
     [Export] public float WaitTime { get; set; } = 2.0f;
-    [Export] public float AttackDistance { get; set; } = 1.2f;
+    [Export] public float AttackDistance { get; set; } = 1.5f;
     [Export] public float AttackCooldown { get; set; } = 1.5f;
     [Export] public float AttackDamage { get; set; } = 10.0f; // 10.0 by default
     [Export] public float KnockbackDeceleration { get; set; } = 12.0f;
@@ -38,12 +38,18 @@ public partial class NpcController : Node
     private bool _isDefeated;
     private Vector3 _knockbackVelocity;
     private float _stunTimer;
-
+    private bool _isAttacking;
     public override async void _Ready()
     {
         _npc = GetParent() as CharacterBody3D;
         _agent = _npc?.GetNodeOrNull<NavigationAgent3D>("NavigationAgent3D");
         _spriteAnimator = _npc?.GetNodeOrNull<SpriteAnimator>("SpriteAnimator");
+
+        if (_spriteAnimator != null)
+        {
+            _spriteAnimator.AttackHitFrame += OnAttackHitFrame;
+            _spriteAnimator.AttackAnimationFinished += OnAttackAnimationFinished;
+        }
 
         if (_npc == null || _agent == null)
         {
@@ -157,26 +163,51 @@ public partial class NpcController : Node
         MoveTowardTarget(_currentTarget.GlobalPosition, dt);
     }
 
+
     private void ProcessChase(double dt)
     {
-        if (_chaseTarget == null) return;
+        if (_chaseTarget == null ||
+            !GodotObject.IsInstanceValid(_chaseTarget))
+        {
+            return;
+        }
 
         _agent.TargetPosition = _chaseTarget.GlobalPosition;
 
         Vector3 targetFlat = _chaseTarget.GlobalPosition;
         targetFlat.Y = _npc.GlobalPosition.Y;
 
-        // Jeśli dotarliśmy na odległość ataku
-        if (_npc.GlobalPosition.DistanceTo(targetFlat) <= AttackDistance)
+        float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
+
+        // Podczas animacji ataku NPC nie rozpoczyna kolejnego ataku
+        // ani nie goni gracza.
+        if (_isAttacking)
         {
             ApplyGravityAndStop(dt);
             _spriteAnimator?.SetMoving(false);
+            FaceTarget(targetFlat);
+            return;
+        }
 
-            // Sprawdzamy czy minął czas cooldownu
+        if (distance <= AttackDistance)
+        {
+            ApplyGravityAndStop(dt);
+            _spriteAnimator?.SetMoving(false);
+            FaceTarget(targetFlat);
+
             if (_attackTimer <= 0.0f)
             {
-                AttackPlayer();
-                _attackTimer = AttackCooldown; // Resetujemy licznik
+                if (_spriteAnimator != null && _spriteAnimator.PlayAttack())
+                {
+                    _isAttacking = true;
+                    _attackTimer = AttackCooldown;
+                }
+                else
+                {
+                    // Nie próbuj uruchamiać animacji w każdej klatce,
+                    // jeśli nie skonfigurowano AttackFrames.
+                    _attackTimer = AttackCooldown;
+                }
             }
 
             return;
@@ -185,19 +216,81 @@ public partial class NpcController : Node
         MoveTowardTarget(_chaseTarget.GlobalPosition, dt);
     }
 
-    private void AttackPlayer()
+    private void FaceTarget(Vector3 targetPosition)
     {
-        var healthController = _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
+        Vector3 direction = targetPosition - _npc.GlobalPosition;
+        direction.Y = 0.0f;
+
+        if (direction.LengthSquared() < 0.001f)
+            return;
+
+        direction = direction.Normalized();
+
+        _npc.Rotation = new Vector3(
+            _npc.Rotation.X,
+            Mathf.Atan2(direction.X, direction.Z),
+            _npc.Rotation.Z
+        );
+    }
+
+
+
+
+    private void OnAttackHitFrame()
+    {
+        GD.Print("[ATTACK DEBUG] OnAttackHitFrame called.");
+
+        GD.Print(
+            $"[ATTACK DEBUG] IsAttacking={_isAttacking}, " +
+            $"IsDefeated={_isDefeated}, " +
+            $"NpcNull={_npc == null}, " +
+            $"TargetNull={_chaseTarget == null}"
+        );
+
+        if (_isDefeated ||
+            _npc == null ||
+            _chaseTarget == null ||
+            !GodotObject.IsInstanceValid(_chaseTarget))
+        {
+            GD.Print("[ATTACK DEBUG] Returning because attack state or target is invalid.");
+            return;
+        }
+
+        Vector3 targetFlat = _chaseTarget.GlobalPosition;
+        targetFlat.Y = _npc.GlobalPosition.Y;
+
+        float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
+
+        GD.Print(
+            $"[ATTACK DEBUG] Distance={distance:F2}, " +
+            $"AttackDistance={AttackDistance}"
+        );
+
+        if (distance > AttackDistance)
+        {
+            GD.Print("[ATTACK DEBUG] Target outside attack range.");
+            return;
+        }
+
+        var healthController =
+            _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
+
+        GD.Print($"[ATTACK DEBUG] HealthController found={healthController != null}");
+
         if (healthController != null)
         {
+            GD.Print($"[ATTACK DEBUG] Applying {AttackDamage} damage.");
             healthController.TakeDamage(AttackDamage);
-            GD.Print($"[COMBAT] {_npc.Name} attacks player for {AttackDamage} damage!");
-        }
-        else
-        {
-            GD.PushWarning($"[COMBAT] {_npc.Name} tried to attack, but HealthController was not found on target!");
         }
     }
+
+
+    private void OnAttackAnimationFinished()
+    {
+        GD.Print("[ATTACK DEBUG] Attack animation finished.");
+        _isAttacking = false;
+    }
+
 
     private void ProcessIdle(double dt)
     {
@@ -346,6 +439,13 @@ public partial class NpcController : Node
         {
             _healthController.Died -= OnNpcDied;
         }
+
+        if (_spriteAnimator != null &&
+    GodotObject.IsInstanceValid(_spriteAnimator))
+        {
+            _spriteAnimator.AttackHitFrame -= OnAttackHitFrame;
+            _spriteAnimator.AttackAnimationFinished -= OnAttackAnimationFinished;
+        }
     }
 
     public void ApplyHitEffects(
@@ -426,6 +526,7 @@ public partial class NpcController : Node
         _isWaiting = false;
         _waitTimer = 0.0f;
         _attackTimer = 0.0f;
+        _isAttacking = false;
 
         if (_currentTarget == null)
         {

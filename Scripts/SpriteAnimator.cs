@@ -1,5 +1,6 @@
 
 using Godot;
+using System;
 
 public partial class SpriteAnimator : Node
 {
@@ -17,6 +18,11 @@ public partial class SpriteAnimator : Node
     [Export] public Godot.Collections.Array<Texture2D> HitFrames { get; set; } = new();
     [Export] public float HitFrameDuration { get; set; } = 0.5f;
 
+    [ExportGroup("Attack")]
+    [Export] public Godot.Collections.Array<Texture2D> AttackFrames { get; set; } = new();
+    [Export] public float AttackFrameDuration { get; set; } = 0.12f;
+    [Export] public int AttackHitFrameIndex { get; set; } = 2;
+
     [ExportGroup("Moving")]
     [Export] public Godot.Collections.Array<Texture2D> MovingFrames { get; set; } = new();
     [Export] public float MovingFrameDuration { get; set; } = 0.12f;
@@ -24,12 +30,17 @@ public partial class SpriteAnimator : Node
     [ExportGroup("Dead")]
     [Export] public Texture2D DeadTexture { get; set; }
 
-    private const float TemporaryDeadOffsetY = -.8f;
+    public event Action AttackHitFrame;
+    public event Action AttackAnimationFinished;
+
+    private const float TemporaryDeadOffsetY = -0.8f;
 
     private bool _isTalking;
     private bool _isMoving;
     private bool _isPlayingHit;
+    private bool _isPlayingAttack;
     private bool _isDead;
+    private bool _attackHitFrameTriggered;
 
     private Vector3 _originalSpritePosition;
 
@@ -68,8 +79,17 @@ public partial class SpriteAnimator : Node
             {
                 if (!_currentAnimationLoops)
                 {
+                    bool wasPlayingAttack = _isPlayingAttack;
+
                     _isPlayingHit = false;
+                    _isPlayingAttack = false;
+                    _attackHitFrameTriggered = false;
+
                     PlayBaseAnimation();
+
+                    if (wasPlayingAttack)
+                        AttackAnimationFinished?.Invoke();
+
                     return;
                 }
 
@@ -77,7 +97,100 @@ public partial class SpriteAnimator : Node
             }
 
             ApplyCurrentFrame();
+            CheckAttackHitFrame();
         }
+    }
+
+    public void SetTalking(bool talking)
+    {
+        if (_isDead || _isTalking == talking)
+            return;
+
+        _isTalking = talking;
+
+        if (!_isPlayingHit && !_isPlayingAttack)
+            PlayBaseAnimation();
+    }
+
+    public void SetMoving(bool moving)
+    {
+        if (_isDead || _isMoving == moving)
+            return;
+
+        _isMoving = moving;
+
+        if (!_isPlayingHit && !_isPlayingAttack)
+            PlayBaseAnimation();
+    }
+
+    public void PlayHit()
+    {
+        if (_isDead)
+            return;
+
+        CancelAttack();
+
+        if (HitFrames.Count == 0)
+        {
+            GD.PushWarning($"{Name}: HitFrames not set.");
+            return;
+        }
+
+        _isPlayingHit = true;
+        PlayAnimation(HitFrames, HitFrameDuration, false);
+    }
+
+    public bool PlayAttack()
+    {
+        if (_isDead || _isPlayingAttack || AttackFrames.Count == 0)
+        {
+            if (!_isDead && AttackFrames.Count == 0)
+                GD.PushWarning($"{Name}: AttackFrames not set.");
+
+            return false;
+        }
+
+        _isPlayingHit = false;
+        _isPlayingAttack = true;
+        _attackHitFrameTriggered = false;
+
+        PlayAnimation(AttackFrames, AttackFrameDuration, false);
+        CheckAttackHitFrame();
+
+        return true;
+    }
+
+    public void CancelAttack()
+    {
+        if (!_isPlayingAttack)
+            return;
+
+        _isPlayingAttack = false;
+        _attackHitFrameTriggered = false;
+
+        AttackAnimationFinished?.Invoke();
+        PlayBaseAnimation();
+    }
+
+    private void CheckAttackHitFrame()
+    {
+        if (!_isPlayingAttack || _attackHitFrameTriggered)
+            return;
+
+        int hitFrame = Mathf.Clamp(
+            AttackHitFrameIndex,
+            0,
+            _currentFrames.Count - 1
+        );
+
+        if (_currentFrame != hitFrame)
+            return;
+
+        _attackHitFrameTriggered = true;
+
+        GD.Print($"[ATTACK DEBUG] Hit frame reached: {_currentFrame}");
+
+        AttackHitFrame?.Invoke();
     }
 
     public void PlayPermanentDead()
@@ -98,10 +211,13 @@ public partial class SpriteAnimator : Node
         if (Sprite == null)
             return;
 
+        CancelAttack();
+
         _isDead = true;
         _isTalking = false;
         _isMoving = false;
         _isPlayingHit = false;
+        _isPlayingAttack = false;
 
         _currentFrames = new Godot.Collections.Array<Texture2D>();
         _currentFrame = 0;
@@ -128,8 +244,9 @@ public partial class SpriteAnimator : Node
         _isTalking = false;
         _isMoving = false;
         _isPlayingHit = false;
+        _isPlayingAttack = false;
+        _attackHitFrameTriggered = false;
 
-        // Przywrócenie pozycji sprzed pokonania.
         Sprite.Position = _originalSpritePosition;
 
         _currentFrames = new Godot.Collections.Array<Texture2D>();
@@ -142,46 +259,9 @@ public partial class SpriteAnimator : Node
         PlayBaseAnimation();
     }
 
-    public void SetTalking(bool talking)
-    {
-        if (_isDead || _isTalking == talking)
-            return;
-
-        _isTalking = talking;
-
-        if (!_isPlayingHit)
-            PlayBaseAnimation();
-    }
-
-    public void SetMoving(bool moving)
-    {
-        if (_isDead || _isMoving == moving)
-            return;
-
-        _isMoving = moving;
-
-        if (!_isPlayingHit)
-            PlayBaseAnimation();
-    }
-
-    public void PlayHit()
-    {
-        if (_isDead)
-            return;
-
-        if (HitFrames.Count == 0)
-        {
-            GD.PushWarning($"{Name}: HitFrames not set.");
-            return;
-        }
-
-        _isPlayingHit = true;
-        PlayAnimation(HitFrames, HitFrameDuration, false);
-    }
-
     private void PlayBaseAnimation()
     {
-        if (_isDead)
+        if (_isDead || _isPlayingHit || _isPlayingAttack)
             return;
 
         if (_isTalking && TalkingFrames.Count > 0)

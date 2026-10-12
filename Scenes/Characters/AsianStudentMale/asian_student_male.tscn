@@ -22,3 +22,6 @@ TalkingFrames = Array[Texture2D]([ExtResource("4_7pvp1"), ExtResource("5_ojkem")
 HitFrames = Array[Texture2D]([ExtResource("6_jku7m")])
 MovingFrames = Array[Texture2D]([ExtResource("7_7v1di"), ExtResource("8_o6nuq")])
 DeadTexture = ExtResource("9_7pvp1")
+
+[node name="NpcController" parent="." index="5" unique_id=991182570]
+Speed = 3.0

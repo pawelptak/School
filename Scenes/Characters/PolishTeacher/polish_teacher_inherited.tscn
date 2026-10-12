@@ -16,3 +16,7 @@ texture = ExtResource("2_celsv")
 [node name="SpriteAnimator" parent="." index="4" unique_id=205470488]
 IdleFrames = Array[Texture2D]([ExtResource("2_celsv")])
 TalkingFrames = Array[Texture2D]([ExtResource("4_htkna"), ExtResource("5_4fpfx"), ExtResource("6_gjhkn")])
+
+[node name="NpcController" parent="." index="5" unique_id=991182570]
+Speed = 0.5
+AttackDamage = 5.0

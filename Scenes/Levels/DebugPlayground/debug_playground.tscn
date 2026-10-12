@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://djhrbul0hlsa" path="res://Scenes/Characters/PolishTeacher/polish_teacher_inherited.tscn" id="5_vkp4y"]
 [ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="6_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://cauxrqvdp5r8u" path="res://Scenes/Objects/Backpack/backpack.tscn" id="6_y8sep"]
+[ext_resource type="Texture2D" uid="uid://booyj4iiiyo6" path="res://Scenes/Characters/Bully/talk1.png" id="7_dhuea"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="7_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Objects/Chair/chair.tscn" id="8_dhuea"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Objects/Desk/desk.tscn" id="9_5gj1k"]
@@ -41,29 +42,21 @@ script = ExtResource("2_s6ct2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132166)
 RecoveryTime = 2.0
 
-[node name="NpcHealthController" parent="AsianStudentMale" index="7" unique_id=1138413887]
-MaxHealth = 10.0
-
 [node name="Mate" parent="." index="5" unique_id=2067851637 groups=["NPCs"] instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
 RecoveryTime = 2.0
-
-[node name="NpcHealthController" parent="Mate" index="7" unique_id=1138413887]
-MaxHealth = 10.0
 
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 groups=["NPCs"] instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
 RecoveryTime = 2.0
 
-[node name="NpcHealthController" parent="PolishTeacher" index="7" unique_id=1138413887]
-MaxHealth = 10.0
-
 [node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
 RecoveryTime = 2.0
 
-[node name="NpcHealthController" parent="Bully" index="7" unique_id=1138413887]
-MaxHealth = 10.0
+[node name="SpriteAnimator" parent="Bully" index="4" unique_id=205470488]
+AttackFrames = Array[Texture2D]([ExtResource("7_dhuea")])
+AttackHitFrameIndex = 0
 
 [node name="Backpack" parent="." index="8" unique_id=499470510 instance=ExtResource("6_y8sep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7392187, 0.5285047, -1.4641004)
