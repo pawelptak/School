@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8vl1wfor5yi4"]
 
-[ext_resource type="PackedScene" uid="uid://dg7gy1xp4uyo5" path="res://Scenes/Characters/NpcBase/npc_base.tscn" id="1_tj4r4"]
+[ext_resource type="PackedScene" uid="uid://djm0nowbi57x7" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_tj4r4"]
 [ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Scenes/Characters/Mate/Mate.cs" id="2_vgug4"]
 [ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="3_wgc55"]
 [ext_resource type="Texture2D" uid="uid://7k17hyvt8dek" path="res://Scenes/Characters/Mate/mate_talk_1.png" id="4_fccbm"]
