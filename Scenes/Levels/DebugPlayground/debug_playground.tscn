@@ -39,19 +39,27 @@ script = ExtResource("2_s6ct2")
 
 [node name="AsianStudentMale" parent="." index="4" unique_id=559252500 groups=["NPCs"] instance=ExtResource("2_o6scy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132166)
-DefeatMode = 1
+
+[node name="NpcHealthController" parent="AsianStudentMale" index="7" unique_id=1138413887]
+MaxHealth = 10.0
 
 [node name="Mate" parent="." index="5" unique_id=2067851637 groups=["NPCs"] instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
-DefeatMode = 1
+
+[node name="NpcHealthController" parent="Mate" index="7" unique_id=1138413887]
+MaxHealth = 10.0
 
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 groups=["NPCs"] instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
-DefeatMode = 1
+
+[node name="NpcHealthController" parent="PolishTeacher" index="7" unique_id=1138413887]
+MaxHealth = 10.0
 
 [node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
-DefeatMode = 1
+
+[node name="NpcHealthController" parent="Bully" index="7" unique_id=1138413887]
+MaxHealth = 10.0
 
 [node name="Backpack" parent="." index="8" unique_id=499470510 instance=ExtResource("6_y8sep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7392187, 0.5285047, -1.4641004)
@@ -112,4 +120,7 @@ shape = SubResource("BoxShape3D_o172t")
 mesh = SubResource("BoxMesh_f5wrq")
 
 [editable path="Player"]
+[editable path="AsianStudentMale"]
+[editable path="Mate"]
 [editable path="PolishTeacher"]
+[editable path="Bully"]
