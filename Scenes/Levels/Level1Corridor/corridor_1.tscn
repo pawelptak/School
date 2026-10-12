@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bmk37yth4de1h" path="res://Scenes/Levels/Level1Corridor/Corridor1.cs" id="1_hftl2"]
 [ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Objects/ObjectiveMarker/objective_marker.tscn" id="2_xjq1u"]
 [ext_resource type="PackedScene" uid="uid://b1kdypswbhvhb" path="res://Scenes/CSG/corridor_wall_no_window_csg.tscn" id="3_4vx7a"]
+[ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="3_q5orf"]
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/CSG/door_csg.tscn" id="4_dvwus"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="5_t8jgm"]
 [ext_resource type="Script" uid="uid://corjvlmdfawd4" path="res://Scenes/Levels/Level1Corridor/TutorialAreaDoor.cs" id="5_xjq1u"]
@@ -37,6 +38,12 @@ size = Vector3(15, 0.2, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_gmee5"]
 material = SubResource("StandardMaterial3D_ubwdy")
 size = Vector3(15, 0.2, 8.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cpxmm"]
+albedo_texture = ExtResource("3_q5orf")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gmee5"]
 panorama = ExtResource("9_gxldj")
@@ -80,6 +87,7 @@ shape = SubResource("BoxShape3D_sbuws")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=216239978]
 mesh = SubResource("BoxMesh_gmee5")
+surface_material_override/0 = SubResource("StandardMaterial3D_cpxmm")
 
 [node name="WallSouth" parent="." unique_id=1370939349 instance=ExtResource("3_4vx7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3.6445372)

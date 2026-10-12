@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="4_b2x66"]
 [ext_resource type="PackedScene" uid="uid://chtolar4fv6w1" path="res://Scenes/Objects/FemaleTeacherBag/female_teacher_bag.tscn" id="4_j7jcc"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Objects/Desk/desk.tscn" id="5_nabnd"]
+[ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="6_5l8dm"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Objects/Chair/chair.tscn" id="6_t0y5t"]
 [ext_resource type="Script" uid="uid://b4ns7x48sbtax" path="res://Scripts/RockingChair.cs" id="7_b2x66"]
 [ext_resource type="PackedScene" uid="uid://d31o1hqaujmd4" path="res://Scenes/Objects/Blackboard/blackboard.tscn" id="7_lxbj7"]
@@ -61,6 +62,12 @@ uv1_scale = Vector3(30, 30, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_ineom"]
 material = SubResource("StandardMaterial3D_tfknm")
 size = Vector3(10.927612, 0.2, 15.665039)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ageul"]
+albedo_texture = ExtResource("6_5l8dm")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7jcc"]
 albedo_color = Color(0.6901961, 0.3137255, 0.0627451, 1)
@@ -179,6 +186,7 @@ shape = SubResource("BoxShape3D_o1t7o")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=1355936309]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5483122, 1.1099396, -2.7475586)
 mesh = SubResource("BoxMesh_ineom")
+surface_material_override/0 = SubResource("StandardMaterial3D_ageul")
 
 [node name="Desk1" parent="." unique_id=273984774 instance=ExtResource("5_nabnd")]
 transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.99984455, -0.9617218, 0, -2.6097665)

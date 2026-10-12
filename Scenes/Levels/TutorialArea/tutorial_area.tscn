@@ -6,10 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="4_bojic"]
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="5_mmjsf"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Objects/Desk/desk.tscn" id="6_1td18"]
+[ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="6_8jqgf"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Objects/Chair/chair.tscn" id="7_43rho"]
 [ext_resource type="PackedScene" uid="uid://d31o1hqaujmd4" path="res://Scenes/Objects/Blackboard/blackboard.tscn" id="8_fbmw3"]
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="9_c4uru"]
 [ext_resource type="PackedScene" uid="uid://cauxrqvdp5r8u" path="res://Scenes/Objects/Backpack/backpack.tscn" id="11_84nw0"]
+[ext_resource type="Texture2D" uid="uid://cb1hpewofyux8" path="res://Assets/Textures/paint-basic-200.png" id="12_qs3pl"]
 [ext_resource type="PackedScene" uid="uid://cf7xdt2v7c84o" path="res://Scenes/Objects/SchoolWalls/school_wall_long.tscn" id="13_xobid"]
 [ext_resource type="PackedScene" uid="uid://3yygsbnnih8c" path="res://Scenes/Objects/SchoolWalls/school_wall_long_no_windows.tscn" id="14_esfx0"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="15_23qg2"]
@@ -55,6 +57,40 @@ uv1_scale = Vector3(30, 30, 30)
 material = SubResource("StandardMaterial3D_tfknm")
 size = Vector3(10.927612, 0.2, 15.665039)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jei0j"]
+albedo_texture = ExtResource("6_8jqgf")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jqgf"]
+albedo_color = Color(0.7781693, 0.89118606, 0.15768033, 1)
+albedo_texture = ExtResource("12_qs3pl")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7legc"]
+albedo_color = Color(0.7781693, 0.89118606, 0.15768033, 1)
+albedo_texture = ExtResource("12_qs3pl")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f57mr"]
+albedo_color = Color(0.7781693, 0.89118606, 0.15768033, 1)
+albedo_texture = ExtResource("12_qs3pl")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18bdw"]
+albedo_color = Color(0.7781693, 0.89118606, 0.15768033, 1)
+albedo_texture = ExtResource("12_qs3pl")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
 [node name="TutorialArea" type="Node3D" unique_id=513644933]
 script = ExtResource("1_a0b8w")
 
@@ -95,6 +131,7 @@ shape = SubResource("BoxShape3D_o1t7o")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=1355936309]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5483122, 1.1099396, -2.7475586)
 mesh = SubResource("BoxMesh_ineom")
+surface_material_override/0 = SubResource("StandardMaterial3D_jei0j")
 
 [node name="Desk1" parent="." unique_id=273984774 instance=ExtResource("6_1td18")]
 transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.99984455, -0.9617218, 0, -2.6097665)
@@ -180,14 +217,26 @@ transform = Transform3D(0.35656482, 0, 0.9342706, 0, 1, 0, -0.9342706, 0, 0.3565
 [node name="SchoolWall" parent="." unique_id=1370939349 instance=ExtResource("13_xobid")]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -5.133, 2, -2.618)
 
+[node name="Wall" parent="SchoolWall/StaticBody3D" parent_id_path=PackedInt32Array(1370939349, 683502198) index="7" unique_id=1244108725]
+surface_material_override/0 = SubResource("StandardMaterial3D_8jqgf")
+
 [node name="SchoolWall2" parent="." unique_id=1182609786 instance=ExtResource("14_esfx0")]
 transform = Transform3D(0.7122973, 0, 0, 0, 1, 0, 0, 0, 1, 0.07741266, 2.0010211, 4.635723)
+
+[node name="Wall" parent="SchoolWall2/StaticBody3D" parent_id_path=PackedInt32Array(1182609786, 1656535474) index="0" unique_id=740282931]
+surface_material_override/0 = SubResource("StandardMaterial3D_7legc")
 
 [node name="SchoolWall4" parent="." unique_id=1092038756 instance=ExtResource("14_esfx0")]
 transform = Transform3D(-0.7190143, 0, -1.5099579e-07, 0, 1, 0, 1.0856814e-07, 0, -0.99999994, 0.078, 2, -9.856)
 
+[node name="Wall" parent="SchoolWall4/StaticBody3D" parent_id_path=PackedInt32Array(1092038756, 1656535474) index="0" unique_id=740282931]
+surface_material_override/0 = SubResource("StandardMaterial3D_f57mr")
+
 [node name="SchoolWall3" parent="." unique_id=1644217364 instance=ExtResource("14_esfx0")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.203, 2, -2.618)
+
+[node name="Wall" parent="SchoolWall3/StaticBody3D" parent_id_path=PackedInt32Array(1644217364, 1656535474) index="0" unique_id=740282931]
+surface_material_override/0 = SubResource("StandardMaterial3D_18bdw")
 
 [node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("15_23qg2")]
 
@@ -207,3 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2118897, 0, -6.779463)
 
 [editable path="Player"]
+[editable path="SchoolWall"]
+[editable path="SchoolWall2"]
+[editable path="SchoolWall4"]
+[editable path="SchoolWall3"]
