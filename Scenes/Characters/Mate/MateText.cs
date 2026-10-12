@@ -4,7 +4,10 @@ public static class MateText
     public const string Name = "Stachu";
     public const string HitByObject = "Co ty odwalasz?!";
     public const string Interaction = "Co tam, psie?";
-    
+    public const string Defeat = "Na następnych zawodach cię pokonam!";
+    public const string Recovery = "Która godzina?";
+
+
     // Tutorial
     public const string WakeUp = "Hej, ty. Nareszcie, dość już tego spania.";
     public const string LessonEnding = "Przespałeś cały WDŻ. Ale było, hehe, pokażę ci potem.";

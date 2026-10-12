@@ -30,7 +30,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     private NpcController _npcController;
     private bool _isDefeated;
     private PackedScene _deadBodyScene;
-
+    private CutsceneController _cutsceneController;
     private const string DeadBodyScenePath =
         "res://Scenes/Objects/DeadNpcBody/dead_npc_body.tscn";
 
@@ -40,6 +40,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         _healthController = GetNodeOrNull<NpcHealthController>("NpcHealthController");
         _npcController = GetNodeOrNull<NpcController>("NpcController");
         _deadBodyScene = GD.Load<PackedScene>(DeadBodyScenePath);
+        _cutsceneController = GetTree().CurrentScene?.GetNodeOrNull<CutsceneController>("CutsceneController");
 
         if (_healthController != null)
             _healthController.Died += OnCharacterDied;
@@ -81,10 +82,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        var controller = GetTree().CurrentScene
-            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
 
-        controller?.StartDialogue(this, dialogue);
+        _cutsceneController?.StartDialogue(this, dialogue);
     }
 
     public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
@@ -176,6 +175,11 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     protected abstract DialogueLine[] GetInteractionDialogue();
 
+    protected abstract DialogueLine[] GetDefeatDialogue();
+
+    protected abstract DialogueLine[] GetRecoveryDialogue();
+
+
     private bool IsDialogueVisible()
     {
         var controller = GetTree().CurrentScene
@@ -202,6 +206,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
 
         _isDefeated = true;
+        _cutsceneController.StartDialogue(this, GetDefeatDialogue());
 
         switch (DefeatMode)
         {
