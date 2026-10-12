@@ -5,7 +5,7 @@ public partial class HealthController : Node
 {
     [Export] public float MaxHealth { get; set; } = 100.0f;
     [Export] public float RegenerationRate { get; set; } = 10.0f;
-    [Export] public double RegenDelay { get; set; } = 60.0f;
+    [Export] public double RegenDelay { get; set; } = 30.0f;
 
     public float CurrentHealth { get; private set; }
     private double _timeSinceLastDamage = 0.0f;

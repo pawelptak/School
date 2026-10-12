@@ -6,11 +6,18 @@ public partial class Hud : CanvasLayer
     private HealthController _healthController;
     private Control _deathScreen;
 
+    [Export] private double hideDelay = 3.0;
+    private double _timeSinceLastHealthChange = 0.0;
+    private bool _isBarVisible = false;
+
     public override void _Ready()
     {
         _healthBar = GetNode<ProgressBar>("MarginContainer/HealthBar");
         _deathScreen = GetNode<Control>("DeathScreen");
         _deathScreen.Hide();
+
+        _healthBar.Modulate = new Color(1, 1, 1, 0);
+        _isBarVisible = false;
 
         var restartButton = _deathScreen.GetNodeOrNull<Button>("VBoxContainer/RestartButton");
 
@@ -20,6 +27,15 @@ public partial class Hud : CanvasLayer
 
     public override void _Process(double delta)
     {
+        if (_isBarVisible && _healthController != null && GodotObject.IsInstanceValid(_healthController))
+        {
+            _timeSinceLastHealthChange += delta;
+            if (_timeSinceLastHealthChange >= hideDelay)
+            {
+                HideHealthBarSmooth();
+            }
+        }
+
         if (_healthController != null && GodotObject.IsInstanceValid(_healthController))
             return;
 
@@ -44,10 +60,29 @@ public partial class Hud : CanvasLayer
     private void OnHealthChanged(float newHealth)
     {
         _healthBar.Value = newHealth;
+
+        _timeSinceLastHealthChange = 0.0;
+        ShowHealthBarSmooth();
+    }
+
+    private void ShowHealthBarSmooth()
+    {
+        _isBarVisible = true;
+        var tween = CreateTween();
+        tween.TweenProperty(_healthBar, "modulate:a", 1.0f, 0.2f);
+    }
+
+    private void HideHealthBarSmooth()
+    {
+        _isBarVisible = false;
+        var tween = CreateTween();
+        tween.TweenProperty(_healthBar, "modulate:a", 0.0f, 0.5f);
     }
 
     private void OnPlayerDied()
     {
+        HideHealthBarSmooth();
+
         _deathScreen.Show();
         Input.MouseMode = Input.MouseModeEnum.Visible;
 
