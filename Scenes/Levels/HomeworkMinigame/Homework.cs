@@ -125,7 +125,8 @@ public partial class Homework : Node3D
 			{
 				SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PolishClass/polish_class.tscn");
 			},
-			cameraReferencePosition: customCameraPosition
+			cameraReferencePosition: customCameraPosition,
+			isSkippable: false
 		);
 	}
 

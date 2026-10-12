@@ -21,6 +21,7 @@ public partial class CutsceneController : Node
 
 	private bool _cinematicDialogueActive;
 	private bool _keepPlayerLockedOnFinish = false;
+	private bool _isSkippable = true;
 
 	private const float CinematicFov = 50f;
 
@@ -52,6 +53,7 @@ public partial class CutsceneController : Node
 		_currentLineToken++;
 		_autoAdvanceDialogue = false;
 		_cinematicDialogueActive = false;
+		_isSkippable = true;
 
 		_cameraTween?.Kill();
 		_cameraTween = null;
@@ -77,6 +79,9 @@ public partial class CutsceneController : Node
 		if (!_cinematicDialogueActive)
 			return;
 
+		if (!_isSkippable)
+			return;
+
 		bool leftMousePressed = @event is InputEventMouseButton mouseButton
 			&& mouseButton.ButtonIndex == MouseButton.Left
 			&& mouseButton.Pressed;
@@ -98,9 +103,16 @@ public partial class CutsceneController : Node
 		Action onFinished = null,
 		bool keepPlayerLockedOnFinish = false,
 		Vector3? cameraReferencePosition = null,
-		float delaySeconds = 0f)
+		float delaySeconds = 0f,
+		bool isSkippable = true)
 	{
 		_keepPlayerLockedOnFinish = keepPlayerLockedOnFinish;
+		_isSkippable = isSkippable;
+
+		if (!_isSkippable)
+		{
+			_autoAdvanceDialogue = true;
+		}
 
 		if (_currentCharacter != null)
 			_currentCharacter.SetTalking(false);
@@ -112,7 +124,11 @@ public partial class CutsceneController : Node
 		_currentCharacter = character as InteractableCharacter;
 		_dialogueLines = messages;
 		_currentDialogueLine = 0;
-		_autoAdvanceDialogue = true;
+
+		if (_isSkippable)
+		{
+			_autoAdvanceDialogue = true;
+		}
 
 		_cinematicDialogueActive = cinematic;
 
@@ -237,6 +253,7 @@ public partial class CutsceneController : Node
 		_currentCharacter = null;
 		_dialogueLines = null;
 		_currentDialogueLine = 0;
+		_isSkippable = true;
 
 		if (!_cinematicDialogueActive)
 			return;
@@ -323,7 +340,7 @@ public partial class CutsceneController : Node
 	{
 		int token = _currentLineToken;
 
-		if (!_autoAdvanceDialogue || _dialogueLines == null || _currentDialogueLine >= _dialogueLines.Length)
+		if ((!_isSkippable && _dialogueLines == null) || (_isSkippable && !_autoAdvanceDialogue) || _dialogueLines == null || _currentDialogueLine >= _dialogueLines.Length)
 			return;
 
 		double duration = _dialogueLines[_currentDialogueLine].DisplayDurationSeconds;
@@ -333,7 +350,7 @@ public partial class CutsceneController : Node
 			SceneTreeTimer.SignalName.Timeout
 		);
 
-		if (token != _currentLineToken || dialogueSession != _dialogueSession || !_autoAdvanceDialogue || !_dialogueUI.IsVisible())
+		if (token != _currentLineToken || dialogueSession != _dialogueSession || (!_isSkippable ? false : !_autoAdvanceDialogue) || !_dialogueUI.IsVisible())
 		{
 			return;
 		}
