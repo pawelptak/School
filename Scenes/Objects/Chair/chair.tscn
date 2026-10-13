@@ -43,6 +43,15 @@ top_radius = 0.015
 bottom_radius = 0.015
 height = 0.37280273
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xgl2"]
+albedo_color = Color(0.52906674, 0.5290667, 0.52906686, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_crm6m"]
+material = SubResource("StandardMaterial3D_4xgl2")
+top_radius = 0.005
+bottom_radius = 0.004
+height = 0.002
+
 [node name="Chair" type="RigidBody3D" unique_id=498573374]
 script = ExtResource("1_nsp1p")
 
@@ -81,3 +90,19 @@ mesh = SubResource("CylinderMesh_udww1")
 [node name="Horizontal2" type="MeshInstance3D" parent="." unique_id=392055712]
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0.0002592504, 0.35937208, 0.19587134)
 mesh = SubResource("CylinderMesh_re0kw")
+
+[node name="Nit1" type="MeshInstance3D" parent="." unique_id=1606533823]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.185, 1, 0.17)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Nit2" type="MeshInstance3D" parent="." unique_id=1978479587]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.185, 0.92, 0.17)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Nit3" type="MeshInstance3D" parent="." unique_id=86790333]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.185, 1, 0.17)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Nit4" type="MeshInstance3D" parent="." unique_id=1724125029]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.185, 0.92, 0.17)
+mesh = SubResource("CylinderMesh_crm6m")
