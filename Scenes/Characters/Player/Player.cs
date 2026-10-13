@@ -1,7 +1,6 @@
 
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Player : CharacterBody3D
 {
@@ -20,15 +19,14 @@ public partial class Player : CharacterBody3D
 
     private Camera3D _camera;
     private RayCast3D _interactRay;
-    private Node3D _holdPoint;
-    private ThrowableObject _heldObject;
     private IInteractable _currentInteractable;
     private Label3D _interactionLabel;
 
+    private HeldObjectController _heldObjectController;
+    private PunchingController _punchingController;
+
     private float _cameraPitch;
     private float _throwCharge;
-    private uint _heldCollisionLayer;
-    private uint _heldCollisionMask;
 
     private const float MinThrowForce = 5.0f;
     private const float MaxThrowForce = 20.0f;
@@ -37,24 +35,17 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
 
-    private readonly Godot.Collections.Array<Rid> _heldObjectExclusions = new();
-    private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
-
-    private const uint EnvironmentCollisionLayer = 1u << (7 - 1);
-    private const float HoldCollisionSkin = 0.05f;
-
-    private PunchingController _punchingController;
-    private Basis _heldObjectInitialRotationLocal;
-
-    private readonly List<Transform3D> _heldShapeLocals = new();
-
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
 
         _camera = GetNode<Camera3D>("Camera3D");
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
-        _holdPoint = GetNode<Node3D>("Camera3D/HoldPoint");
+
+        _heldObjectController =
+            GetNode<HeldObjectController>("HeldObjectController");
+
+        _heldObjectController.ObjectPickedUp += OnObjectPickedUp;
 
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
@@ -67,6 +58,11 @@ public partial class Player : CharacterBody3D
             .GetNode<ProgressBar>("MarginContainer/ProgressBar");
 
         _throwChargeBarCanvas.Hide();
+    }
+
+    private void OnObjectPickedUp(ThrowableObject body)
+    {
+        ObjectPickedUp?.Invoke(body);
     }
 
     public override void _Input(InputEvent @event)
@@ -96,7 +92,8 @@ public partial class Player : CharacterBody3D
             && mouseButton.Pressed
             && !mouseButton.IsEcho())
         {
-            if (_heldObject == null && CanStartPunch())
+            if (_heldObjectController.HeldObject == null
+                && CanStartPunch())
             {
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
@@ -105,14 +102,18 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        if (!@event.IsActionPressed("interact") || IsCinematicDialogueActive())
+        if (!@event.IsActionPressed("interact")
+            || IsCinematicDialogueActive())
+        {
             return;
+        }
 
         GetViewport().SetInputAsHandled();
 
-        if (_heldObject != null)
+        if (_heldObjectController.HeldObject != null)
         {
-            DropObject();
+            _heldObjectController.DropObject();
+            ResetChargeBar();
         }
         else if (!MovementLocked)
         {
@@ -167,13 +168,14 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        if (_heldObject != null)
-            UpdateHeldObjectPose((float)delta);
+        // Aktualizujemy trzymany obiekt w tym samym cyklu co kamerę.
+        // To zapobiega drganiom przy ruchu myszką.
+        _heldObjectController.UpdateHeldObjectPose((float)delta);
 
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
-        if (_heldObject == null)
+        if (_heldObjectController.HeldObject == null)
             return;
 
         if (Input.IsActionJustPressed("throw"))
@@ -200,7 +202,10 @@ public partial class Player : CharacterBody3D
         _throwChargeBar.Value = chargePercent;
 
         if (Input.IsActionJustReleased("throw"))
-            ThrowObject();
+        {
+            _heldObjectController.ThrowObject(_throwCharge);
+            ResetChargeBar();
+        }
     }
 
     private bool IsCinematicDialogueActive()
@@ -217,7 +222,7 @@ public partial class Player : CharacterBody3D
 
         if (!MovementLocked
             && !IsCinematicDialogueActive()
-            && _heldObject == null
+            && _heldObjectController.HeldObject == null
             && _interactRay.IsColliding())
         {
             var interactable = FindInteractable(
@@ -302,88 +307,10 @@ public partial class Player : CharacterBody3D
 
     public bool TryPickup(ThrowableObject body)
     {
-        if (_heldObject != null || !GodotObject.IsInstanceValid(body))
+        if (MovementLocked || IsCinematicDialogueActive())
             return false;
 
-        _heldObject = body;
-
-        _heldObjectInitialRotationLocal =
-            _holdPoint.GlobalBasis.Inverse() * body.GlobalBasis;
-
-        _heldShapes.Clear();
-        _heldShapeLocals.Clear();
-
-        Transform3D worldToBody = body.GlobalTransform.AffineInverse();
-
-        foreach (Node node in body.FindChildren("*", "CollisionShape3D", true, false))
-        {
-            if (node is CollisionShape3D shape
-                && shape.Shape != null
-                && !shape.Disabled)
-            {
-                _heldShapes.Add(shape);
-                _heldShapeLocals.Add(
-                    worldToBody * shape.GlobalTransform
-                );
-            }
-        }
-
-        _heldObjectExclusions.Clear();
-        _heldObjectExclusions.Add(GetRid());
-        _heldObjectExclusions.Add(body.GetRid());
-
-        _heldCollisionLayer = body.CollisionLayer;
-        _heldCollisionMask = body.CollisionMask;
-
-        body.Freeze = true;
-        body.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
-        body.CollisionLayer = 0;
-        body.CollisionMask = 0;
-
-        ObjectPickedUp?.Invoke(body);
-
-        return true;
-    }
-
-    private void ThrowObject()
-    {
-        if (_heldObject == null)
-            return;
-
-        var throwDirection = -_camera.GlobalTransform.Basis.Z;
-
-        _heldObject.ThrowForce = _throwCharge;
-        _heldObject.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.On;
-        _heldObject.Freeze = false;
-        _heldObject.CollisionLayer = _heldCollisionLayer;
-        _heldObject.CollisionMask = _heldCollisionMask | 2;
-
-        _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
-
-        ClearHeldObjectState();
-        ResetChargeBar();
-    }
-
-    private void DropObject()
-    {
-        if (_heldObject == null)
-            return;
-
-        _heldObject.Freeze = false;
-        _heldObject.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.On;
-        _heldObject.CollisionLayer = _heldCollisionLayer;
-        _heldObject.CollisionMask = _heldCollisionMask;
-
-        ClearHeldObjectState();
-        ResetChargeBar();
-    }
-
-    private void ClearHeldObjectState()
-    {
-        _heldObjectExclusions.Clear();
-        _heldShapes.Clear();
-        _heldShapeLocals.Clear();
-        _heldObject = null;
+        return _heldObjectController.TryPickup(body);
     }
 
     private void ResetChargeBar()
@@ -413,246 +340,6 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    private void UpdateHeldObjectPose(float delta)
-    {
-        if (_heldObject == null
-            || !GodotObject.IsInstanceValid(_heldObject)
-            || _holdPoint == null
-            || _camera == null
-            || GetWorld3D()?.DirectSpaceState == null)
-        {
-            return;
-        }
-
-        Vector3 previousPosition = _heldObject.GlobalPosition;
-        Basis previousBasis = _heldObject.GlobalBasis;
-
-        Vector3 desiredPosition = _holdPoint.GlobalPosition;
-        Basis desiredBasis =
-            _holdPoint.GlobalBasis * _heldObjectInitialRotationLocal;
-
-        _heldObject.GlobalBasis = desiredBasis;
-
-        if (TryPlaceHeld(previousPosition, desiredPosition, out Vector3 target))
-        {
-            _heldObject.GlobalPosition = target;
-            return;
-        }
-
-        _heldObject.GlobalBasis = previousBasis;
-
-        if (TryPlaceHeld(previousPosition, desiredPosition, out target))
-        {
-            _heldObject.GlobalPosition = target;
-            return;
-        }
-
-        _heldObject.GlobalPosition = previousPosition;
-    }
-
-    private bool TryPlaceHeld(
-        Vector3 previousPosition,
-        Vector3 desiredPosition,
-        out Vector3 solved)
-    {
-        if (!HeldOverlapsAt(desiredPosition))
-        {
-            if (!HeldOverlapsAt(previousPosition))
-            {
-                solved = SweepHeld(previousPosition, desiredPosition);
-
-                if (!HeldOverlapsAt(solved))
-                    return true;
-            }
-            else if (TryRetreatUntilClear(
-                previousPosition,
-                _camera.GlobalPosition,
-                out Vector3 clear))
-            {
-                solved = SweepHeld(clear, desiredPosition);
-
-                if (!HeldOverlapsAt(solved))
-                    return true;
-            }
-        }
-
-        if (!HeldOverlapsAt(previousPosition))
-        {
-            solved = SweepHeld(previousPosition, desiredPosition);
-
-            if (!HeldOverlapsAt(solved))
-                return true;
-        }
-
-        if (!TryRetreatUntilClear(
-            previousPosition,
-            _camera.GlobalPosition,
-            out Vector3 retreatClear))
-        {
-            solved = previousPosition;
-            return false;
-        }
-
-        solved = SweepHeld(retreatClear, desiredPosition);
-
-        if (!HeldOverlapsAt(solved))
-            return true;
-
-        return TryRetreatUntilClear(
-            solved,
-            retreatClear,
-            out solved
-        );
-    }
-
-    private bool TryRetreatUntilClear(
-        Vector3 from,
-        Vector3 to,
-        out Vector3 clear)
-    {
-        if (!HeldOverlapsAt(from))
-        {
-            clear = from;
-            return true;
-        }
-
-        if (HeldOverlapsAt(to))
-        {
-            clear = from;
-            return false;
-        }
-
-        float lo = 0.0f;
-        float hi = 1.0f;
-
-        for (int i = 0; i < 10; i++)
-        {
-            float mid = (lo + hi) * 0.5f;
-
-            if (HeldOverlapsAt(from.Lerp(to, mid)))
-                lo = mid;
-            else
-                hi = mid;
-        }
-
-        float length = from.DistanceTo(to);
-        float skin = length > 0.001f
-            ? HoldCollisionSkin / length
-            : 0.0f;
-
-        clear = from.Lerp(
-            to,
-            Mathf.Clamp(hi + skin, 0.0f, 1.0f)
-        );
-
-        if (HeldOverlapsAt(clear))
-            clear = from.Lerp(to, hi);
-
-        return !HeldOverlapsAt(clear);
-    }
-
-    private Vector3 SweepHeld(Vector3 from, Vector3 to)
-    {
-        Vector3 motion = to - from;
-        float distance = motion.Length();
-
-        if (distance < 0.0001f || _heldShapes.Count == 0)
-            return to;
-
-        var spaceState = GetWorld3D()?.DirectSpaceState;
-
-        if (spaceState == null)
-            return from;
-
-        float safeFraction = 1.0f;
-
-        for (int i = 0; i < _heldShapes.Count; i++)
-        {
-            if (!IsHeldShapeUsable(i))
-                continue;
-
-            PhysicsShapeQueryParameters3D query = MakeShapeQuery(from, i);
-            query.Motion = motion;
-
-            float[] result = spaceState.CastMotion(query);
-            safeFraction = Mathf.Min(safeFraction, result[0]);
-        }
-
-        safeFraction = Mathf.Clamp(safeFraction, 0.0f, 1.0f);
-
-        if (safeFraction < 1.0f)
-        {
-            float safeDistance = Mathf.Max(
-                0.0f,
-                distance * safeFraction - HoldCollisionSkin
-            );
-
-            safeFraction = safeDistance / distance;
-        }
-
-        return from + motion * safeFraction;
-    }
-
-    private bool HeldOverlapsAt(Vector3 origin)
-    {
-        if (_heldShapes.Count == 0)
-            return false;
-
-        var spaceState = GetWorld3D()?.DirectSpaceState;
-
-        if (spaceState == null)
-            return true;
-
-        for (int i = 0; i < _heldShapes.Count; i++)
-        {
-            if (!IsHeldShapeUsable(i))
-                continue;
-
-            PhysicsShapeQueryParameters3D query = MakeShapeQuery(origin, i);
-
-            if (spaceState.IntersectShape(query, 1).Count > 0)
-                return true;
-        }
-
-        return false;
-    }
-
-    private PhysicsShapeQueryParameters3D MakeShapeQuery(
-        Vector3 origin,
-        int shapeIndex)
-    {
-        return new PhysicsShapeQueryParameters3D
-        {
-            Shape = _heldShapes[shapeIndex].Shape,
-
-            Transform = new Transform3D(
-                _heldObject.GlobalBasis,
-                origin
-            ) * _heldShapeLocals[shapeIndex],
-
-            CollisionMask = EnvironmentCollisionLayer,
-            Exclude = _heldObjectExclusions,
-            CollideWithAreas = false,
-            CollideWithBodies = true,
-            Margin = HoldCollisionSkin
-        };
-    }
-
-    private bool IsHeldShapeUsable(int index)
-    {
-        if (index >= _heldShapeLocals.Count
-            || index >= _heldShapes.Count)
-        {
-            return false;
-        }
-
-        CollisionShape3D shape = _heldShapes[index];
-
-        return GodotObject.IsInstanceValid(shape)
-            && !shape.Disabled
-            && shape.Shape != null;
-    }
-
     private bool CanStartPunch()
     {
         if (MovementLocked || _punchingController.IsPlaying)
@@ -663,8 +350,11 @@ public partial class Player : CharacterBody3D
 
     private void TryPunchTarget()
     {
-        if (MovementLocked || _heldObject != null)
+        if (MovementLocked
+            || _heldObjectController.HeldObject != null)
+        {
             return;
+        }
 
         if (IsCinematicDialogueActive())
             return;
@@ -708,6 +398,12 @@ public partial class Player : CharacterBody3D
 
     public override void _ExitTree()
     {
+        if (_heldObjectController != null
+            && GodotObject.IsInstanceValid(_heldObjectController))
+        {
+            _heldObjectController.ObjectPickedUp -= OnObjectPickedUp;
+        }
+
         if (_punchingController != null
             && GodotObject.IsInstanceValid(_punchingController))
         {
