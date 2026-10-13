@@ -42,6 +42,7 @@ public partial class Player : CharacterBody3D
     private const uint EnvironmentCollisionLayer = 1u << (7 - 1);
 
     private PunchingController _punchingController;
+    private Basis _heldObjectInitialRotationLocal;
 
     public override void _Ready()
     {
@@ -169,6 +170,7 @@ public partial class Player : CharacterBody3D
             return;
 
         _heldObject.GlobalPosition = GetSafeHoldPosition();
+        _heldObject.GlobalBasis = _holdPoint.GlobalBasis * _heldObjectInitialRotationLocal;
 
         if (Input.IsActionJustPressed("throw"))
         {
@@ -300,7 +302,7 @@ public partial class Player : CharacterBody3D
             return false;
 
         _heldObject = body;
-
+        _heldObjectInitialRotationLocal = _holdPoint.GlobalBasis.Inverse() * body.GlobalBasis;
         _heldShapes.Clear();
 
         foreach (Node node in body.FindChildren(

@@ -140,7 +140,7 @@ transform = Transform3D(0.99984455, 0, -0.017632639, 0, 1, 0, 0.017632639, 0, 0.
 transform = Transform3D(0.99824804, 0, 0.05916829, 0, 1, 0, -0.05916829, 0, 0.99824804, -3.5811396, 0, -2.6097665)
 
 [node name="Chair2" parent="." unique_id=662460025 groups=["chairs"] instance=ExtResource("7_43rho")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5811396, 0, -2.4630153)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5811396, 0, -2.2869914)
 
 [node name="Desk3" parent="." unique_id=319635515 instance=ExtResource("6_1td18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -2.6097665)
@@ -191,13 +191,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, 0.04455352)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -5.065106)
 
 [node name="PlayerChair" parent="." unique_id=633354446 groups=["chairs"] instance=ExtResource("7_43rho")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -4.8651447)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9617218, 0, -4.8471556)
 
 [node name="Desk8" parent="." unique_id=2001969534 instance=ExtResource("6_1td18")]
 transform = Transform3D(0.9961684, 0, 0.087456055, 0, 1, 0, -0.087456055, 0, 0.9961684, -3.5811396, 0, -5.065106)
 
 [node name="Chair8" parent="." unique_id=379411025 groups=["chairs"] instance=ExtResource("7_43rho")]
-transform = Transform3D(0.9494173, 0, -0.31401712, 0, 1, 0, 0.31401712, 0, 0.9494173, -3.5811396, 0, -4.8146815)
+transform = Transform3D(0.9494173, 0, -0.31401712, 0, 1, 0, 0.31401712, 0, 0.9494173, -3.5811396, 0, -4.6618495)
 
 [node name="Desk9" parent="." unique_id=202158330 instance=ExtResource("6_1td18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.310907, 0, -5.065106)
@@ -256,6 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2118897, 0, -6.779463)
 
 [editable path="Player"]
+[editable path="Player/LowHealth"]
 [editable path="SchoolWall"]
 [editable path="SchoolWall2"]
 [editable path="SchoolWall4"]
