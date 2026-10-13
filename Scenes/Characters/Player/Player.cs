@@ -1,4 +1,3 @@
-
 using Godot;
 using System;
 
@@ -20,8 +19,9 @@ public partial class Player : CharacterBody3D
     private Camera3D _camera;
     private RayCast3D _interactRay;
     private IInteractable _currentInteractable;
-    private Label3D _interactionLabel;
-
+    private Node3D _interactionRoot; 
+    private Label _interactionTextLabel;
+    private ProgressBar _interactionProgressBar;
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
 
@@ -35,6 +35,11 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
 
+    // Zmienne do obsługi przytrzymywania interakcji
+    private float _interactionHoldTime = 0.0f;
+    private float _requiredInteractionTime = 1.0f;
+    private bool _isHoldingInteraction = false;
+
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -42,21 +47,22 @@ public partial class Player : CharacterBody3D
         _camera = GetNode<Camera3D>("Camera3D");
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
 
-        _heldObjectController =
-            GetNode<HeldObjectController>("HeldObjectController");
-
+        _heldObjectController = GetNode<HeldObjectController>("HeldObjectController");
         _heldObjectController.ObjectPickedUp += OnObjectPickedUp;
 
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
-        _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
-        _interactionLabel.Hide();
+        _interactionRoot = GetNode<Node3D>("InteractionLabel");
+        _interactionTextLabel = GetNode<Label>("InteractionLabel/Sprite3D/SubViewport/VBoxContainer/Label");
+        _interactionProgressBar = GetNode<ProgressBar>("InteractionLabel/Sprite3D/SubViewport/VBoxContainer/InteractionProgressBar");
+
+        _interactionRoot.Hide();
+        if (_interactionProgressBar != null)
+            _interactionProgressBar.Hide();
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
-        _throwChargeBar = _throwChargeBarCanvas
-            .GetNode<ProgressBar>("MarginContainer/ProgressBar");
-
+        _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
         _throwChargeBarCanvas.Hide();
     }
 
@@ -92,8 +98,7 @@ public partial class Player : CharacterBody3D
             && mouseButton.Pressed
             && !mouseButton.IsEcho())
         {
-            if (_heldObjectController.HeldObject == null
-                && CanStartPunch())
+            if (_heldObjectController.HeldObject == null && CanStartPunch())
             {
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
@@ -102,23 +107,16 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        if (!@event.IsActionPressed("interact")
-            || IsCinematicDialogueActive())
+        // Obsługa natychmiastowego upuszczenia obiektu po naciśnięciu interakcji
+        if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
-            return;
-        }
-
-        GetViewport().SetInputAsHandled();
-
-        if (_heldObjectController.HeldObject != null)
-        {
-            _heldObjectController.DropObject();
-            ResetChargeBar();
-        }
-        else if (!MovementLocked)
-        {
-            UpdateInteractionTarget();
-            TryInteract();
+            if (_heldObjectController.HeldObject != null)
+            {
+                GetViewport().SetInputAsHandled();
+                _heldObjectController.DropObject();
+                ResetChargeBar();
+                ResetHoldInteraction();
+            }
         }
     }
 
@@ -168,12 +166,13 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        // Aktualizujemy trzymany obiekt w tym samym cyklu co kamerę.
-        // To zapobiega drganiom przy ruchu myszką.
         _heldObjectController.UpdateHeldObjectPose((float)delta);
 
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
+
+        // KLUCZOWE: Obsługa przytrzymywania klawisza "E"
+        HandleHoldInteraction((float)delta);
 
         if (_heldObjectController.HeldObject == null)
             return;
@@ -205,6 +204,58 @@ public partial class Player : CharacterBody3D
         {
             _heldObjectController.ThrowObject(_throwCharge);
             ResetChargeBar();
+        }
+    }
+
+    private void HandleHoldInteraction(float delta)
+    {
+        // Jeśli nic nie trzymamy i celujemy w obiekt typu ThrowableObject
+        if (_heldObjectController.HeldObject == null && !MovementLocked && !IsCinematicDialogueActive())
+        {
+            if (Input.IsActionPressed("interact") && _currentInteractable is ThrowableObject throwable)
+            {
+                if (!_isHoldingInteraction)
+                {
+                    _isHoldingInteraction = true;
+                    _interactionHoldTime = 0.0f;
+                    _requiredInteractionTime = throwable.GetPickupDuration();
+                }
+
+                _interactionHoldTime += delta;
+                float progress = Mathf.Clamp(_interactionHoldTime / _requiredInteractionTime, 0.0f, 1.0f);
+
+                if (_interactionProgressBar != null)
+                {
+                    _interactionProgressBar.Show();
+                    _interactionProgressBar.Value = progress * 100.0f;
+                }
+
+                // Gdy upłynie wymagany czas – podnosimy obiekt
+                if (_interactionHoldTime >= _requiredInteractionTime)
+                {
+                    TryInteract();
+                    ResetHoldInteraction();
+                }
+                return;
+            }
+        }
+
+        // Jeśli puszczono przycisk lub cel zniknął
+        if (Input.IsActionJustReleased("interact") || _currentInteractable is not ThrowableObject)
+        {
+            ResetHoldInteraction();
+        }
+    }
+
+    private void ResetHoldInteraction()
+    {
+        _isHoldingInteraction = false;
+        _interactionHoldTime = 0.0f;
+
+        if (_interactionProgressBar != null)
+        {
+            _interactionProgressBar.Value = 0;
+            _interactionProgressBar.Hide();
         }
     }
 
@@ -241,19 +292,20 @@ public partial class Player : CharacterBody3D
             return;
         }
 
+        ResetHoldInteraction();
         _currentInteractable = nextTarget;
 
         if (_currentInteractable == null)
         {
-            _interactionLabel.Hide();
+            _interactionRoot.Hide();
+            if (_interactionProgressBar != null)
+                _interactionProgressBar.Hide();
             return;
         }
 
-        _interactionLabel.Text =
-            $"{_currentInteractable.InteractionText} [E]";
-
+        _interactionTextLabel.Text = $"{_currentInteractable.InteractionText} [E]";
         UpdateLabelPosition(_currentInteractable);
-        _interactionLabel.Show();
+        _interactionRoot.Show();
     }
 
     private void UpdateLabelPosition(IInteractable interactable)
@@ -261,7 +313,9 @@ public partial class Player : CharacterBody3D
         if (interactable is not Node3D node
             || !GodotObject.IsInstanceValid(node))
         {
-            _interactionLabel.Hide();
+            _interactionRoot.Hide();
+            if (_interactionProgressBar != null)
+                _interactionProgressBar.Hide();
             return;
         }
 
@@ -271,7 +325,7 @@ public partial class Player : CharacterBody3D
 
         float labelHeight = Mathf.Min(objectHeight, eyeHeight);
 
-        _interactionLabel.GlobalPosition = new Vector3(
+        _interactionRoot.GlobalPosition = new Vector3(
             node.GlobalPosition.X + interactable.PromptOffset.X,
             labelHeight,
             node.GlobalPosition.Z + interactable.PromptOffset.Z
@@ -289,7 +343,9 @@ public partial class Player : CharacterBody3D
             return;
 
         _currentInteractable = null;
-        _interactionLabel.Hide();
+        _interactionRoot.Hide();
+        if (_interactionProgressBar != null)
+            _interactionProgressBar.Hide();
 
         interactable.Interact(this);
     }
