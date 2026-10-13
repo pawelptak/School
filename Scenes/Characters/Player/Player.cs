@@ -22,7 +22,7 @@ public partial class Player : CharacterBody3D
 
     private CanvasLayer _interactionUiCanvas;
     private Label _interactionTextLabel;
-    private ProgressBar _interactionProgressBar;
+    private TextureProgressBar _interactionProgressBar;
 
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
@@ -54,15 +54,13 @@ public partial class Player : CharacterBody3D
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
-        // Inicjalizacja CanvasLayer UI (dostosuj ścieżki do swojej sceny)
         _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
-        _interactionTextLabel = GetNode<Label>("InteractionUI/Container/VBoxContainer/Label");
-        _interactionProgressBar = GetNode<ProgressBar>("InteractionUI/Container/VBoxContainer/InteractionProgressBar");
+        _interactionTextLabel = GetNode<Label>("InteractionUI/VBoxContainer/Label");
+        _interactionProgressBar = GetNode<TextureProgressBar>("InteractionUI/VBoxContainer/Container/TextureProgressBar");
 
         _interactionUiCanvas.Hide();
         if (_interactionProgressBar != null)
-            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-        //_interactionProgressBar.Hide();
+            _interactionProgressBar.Visible = false;
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
         _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
@@ -94,7 +92,7 @@ public partial class Player : CharacterBody3D
         }
     }
 
-public override void _UnhandledInput(InputEvent @event)
+    public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
@@ -233,7 +231,6 @@ public override void _UnhandledInput(InputEvent @event)
 
                 if (_interactionProgressBar != null)
                 {
-                    _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
                     _interactionProgressBar.Value = progress * 100.0f;
                 }
 
@@ -260,11 +257,6 @@ public override void _UnhandledInput(InputEvent @event)
         if (_interactionProgressBar != null)
         {
             _interactionProgressBar.Value = 0;
-
-            if (_currentInteractable is not ThrowableObject)
-            {
-                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-            }
         }
     }
 
@@ -306,7 +298,9 @@ public override void _UnhandledInput(InputEvent @event)
         _interactionTextLabel.Text = _currentInteractable.GetPromptText();
 
         if (_interactionProgressBar != null)
-            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+        {
+            _interactionProgressBar.Visible = _currentInteractable.RequiresHold;
+        }
 
         _interactionUiCanvas.Show();
     }
