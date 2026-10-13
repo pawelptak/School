@@ -54,7 +54,6 @@ public partial class Player : CharacterBody3D
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
-        // Inicjalizacja CanvasLayer UI (dostosuj ścieżki do swojej sceny)
         _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
         _interactionTextLabel = GetNode<Label>("InteractionUI/Container/VBoxContainer/Label");
         _interactionProgressBar = GetNode<ProgressBar>("InteractionUI/Container/VBoxContainer/InteractionProgressBar");
@@ -62,7 +61,6 @@ public partial class Player : CharacterBody3D
         _interactionUiCanvas.Hide();
         if (_interactionProgressBar != null)
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-        //_interactionProgressBar.Hide();
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
         _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
