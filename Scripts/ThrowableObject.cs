@@ -21,7 +21,7 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
     public Vector3 PromptOffset => new Vector3(0, 0.5f, 0);
     public bool RequiresHold => true;
     public float GetInteractionDuration() => PickupTime;
-    public string GetPromptText() => $"PRZYTRZYMAJ [E] {InteractionText}";
+    public string GetPromptText() => $"[E] {InteractionText}";
 
     public float GetPickupDuration()
     {

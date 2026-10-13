@@ -306,7 +306,7 @@ public override void _UnhandledInput(InputEvent @event)
         _interactionTextLabel.Text = _currentInteractable.GetPromptText();
 
         if (_interactionProgressBar != null)
-            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
 
         _interactionUiCanvas.Show();
     }
