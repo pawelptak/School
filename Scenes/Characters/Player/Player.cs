@@ -34,12 +34,11 @@ public partial class Player : CharacterBody3D
     private const float MaxThrowForce = 20.0f;
     private const float ThrowChargeSpeed = 15.0f;
 
-    private CanvasLayer _throwChargeBarCanvas;
-    private ProgressBar _throwChargeBar;
-
     private float _interactionHoldTime = 0.0f;
     private float _requiredInteractionTime = 1.0f;
     private bool _isHoldingInteraction = false;
+    private const float ThrowChargeDelay = 0.15f;
+    private float _throwHoldTime = 0.0f;
 
     public override void _Ready()
     {
@@ -61,10 +60,6 @@ public partial class Player : CharacterBody3D
         _interactionUiCanvas.Hide();
         if (_interactionProgressBar != null)
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-
-        _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
-        _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
-        _throwChargeBarCanvas.Hide();
     }
 
     private void OnObjectPickedUp(ThrowableObject body)
@@ -92,7 +87,7 @@ public partial class Player : CharacterBody3D
         }
     }
 
-public override void _UnhandledInput(InputEvent @event)
+    public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
@@ -108,7 +103,7 @@ public override void _UnhandledInput(InputEvent @event)
             return;
         }
 
-        if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
+        if (@event.IsActionPressed("drop") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject != null)
             {
@@ -116,13 +111,21 @@ public override void _UnhandledInput(InputEvent @event)
                 _heldObjectController.DropObject();
                 ResetChargeBar();
                 ResetHoldInteraction();
+
                 return;
             }
+        }
 
-            if (_currentInteractable != null && !_currentInteractable.RequiresHold)
+        if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
+        {
+            if (_heldObjectController.HeldObject == null
+                && _currentInteractable != null
+                && !_currentInteractable.RequiresHold)
             {
                 GetViewport().SetInputAsHandled();
                 TryInteract();
+
+                return;
             }
         }
     }
@@ -175,44 +178,57 @@ public override void _UnhandledInput(InputEvent @event)
     {
         _heldObjectController.UpdateHeldObjectPose((float)delta);
 
+        if (_heldObjectController.HeldObject != null)
+        {
+            if (Input.IsActionJustPressed("throw"))
+            {
+                _throwCharge = MinThrowForce;
+                _throwHoldTime = 0.0f;
+            }
+
+            if (Input.IsActionPressed("throw"))
+            {
+                _throwHoldTime += (float)delta;
+
+                _throwCharge = Mathf.MoveToward(
+                    _throwCharge,
+                    MaxThrowForce,
+                    ThrowChargeSpeed * (float)delta
+                );
+
+                if (_throwHoldTime >= ThrowChargeDelay)
+                {
+                    float chargePercent = Mathf.InverseLerp(
+                        MinThrowForce,
+                        MaxThrowForce,
+                        _throwCharge
+                    ) * 100.0f;
+
+                    _interactionTextLabel.Hide();
+                    _interactionUiCanvas.Show();
+
+                    if (_interactionProgressBar != null)
+                    {
+                        _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
+                        _interactionProgressBar.Value = chargePercent;
+                    }
+                }
+            }
+
+            if (Input.IsActionJustReleased("throw"))
+            {
+                _heldObjectController.ThrowObject(_throwCharge);
+                ResetChargeBar();
+            }
+
+            return;
+        }
+
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
         HandleHoldInteraction((float)delta);
-
-        if (_heldObjectController.HeldObject == null)
-            return;
-
-        if (Input.IsActionJustPressed("throw"))
-        {
-            _throwCharge = MinThrowForce;
-            _throwChargeBarCanvas.Show();
-        }
-
-        if (Input.IsActionPressed("throw"))
-        {
-            _throwCharge = Mathf.MoveToward(
-                _throwCharge,
-                MaxThrowForce,
-                ThrowChargeSpeed * (float)delta
-            );
-        }
-
-        float chargePercent = Mathf.InverseLerp(
-            MinThrowForce,
-            MaxThrowForce,
-            _throwCharge
-        ) * 100.0f;
-
-        _throwChargeBar.Value = chargePercent;
-
-        if (Input.IsActionJustReleased("throw"))
-        {
-            _heldObjectController.ThrowObject(_throwCharge);
-            ResetChargeBar();
-        }
     }
-
     private void HandleHoldInteraction(float delta)
     {
         if (_heldObjectController.HeldObject == null && !MovementLocked && !IsCinematicDialogueActive())
@@ -255,14 +271,10 @@ public override void _UnhandledInput(InputEvent @event)
         _isHoldingInteraction = false;
         _interactionHoldTime = 0.0f;
 
-        if (_interactionProgressBar != null)
+        if (_interactionProgressBar != null && _heldObjectController.HeldObject == null)
         {
             _interactionProgressBar.Value = 0;
-
-            if (_currentInteractable is not ThrowableObject)
-            {
-                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-            }
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
         }
     }
 
@@ -302,9 +314,10 @@ public override void _UnhandledInput(InputEvent @event)
         }
 
         _interactionTextLabel.Text = _currentInteractable.GetPromptText();
+        _interactionTextLabel.Show();
 
         if (_interactionProgressBar != null)
-            _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
 
         _interactionUiCanvas.Show();
     }
@@ -347,8 +360,12 @@ public override void _UnhandledInput(InputEvent @event)
     private void ResetChargeBar()
     {
         _throwCharge = 0;
-        _throwChargeBar.Value = 0;
-        _throwChargeBarCanvas.Hide();
+        if (_interactionProgressBar != null)
+        {
+            _interactionProgressBar.Value = 0;
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+        }
+        _interactionUiCanvas.Hide();
     }
 
     private void PushRigidBodies()
@@ -358,13 +375,17 @@ public override void _UnhandledInput(InputEvent @event)
             var collision = GetSlideCollision(i);
 
             if (collision.GetCollider() is not RigidBody3D rigidBody)
+            {
                 continue;
+            }
 
             var pushDirection = -collision.GetNormal();
             pushDirection.Y = 0;
 
             if (pushDirection.LengthSquared() == 0)
+            {
                 continue;
+            }
 
             pushDirection = pushDirection.Normalized();
             rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
@@ -381,8 +402,7 @@ public override void _UnhandledInput(InputEvent @event)
 
     private void TryPunchTarget()
     {
-        if (MovementLocked
-            || _heldObjectController.HeldObject != null)
+        if (MovementLocked || _heldObjectController.HeldObject != null)
         {
             return;
         }
