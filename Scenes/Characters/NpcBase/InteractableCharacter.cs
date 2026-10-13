@@ -92,17 +92,16 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
 
         float damage = throwable.CalculateDamage();
-        float knockback = throwable.CalculateKnockback();
         _healthController?.TakeDamage(damage);
 
         GD.Print(
             $"[COMBAT] {Name} hit by {throwable.Name}. " +
-            $"ThrowForce={throwForce:F1}, Damage={damage:F1}, Knockback={knockback:F1}"
+            $"ThrowForce={throwForce:F1}, Damage={damage:F1}, Knockback={throwable.Knockback:F1}"
         );
 
         _npcController?.ApplyHitEffects(
             throwable,
-            knockback,
+            throwable.Knockback,
             throwable.StunDuration
         );
 

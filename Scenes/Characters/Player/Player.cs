@@ -8,6 +8,13 @@ public partial class Player : CharacterBody3D
     [Export] public float AttackDistance { get; set; } = 1.8f;
     [Export] public float AttackKnockback { get; set; } = 5.0f;
 
+    // ==========================================
+    // SEKCJA RZUTU (Zmienną FixedThrowForce możesz łatwo zmienić, 
+    // a kod ładowania wykomentowany na dole pozwala wrócić do charge throw)
+    // ==========================================
+    [ExportGroup("Throw")]
+    [Export] public float FixedThrowForce { get; set; } = 20.0f; // Stała, maksymalna siła rzutu
+
     public const float Speed = 5.0f;
     public const float JumpVelocity = 4.5f;
 
@@ -28,17 +35,10 @@ public partial class Player : CharacterBody3D
     private PunchingController _punchingController;
 
     private float _cameraPitch;
-    private float _throwCharge;
-
-    private const float MinThrowForce = 5.0f;
-    private const float MaxThrowForce = 20.0f;
-    private const float ThrowChargeSpeed = 15.0f;
 
     private float _interactionHoldTime = 0.0f;
     private float _requiredInteractionTime = 1.0f;
     private bool _isHoldingInteraction = false;
-    private const float ThrowChargeDelay = 0.15f;
-    private float _throwHoldTime = 0.0f;
 
     public override void _Ready()
     {
@@ -89,6 +89,7 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        // 1. Akcja pięści (LPM, gdy nic nie trzymamy)
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
             && mouseButton.Pressed
@@ -99,23 +100,32 @@ public partial class Player : CharacterBody3D
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
             }
+            // 2. Natychmiastowy rzut (LPM, gdy trzymamy obiekt)
+            else if (_heldObjectController.HeldObject != null && !IsCinematicDialogueActive())
+            {
+                GetViewport().SetInputAsHandled();
+                _heldObjectController.ThrowObject(FixedThrowForce);
+                ResetThrowUI();
+                return;
+            }
 
             return;
         }
 
-        if (@event.IsActionPressed("drop") && !IsCinematicDialogueActive())
+        // Upuszczanie przedmiotu pod PPM
+        if (@event is InputEventAction actionEvent && actionEvent.IsActionPressed("drop") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject != null)
             {
                 GetViewport().SetInputAsHandled();
                 _heldObjectController.DropObject();
-                ResetChargeBar();
+                ResetThrowUI();
                 ResetHoldInteraction();
-
                 return;
             }
         }
 
+        // Zwykła interakcja (np. klawisz E)
         if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject == null
@@ -124,7 +134,6 @@ public partial class Player : CharacterBody3D
             {
                 GetViewport().SetInputAsHandled();
                 TryInteract();
-
                 return;
             }
         }
@@ -178,57 +187,16 @@ public partial class Player : CharacterBody3D
     {
         _heldObjectController.UpdateHeldObjectPose((float)delta);
 
+        // Jeśli trzymamy obiekt, nie sprawdzamy raycastu interakcji w świecie
         if (_heldObjectController.HeldObject != null)
-        {
-            if (Input.IsActionJustPressed("throw"))
-            {
-                _throwCharge = MinThrowForce;
-                _throwHoldTime = 0.0f;
-            }
-
-            if (Input.IsActionPressed("throw"))
-            {
-                _throwHoldTime += (float)delta;
-
-                _throwCharge = Mathf.MoveToward(
-                    _throwCharge,
-                    MaxThrowForce,
-                    ThrowChargeSpeed * (float)delta
-                );
-
-                if (_throwHoldTime >= ThrowChargeDelay)
-                {
-                    float chargePercent = Mathf.InverseLerp(
-                        MinThrowForce,
-                        MaxThrowForce,
-                        _throwCharge
-                    ) * 100.0f;
-
-                    _interactionTextLabel.Hide();
-                    _interactionUiCanvas.Show();
-
-                    if (_interactionProgressBar != null)
-                    {
-                        _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
-                        _interactionProgressBar.Value = chargePercent;
-                    }
-                }
-            }
-
-            if (Input.IsActionJustReleased("throw"))
-            {
-                _heldObjectController.ThrowObject(_throwCharge);
-                ResetChargeBar();
-            }
-
             return;
-        }
 
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
         HandleHoldInteraction((float)delta);
     }
+
     private void HandleHoldInteraction(float delta)
     {
         if (_heldObjectController.HeldObject == null && !MovementLocked && !IsCinematicDialogueActive())
@@ -276,6 +244,16 @@ public partial class Player : CharacterBody3D
             _interactionProgressBar.Value = 0;
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
         }
+    }
+
+    private void ResetThrowUI()
+    {
+        if (_interactionProgressBar != null)
+        {
+            _interactionProgressBar.Value = 0;
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+        }
+        _interactionUiCanvas.Hide();
     }
 
     private bool IsCinematicDialogueActive()
@@ -357,38 +335,23 @@ public partial class Player : CharacterBody3D
         return _heldObjectController.TryPickup(body);
     }
 
-    private void ResetChargeBar()
-    {
-        _throwCharge = 0;
-        if (_interactionProgressBar != null)
-        {
-            _interactionProgressBar.Value = 0;
-            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
-        }
-        _interactionUiCanvas.Hide();
-    }
-
     private void PushRigidBodies()
     {
         for (var i = 0; i < GetSlideCollisionCount(); i++)
         {
             var collision = GetSlideCollision(i);
 
-            if (collision.GetCollider() is not RigidBody3D rigidBody)
+            if (collision.GetCollider() is not RigidBody3D rigidBody && collision.GetCollider() is RigidBody3D rb)
             {
-                continue;
+                var pushDirection = -collision.GetNormal();
+                pushDirection.Y = 0;
+
+                if (pushDirection.LengthSquared() == 0)
+                    continue;
+
+                pushDirection = pushDirection.Normalized();
+                rb.ApplyCentralImpulse(pushDirection * 2.0f);
             }
-
-            var pushDirection = -collision.GetNormal();
-            pushDirection.Y = 0;
-
-            if (pushDirection.LengthSquared() == 0)
-            {
-                continue;
-            }
-
-            pushDirection = pushDirection.Normalized();
-            rigidBody.ApplyCentralImpulse(pushDirection * 2.0f);
         }
     }
 
