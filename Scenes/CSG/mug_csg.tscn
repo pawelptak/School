@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bg6dprq1ct4li"]
+
+[ext_resource type="Script" uid="uid://c1rcxv7skthgl" path="res://Scenes/Objects/Mug/Mug.cs" id="1_fobrh"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+top_radius = 0.08
+bottom_radius = 0.08
+height = 0.15
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fobrh"]
+top_radius = 0.072
+bottom_radius = 0.072
+height = 0.2
+
+[sub_resource type="TorusMesh" id="TorusMesh_lc5oj"]
+inner_radius = 0.058
+outer_radius = 0.037
+
+[node name="Mug" type="Node3D" unique_id=52267945]
+script = ExtResource("1_fobrh")
+Damage = 7.0
+StunDuration = 2.0
+
+[node name="body" type="CSGMesh3D" parent="." unique_id=1624298592]
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="hole" type="CSGMesh3D" parent="body" unique_id=173990545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.041330278, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_fobrh")
+
+[node name="hold" type="CSGMesh3D" parent="." unique_id=1078497119]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.08610211, 0, 0.0014843419)
+operation = 2
+mesh = SubResource("TorusMesh_lc5oj")
+
+[node name="hole2" type="CSGMesh3D" parent="hold" unique_id=545246661]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.08495188, -0.0014843438, -0.041330278)
+operation = 2
+mesh = SubResource("CylinderMesh_fobrh")

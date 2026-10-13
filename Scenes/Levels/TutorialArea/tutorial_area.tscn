@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Objects/Sponge/sponge.tscn" id="16_c3v6k"]
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="17_5t51o"]
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Objects/TeacherDesk/teacher_desk.tscn" id="18_3emq4"]
+[ext_resource type="PackedScene" uid="uid://n0mv68fne0fi" path="res://Scenes/Objects/Mug/mug.tscn" id="19_7legc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
 panorama = ExtResource("3_tkhkv")
@@ -254,6 +255,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.1
 
 [node name="Desk" parent="." unique_id=1876954106 instance=ExtResource("18_3emq4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2118897, 0, -6.779463)
+
+[node name="Mug" parent="." unique_id=846729379 instance=ExtResource("19_7legc")]
+transform = Transform3D(-0.6612439, 0, -0.750171, 0, 1, 0, 0.750171, 0, -0.6612439, -2.7564154, 1.0900002, -6.9538713)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

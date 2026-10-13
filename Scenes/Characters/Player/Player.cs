@@ -1,6 +1,7 @@
 
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : CharacterBody3D
 {
@@ -40,9 +41,12 @@ public partial class Player : CharacterBody3D
     private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
 
     private const uint EnvironmentCollisionLayer = 1u << (7 - 1);
+    private const float HoldCollisionSkin = 0.05f;
 
     private PunchingController _punchingController;
     private Basis _heldObjectInitialRotationLocal;
+
+    private readonly List<Transform3D> _heldShapeLocals = new();
 
     public override void _Ready()
     {
@@ -163,14 +167,14 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
+        if (_heldObject != null)
+            UpdateHeldObjectPose((float)delta);
+
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
         if (_heldObject == null)
             return;
-
-        _heldObject.GlobalPosition = GetSafeHoldPosition();
-        _heldObject.GlobalBasis = _holdPoint.GlobalBasis * _heldObjectInitialRotationLocal;
 
         if (Input.IsActionJustPressed("throw"))
         {
@@ -302,17 +306,25 @@ public partial class Player : CharacterBody3D
             return false;
 
         _heldObject = body;
-        _heldObjectInitialRotationLocal = _holdPoint.GlobalBasis.Inverse() * body.GlobalBasis;
-        _heldShapes.Clear();
 
-        foreach (Node node in body.FindChildren(
-            "*", "CollisionShape3D", true, false))
+        _heldObjectInitialRotationLocal =
+            _holdPoint.GlobalBasis.Inverse() * body.GlobalBasis;
+
+        _heldShapes.Clear();
+        _heldShapeLocals.Clear();
+
+        Transform3D worldToBody = body.GlobalTransform.AffineInverse();
+
+        foreach (Node node in body.FindChildren("*", "CollisionShape3D", true, false))
         {
             if (node is CollisionShape3D shape
                 && shape.Shape != null
                 && !shape.Disabled)
             {
                 _heldShapes.Add(shape);
+                _heldShapeLocals.Add(
+                    worldToBody * shape.GlobalTransform
+                );
             }
         }
 
@@ -324,9 +336,9 @@ public partial class Player : CharacterBody3D
         _heldCollisionMask = body.CollisionMask;
 
         body.Freeze = true;
+        body.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
         body.CollisionLayer = 0;
         body.CollisionMask = 0;
-        body.GlobalPosition = _holdPoint.GlobalPosition;
 
         ObjectPickedUp?.Invoke(body);
 
@@ -341,16 +353,14 @@ public partial class Player : CharacterBody3D
         var throwDirection = -_camera.GlobalTransform.Basis.Z;
 
         _heldObject.ThrowForce = _throwCharge;
+        _heldObject.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.On;
         _heldObject.Freeze = false;
         _heldObject.CollisionLayer = _heldCollisionLayer;
         _heldObject.CollisionMask = _heldCollisionMask | 2;
 
         _heldObject.ApplyCentralImpulse(throwDirection * _throwCharge);
 
-        _heldObjectExclusions.Clear();
-        _heldShapes.Clear();
-        _heldObject = null;
-
+        ClearHeldObjectState();
         ResetChargeBar();
     }
 
@@ -360,14 +370,20 @@ public partial class Player : CharacterBody3D
             return;
 
         _heldObject.Freeze = false;
+        _heldObject.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.On;
         _heldObject.CollisionLayer = _heldCollisionLayer;
         _heldObject.CollisionMask = _heldCollisionMask;
 
+        ClearHeldObjectState();
+        ResetChargeBar();
+    }
+
+    private void ClearHeldObjectState()
+    {
         _heldObjectExclusions.Clear();
         _heldShapes.Clear();
+        _heldShapeLocals.Clear();
         _heldObject = null;
-
-        ResetChargeBar();
     }
 
     private void ResetChargeBar()
@@ -397,48 +413,244 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    private Vector3 GetSafeHoldPosition()
+    private void UpdateHeldObjectPose(float delta)
     {
-        Vector3 target = _holdPoint.GlobalPosition;
-        Vector3 motion = target - _heldObject.GlobalPosition;
+        if (_heldObject == null
+            || !GodotObject.IsInstanceValid(_heldObject)
+            || _holdPoint == null
+            || _camera == null
+            || GetWorld3D()?.DirectSpaceState == null)
+        {
+            return;
+        }
 
-        if (motion.LengthSquared() < 0.000001f || _heldShapes.Count == 0)
-            return _heldObject.GlobalPosition;
+        Vector3 previousPosition = _heldObject.GlobalPosition;
+        Basis previousBasis = _heldObject.GlobalBasis;
 
-        var spaceState = GetWorld3D().DirectSpaceState;
+        Vector3 desiredPosition = _holdPoint.GlobalPosition;
+        Basis desiredBasis =
+            _holdPoint.GlobalBasis * _heldObjectInitialRotationLocal;
+
+        _heldObject.GlobalBasis = desiredBasis;
+
+        if (TryPlaceHeld(previousPosition, desiredPosition, out Vector3 target))
+        {
+            _heldObject.GlobalPosition = target;
+            return;
+        }
+
+        _heldObject.GlobalBasis = previousBasis;
+
+        if (TryPlaceHeld(previousPosition, desiredPosition, out target))
+        {
+            _heldObject.GlobalPosition = target;
+            return;
+        }
+
+        _heldObject.GlobalPosition = previousPosition;
+    }
+
+    private bool TryPlaceHeld(
+        Vector3 previousPosition,
+        Vector3 desiredPosition,
+        out Vector3 solved)
+    {
+        if (!HeldOverlapsAt(desiredPosition))
+        {
+            if (!HeldOverlapsAt(previousPosition))
+            {
+                solved = SweepHeld(previousPosition, desiredPosition);
+
+                if (!HeldOverlapsAt(solved))
+                    return true;
+            }
+            else if (TryRetreatUntilClear(
+                previousPosition,
+                _camera.GlobalPosition,
+                out Vector3 clear))
+            {
+                solved = SweepHeld(clear, desiredPosition);
+
+                if (!HeldOverlapsAt(solved))
+                    return true;
+            }
+        }
+
+        if (!HeldOverlapsAt(previousPosition))
+        {
+            solved = SweepHeld(previousPosition, desiredPosition);
+
+            if (!HeldOverlapsAt(solved))
+                return true;
+        }
+
+        if (!TryRetreatUntilClear(
+            previousPosition,
+            _camera.GlobalPosition,
+            out Vector3 retreatClear))
+        {
+            solved = previousPosition;
+            return false;
+        }
+
+        solved = SweepHeld(retreatClear, desiredPosition);
+
+        if (!HeldOverlapsAt(solved))
+            return true;
+
+        return TryRetreatUntilClear(
+            solved,
+            retreatClear,
+            out solved
+        );
+    }
+
+    private bool TryRetreatUntilClear(
+        Vector3 from,
+        Vector3 to,
+        out Vector3 clear)
+    {
+        if (!HeldOverlapsAt(from))
+        {
+            clear = from;
+            return true;
+        }
+
+        if (HeldOverlapsAt(to))
+        {
+            clear = from;
+            return false;
+        }
+
+        float lo = 0.0f;
+        float hi = 1.0f;
+
+        for (int i = 0; i < 10; i++)
+        {
+            float mid = (lo + hi) * 0.5f;
+
+            if (HeldOverlapsAt(from.Lerp(to, mid)))
+                lo = mid;
+            else
+                hi = mid;
+        }
+
+        float length = from.DistanceTo(to);
+        float skin = length > 0.001f
+            ? HoldCollisionSkin / length
+            : 0.0f;
+
+        clear = from.Lerp(
+            to,
+            Mathf.Clamp(hi + skin, 0.0f, 1.0f)
+        );
+
+        if (HeldOverlapsAt(clear))
+            clear = from.Lerp(to, hi);
+
+        return !HeldOverlapsAt(clear);
+    }
+
+    private Vector3 SweepHeld(Vector3 from, Vector3 to)
+    {
+        Vector3 motion = to - from;
+        float distance = motion.Length();
+
+        if (distance < 0.0001f || _heldShapes.Count == 0)
+            return to;
+
+        var spaceState = GetWorld3D()?.DirectSpaceState;
+
+        if (spaceState == null)
+            return from;
+
         float safeFraction = 1.0f;
 
-        foreach (var collisionShape in _heldShapes)
+        for (int i = 0; i < _heldShapes.Count; i++)
         {
-            if (!GodotObject.IsInstanceValid(collisionShape)
-                || collisionShape.Disabled)
-            {
+            if (!IsHeldShapeUsable(i))
                 continue;
-            }
 
-            Transform3D relativeTransform =
-                _heldObject.GlobalTransform.AffineInverse()
-                * collisionShape.GlobalTransform;
+            PhysicsShapeQueryParameters3D query = MakeShapeQuery(from, i);
+            query.Motion = motion;
 
-            var query = new PhysicsShapeQueryParameters3D
-            {
-                Shape = collisionShape.Shape,
-                Transform = new Transform3D(
-                    _heldObject.GlobalBasis,
-                    _heldObject.GlobalPosition
-                ) * relativeTransform,
-                Motion = motion,
-                CollisionMask = EnvironmentCollisionLayer,
-                Exclude = _heldObjectExclusions
-            };
-
-            var result = spaceState.CastMotion(query);
+            float[] result = spaceState.CastMotion(query);
             safeFraction = Mathf.Min(safeFraction, result[0]);
         }
 
-        safeFraction = Mathf.Max(0.0f, safeFraction - 0.05f);
+        safeFraction = Mathf.Clamp(safeFraction, 0.0f, 1.0f);
 
-        return _heldObject.GlobalPosition + motion * safeFraction;
+        if (safeFraction < 1.0f)
+        {
+            float safeDistance = Mathf.Max(
+                0.0f,
+                distance * safeFraction - HoldCollisionSkin
+            );
+
+            safeFraction = safeDistance / distance;
+        }
+
+        return from + motion * safeFraction;
+    }
+
+    private bool HeldOverlapsAt(Vector3 origin)
+    {
+        if (_heldShapes.Count == 0)
+            return false;
+
+        var spaceState = GetWorld3D()?.DirectSpaceState;
+
+        if (spaceState == null)
+            return true;
+
+        for (int i = 0; i < _heldShapes.Count; i++)
+        {
+            if (!IsHeldShapeUsable(i))
+                continue;
+
+            PhysicsShapeQueryParameters3D query = MakeShapeQuery(origin, i);
+
+            if (spaceState.IntersectShape(query, 1).Count > 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private PhysicsShapeQueryParameters3D MakeShapeQuery(
+        Vector3 origin,
+        int shapeIndex)
+    {
+        return new PhysicsShapeQueryParameters3D
+        {
+            Shape = _heldShapes[shapeIndex].Shape,
+
+            Transform = new Transform3D(
+                _heldObject.GlobalBasis,
+                origin
+            ) * _heldShapeLocals[shapeIndex],
+
+            CollisionMask = EnvironmentCollisionLayer,
+            Exclude = _heldObjectExclusions,
+            CollideWithAreas = false,
+            CollideWithBodies = true,
+            Margin = HoldCollisionSkin
+        };
+    }
+
+    private bool IsHeldShapeUsable(int index)
+    {
+        if (index >= _heldShapeLocals.Count
+            || index >= _heldShapes.Count)
+        {
+            return false;
+        }
+
+        CollisionShape3D shape = _heldShapes[index];
+
+        return GodotObject.IsInstanceValid(shape)
+            && !shape.Disabled
+            && shape.Shape != null;
     }
 
     private bool CanStartPunch()
