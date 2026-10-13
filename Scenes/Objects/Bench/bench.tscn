@@ -22,6 +22,7 @@ size = Vector3(2.3904114, 0.57910156, 0.51342773)
 [node name="Bench" type="RigidBody3D" unique_id=1804631136]
 script = ExtResource("1_rgxpg")
 Knockback = 10.0
+PickupTime = 1.0
 
 [node name="Plank1" type="MeshInstance3D" parent="." unique_id=1123173334]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24530846, 0)

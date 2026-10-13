@@ -1,4 +1,3 @@
-
 using Godot;
 using System;
 
@@ -20,7 +19,10 @@ public partial class Player : CharacterBody3D
     private Camera3D _camera;
     private RayCast3D _interactRay;
     private IInteractable _currentInteractable;
-    private Label3D _interactionLabel;
+
+    private CanvasLayer _interactionUiCanvas;
+    private Label _interactionTextLabel;
+    private ProgressBar _interactionProgressBar;
 
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
@@ -35,6 +37,10 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
 
+    private float _interactionHoldTime = 0.0f;
+    private float _requiredInteractionTime = 1.0f;
+    private bool _isHoldingInteraction = false;
+
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -42,21 +48,24 @@ public partial class Player : CharacterBody3D
         _camera = GetNode<Camera3D>("Camera3D");
         _interactRay = GetNode<RayCast3D>("Camera3D/InteractRay");
 
-        _heldObjectController =
-            GetNode<HeldObjectController>("HeldObjectController");
-
+        _heldObjectController = GetNode<HeldObjectController>("HeldObjectController");
         _heldObjectController.ObjectPickedUp += OnObjectPickedUp;
 
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
-        _interactionLabel = GetNode<Label3D>("InteractionLabel/Label3D");
-        _interactionLabel.Hide();
+        // Inicjalizacja CanvasLayer UI (dostosuj ścieżki do swojej sceny)
+        _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
+        _interactionTextLabel = GetNode<Label>("InteractionUI/Container/VBoxContainer/Label");
+        _interactionProgressBar = GetNode<ProgressBar>("InteractionUI/Container/VBoxContainer/InteractionProgressBar");
+
+        _interactionUiCanvas.Hide();
+        if (_interactionProgressBar != null)
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+        //_interactionProgressBar.Hide();
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
-        _throwChargeBar = _throwChargeBarCanvas
-            .GetNode<ProgressBar>("MarginContainer/ProgressBar");
-
+        _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
         _throwChargeBarCanvas.Hide();
     }
 
@@ -85,15 +94,14 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
             && mouseButton.Pressed
             && !mouseButton.IsEcho())
         {
-            if (_heldObjectController.HeldObject == null
-                && CanStartPunch())
+            if (_heldObjectController.HeldObject == null && CanStartPunch())
             {
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
@@ -102,23 +110,22 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        if (!@event.IsActionPressed("interact")
-            || IsCinematicDialogueActive())
+        if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
-            return;
-        }
+            if (_heldObjectController.HeldObject != null)
+            {
+                GetViewport().SetInputAsHandled();
+                _heldObjectController.DropObject();
+                ResetChargeBar();
+                ResetHoldInteraction();
+                return;
+            }
 
-        GetViewport().SetInputAsHandled();
-
-        if (_heldObjectController.HeldObject != null)
-        {
-            _heldObjectController.DropObject();
-            ResetChargeBar();
-        }
-        else if (!MovementLocked)
-        {
-            UpdateInteractionTarget();
-            TryInteract();
+            if (_currentInteractable != null && !_currentInteractable.RequiresHold)
+            {
+                GetViewport().SetInputAsHandled();
+                TryInteract();
+            }
         }
     }
 
@@ -168,12 +175,12 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        // Aktualizujemy trzymany obiekt w tym samym cyklu co kamerę.
-        // To zapobiega drganiom przy ruchu myszką.
         _heldObjectController.UpdateHeldObjectPose((float)delta);
 
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
+
+        HandleHoldInteraction((float)delta);
 
         if (_heldObjectController.HeldObject == null)
             return;
@@ -208,6 +215,59 @@ public partial class Player : CharacterBody3D
         }
     }
 
+    private void HandleHoldInteraction(float delta)
+    {
+        if (_heldObjectController.HeldObject == null && !MovementLocked && !IsCinematicDialogueActive())
+        {
+            if (Input.IsActionPressed("interact") && _currentInteractable != null && _currentInteractable.RequiresHold)
+            {
+                if (!_isHoldingInteraction)
+                {
+                    _isHoldingInteraction = true;
+                    _interactionHoldTime = 0.0f;
+                    _requiredInteractionTime = _currentInteractable.GetInteractionDuration();
+                }
+
+                _interactionHoldTime += delta;
+                float progress = Mathf.Clamp(_interactionHoldTime / _requiredInteractionTime, 0.0f, 1.0f);
+
+                if (_interactionProgressBar != null)
+                {
+                    _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
+                    _interactionProgressBar.Value = progress * 100.0f;
+                }
+
+                if (_interactionHoldTime >= _requiredInteractionTime)
+                {
+                    TryInteract();
+                    ResetHoldInteraction();
+                }
+                return;
+            }
+        }
+
+        if (Input.IsActionJustReleased("interact") || _currentInteractable == null || !_currentInteractable.RequiresHold)
+        {
+            ResetHoldInteraction();
+        }
+    }
+
+    private void ResetHoldInteraction()
+    {
+        _isHoldingInteraction = false;
+        _interactionHoldTime = 0.0f;
+
+        if (_interactionProgressBar != null)
+        {
+            _interactionProgressBar.Value = 0;
+
+            if (_currentInteractable is not ThrowableObject)
+            {
+                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+            }
+        }
+    }
+
     private bool IsCinematicDialogueActive()
     {
         var controller = GetTree().CurrentScene
@@ -225,57 +285,30 @@ public partial class Player : CharacterBody3D
             && _heldObjectController.HeldObject == null
             && _interactRay.IsColliding())
         {
-            var interactable = FindInteractable(
-                _interactRay.GetCollider() as Node
-            );
+            var interactable = FindInteractable(_interactRay.GetCollider() as Node);
 
             if (interactable != null && interactable.CanInteract(this))
                 nextTarget = interactable;
         }
 
         if (ReferenceEquals(nextTarget, _currentInteractable))
-        {
-            if (nextTarget != null)
-                UpdateLabelPosition(nextTarget);
-
             return;
-        }
 
+        ResetHoldInteraction();
         _currentInteractable = nextTarget;
 
         if (_currentInteractable == null)
         {
-            _interactionLabel.Hide();
+            _interactionUiCanvas.Hide();
             return;
         }
 
-        _interactionLabel.Text =
-            $"{_currentInteractable.InteractionText} [E]";
+        _interactionTextLabel.Text = _currentInteractable.GetPromptText();
 
-        UpdateLabelPosition(_currentInteractable);
-        _interactionLabel.Show();
-    }
+        if (_interactionProgressBar != null)
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
 
-    private void UpdateLabelPosition(IInteractable interactable)
-    {
-        if (interactable is not Node3D node
-            || !GodotObject.IsInstanceValid(node))
-        {
-            _interactionLabel.Hide();
-            return;
-        }
-
-        float eyeHeight = _camera.GlobalPosition.Y;
-        float objectHeight = node.GlobalPosition.Y
-            + interactable.PromptOffset.Y;
-
-        float labelHeight = Mathf.Min(objectHeight, eyeHeight);
-
-        _interactionLabel.GlobalPosition = new Vector3(
-            node.GlobalPosition.X + interactable.PromptOffset.X,
-            labelHeight,
-            node.GlobalPosition.Z + interactable.PromptOffset.Z
-        );
+        _interactionUiCanvas.Show();
     }
 
     private void TryInteract()
@@ -289,7 +322,7 @@ public partial class Player : CharacterBody3D
             return;
 
         _currentInteractable = null;
-        _interactionLabel.Hide();
+        _interactionUiCanvas.Hide();
 
         interactable.Interact(this);
     }

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Scenes/Characters/Player/Player.cs" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bvlx8sd8gxpax" path="res://Scenes/UI/HealthIndicators/low_health_indicator.tscn" id="2_fu1fx"]
-[ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/interaction_label.tscn" id="2_km8w0"]
+[ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/interaction_ui.tscn" id="2_km8w0"]
 [ext_resource type="PackedScene" uid="uid://ctmaby078nvnr" path="res://Scenes/UI/throw_charge_bar.tscn" id="3_v3drb"]
 [ext_resource type="Script" uid="uid://kldg4ox7ja4f" path="res://Scenes/Characters/Player/PlayerCamera.cs" id="4_dxcao"]
 [ext_resource type="Script" uid="uid://bwxb3j5xv802c" path="res://Scripts/HealthController.cs" id="4_qqvsf"]
@@ -40,7 +40,7 @@ collision_mask = 5
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=634412986]
 shape = SubResource("CapsuleShape3D_kppql")
 
-[node name="InteractionLabel" parent="." unique_id=384664197 instance=ExtResource("2_km8w0")]
+[node name="InteractionUI" parent="." unique_id=384664197 instance=ExtResource("2_km8w0")]
 
 [node name="ThrowChargeBar" parent="." unique_id=520721496 instance=ExtResource("3_v3drb")]
 
