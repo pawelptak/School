@@ -9,6 +9,8 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
     [Export] public float MinDamageMultiplier { get; set; } = 0.5f;
     [Export] public float MaxDamageMultiplier { get; set; } = 2.0f;
     [Export] public float Knockback { get; set; } = 5.0f;
+    [Export] public float MinKnockbackMultiplier { get; set; } = 0.5f;
+    [Export] public float MaxKnockbackMultiplier { get; set; } = 2.0f;
     [Export] public float StunDuration { get; set; } = 0.0f;
 
     [ExportGroup("Interaction")]
@@ -50,6 +52,13 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
         float forcePercent = Mathf.InverseLerp(MinThrowForce, MaxThrowForce, ThrowForce);
         float multiplier = Mathf.Lerp(MinDamageMultiplier, MaxDamageMultiplier, forcePercent);
         return Damage * multiplier;
+    }
+
+    public float CalculateKnockback()
+    {
+        float forcePercent = Mathf.InverseLerp(MinThrowForce, MaxThrowForce, ThrowForce);
+        float multiplier = Mathf.Lerp(MinKnockbackMultiplier, MaxKnockbackMultiplier, forcePercent);
+        return Knockback * multiplier;
     }
 
     private void OnBodyEntered(Node body)
