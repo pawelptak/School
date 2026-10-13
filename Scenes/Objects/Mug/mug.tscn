@@ -45,6 +45,7 @@ height = 0.05
 script = ExtResource("1_fobrh")
 Damage = 7.0
 StunDuration = 2.0
+PickupTime = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1553115191]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031777345, 0, 0)

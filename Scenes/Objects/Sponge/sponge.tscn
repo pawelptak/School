@@ -17,6 +17,7 @@ script = ExtResource("1_0v2wc")
 Damage = 5.0
 Knockback = 0.0
 StunDuration = 2.0
+PickupTime = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=183504577]
 mesh = SubResource("BoxMesh_lc5oj")

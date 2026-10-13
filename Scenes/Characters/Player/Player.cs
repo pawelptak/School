@@ -19,9 +19,11 @@ public partial class Player : CharacterBody3D
     private Camera3D _camera;
     private RayCast3D _interactRay;
     private IInteractable _currentInteractable;
-    private Node3D _interactionRoot; 
+
+    private CanvasLayer _interactionUiCanvas;
     private Label _interactionTextLabel;
     private ProgressBar _interactionProgressBar;
+
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
 
@@ -35,7 +37,6 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _throwChargeBarCanvas;
     private ProgressBar _throwChargeBar;
 
-    // Zmienne do obsługi przytrzymywania interakcji
     private float _interactionHoldTime = 0.0f;
     private float _requiredInteractionTime = 1.0f;
     private bool _isHoldingInteraction = false;
@@ -53,13 +54,15 @@ public partial class Player : CharacterBody3D
         _punchingController = GetNode<PunchingController>("Punching");
         _punchingController.PunchHitFrame += TryPunchTarget;
 
-        _interactionRoot = GetNode<Node3D>("InteractionLabel");
-        _interactionTextLabel = GetNode<Label>("InteractionLabel/Sprite3D/SubViewport/VBoxContainer/Label");
-        _interactionProgressBar = GetNode<ProgressBar>("InteractionLabel/Sprite3D/SubViewport/VBoxContainer/InteractionProgressBar");
+        // Inicjalizacja CanvasLayer UI (dostosuj ścieżki do swojej sceny)
+        _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
+        _interactionTextLabel = GetNode<Label>("InteractionUI/Container/VBoxContainer/Label");
+        _interactionProgressBar = GetNode<ProgressBar>("InteractionUI/Container/VBoxContainer/InteractionProgressBar");
 
-        _interactionRoot.Hide();
+        _interactionUiCanvas.Hide();
         if (_interactionProgressBar != null)
-            _interactionProgressBar.Hide();
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+        //_interactionProgressBar.Hide();
 
         _throwChargeBarCanvas = GetNode<CanvasLayer>("ThrowChargeBar");
         _throwChargeBar = _throwChargeBarCanvas.GetNode<ProgressBar>("MarginContainer/ProgressBar");
@@ -91,7 +94,7 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
@@ -107,7 +110,6 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        // Obsługa natychmiastowego upuszczenia obiektu po naciśnięciu interakcji
         if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject != null)
@@ -116,6 +118,13 @@ public partial class Player : CharacterBody3D
                 _heldObjectController.DropObject();
                 ResetChargeBar();
                 ResetHoldInteraction();
+                return;
+            }
+
+            if (_currentInteractable != null && !_currentInteractable.RequiresHold)
+            {
+                GetViewport().SetInputAsHandled();
+                TryInteract();
             }
         }
     }
@@ -171,7 +180,6 @@ public partial class Player : CharacterBody3D
         if (!IsCinematicDialogueActive())
             UpdateInteractionTarget();
 
-        // KLUCZOWE: Obsługa przytrzymywania klawisza "E"
         HandleHoldInteraction((float)delta);
 
         if (_heldObjectController.HeldObject == null)
@@ -209,16 +217,15 @@ public partial class Player : CharacterBody3D
 
     private void HandleHoldInteraction(float delta)
     {
-        // Jeśli nic nie trzymamy i celujemy w obiekt typu ThrowableObject
         if (_heldObjectController.HeldObject == null && !MovementLocked && !IsCinematicDialogueActive())
         {
-            if (Input.IsActionPressed("interact") && _currentInteractable is ThrowableObject throwable)
+            if (Input.IsActionPressed("interact") && _currentInteractable != null && _currentInteractable.RequiresHold)
             {
                 if (!_isHoldingInteraction)
                 {
                     _isHoldingInteraction = true;
                     _interactionHoldTime = 0.0f;
-                    _requiredInteractionTime = throwable.GetPickupDuration();
+                    _requiredInteractionTime = _currentInteractable.GetInteractionDuration();
                 }
 
                 _interactionHoldTime += delta;
@@ -226,11 +233,10 @@ public partial class Player : CharacterBody3D
 
                 if (_interactionProgressBar != null)
                 {
-                    _interactionProgressBar.Show();
+                    _interactionProgressBar.Modulate = new Color(1, 1, 1, 1);
                     _interactionProgressBar.Value = progress * 100.0f;
                 }
 
-                // Gdy upłynie wymagany czas – podnosimy obiekt
                 if (_interactionHoldTime >= _requiredInteractionTime)
                 {
                     TryInteract();
@@ -240,8 +246,7 @@ public partial class Player : CharacterBody3D
             }
         }
 
-        // Jeśli puszczono przycisk lub cel zniknął
-        if (Input.IsActionJustReleased("interact") || _currentInteractable is not ThrowableObject)
+        if (Input.IsActionJustReleased("interact") || _currentInteractable == null || !_currentInteractable.RequiresHold)
         {
             ResetHoldInteraction();
         }
@@ -255,7 +260,11 @@ public partial class Player : CharacterBody3D
         if (_interactionProgressBar != null)
         {
             _interactionProgressBar.Value = 0;
-            _interactionProgressBar.Hide();
+
+            if (_currentInteractable is not ThrowableObject)
+            {
+                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+            }
         }
     }
 
@@ -276,60 +285,30 @@ public partial class Player : CharacterBody3D
             && _heldObjectController.HeldObject == null
             && _interactRay.IsColliding())
         {
-            var interactable = FindInteractable(
-                _interactRay.GetCollider() as Node
-            );
+            var interactable = FindInteractable(_interactRay.GetCollider() as Node);
 
             if (interactable != null && interactable.CanInteract(this))
                 nextTarget = interactable;
         }
 
         if (ReferenceEquals(nextTarget, _currentInteractable))
-        {
-            if (nextTarget != null)
-                UpdateLabelPosition(nextTarget);
-
             return;
-        }
 
         ResetHoldInteraction();
         _currentInteractable = nextTarget;
 
         if (_currentInteractable == null)
         {
-            _interactionRoot.Hide();
-            if (_interactionProgressBar != null)
-                _interactionProgressBar.Hide();
+            _interactionUiCanvas.Hide();
             return;
         }
 
-        _interactionTextLabel.Text = $"{_currentInteractable.InteractionText} [E]";
-        UpdateLabelPosition(_currentInteractable);
-        _interactionRoot.Show();
-    }
+        _interactionTextLabel.Text = _currentInteractable.GetPromptText();
 
-    private void UpdateLabelPosition(IInteractable interactable)
-    {
-        if (interactable is not Node3D node
-            || !GodotObject.IsInstanceValid(node))
-        {
-            _interactionRoot.Hide();
-            if (_interactionProgressBar != null)
-                _interactionProgressBar.Hide();
-            return;
-        }
+        if (_interactionProgressBar != null)
+            _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
 
-        float eyeHeight = _camera.GlobalPosition.Y;
-        float objectHeight = node.GlobalPosition.Y
-            + interactable.PromptOffset.Y;
-
-        float labelHeight = Mathf.Min(objectHeight, eyeHeight);
-
-        _interactionRoot.GlobalPosition = new Vector3(
-            node.GlobalPosition.X + interactable.PromptOffset.X,
-            labelHeight,
-            node.GlobalPosition.Z + interactable.PromptOffset.Z
-        );
+        _interactionUiCanvas.Show();
     }
 
     private void TryInteract()
@@ -343,9 +322,7 @@ public partial class Player : CharacterBody3D
             return;
 
         _currentInteractable = null;
-        _interactionRoot.Hide();
-        if (_interactionProgressBar != null)
-            _interactionProgressBar.Hide();
+        _interactionUiCanvas.Hide();
 
         interactable.Interact(this);
     }
