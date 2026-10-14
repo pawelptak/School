@@ -193,11 +193,11 @@ public partial class Player : CharacterBody3D
 				GetViewport().SetInputAsHandled();
 				_heldObjectController.ThrowObject(FixedThrowForce);
 
-				RemoveCurrentSelectedInventoryItem();
+				bool stackRemaining = RemoveCurrentSelectedInventoryItem();
 
 				ResetThrowUI();
 				_interactionCooldownTimer = 0.3f;
-				SelectSlot(0); // Automatyczny powrót do pięści po rzucie
+				EquipNextFromStackOrFist(stackRemaining);
 				return;
 			}
 
@@ -211,11 +211,11 @@ public partial class Player : CharacterBody3D
 			{
 				GetViewport().SetInputAsHandled();
 				_heldObjectController.DropObject();
-				RemoveCurrentSelectedInventoryItem();
+				bool stackRemaining = RemoveCurrentSelectedInventoryItem();
 				ResetThrowUI();
 				ResetHoldInteraction();
 				_interactionCooldownTimer = 0.3f;
-				SelectSlot(0);
+				EquipNextFromStackOrFist(stackRemaining);
 				return;
 			}
 		}
@@ -359,7 +359,8 @@ public partial class Player : CharacterBody3D
 		UpdatePickedUpUIState();
 	}
 
-	private void RemoveCurrentSelectedInventoryItem()
+	/// <returns>True, jeśli w wybranym slocie zostały jeszcze sztuki przedmiotu.</returns>
+	private bool RemoveCurrentSelectedInventoryItem()
 	{
 		if (_heldObjectFromInventory && _selectedInventoryIndex > 0)
 		{
@@ -371,8 +372,24 @@ public partial class Player : CharacterBody3D
 				if (_inventory[listIdx].Count <= 0)
 				{
 					_inventory.RemoveAt(listIdx);
+					return false;
 				}
+				return true;
 			}
+		}
+		return false;
+	}
+
+	private void EquipNextFromStackOrFist(bool stackRemaining)
+	{
+		if (stackRemaining)
+		{
+			EquipItemFromInventory(_selectedInventoryIndex - 1);
+			UpdateInventoryUI(showOnSelectionChange: true);
+		}
+		else
+		{
+			SelectSlot(0);
 		}
 	}
 
