@@ -8,11 +8,12 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -151.0
-offset_top = -134.0
+offset_left = -324.0
+offset_top = -36.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="HBoxContainer" parent="Container" unique_id=1202050141]
 layout_mode = 2

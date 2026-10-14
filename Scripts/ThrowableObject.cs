@@ -4,6 +4,10 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
 {
     public float ThrowForce { get; set; }
 
+    [ExportGroup("Inventory Setup")]
+    [Export] public bool IsEquippable { get; set; } = false;
+    [Export] public Texture2D Icon { get; set; }
+
     [ExportGroup("Damage")]
     [Export] public float Damage { get; set; } = 10.0f;
     [Export] public float MinDamageMultiplier { get; set; } = 0.5f;
@@ -23,15 +27,9 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
     public float GetInteractionDuration() => PickupTime;
     public string GetPromptText() => $"[E] {InteractionText}";
 
-    public float GetPickupDuration()
-    {
-        return PickupTime;
-    }
+    public float GetPickupDuration() => PickupTime;
 
-    public bool CanInteract(Player player)
-    {
-        return !Freeze;
-    }
+    public bool CanInteract(Player player) => !Freeze;
 
     public void Interact(Player player)
     {
@@ -54,7 +52,6 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
 
     private void OnBodyEntered(Node body)
     {
-        GD.Print($"Throwable hit: {body.Name}");
         if (body is InteractableCharacter character)
             character.NotifyHitByThrowable(this, ThrowForce);
     }

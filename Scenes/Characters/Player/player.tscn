@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Scenes/Characters/Player/Player.cs" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bvlx8sd8gxpax" path="res://Scenes/UI/HealthIndicators/low_health_indicator.tscn" id="2_fu1fx"]
-[ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/Interaction/interaction_ui.tscn" id="2_km8w0"]
+[ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/HUD/interaction_ui.tscn" id="2_km8w0"]
 [ext_resource type="Script" uid="uid://kldg4ox7ja4f" path="res://Scenes/Characters/Player/PlayerCamera.cs" id="4_dxcao"]
 [ext_resource type="Script" uid="uid://bwxb3j5xv802c" path="res://Scripts/HealthController.cs" id="4_qqvsf"]
 [ext_resource type="PackedScene" uid="uid://c7do1x5mvdx2n" path="res://Scenes/UI/Punching/punching.tscn" id="5_apx8m"]
 [ext_resource type="Script" uid="uid://qgsg1armh5w" path="res://Scenes/Characters/Player/HeldObjectController.cs" id="8_1mdwi"]
-[ext_resource type="PackedScene" uid="uid://c1bh6tkq6fkr6" path="res://Scenes/UI/Interaction/picked_up_object_interaction_ui.tscn" id="8_8gg06"]
+[ext_resource type="PackedScene" uid="uid://c1bh6tkq6fkr6" path="res://Scenes/UI/HUD/picked_up_object_interaction_ui.tscn" id="8_8gg06"]
+[ext_resource type="PackedScene" uid="uid://rnn44gc6x4jt" path="res://Scenes/UI/HUD/inventory_ui.tscn" id="9_8gg06"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kppql"]
 radius = 0.35
@@ -49,5 +50,7 @@ script = ExtResource("4_qqvsf")
 script = ExtResource("8_1mdwi")
 
 [node name="PickedUpObjectInteractionUI" parent="." unique_id=120741911 instance=ExtResource("8_8gg06")]
+
+[node name="InventoryUI" parent="." unique_id=814523127 instance=ExtResource("9_8gg06")]
 
 [editable path="LowHealth"]
