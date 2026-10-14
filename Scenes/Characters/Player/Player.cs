@@ -10,7 +10,16 @@ public partial class Player : CharacterBody3D
     [Export] public float AttackKnockback { get; set; } = 5.0f;
 
     [ExportGroup("Throw")]
+    /// <summary>Immediate throw force, also the maximum force when charging is enabled.</summary>
     [Export] public float FixedThrowForce { get; set; } = 20.0f;
+    /// <summary>Hold LMB to charge and release to throw. Disabled by default.</summary>
+    [Export] public bool ChargeThrowEnabled { get; set; } = false;
+    /// <summary>Force of a quick click when charging is enabled.</summary>
+    [Export(PropertyHint.Range, "0,100,0.1,or_greater")]
+    public float MinThrowForce { get; set; } = 5.0f;
+    /// <summary>Seconds required to reach FixedThrowForce.</summary>
+    [Export(PropertyHint.Range, "0.1,10,0.1,or_greater")]
+    public float ThrowChargeDuration { get; set; } = 1.5f;
 
     [ExportGroup("Inventory")]
     [Export] public int MaxInventorySlots { get; set; } = 9;
@@ -52,6 +61,8 @@ public partial class Player : CharacterBody3D
     private List<InventoryItem> _inventory = new List<InventoryItem>();
     private int _selectedInventoryIndex = 0; // 0 to domyślnie pięść
     private bool _heldObjectFromInventory;
+    private ThrowableObject _chargingThrowObject;
+    private float _throwChargeTime;
 
     private float _cameraPitch;
     private float _interactionHoldTime = 0.0f;
@@ -94,6 +105,7 @@ public partial class Player : CharacterBody3D
 
     private void OnObjectPickedUp(ThrowableObject body)
     {
+        ResetThrowCharge();
         _heldObjectFromInventory = false;
         ObjectPickedUp?.Invoke(body);
         UpdatePickedUpUIState();
@@ -111,7 +123,10 @@ public partial class Player : CharacterBody3D
 
         bool canTake = _heldObjectController.HeldObject.IsEquippable && !_heldObjectFromInventory;
 
-        if (_throwLabel != null) _throwLabel.Show();
+        if (_throwLabel != null)
+        {
+            _throwLabel.Show();
+        }
         if (_takeLabel != null) _takeLabel.Visible = canTake;
     }
 
@@ -180,9 +195,27 @@ public partial class Player : CharacterBody3D
         // Lewy przycisk myszy (Atak pięścią lub Rzut / Użycie trzymanego przedmiotu)
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
-            && mouseButton.Pressed
             && !mouseButton.IsEcho())
         {
+            if (!mouseButton.Pressed)
+            {
+                if (_chargingThrowObject != null)
+                {
+                    GetViewport().SetInputAsHandled();
+                    if (IsThrowChargeValid())
+                    {
+                        float maxForce = Mathf.Max(0.0f, FixedThrowForce);
+                        float minForce = Mathf.Clamp(MinThrowForce, 0.0f, maxForce);
+                        ThrowHeldObject(Mathf.Lerp(minForce, maxForce, GetThrowChargeProgress()));
+                    }
+                    else
+                    {
+                        ResetThrowCharge();
+                    }
+                }
+                return;
+            }
+
             if (_selectedInventoryIndex == 0 && _heldObjectController.HeldObject == null && CanStartPunch())
             {
                 if (_punchingController.StartPunch())
@@ -191,13 +224,19 @@ public partial class Player : CharacterBody3D
             else if (_heldObjectController.HeldObject != null && !IsCinematicDialogueActive())
             {
                 GetViewport().SetInputAsHandled();
-                _heldObjectController.ThrowObject(FixedThrowForce);
-
-                bool stackRemaining = RemoveCurrentSelectedInventoryItem();
-
-                ResetThrowUI();
-                _interactionCooldownTimer = 0.3f;
-                EquipNextFromStackOrFist(stackRemaining);
+                if (ChargeThrowEnabled)
+                {
+                    if (!MovementLocked && !CameraLocked)
+                    {
+                        _chargingThrowObject = _heldObjectController.HeldObject;
+                        _throwChargeTime = 0.0f;
+                        UpdatePickedUpUIState();
+                    }
+                }
+                else
+                {
+                    ThrowHeldObject(FixedThrowForce);
+                }
                 return;
             }
 
@@ -449,6 +488,7 @@ public partial class Player : CharacterBody3D
     public override void _Process(double delta)
     {
         _heldObjectController.UpdateHeldObjectPose((float)delta);
+        UpdateThrowCharge((float)delta);
 
         if (_interactionCooldownTimer > 0.0f)
         {
@@ -461,6 +501,60 @@ public partial class Player : CharacterBody3D
         }
 
         HandleHoldInteraction((float)delta);
+    }
+
+    private void ThrowHeldObject(float force)
+    {
+        _heldObjectController.ThrowObject(force);
+        bool stackRemaining = RemoveCurrentSelectedInventoryItem();
+        ResetThrowUI();
+        _interactionCooldownTimer = 0.3f;
+        EquipNextFromStackOrFist(stackRemaining);
+    }
+
+    private bool IsThrowChargeValid()
+    {
+        return ChargeThrowEnabled
+            && _chargingThrowObject != null
+            && GodotObject.IsInstanceValid(_chargingThrowObject)
+            && ReferenceEquals(_chargingThrowObject, _heldObjectController.HeldObject)
+            && !MovementLocked
+            && !CameraLocked
+            && !IsCinematicDialogueActive();
+    }
+
+    private float GetThrowChargeProgress()
+    {
+        return Mathf.Clamp(_throwChargeTime / Mathf.Max(0.1f, ThrowChargeDuration), 0.0f, 1.0f);
+    }
+
+    private void UpdateThrowCharge(float delta)
+    {
+        if (_chargingThrowObject == null)
+            return;
+
+        if (!IsThrowChargeValid() || !Input.IsMouseButtonPressed(MouseButton.Left))
+        {
+            ResetThrowCharge();
+            return;
+        }
+
+        _throwChargeTime = Mathf.Min(_throwChargeTime + delta, Mathf.Max(0.1f, ThrowChargeDuration));
+    }
+
+    private void ResetThrowCharge()
+    {
+        if (_chargingThrowObject != null)
+        {
+            if (_interactionProgressBar != null)
+            {
+                _interactionProgressBar.Value = 0;
+                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+            }
+            _interactionUiCanvas.Hide();
+        }
+        _chargingThrowObject = null;
+        _throwChargeTime = 0.0f;
     }
 
     private void HandleHoldInteraction(float delta)
@@ -514,6 +608,7 @@ public partial class Player : CharacterBody3D
 
     private void ResetThrowUI()
     {
+        ResetThrowCharge();
         if (_interactionProgressBar != null)
         {
             _interactionProgressBar.Value = 0;
@@ -533,7 +628,7 @@ public partial class Player : CharacterBody3D
 
     private void UpdateInteractionTarget()
     {
-        if (_interactionCooldownTimer > 0.0f)
+        if (_interactionCooldownTimer > 0.0f && _chargingThrowObject == null)
         {
             _interactionUiCanvas.Hide();
             return;
@@ -547,8 +642,16 @@ public partial class Player : CharacterBody3D
                 return;
             }
 
+            bool isChargingThrow = _chargingThrowObject != null;
+            _interactionTextLabel.Hide();
+            _interactionUiCanvas.Visible = isChargingThrow;
+
             if (_interactionProgressBar != null)
-                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+            {
+                _interactionProgressBar.ShowPercentage = false;
+                _interactionProgressBar.Modulate = new Color(1, 1, 1, isChargingThrow ? 1 : 0);
+                _interactionProgressBar.Value = isChargingThrow ? GetThrowChargeProgress() * 100.0f : 0;
+            }
 
             UpdatePickedUpUIState();
             return;

@@ -15,6 +15,9 @@ size = Vector3(100, 1, 50)
 
 [node name="OutsideCourt" unique_id=513644933 instance=ExtResource("1_dh3gs")]
 
+[node name="Player" parent="." index="1" unique_id=195847836]
+ChargeThrowEnabled = true
+
 [node name="BasketballCourt" parent="." index="4" unique_id=83723086 instance=ExtResource("2_4qbhs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
 
