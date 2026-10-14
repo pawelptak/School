@@ -289,7 +289,8 @@ public partial class Player : CharacterBody3D
 		_heldObjectFromInventory = false;
 
 		ResetThrowUI();
-		SelectSlot(0);
+		_selectedInventoryIndex = 0;
+		UpdateInventoryUI(showOnSelectionChange: true);
 	}
 
 	private void StoreHeldObjectToInventoryQuietly()
