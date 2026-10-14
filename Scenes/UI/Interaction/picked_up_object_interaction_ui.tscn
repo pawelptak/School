@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c1bh6tkq6fkr6"]
+
+[node name="PickedUpObjectInteractionUI" type="CanvasLayer" unique_id=120741911]
+
+[node name="Container" type="MarginContainer" parent="." unique_id=382981593]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = -134.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Container" unique_id=1202050141]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="ThrowLabel" type="Label" parent="Container/VBoxContainer" unique_id=670067872]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+text = "Rzuć [LPM]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TakeLabel" type="Label" parent="Container/VBoxContainer" unique_id=2118475404]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+text = "Weź [F]"
+horizontal_alignment = 1
+vertical_alignment = 1

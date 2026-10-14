@@ -28,6 +28,7 @@ public partial class Player : CharacterBody3D
     private IInteractable _currentInteractable;
 
     private CanvasLayer _interactionUiCanvas;
+    private CanvasLayer _pickedUpObjectCanvas;
     private Label _interactionTextLabel;
     private ProgressBar _interactionProgressBar;
 
@@ -55,10 +56,13 @@ public partial class Player : CharacterBody3D
         _punchingController.PunchHitFrame += TryPunchTarget;
 
         _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
-        _interactionTextLabel = GetNode<Label>("InteractionUI/Container/VBoxContainer/Label");
-        _interactionProgressBar = GetNode<ProgressBar>("InteractionUI/Container/VBoxContainer/InteractionProgressBar");
+        _interactionTextLabel = _interactionUiCanvas.GetNode<Label>("Container/VBoxContainer/Label");
+        _interactionProgressBar = _interactionUiCanvas.GetNode<ProgressBar>("Container/VBoxContainer/InteractionProgressBar");
+
+        _pickedUpObjectCanvas = GetNode<CanvasLayer>("PickedUpObjectInteractionUI");
 
         _interactionUiCanvas.Hide();
+        _pickedUpObjectCanvas.Hide();
         if (_interactionProgressBar != null)
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
     }
@@ -256,6 +260,7 @@ public partial class Player : CharacterBody3D
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
         }
         _interactionUiCanvas.Hide();
+        _pickedUpObjectCanvas.Hide();
     }
 
     private bool IsCinematicDialogueActive()
@@ -282,13 +287,10 @@ public partial class Player : CharacterBody3D
                 return;
             }
 
-            _interactionTextLabel.Text = "Rzuć [LPM]";
-            _interactionTextLabel.Show();
-
             if (_interactionProgressBar != null)
                 _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
 
-            _interactionUiCanvas.Show();
+            _pickedUpObjectCanvas.Show();
             return;
         }
 
