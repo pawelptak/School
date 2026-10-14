@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bexxx5hlgvvgn"]
+
+[ext_resource type="Texture2D" uid="uid://lpwpey0cr6h" path="res://Scenes/Objects/BasketballCourt/basketball_court.png" id="1_6vege"]
+[ext_resource type="PackedScene" uid="uid://v7ngynidfyg8" path="res://Scenes/Objects/BasketballCourt/basket.tscn" id="2_urihe"]
+[ext_resource type="PackedScene" uid="uid://b4e46dh47uql3" path="res://Scenes/Objects/BasketballCourt/goal.tscn" id="2_yj1qo"]
+[ext_resource type="PackedScene" uid="uid://d3fcmtc6r5gc7" path="res://Scenes/Objects/Basketball/basketball.tscn" id="3_t0ufl"]
+[ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="3_yj1qo"]
+[ext_resource type="PackedScene" uid="uid://bru8xe3u6wpwx" path="res://Scenes/Objects/BasketballCourt/court_net.tscn" id="6_t0ufl"]
+[ext_resource type="PackedScene" uid="uid://cg4owbje4puvh" path="res://Scenes/Objects/BasketballCourt/court_net_short.tscn" id="7_o6gts"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avqul"]
+albedo_texture = ExtResource("1_6vege")
+uv1_scale = Vector3(0.035, 1, 0.046)
+uv1_offset = Vector3(0.5, 0, 1.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_avqul")
+size = Vector3(30, 0.05, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bp8qj"]
+size = Vector3(30, 0.05, 20)
+
+[node name="BasketballCourt" type="Node3D" unique_id=83723086]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=133038903]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1553319027]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1082210567]
+shape = SubResource("BoxShape3D_bp8qj")
+
+[node name="Goal" parent="StaticBody3D" unique_id=272376366 instance=ExtResource("2_yj1qo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.114048, 1.0249996, -0.48698568)
+
+[node name="Goal2" parent="StaticBody3D" unique_id=1499310618 instance=ExtResource("2_yj1qo")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 14.0128, 1.0249996, 0.24949169)
+
+[node name="Basketball" parent="StaticBody3D" unique_id=756961244 instance=ExtResource("3_t0ufl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3175116, 0.32210922, -1.1936929)
+
+[node name="Basket" parent="." unique_id=2069645483 instance=ExtResource("2_urihe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7419176, 1.3783569, -9.593334)
+
+[node name="Basket2" parent="." unique_id=1364508377 instance=ExtResource("2_urihe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5210485, 1.3783569, -9.593334)
+
+[node name="Basket3" parent="." unique_id=1883908746 instance=ExtResource("2_urihe")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6.5210485, 1.3783569, 9.598095)
+
+[node name="Basket4" parent="." unique_id=2072458037 instance=ExtResource("2_urihe")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6.9573317, 1.3783569, 9.598095)
+
+[node name="Player" parent="." unique_id=195847836 instance=ExtResource("3_yj1qo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.13844, 0.2672143, 1.1492734)
+
+[node name="CourtNet" parent="." unique_id=693622821 instance=ExtResource("6_t0ufl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.936736, 1.05, -0.002925396)
+
+[node name="CourtNet3" parent="." unique_id=286842002 instance=ExtResource("6_t0ufl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.9772425, 1.05, 9.943035)
+
+[node name="CourtNet4" parent="." unique_id=1716544842 instance=ExtResource("6_t0ufl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.9772425, 1.05, 9.943035)
+
+[node name="CourtNet5" parent="." unique_id=763318753 instance=ExtResource("6_t0ufl")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.9772425, 1.05, -9.921166)
+
+[node name="CourtNet2" parent="." unique_id=1258253837 instance=ExtResource("6_t0ufl")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 14.893899, 1.05, -0.002925396)
+
+[node name="CourtNetShort" parent="." unique_id=1744615059 instance=ExtResource("7_o6gts")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.963, 1.05, 9.943)
+
+[node name="CourtNetShort2" parent="." unique_id=2017795641 instance=ExtResource("7_o6gts")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.870116, 1.05, -9.921)
