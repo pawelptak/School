@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://v7ngynidfyg8" path="res://Scenes/Objects/BasketballCourt/basket.tscn" id="2_urihe"]
 [ext_resource type="PackedScene" uid="uid://b4e46dh47uql3" path="res://Scenes/Objects/BasketballCourt/goal.tscn" id="2_yj1qo"]
 [ext_resource type="PackedScene" uid="uid://d3fcmtc6r5gc7" path="res://Scenes/Objects/Basketball/basketball.tscn" id="3_t0ufl"]
-[ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="3_yj1qo"]
 [ext_resource type="PackedScene" uid="uid://bru8xe3u6wpwx" path="res://Scenes/Objects/BasketballCourt/court_net.tscn" id="6_t0ufl"]
 [ext_resource type="PackedScene" uid="uid://cg4owbje4puvh" path="res://Scenes/Objects/BasketballCourt/court_net_short.tscn" id="7_o6gts"]
 
@@ -52,9 +51,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6.5
 
 [node name="Basket4" parent="." unique_id=2072458037 instance=ExtResource("2_urihe")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6.9573317, 1.3783569, 9.598095)
-
-[node name="Player" parent="." unique_id=195847836 instance=ExtResource("3_yj1qo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.13844, 0.2672143, 1.1492734)
 
 [node name="CourtNet" parent="." unique_id=693622821 instance=ExtResource("6_t0ufl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.936736, 1.05, -0.002925396)
