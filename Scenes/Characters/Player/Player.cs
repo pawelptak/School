@@ -109,16 +109,10 @@ public partial class Player : CharacterBody3D
 
 		_pickedUpObjectCanvas.Show();
 
-		bool isEquippable = _heldObjectController.HeldObject.IsEquippable;
+		bool canTake = _heldObjectController.HeldObject.IsEquippable && !_heldObjectFromInventory;
 
 		if (_throwLabel != null) _throwLabel.Show();
-		if (_takeLabel != null)
-		{
-			if (isEquippable)
-				_takeLabel.Show();
-			else
-				_takeLabel.Hide();
-		}
+		if (_takeLabel != null) _takeLabel.Visible = canTake;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -173,7 +167,9 @@ public partial class Player : CharacterBody3D
 		// Schowanie przedmiotu do plecaka (wymaga akcji "take_to_inventory" w Input Map, np. Q)
 		if (@event.IsActionPressed("take_to_inventory") && !IsCinematicDialogueActive())
 		{
-			if (_heldObjectController.HeldObject != null && _heldObjectController.HeldObject.IsEquippable)
+			if (_heldObjectController.HeldObject != null
+				&& _heldObjectController.HeldObject.IsEquippable
+				&& !_heldObjectFromInventory)
 			{
 				GetViewport().SetInputAsHandled();
 				StoreHeldObjectToInventory();
