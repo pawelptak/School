@@ -313,7 +313,8 @@ public partial class Player : CharacterBody3D
 
 	private void AddToCartInventory(ThrowableObject obj)
 	{
-		var existing = _inventory.Find(i => i.ItemName == obj.Name);
+		string itemKey = !string.IsNullOrEmpty(obj.SceneFilePath) ? obj.SceneFilePath : obj.Name.ToString();
+		var existing = _inventory.Find(i => i.ItemName == itemKey);
 		if (existing != null)
 		{
 			existing.Count++;
@@ -328,7 +329,7 @@ public partial class Player : CharacterBody3D
 
 			_inventory.Add(new InventoryItem
 			{
-				ItemName = obj.Name,
+				ItemName = itemKey,
 				ObjectScene = loadedScene, // Pobrane automatycznie!
 				Icon = obj.Icon,
 				Count = 1
