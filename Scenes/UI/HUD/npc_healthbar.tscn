@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bj8cm6n6qddsa"]
+
+[ext_resource type="Script" uid="uid://cs2nbvioe6fkv" path="res://Scenes/UI/HUD/NpcHealthBar.cs" id="2_fv1eb"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_crm6m"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0b3e5"]
+bg_color = Color(0, 0, 0, 0.7372549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fv1eb"]
+bg_color = Color(0.6, 0, 0, 1)
+
+[node name="NpcHealthBar" type="Sprite3D" unique_id=1649321529 node_paths=PackedStringArray("ProgressBar")]
+billboard = 1
+texture_filter = 0
+texture = SubResource("ViewportTexture_crm6m")
+script = ExtResource("2_fv1eb")
+ProgressBar = NodePath("SubViewport/ProgressBar")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=104805483]
+transparent_bg = true
+size = Vector2i(40, 6)
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport" unique_id=1291265082]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_0b3e5")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fv1eb")
+show_percentage = false
