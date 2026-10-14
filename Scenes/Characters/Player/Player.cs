@@ -39,6 +39,7 @@ public partial class Player : CharacterBody3D
     private float _interactionHoldTime = 0.0f;
     private float _requiredInteractionTime = 1.0f;
     private bool _isHoldingInteraction = false;
+    private float _interactionCooldownTimer = 0.0f;
 
     public override void _Ready()
     {
@@ -89,7 +90,6 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // 1. Akcja pięści (LPM, gdy nic nie trzymamy)
         if (@event is InputEventMouseButton mouseButton
             && mouseButton.ButtonIndex == MouseButton.Left
             && mouseButton.Pressed
@@ -100,20 +100,19 @@ public partial class Player : CharacterBody3D
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
             }
-            // 2. Natychmiastowy rzut (LPM, gdy trzymamy obiekt)
             else if (_heldObjectController.HeldObject != null && !IsCinematicDialogueActive())
             {
                 GetViewport().SetInputAsHandled();
                 _heldObjectController.ThrowObject(FixedThrowForce);
                 ResetThrowUI();
+                _interactionCooldownTimer = 0.3f;
                 return;
             }
 
             return;
         }
 
-        // Upuszczanie przedmiotu pod PPM
-        if (@event is InputEventAction actionEvent && actionEvent.IsActionPressed("drop") && !IsCinematicDialogueActive())
+        if (@event.IsActionPressed("drop") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject != null)
             {
@@ -121,11 +120,11 @@ public partial class Player : CharacterBody3D
                 _heldObjectController.DropObject();
                 ResetThrowUI();
                 ResetHoldInteraction();
+                _interactionCooldownTimer = 0.3f;
                 return;
             }
         }
 
-        // Zwykła interakcja (np. klawisz E)
         if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject == null
@@ -186,6 +185,11 @@ public partial class Player : CharacterBody3D
     public override void _Process(double delta)
     {
         _heldObjectController.UpdateHeldObjectPose((float)delta);
+
+        if (_interactionCooldownTimer > 0.0f)
+        {
+            _interactionCooldownTimer -= (float)delta;
+        }
 
         if (!IsCinematicDialogueActive())
         {
@@ -264,6 +268,12 @@ public partial class Player : CharacterBody3D
 
     private void UpdateInteractionTarget()
     {
+        if (_interactionCooldownTimer > 0.0f)
+        {
+            _interactionUiCanvas.Hide();
+            return;
+        }
+
         if (_heldObjectController.HeldObject != null)
         {
             if (MovementLocked || IsCinematicDialogueActive())
