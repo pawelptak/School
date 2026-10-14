@@ -187,12 +187,10 @@ public partial class Player : CharacterBody3D
     {
         _heldObjectController.UpdateHeldObjectPose((float)delta);
 
-        // Jeśli trzymamy obiekt, nie sprawdzamy raycastu interakcji w świecie
-        if (_heldObjectController.HeldObject != null)
-            return;
-
         if (!IsCinematicDialogueActive())
+        {
             UpdateInteractionTarget();
+        }
 
         HandleHoldInteraction((float)delta);
     }
@@ -266,11 +264,28 @@ public partial class Player : CharacterBody3D
 
     private void UpdateInteractionTarget()
     {
+        if (_heldObjectController.HeldObject != null)
+        {
+            if (MovementLocked || IsCinematicDialogueActive())
+            {
+                _interactionUiCanvas.Hide();
+                return;
+            }
+
+            _interactionTextLabel.Text = "Rzuć [LPM]";
+            _interactionTextLabel.Show();
+
+            if (_interactionProgressBar != null)
+                _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);
+
+            _interactionUiCanvas.Show();
+            return;
+        }
+
         IInteractable nextTarget = null;
 
         if (!MovementLocked
             && !IsCinematicDialogueActive()
-            && _heldObjectController.HeldObject == null
             && _interactRay.IsColliding())
         {
             var interactable = FindInteractable(_interactRay.GetCollider() as Node);
