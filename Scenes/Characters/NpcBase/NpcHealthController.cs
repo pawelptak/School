@@ -4,6 +4,7 @@ using System;
 public partial class NpcHealthController : Node
 {
 	[Export] public float MaxHealth { get; set; } = 100.0f;
+	[Export] public bool IsImmortal { get; set; } = false;
 
 	public float CurrentHealth { get; private set; }
 
@@ -18,7 +19,7 @@ public partial class NpcHealthController : Node
 
 	public void TakeDamage(float amount)
 	{
-		if (CurrentHealth <= 0.0f || amount <= 0.0f)
+		if (IsImmortal || CurrentHealth <= 0.0f || amount <= 0.0f)
 			return;
 
 		CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0.0f, MaxHealth);

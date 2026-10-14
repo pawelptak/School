@@ -12,6 +12,7 @@ public partial class ClassroomTutorial : Node3D
     private Door _door;
     private RigidBody3D _playerChair;
     private RigidBody3D _playerDesk;
+    private int correctThrowCount = 0;
 
     public override void _Ready()
     {
@@ -145,12 +146,17 @@ public partial class ClassroomTutorial : Node3D
         if (_doorObjectiveActive)
             return false;
 
-        if (throwForce < 15.0f)
+
+        if (correctThrowCount < 2)
         {
             _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.ThrowAgain, "LPM"), 4.0f)]);
 
+            correctThrowCount++;
+
             return true;
         }
+
+
 
         _objectiveMarker.Hide();
 
