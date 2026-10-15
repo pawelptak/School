@@ -11,5 +11,5 @@ public static class PolishTeacherText
     public const string Introduction = "No dobrze dzieci, piszemy lekcja, temat dzisiejszy...";
     public const string LessonTopic = "\"Bolesław Prus - życie i twórczość\"";
     public const string Homework = "Pod koniec lekcji oddajcie mi zeszyty i posprawdzam wasze zadania domowe. Dobrze?";
-
+    public const string EndOfClass = "No dobrze, zaraz koniec lekcji, to dajcie te wasze wypracowania.";
 }

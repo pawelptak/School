@@ -6,6 +6,8 @@ public partial class TutorialAreaDoor : AnimatableBody3D, IInteractable
 
     public Vector3 PromptOffset => new Vector3(0, 1.5f, 0);
 
+    string IInteractable.Name => "Drzwi";
+
     public bool CanInteract(Player player)
     {
         return true;

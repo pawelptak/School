@@ -29,3 +29,10 @@ vertical_alignment = 1
 [node name="InteractionProgressBar" type="ProgressBar" parent="Container/VBoxContainer" unique_id=737540123]
 layout_mode = 2
 show_percentage = false
+
+[node name="InteractableName" type="Label" parent="Container/VBoxContainer" unique_id=714984058]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+text = "Krzesło"
+horizontal_alignment = 1
+vertical_alignment = 1

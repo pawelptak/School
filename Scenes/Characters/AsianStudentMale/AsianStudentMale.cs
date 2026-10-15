@@ -1,5 +1,7 @@
 public partial class AsianStudentMale : InteractableCharacter
 {
+    public override string Name => DialogueSpeakerExtensions.GetDisplayName(DialogueSpeaker.AsianStudentMale);
+
     protected override DialogueLine[] GetDefeatDialogue()
     {
         return [new DialogueLine(DialogueSpeaker.AsianStudentMale, AsianStudentMaleText.Defeat, 2.5f)];

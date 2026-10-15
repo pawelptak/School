@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cift6vgk7opfj"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_bho8n"]
+
+[node name="CorridorFight1" unique_id=513644933 instance=ExtResource("1_bho8n")]
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]

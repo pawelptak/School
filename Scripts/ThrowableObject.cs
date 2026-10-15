@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class ThrowableObject : RigidBody3D, IInteractable
+public abstract partial class ThrowableObject : RigidBody3D, IInteractable
 {
     public float ThrowForce { get; set; }
 
@@ -18,6 +18,7 @@ public partial class ThrowableObject : RigidBody3D, IInteractable
     [ExportGroup("Interaction")]
     [Export] public float PickupTime { get; set; } = 0.5f;
 
+    public abstract new string Name { get; }
     private const float MinThrowForce = 5.0f;
     private const float MaxThrowForce = 20.0f;
 

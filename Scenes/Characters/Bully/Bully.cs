@@ -1,5 +1,7 @@
 public partial class Bully : InteractableCharacter
 {
+    public override string Name => DialogueSpeakerExtensions.GetDisplayName(DialogueSpeaker.Bully);
+
     protected override DialogueLine[] GetDefeatDialogue()
     {
         return [new DialogueLine(DialogueSpeaker.Bully, BullyText.Defeat, 2.0f)];

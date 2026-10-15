@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://cyduikec4p0a3" path="res://Scenes/Characters/Crowd/ManRear/man_rear.tscn" id="19_5yqfh"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="22_t0y5t"]
 [ext_resource type="PackedScene" uid="uid://cv0ho75s5v7rt" path="res://Scenes/Characters/PolishTeacher/polish_teacher.tscn" id="23_lxbj7"]
+[ext_resource type="PackedScene" uid="uid://dlpgb5bd061n" path="res://Scenes/Objects/Clock/clock.tscn" id="25_ageul"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
 panorama = ExtResource("3_5yqfh")
@@ -157,6 +158,7 @@ transform = Transform3D(-0.14715293, 0.00731391, 0.98908675, 0.00644029, 0.99995
 
 [node name="TeacherChair" parent="." unique_id=786745295 instance=ExtResource("2_owm2g")]
 transform = Transform3D(-0.99963, 0, -0.027199835, 0, 1, 0, 0.027199835, 0, -0.99963, 0.2100141, 0, -7.67)
+freeze = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1096299740]
 environment = SubResource("Environment_4xgl2")
@@ -378,6 +380,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113661766, 3.7221131, -5.1
 
 [node name="Desk" parent="." unique_id=1876954106 instance=ExtResource("17_6iri6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23944807, 0, -6.779463)
+freeze = true
 
 [node name="WomanRear" parent="." unique_id=646489535 instance=ExtResource("17_vortt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5594795, 0.66111517, -4.6676598)
@@ -409,11 +412,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.034, 0.63599586, -2.096)
 [node name="PolishTeacher" parent="." unique_id=810253095 instance=ExtResource("23_lxbj7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7348375, 0.9215998, -7.274063)
 
+[node name="PolishTeacher2" parent="." unique_id=1700093473 instance=ExtResource("23_lxbj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27478647, 0.9215998, -7.274063)
+visible = false
+
 [node name="CustomCameraClose" type="Node3D" parent="." unique_id=243858672]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6209226, 1.2625248, -2.466542)
 
 [node name="CustomCameraFar" type="Node3D" parent="." unique_id=559754141]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099766, 1.1510559, -2.393251)
+
+[node name="CustomCameraClock" type="Node3D" parent="." unique_id=691433615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0873837, 3.153599, -4.0767136)
+
+[node name="CustomCameraEnd" type="Node3D" parent="." unique_id=2029022428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.053161293, 1.5337123, -6.152248)
+
+[node name="Clock" parent="." unique_id=1525051978 instance=ExtResource("25_ageul")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 4.9423637, 3.1732903, -4.09756)
 
 [editable path="Blackboard"]
 [editable path="Mate"]

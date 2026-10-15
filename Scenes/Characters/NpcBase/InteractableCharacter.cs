@@ -15,6 +15,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public bool PlayerInRange { get; private set; }
 
+    public abstract new string Name { get; }
+
     public string InteractionText => "Rozmawiaj";
     public Vector3 PromptOffset => new Vector3(0, 2.0f, 0);
 

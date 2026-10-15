@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://8nrtfqpxn1hl"]
 
-[ext_resource type="Script" uid="uid://b1qik13rmbwam" path="res://Scripts/ThrowableObject.cs" id="1_7tcfe"]
+[ext_resource type="Script" uid="uid://tb8qitsi2tkj" path="res://Scenes/Objects/DeadNpcBody/DeadNpcBody.cs" id="1_7tcfe"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6dere"]
 friction = 0.06

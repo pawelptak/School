@@ -29,5 +29,13 @@ public static class MateText
 
     // Polish Class
     public const string PhysicalEdu = "Zapomniałem butów zmiennych. Chłop od wuefu się zesra.";
+    public const string AfterClass = "No i? Co dostałeś? Mi dała 4.";
+    public const string Grade1Response = "Jedynka? Chyba za dużo pozmieniałeś XD";
+    public const string Grade2Response = "Dwóję dostałeś? Chłopie, co ty żeś tam napisoł XD";
+    public const string Grade3Response = "Trójka to nie tak źle, ale ja mam czwórke hehe.";
+    public const string Grade4Response = "O też masz czwórkę. Zółwik!";
+    public const string Grade5Response = "Co? Czemu ta szmata dała ci wyższą ocenę niż mi?!";
+    public const string Grade6Response = "Co? Jakim prawem dostałeś szóstkę, jak ode mnie spisywałeś? Ta szmata losuje te oceny, czy co?";
+    public const string ExitPolishClass = "Dobra, chodźmy stąd.";
 
 }

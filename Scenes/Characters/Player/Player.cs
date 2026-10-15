@@ -41,6 +41,7 @@ public partial class Player : CharacterBody3D
     private CanvasLayer _interactionUiCanvas;
     private CanvasLayer _pickedUpObjectCanvas;
     private Label _interactionTextLabel;
+    private Label _interactableNameLabel;
     private ProgressBar _interactionProgressBar;
 
     private Label _throwLabel;
@@ -85,6 +86,7 @@ public partial class Player : CharacterBody3D
 
         _interactionUiCanvas = GetNode<CanvasLayer>("InteractionUI");
         _interactionTextLabel = _interactionUiCanvas.GetNode<Label>("Container/VBoxContainer/Label");
+        _interactableNameLabel = _interactionUiCanvas.GetNode<Label>("Container/VBoxContainer/InteractableName");
         _interactionProgressBar = _interactionUiCanvas.GetNode<ProgressBar>("Container/VBoxContainer/InteractionProgressBar");
 
         _pickedUpObjectCanvas = GetNode<CanvasLayer>("PickedUpObjectInteractionUI");
@@ -644,6 +646,7 @@ public partial class Player : CharacterBody3D
 
             bool isChargingThrow = _chargingThrowObject != null;
             _interactionTextLabel.Hide();
+            _interactableNameLabel.Hide();
             _interactionUiCanvas.Visible = isChargingThrow;
 
             if (_interactionProgressBar != null)
@@ -682,7 +685,9 @@ public partial class Player : CharacterBody3D
         }
 
         _interactionTextLabel.Text = _currentInteractable.GetPromptText();
+        _interactableNameLabel.Text = _currentInteractable.Name;
         _interactionTextLabel.Show();
+        _interactableNameLabel.Show();
 
         if (_interactionProgressBar != null)
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);

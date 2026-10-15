@@ -66,6 +66,7 @@ texture = SubResource("ViewportTexture_5gj1k")
 
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
+DefeatMode = 1
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]

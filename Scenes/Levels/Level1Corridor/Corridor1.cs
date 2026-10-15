@@ -9,6 +9,7 @@ public partial class Corridor1 : Node3D
     private ObjectiveMarker _objectiveMarker;
 
     private Player _player;
+    private Camera3D _camera;
 
     public override void _Ready()
     {
@@ -23,6 +24,11 @@ public partial class Corridor1 : Node3D
 
         _studentController = GetNode<NpcController>("AsianStudentMale/NpcController");
         _player = GetNode<Player>("Player");
+        _camera = _player.GetNode<Camera3D>("Camera3D");
+
+        _cutsceneController.SetCamera(_camera);
+        _cutsceneController.SetPlayer(_player);
+
     }
 
     private void OnMateInteractionRequested(Player player)
@@ -42,7 +48,8 @@ public partial class Corridor1 : Node3D
                 new DialogueLine(DialogueSpeaker.Mate, string.Empty, 2f),
                 new DialogueLine(DialogueSpeaker.Mate, MateText.PlayerResponse2, 4.5f)
             ],
-            onFinished: StartHomeworkMinigame
+            onFinished: StartHomeworkMinigame,
+            cinematic: true
         );
     }
 

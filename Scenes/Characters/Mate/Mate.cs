@@ -1,5 +1,7 @@
 public partial class Mate : InteractableCharacter
 {
+    public override string Name => DialogueSpeakerExtensions.GetDisplayName(DialogueSpeaker.Mate);
+
     protected override DialogueLine[] GetDefeatDialogue()
     {
         return [new DialogueLine(DialogueSpeaker.Mate, MateText.Defeat, 2.5f)];

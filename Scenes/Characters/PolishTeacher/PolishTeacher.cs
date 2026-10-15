@@ -1,6 +1,8 @@
 public partial class PolishTeacher : InteractableCharacter
 {
-	protected override DialogueLine[] GetDefeatDialogue()
+    public override string Name => DialogueSpeakerExtensions.GetDisplayName(DialogueSpeaker.PolishTeacher);
+
+    protected override DialogueLine[] GetDefeatDialogue()
 	{
 		return [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.Defeat, 2.0f)];
 	}
