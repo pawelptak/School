@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bymnc5e5vfbpn"]
 
+[ext_resource type="Script" uid="uid://dwrnlnfpqv6hj" path="res://Scenes/Levels/LevelBase/LevelBase.cs" id="1_817ye"]
 [ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="2_re518"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="3_wd4p8"]
+[ext_resource type="Script" uid="uid://cts0haix31v8o" path="res://Scripts/SaveData/WorldCleaner.cs" id="5_e0mo0"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="12_3q0to"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
@@ -19,6 +21,7 @@ sdfgi_read_sky_light = false
 sdfgi_bounce_feedback = 1.61
 
 [node name="LevelBase" type="Node3D" unique_id=513644933]
+script = ExtResource("1_817ye")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1096299740]
 environment = SubResource("Environment_4xgl2")
@@ -33,4 +36,8 @@ visible = false
 
 [node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("12_3q0to")]
 
+[node name="WorldCleaner" type="Node" parent="." unique_id=1993814894]
+script = ExtResource("5_e0mo0")
+
 [editable path="Player"]
+[editable path="Player/LowHealth"]

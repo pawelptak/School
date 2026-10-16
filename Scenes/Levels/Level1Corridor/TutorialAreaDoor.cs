@@ -15,6 +15,6 @@ public partial class TutorialAreaDoor : AnimatableBody3D, IInteractable
 
     public void Interact(Player player)
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/TutorialArea/tutorial_area.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/TutorialArea/tutorial_area_inherited.tscn");
     }
 }

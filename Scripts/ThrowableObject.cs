@@ -22,6 +22,12 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
     private const float MinThrowForce = 5.0f;
     private const float MaxThrowForce = 20.0f;
 
+    [ExportGroup("Persistence")]
+    [Export]
+    public string WorldItemID { get; set; } = "";
+
+    public bool DroppedFromInventory { get; set; } = false;
+
     public string InteractionText => "Podnieś";
     public Vector3 PromptOffset => new Vector3(0, 0.5f, 0);
     public bool RequiresHold => true;
@@ -42,6 +48,11 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
         ContactMonitor = true;
         MaxContactsReported = 4;
         BodyEntered += OnBodyEntered;
+
+        if (string.IsNullOrEmpty(WorldItemID))
+        {
+            WorldItemID = $"{SceneFilePath}_{GlobalPosition.X:F2}_{GlobalPosition.Y:F2}_{GlobalPosition.Z:F2}";
+        }
     }
 
     public float CalculateDamage()

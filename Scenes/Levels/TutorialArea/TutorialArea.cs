@@ -1,11 +1,13 @@
 using Godot;
 
-public partial class TutorialArea : Node3D
+public partial class TutorialArea : LevelBase
 {
     private Door _door;
 
     public override void _Ready()
     {
+        base._Ready();
+
         _door = GetNode<Door>("Door");
         _door.InteractionEnabled = true;
         _door.Interacted += OnDoorInteracted;
@@ -13,6 +15,6 @@ public partial class TutorialArea : Node3D
 
     private void OnDoorInteracted()
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1_inherited.tscn");
     }
 }

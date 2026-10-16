@@ -224,14 +224,22 @@ public partial class Player : CharacterBody3D
 
         if (@event.IsActionPressed("drop") && !IsCinematicDialogueActive())
         {
-            if (_heldObjectController.HeldObject != null)
+            var heldObject = _heldObjectController.HeldObject;
+
+            if (heldObject != null)
             {
                 GetViewport().SetInputAsHandled();
-                _heldObjectController.DropObject();
+
+                heldObject.DroppedFromInventory = true;
+
                 var stackRemaining = RemoveCurrentSelectedInventoryItem();
+
+                _heldObjectController.DropObject();
+
                 ResetThrowUI();
                 ResetHoldInteraction();
                 _interactionCooldownTimer = 0.3f;
+
                 EquipNextFromStackOrFist(stackRemaining);
                 return;
             }
@@ -336,6 +344,8 @@ public partial class Player : CharacterBody3D
                 Icon = obj.Icon,
                 Count = 1
             });
+
+            RegisterWorldItemAsCollected(obj);
         }
     }
 
@@ -439,6 +449,11 @@ public partial class Player : CharacterBody3D
 
     private void ThrowHeldObject(float force)
     {
+        if (_heldObjectController.HeldObject != null)
+        {
+            _heldObjectController.HeldObject.DroppedFromInventory = true;
+        }
+
         _heldObjectController.ThrowObject(force);
         var stackRemaining = RemoveCurrentSelectedInventoryItem();
         ResetThrowUI();
@@ -751,5 +766,18 @@ public partial class Player : CharacterBody3D
 
         _selectedInventoryIndex = 0;
         UpdateInventoryUI();
+    }
+
+    private void RegisterWorldItemAsCollected(ThrowableObject obj)
+    {
+        if (obj != null && GameManager.Instance != null)
+        {
+            string worldId = obj.WorldItemID;
+
+            if (!GameManager.Instance.CurrentSaveData.CollectedWorldItems.Contains(worldId))
+            {
+                GameManager.Instance.CurrentSaveData.CollectedWorldItems.Add(worldId);
+            }
+        }
     }
 }

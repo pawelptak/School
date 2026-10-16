@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class ClassroomTutorial : Node3D
+public partial class ClassroomTutorial : LevelBase
 {
     private Mate _mate;
     private Player _player;
@@ -16,6 +16,8 @@ public partial class ClassroomTutorial : Node3D
 
     public override void _Ready()
     {
+        base._Ready();
+
         _mate = GetNode<Mate>("Mate");
         _player = GetNode<Player>("Player");
         _camera = _player.GetNode<Camera3D>("Camera3D");
@@ -117,7 +119,7 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnDoorInteracted()
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1_inherited.tscn");
     }
 
     private void OnCinematicDialogueFinished()
@@ -147,7 +149,7 @@ public partial class ClassroomTutorial : Node3D
             return false;
 
 
-        if (correctThrowCount < 2)
+        if (correctThrowCount < 1)
         {
             _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.ThrowAgain, "LPM"), 4.0f)]);
 

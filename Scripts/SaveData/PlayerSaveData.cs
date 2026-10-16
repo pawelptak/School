@@ -7,6 +7,8 @@ public class PlayerSaveData
     public bool AttackingUnlocked { get; set; } = false;
     
     public List<InventoryItemSaveData> InventoryItems { get; set; } = new List<InventoryItemSaveData>();
+
+    public List<string> CollectedWorldItems { get; set; } = new List<string>();
 }
 
 [Serializable]

@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Corridor1 : Node3D
+public partial class Corridor1 : LevelBase
 {
     private Mate _mate;
     private NpcController _studentController;
@@ -13,6 +13,8 @@ public partial class Corridor1 : Node3D
 
     public override void _Ready()
     {
+        base._Ready();
+
         _mate = GetNode<Mate>("Mate");
         _mate.InteractionRequested += OnMateInteractionRequested;
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");

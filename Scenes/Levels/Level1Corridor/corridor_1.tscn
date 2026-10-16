@@ -57,6 +57,9 @@ sky = SubResource("Sky_tfknm")
 sdfgi_read_sky_light = false
 sdfgi_bounce_feedback = 1.61
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_t8jgm"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Corridor1" type="Node3D" unique_id=64099720]
 script = ExtResource("1_hftl2")
 
@@ -142,17 +145,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.9213
 [node name="AsianStudentMale" parent="." unique_id=1866947794 instance=ExtResource("14_4vx7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60397, 0.9215998, 2.5093393)
 
-[node name="Sprite" parent="AsianStudentMale" index="0" unique_id=274662881]
+[node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_t8jgm")
+
+[node name="Sprite" parent="AsianStudentMale" index="1" unique_id=274662881]
 transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, -0.75003004)
 
-[node name="DialogueLookAtPoint" parent="AsianStudentMale" index="3" unique_id=1460371450]
+[node name="DialogueLookAtPoint" parent="AsianStudentMale" index="4" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
 
-[node name="NpcController" parent="AsianStudentMale" index="5" unique_id=991182570 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
+[node name="NpcController" parent="AsianStudentMale" index="6" unique_id=991182570 node_paths=PackedStringArray("PatrolPointA", "PatrolPointB")]
 PatrolPointA = NodePath("../../PatrolPointA")
 PatrolPointB = NodePath("../../PatrolPointB")
 
-[node name="NpcHealthController" parent="AsianStudentMale" index="7" unique_id=1138413887]
+[node name="NpcHealthController" parent="AsianStudentMale" index="8" unique_id=1138413887]
 MaxHealth = 10.0
 
 [node name="PatrolPointA" type="Marker3D" parent="." unique_id=1246575610]
