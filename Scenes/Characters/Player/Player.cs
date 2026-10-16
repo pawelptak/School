@@ -50,7 +50,6 @@ public partial class Player : CharacterBody3D
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
 
-    // Struktura ekwipunku (publiczna, aby InventoryUI mogło z niej korzystać)
     public class InventoryItem
     {
         public string ItemName { get; set; }
@@ -60,7 +59,7 @@ public partial class Player : CharacterBody3D
     }
 
     private List<InventoryItem> _inventory = new List<InventoryItem>();
-    private int _selectedInventoryIndex = 0; // 0 to domyślnie pięść
+    private int _selectedInventoryIndex = 0;
     private bool _heldObjectFromInventory;
     private ThrowableObject _chargingThrowObject;
     private float _throwChargeTime;
@@ -90,8 +89,6 @@ public partial class Player : CharacterBody3D
         _interactionProgressBar = _interactionUiCanvas.GetNode<ProgressBar>("Container/VBoxContainer/InteractionProgressBar");
 
         _pickedUpObjectCanvas = GetNode<CanvasLayer>("PickedUpObjectInteractionUI");
-
-
         _inventoryUI = GetNodeOrNull<InventoryUI>("InventoryUI");
 
         _throwLabel = _pickedUpObjectCanvas.GetNode<Label>("Container/VBoxContainer/ThrowLabel");
@@ -122,36 +119,24 @@ public partial class Player : CharacterBody3D
         }
 
         _pickedUpObjectCanvas.Show();
+        var canTake = _heldObjectController.HeldObject.IsEquippable && !_heldObjectFromInventory;
 
-        bool canTake = _heldObjectController.HeldObject.IsEquippable && !_heldObjectFromInventory;
-
-        if (_throwLabel != null)
-        {
-            _throwLabel.Show();
-        }
+        if (_throwLabel != null) _throwLabel.Show();
         if (_takeLabel != null) _takeLabel.Visible = canTake;
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (CameraLocked)
-            return;
+        if (CameraLocked) return;
 
         if (@event is InputEventMouseMotion mouseMotion)
         {
             RotateY(-mouseMotion.Relative.X * 0.01f);
-
             _cameraPitch -= mouseMotion.Relative.Y * 0.01f;
-            _cameraPitch = Mathf.Clamp(
-                _cameraPitch,
-                Mathf.DegToRad(-80),
-                Mathf.DegToRad(80)
-            );
-
+            _cameraPitch = Mathf.Clamp(_cameraPitch, Mathf.DegToRad(-80), Mathf.DegToRad(80));
             _camera.Rotation = new Vector3(_cameraPitch, 0, 0);
         }
 
-        // Obsługa scrolla myszy do zmiany wybranego slotu
         if (@event is InputEventMouseButton mb && mb.Pressed)
         {
             if (mb.ButtonIndex == MouseButton.WheelUp)
@@ -169,24 +154,20 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // Wybór slotu za pomocą klawiszy numerycznych 1-9
         if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.IsEcho())
         {
             if (keyEvent.Keycode >= Key.Key1 && keyEvent.Keycode <= Key.Key9)
             {
-                int index = (int)keyEvent.Keycode - (int)Key.Key1;
+                var index = (int)keyEvent.Keycode - (int)Key.Key1;
                 SelectSlot(index);
                 GetViewport().SetInputAsHandled();
                 return;
             }
         }
 
-        // Schowanie przedmiotu do plecaka (wymaga akcji "take_to_inventory" w Input Map, np. Q)
         if (@event.IsActionPressed("take_to_inventory") && !IsCinematicDialogueActive())
         {
-            if (_heldObjectController.HeldObject != null
-                && _heldObjectController.HeldObject.IsEquippable
-                && !_heldObjectFromInventory)
+            if (_heldObjectController.HeldObject != null && _heldObjectController.HeldObject.IsEquippable && !_heldObjectFromInventory)
             {
                 GetViewport().SetInputAsHandled();
                 StoreHeldObjectToInventory();
@@ -194,10 +175,7 @@ public partial class Player : CharacterBody3D
             }
         }
 
-        // Lewy przycisk myszy (Atak pięścią lub Rzut / Użycie trzymanego przedmiotu)
-        if (@event is InputEventMouseButton mouseButton
-            && mouseButton.ButtonIndex == MouseButton.Left
-            && !mouseButton.IsEcho())
+        if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && !mouseButton.IsEcho())
         {
             if (!mouseButton.Pressed)
             {
@@ -206,8 +184,8 @@ public partial class Player : CharacterBody3D
                     GetViewport().SetInputAsHandled();
                     if (IsThrowChargeValid())
                     {
-                        float maxForce = Mathf.Max(0.0f, FixedThrowForce);
-                        float minForce = Mathf.Clamp(MinThrowForce, 0.0f, maxForce);
+                        var maxForce = Mathf.Max(0.0f, FixedThrowForce);
+                        var minForce = Mathf.Clamp(MinThrowForce, 0.0f, maxForce);
                         ThrowHeldObject(Mathf.Lerp(minForce, maxForce, GetThrowChargeProgress()));
                     }
                     else
@@ -241,18 +219,16 @@ public partial class Player : CharacterBody3D
                 }
                 return;
             }
-
             return;
         }
 
-        // Upuszczenie przedmiotu
         if (@event.IsActionPressed("drop") && !IsCinematicDialogueActive())
         {
             if (_heldObjectController.HeldObject != null)
             {
                 GetViewport().SetInputAsHandled();
                 _heldObjectController.DropObject();
-                bool stackRemaining = RemoveCurrentSelectedInventoryItem();
+                var stackRemaining = RemoveCurrentSelectedInventoryItem();
                 ResetThrowUI();
                 ResetHoldInteraction();
                 _interactionCooldownTimer = 0.3f;
@@ -261,12 +237,9 @@ public partial class Player : CharacterBody3D
             }
         }
 
-        // Interakcja ze światem
         if (@event.IsActionPressed("interact") && !IsCinematicDialogueActive())
         {
-            if (_heldObjectController.HeldObject == null
-                && _currentInteractable != null
-                && !_currentInteractable.RequiresHold)
+            if (_heldObjectController.HeldObject == null && _currentInteractable != null && !_currentInteractable.RequiresHold)
             {
                 GetViewport().SetInputAsHandled();
                 TryInteract();
@@ -277,20 +250,17 @@ public partial class Player : CharacterBody3D
 
     private void ChangeInventorySelection(int newIndex)
     {
-        int totalSlotsCount = _inventory.Count + 1; // +1 dla slotu pięści
+        var totalSlotsCount = _inventory.Count + 1;
         newIndex = (newIndex + totalSlotsCount) % totalSlotsCount;
         SelectSlot(newIndex);
     }
 
     private void SelectSlot(int slotIndex)
     {
-        // Nieekwipowalnego przedmiotu nie da się schować – najpierw trzeba go rzucić lub upuścić
         var held = _heldObjectController.HeldObject;
-        if (held != null && !held.IsEquippable)
-            return;
+        if (held != null && !held.IsEquippable) return;
 
-        if (slotIndex == _selectedInventoryIndex
-            && (_heldObjectController.HeldObject == null || _heldObjectFromInventory))
+        if (slotIndex == _selectedInventoryIndex && (_heldObjectController.HeldObject == null || _heldObjectFromInventory))
         {
             UpdateInventoryUI();
             return;
@@ -298,11 +268,7 @@ public partial class Player : CharacterBody3D
 
         if (slotIndex == 0)
         {
-            if (_heldObjectController.HeldObject != null)
-            {
-                // Schowaj przedmiot z rąk do plecaka i przełącz na pięść
-                StoreHeldObjectToInventoryQuietly();
-            }
+            if (_heldObjectController.HeldObject != null) StoreHeldObjectToInventoryQuietly();
             _selectedInventoryIndex = 0;
         }
         else
@@ -322,8 +288,7 @@ public partial class Player : CharacterBody3D
         var obj = _heldObjectController.HeldObject;
         if (obj == null || !obj.IsEquippable) return;
 
-        if (!_heldObjectFromInventory)
-            AddToCartInventory(obj);
+        if (!_heldObjectFromInventory) AddToCartInventory(obj);
 
         obj.QueueFree();
         _heldObjectController.ClearHeldObjectReference();
@@ -339,13 +304,8 @@ public partial class Player : CharacterBody3D
         var obj = _heldObjectController.HeldObject;
         if (obj != null)
         {
-            if (!obj.IsEquippable)
-                return;
-
-            if (!_heldObjectFromInventory)
-            {
-                AddToCartInventory(obj);
-            }
+            if (!obj.IsEquippable) return;
+            if (!_heldObjectFromInventory) AddToCartInventory(obj);
             obj.QueueFree();
             _heldObjectController.ClearHeldObjectReference();
         }
@@ -355,7 +315,7 @@ public partial class Player : CharacterBody3D
 
     private void AddToCartInventory(ThrowableObject obj)
     {
-        string itemKey = !string.IsNullOrEmpty(obj.SceneFilePath) ? obj.SceneFilePath : obj.Name.ToString();
+        var itemKey = !string.IsNullOrEmpty(obj.SceneFilePath) ? obj.SceneFilePath : obj.Name.ToString();
         var existing = _inventory.Find(i => i.ItemName == itemKey);
         if (existing != null)
         {
@@ -372,7 +332,7 @@ public partial class Player : CharacterBody3D
             _inventory.Add(new InventoryItem
             {
                 ItemName = itemKey,
-                ObjectScene = loadedScene, // Pobrane automatycznie!
+                ObjectScene = loadedScene,
                 Icon = obj.Icon,
                 Count = 1
             });
@@ -381,33 +341,25 @@ public partial class Player : CharacterBody3D
 
     private void EquipItemFromInventory(int index)
     {
-        if (_heldObjectController.HeldObject != null)
-        {
-            StoreHeldObjectToInventoryQuietly();
-        }
+        if (_heldObjectController.HeldObject != null) StoreHeldObjectToInventoryQuietly();
 
         var item = _inventory[index];
-
         if (item.ObjectScene != null)
         {
             var newObj = item.ObjectScene.Instantiate<ThrowableObject>();
             GetTree().CurrentScene.AddChild(newObj);
-            if (_heldObjectController.TryPickup(newObj))
-                _heldObjectFromInventory = true;
-            else
-                newObj.QueueFree();
+            if (_heldObjectController.TryPickup(newObj)) _heldObjectFromInventory = true;
+            else newObj.QueueFree();
         }
-
         UpdatePickedUpUIState();
     }
 
-    /// <returns>True, jeśli w wybranym slocie zostały jeszcze sztuki przedmiotu.</returns>
     private bool RemoveCurrentSelectedInventoryItem()
     {
         if (_heldObjectFromInventory && _selectedInventoryIndex > 0)
         {
             _heldObjectFromInventory = false;
-            int listIdx = _selectedInventoryIndex - 1;
+            var listIdx = _selectedInventoryIndex - 1;
             if (listIdx < _inventory.Count)
             {
                 _inventory[listIdx].Count--;
@@ -451,24 +403,12 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        Vector3 velocity = Velocity;
+        var velocity = Velocity;
+        if (!IsOnFloor()) velocity += GetGravity() * (float)delta;
+        if (Input.IsActionJustPressed("ui_accept") && IsOnFloor()) velocity.Y = JumpVelocity;
 
-        if (!IsOnFloor())
-            velocity += GetGravity() * (float)delta;
-
-        if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-            velocity.Y = JumpVelocity;
-
-        Vector2 inputDir = Input.GetVector(
-            "move_left",
-            "move_right",
-            "move_forward",
-            "move_backward"
-        );
-
-        Vector3 direction = (
-            Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)
-        ).Normalized();
+        var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+        var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         if (direction != Vector3.Zero)
         {
@@ -483,7 +423,6 @@ public partial class Player : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
-
         PushRigidBodies();
     }
 
@@ -492,15 +431,8 @@ public partial class Player : CharacterBody3D
         _heldObjectController.UpdateHeldObjectPose((float)delta);
         UpdateThrowCharge((float)delta);
 
-        if (_interactionCooldownTimer > 0.0f)
-        {
-            _interactionCooldownTimer -= (float)delta;
-        }
-
-        if (!IsCinematicDialogueActive())
-        {
-            UpdateInteractionTarget();
-        }
+        if (_interactionCooldownTimer > 0.0f) _interactionCooldownTimer -= (float)delta;
+        if (!IsCinematicDialogueActive()) UpdateInteractionTarget();
 
         HandleHoldInteraction((float)delta);
     }
@@ -508,7 +440,7 @@ public partial class Player : CharacterBody3D
     private void ThrowHeldObject(float force)
     {
         _heldObjectController.ThrowObject(force);
-        bool stackRemaining = RemoveCurrentSelectedInventoryItem();
+        var stackRemaining = RemoveCurrentSelectedInventoryItem();
         ResetThrowUI();
         _interactionCooldownTimer = 0.3f;
         EquipNextFromStackOrFist(stackRemaining);
@@ -518,11 +450,9 @@ public partial class Player : CharacterBody3D
     {
         return ChargeThrowEnabled
             && _chargingThrowObject != null
-            && GodotObject.IsInstanceValid(_chargingThrowObject)
+            && IsInstanceValid(_chargingThrowObject)
             && ReferenceEquals(_chargingThrowObject, _heldObjectController.HeldObject)
-            && !MovementLocked
-            && !CameraLocked
-            && !IsCinematicDialogueActive();
+            && !MovementLocked && !CameraLocked && !IsCinematicDialogueActive();
     }
 
     private float GetThrowChargeProgress()
@@ -532,15 +462,12 @@ public partial class Player : CharacterBody3D
 
     private void UpdateThrowCharge(float delta)
     {
-        if (_chargingThrowObject == null)
-            return;
-
+        if (_chargingThrowObject == null) return;
         if (!IsThrowChargeValid() || !Input.IsMouseButtonPressed(MouseButton.Left))
         {
             ResetThrowCharge();
             return;
         }
-
         _throwChargeTime = Mathf.Min(_throwChargeTime + delta, Mathf.Max(0.1f, ThrowChargeDuration));
     }
 
@@ -573,7 +500,7 @@ public partial class Player : CharacterBody3D
                 }
 
                 _interactionHoldTime += delta;
-                float progress = Mathf.Clamp(_interactionHoldTime / _requiredInteractionTime, 0.0f, 1.0f);
+                var progress = Mathf.Clamp(_interactionHoldTime / _requiredInteractionTime, 0.0f, 1.0f);
 
                 if (_interactionProgressBar != null)
                 {
@@ -622,9 +549,7 @@ public partial class Player : CharacterBody3D
 
     private bool IsCinematicDialogueActive()
     {
-        var controller = GetTree().CurrentScene
-            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
-
+        var controller = GetTree().CurrentScene?.GetNodeOrNull<CutsceneController>("CutsceneController");
         return controller?.IsCinematicDialogueActive == true;
     }
 
@@ -661,19 +586,14 @@ public partial class Player : CharacterBody3D
         }
 
         IInteractable nextTarget = null;
-
-        if (!MovementLocked
-            && !IsCinematicDialogueActive()
-            && _interactRay.IsColliding())
+        if (!MovementLocked && !IsCinematicDialogueActive() && _interactRay.IsColliding())
         {
             var interactable = FindInteractable(_interactRay.GetCollider() as Node);
-
             if (interactable != null && interactable.CanInteract(this))
                 nextTarget = interactable;
         }
 
-        if (ReferenceEquals(nextTarget, _currentInteractable))
-            return;
+        if (ReferenceEquals(nextTarget, _currentInteractable)) return;
 
         ResetHoldInteraction();
         _currentInteractable = nextTarget;
@@ -697,17 +617,12 @@ public partial class Player : CharacterBody3D
 
     private void TryInteract()
     {
-        if (_currentInteractable == null)
-            return;
-
+        if (_currentInteractable == null) return;
         var interactable = _currentInteractable;
-
-        if (!interactable.CanInteract(this))
-            return;
+        if (!interactable.CanInteract(this)) return;
 
         _currentInteractable = null;
         _interactionUiCanvas.Hide();
-
         interactable.Interact(this);
     }
 
@@ -715,35 +630,27 @@ public partial class Player : CharacterBody3D
     {
         for (Node current = node; current != null; current = current.GetParent())
         {
-            if (current is IInteractable interactable)
-                return interactable;
+            if (current is IInteractable interactable) return interactable;
         }
-
         return null;
     }
 
     public bool TryPickup(ThrowableObject body)
     {
-        if (MovementLocked || IsCinematicDialogueActive())
-            return false;
-
+        if (MovementLocked || IsCinematicDialogueActive()) return false;
         return _heldObjectController.HeldObject == null && _heldObjectController.TryPickup(body);
     }
 
     private void PushRigidBodies()
     {
-        for (var i = 0; i < GetSlideCollisionCount(); i++)
+        for (int i = 0; i < GetSlideCollisionCount(); i++)
         {
             var collision = GetSlideCollision(i);
-
             if (collision.GetCollider() is RigidBody3D rb)
             {
                 var pushDirection = -collision.GetNormal();
                 pushDirection.Y = 0;
-
-                if (pushDirection.LengthSquared() == 0)
-                    continue;
-
+                if (pushDirection.LengthSquared() == 0) continue;
                 pushDirection = pushDirection.Normalized();
                 rb.ApplyCentralImpulse(pushDirection * 2.0f);
             }
@@ -752,7 +659,9 @@ public partial class Player : CharacterBody3D
 
     private bool CanStartPunch()
     {
-        if (MovementLocked || _punchingController.IsPlaying)
+        var isAttackUnlocked = GameManager.Instance != null && GameManager.Instance.CurrentSaveData.AttackingUnlocked;
+
+        if (!isAttackUnlocked || MovementLocked || _punchingController.IsPlaying)
             return false;
 
         return !IsCinematicDialogueActive();
@@ -760,63 +669,87 @@ public partial class Player : CharacterBody3D
 
     private void TryPunchTarget()
     {
-        if (MovementLocked || _heldObjectController.HeldObject != null)
-        {
-            return;
-        }
-
-        if (IsCinematicDialogueActive())
+        if (MovementLocked || _heldObjectController.HeldObject != null || IsCinematicDialogueActive())
             return;
 
-        Vector3 origin = _camera.GlobalPosition;
-        Vector3 direction = -_camera.GlobalTransform.Basis.Z;
-        Vector3 end = origin + direction * AttackDistance;
+        var origin = _camera.GlobalPosition;
+        var direction = -_camera.GlobalTransform.Basis.Z;
+        var end = origin + (direction * AttackDistance);
 
         var query = PhysicsRayQueryParameters3D.Create(origin, end);
-
-        query.Exclude = new Godot.Collections.Array<Rid>
-        {
-            GetRid()
-        };
-
+        query.Exclude = new Godot.Collections.Array<Rid> { GetRid() };
         query.CollideWithAreas = false;
 
-        var result = GetWorld3D()
-            .DirectSpaceState
-            .IntersectRay(query);
-
-        if (result.Count == 0)
-            return;
+        var result = GetWorld3D().DirectSpaceState.IntersectRay(query);
+        if (result.Count == 0) return;
 
         var collider = result["collider"].AsGodotObject() as Node;
-
-        if (collider == null)
-            return;
+        if (collider == null) return;
 
         var interactable = FindInteractable(collider);
+        if (interactable is not InteractableCharacter character) return;
 
-        if (interactable is not InteractableCharacter character)
-            return;
-
-        character.NotifyHitByPunch(
-            this,
-            AttackDamage,
-            AttackKnockback
-        );
+        character.NotifyHitByPunch(this, AttackDamage, AttackKnockback);
     }
 
     public override void _ExitTree()
     {
-        if (_heldObjectController != null
-            && GodotObject.IsInstanceValid(_heldObjectController))
+        if (_heldObjectController != null && GodotObject.IsInstanceValid(_heldObjectController))
         {
             _heldObjectController.ObjectPickedUp -= OnObjectPickedUp;
         }
 
-        if (_punchingController != null
-            && GodotObject.IsInstanceValid(_punchingController))
+        if (_punchingController != null && GodotObject.IsInstanceValid(_punchingController))
         {
             _punchingController.PunchHitFrame -= TryPunchTarget;
         }
+    }
+
+    public void SaveToData(PlayerSaveData saveData)
+    {
+        saveData.InventoryItems.Clear();
+
+        foreach (InventoryItem item in _inventory)
+        {
+            saveData.InventoryItems.Add(new InventoryItemSaveData
+            {
+                ItemName = item.ItemName,
+                SceneFilePath = item.ObjectScene?.ResourcePath ?? "",
+                Count = item.Count
+            });
+        }
+    }
+
+    public void LoadFromData(PlayerSaveData saveData)
+    {
+        _inventory.Clear();
+
+        foreach (InventoryItemSaveData savedItem in saveData.InventoryItems)
+        {
+            PackedScene loadedScene = null;
+            if (!string.IsNullOrEmpty(savedItem.SceneFilePath))
+            {
+                loadedScene = GD.Load<PackedScene>(savedItem.SceneFilePath);
+            }
+
+            Texture2D icon = null;
+            if (loadedScene != null)
+            {
+                var tempObj = loadedScene.Instantiate<ThrowableObject>();
+                icon = tempObj.Icon;
+                tempObj.QueueFree();
+            }
+
+            _inventory.Add(new InventoryItem
+            {
+                ItemName = savedItem.ItemName,
+                ObjectScene = loadedScene,
+                Icon = icon,
+                Count = savedItem.Count
+            });
+        }
+
+        _selectedInventoryIndex = 0;
+        UpdateInventoryUI();
     }
 }
