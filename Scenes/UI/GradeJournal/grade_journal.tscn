@@ -13,41 +13,53 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.6156863)
 
-[node name="Panel" type="Panel" parent="." unique_id=1893641045]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=701923446]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 100
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=953628355]
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1893641045]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=953628355]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1970716670]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=1970716670]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=2092381920]
+[node name="Title" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2092381920]
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
 text = "DZIENNIK POSTĘPÓW W NAUCE"
 horizontal_alignment = 1
 
-[node name="GradesList" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=137976580]
+[node name="Space" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=268174192]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="GradesList" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=137976580]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Panel/MarginContainer/VBoxContainer" unique_id=716273962]
+[node name="Control" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=716273962]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=2023718145]
+[node name="CloseButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2023718145]
 layout_mode = 2
 text = "Zamknij [J]"

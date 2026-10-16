@@ -18,10 +18,10 @@ public partial class GradeJournal : CanvasLayer
     {
         _hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
         _gradesList = GetNode<VBoxContainer>(
-            "Panel/MarginContainer/VBoxContainer/GradesList");
+            "MarginContainer/Panel/MarginContainer/VBoxContainer/GradesList");
 
         _closeButton = GetNode<Button>(
-            "Panel/MarginContainer/VBoxContainer/CloseButton");
+            "MarginContainer/Panel/MarginContainer/VBoxContainer/CloseButton");
 
         _closeButton.Pressed += CloseJournal;
 

@@ -28,7 +28,7 @@ public partial class Homework : Node3D
     private int _correctWords;
     private int _totalWords;
 
-    private const double GameDuration = 2.0; // 60 be default
+    private const double GameDuration = 60.0; // 60 be default
     private double _timeRemaining;
     private bool _gameFinished;
     private double _score;

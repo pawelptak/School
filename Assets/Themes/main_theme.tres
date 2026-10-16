@@ -40,7 +40,7 @@ content_margin_left = 20.0
 content_margin_top = 20.0
 content_margin_right = 20.0
 content_margin_bottom = 20.0
-bg_color = Color(0.07058824, 0.15686275, 0.0627451, 0.92941177)
+bg_color = Color(0, 0, 0, 0.92941177)
 
 [resource]
 Button/colors/font_hover_color = Color(0.4661808, 0.46618086, 0.46618068, 1)
