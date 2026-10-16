@@ -30,6 +30,7 @@ public static class MateText
     // Polish Class
     public const string PhysicalEdu = "Zapomniałem butów zmiennych. Chłop od wuefu się zesra.";
     public const string AfterClass = "No i? Co dostałeś? Mi dała 4.";
+    public const string OpenJournalInstruction = "Wciśnij [color=#77777d]{0}[/color], żeby otworzyć dziennik ocen.";
     public const string Grade1Response = "Jedynka? Chyba za dużo pozmieniałeś XD";
     public const string Grade2Response = "Dwóję dostałeś? Chłopie, co ty żeś tam napisoł XD";
     public const string Grade3Response = "Trójka to nie tak źle, ale ja mam czwórke hehe.";

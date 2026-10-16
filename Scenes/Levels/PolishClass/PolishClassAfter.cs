@@ -6,6 +6,7 @@ public partial class PolishClassAfter : LevelBase
     private Mate _mate;
     private Player _player;
     private Camera3D _camera;
+    private PolishTeacher _teacher;
     private Door _door;
     private CutsceneController _cutsceneController;
     private GradeJournal _gradeJournal;
@@ -38,8 +39,44 @@ public partial class PolishClassAfter : LevelBase
         );
 
         _homeWorkMinigameGrade = GameManager.Instance.GetMinigameResult("homework_minigame").Grade;
-        // TODO: add teacher interaction text based on grade
-        // TODO: add on mate intraction open Journal instruction
+
+        _teacher = GetNode<PolishTeacher>("PolishTeacher");
+        _teacher.InteractionRequested += (_player) =>
+        {
+            var teacherInteractionText = GetTeacherInteractionText(_homeWorkMinigameGrade);
+            _cutsceneController.StartDialogue(
+                _teacher,
+                [new DialogueLine(DialogueSpeaker.PolishTeacher, teacherInteractionText, 3.0f)]
+            );
+        };
+    }
+
+    private string GetTeacherInteractionText(int homeworkGrade)
+    {
+        return homeworkGrade switch
+        {
+            1 => PolishTeacherText.Grade1Interaction,
+            2 => PolishTeacherText.Grade2Interaction,
+            3 => PolishTeacherText.Grade3Interaction,
+            4 => PolishTeacherText.Grade4Interaction,
+            5 => PolishTeacherText.Grade5Interaction,
+            6 => PolishTeacherText.Grade6Interaction,
+            _ => string.Empty
+        };
+    }
+
+    private string GetMateReactionText(int homeworkGrade)
+    {
+        return homeworkGrade switch
+        {
+            1 => MateText.Grade1Response,
+            2 => MateText.Grade2Response,
+            3 => MateText.Grade3Response,
+            4 => MateText.Grade4Response,
+            5 => MateText.Grade5Response,
+            6 => MateText.Grade6Response,
+            _ => string.Empty
+        };
     }
 
     private void OnDoorInteracted()
@@ -61,6 +98,13 @@ public partial class PolishClassAfter : LevelBase
 
         GameManager.Instance.CurrentSaveData.GradeJournalUnlocked = true;
 
+        _mate.InteractionRequested += (_player) =>
+        {
+            _cutsceneController.StartDialogue(
+                _mate,
+                [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.OpenJournalInstruction, GameManager.Instance.GetActionKeyName("toggle_grade_journal")), 3.0f)]
+            );
+        };
     }
 
     private void OnGradeJournalClosed()
@@ -70,32 +114,8 @@ public partial class PolishClassAfter : LevelBase
 
         GradeJournalClosed = true;
 
-        string nextDialogueText = string.Empty;
+        var nextDialogueText = GetMateReactionText(_homeWorkMinigameGrade);
 
-        switch (_homeWorkMinigameGrade)
-        {
-            case 1:
-                nextDialogueText = MateText.Grade1Response;
-                break;
-            case 2:
-                nextDialogueText = MateText.Grade2Response;
-                break;
-            case 3:
-                nextDialogueText = MateText.Grade3Response;
-                break;
-            case 4:
-                nextDialogueText = MateText.Grade4Response;
-                break;
-            case 5:
-                nextDialogueText = MateText.Grade5Response;
-                break;
-            case 6:
-                nextDialogueText = MateText.Grade6Response;
-                break;
-            default:
-                break;
-        }
-        
         _cutsceneController.StartDialogue(
             _mate,
             [
@@ -106,5 +126,13 @@ public partial class PolishClassAfter : LevelBase
                 _door.InteractionEnabled = true;
             }
         );
+
+        _mate.InteractionRequested += (_player) =>
+        {
+            _cutsceneController.StartDialogue(
+                _mate,
+                [new DialogueLine(DialogueSpeaker.Mate, MateText.ExitPolishClass, 2.0f)]
+            );
+        };
     }
 }
