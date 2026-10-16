@@ -6,8 +6,15 @@ public partial class NpcController : Node
     {
         Patrol,
         Chase,
-        Idle
+        Idle,
+        MoveTo
     }
+
+    [Signal]
+    public delegate void MoveToFinishedEventHandler();
+
+    private Node3D _moveToTarget;
+    private float _moveToStopDistance = 0.5f;
 
     [Export] public Node3D PatrolPointA { get; set; }
     [Export] public Node3D PatrolPointB { get; set; }
@@ -102,7 +109,6 @@ public partial class NpcController : Node
         if (!_initialized || _agent == null || _npc == null)
             return;
 
-        // Aktualizujemy timer ataku w każdej klatce, jeśli jest większy od zera
         if (_attackTimer > 0.0f)
         {
             _attackTimer -= (float)dt;
@@ -124,7 +130,82 @@ public partial class NpcController : Node
             case NpcState.Idle:
                 ProcessIdle(dt);
                 break;
+
+            case NpcState.MoveTo:
+                ProcessMoveTo(dt);
+                break;
         }
+    }
+
+    public void MoveTo(Node3D target, float stopDistance = 0.5f)
+    {
+        if (_isDefeated || target == null || !GodotObject.IsInstanceValid(target))
+            return;
+
+        if (_agent == null || _npc == null)
+            return;
+
+        _moveToTarget = target;
+        _moveToStopDistance = Mathf.Max(0.1f, stopDistance);
+
+        _isWaiting = false;
+        _isAttacking = false;
+
+        _currentState = NpcState.MoveTo;
+
+        _agent.TargetDesiredDistance = _moveToStopDistance;
+        _agent.TargetPosition = target.GlobalPosition;
+
+        GD.Print($"[NPC] {_npc.Name} is moving to {target.Name}.");
+    }
+
+    private void ProcessMoveTo(double dt)
+    {
+        if (_moveToTarget == null ||
+            !GodotObject.IsInstanceValid(_moveToTarget))
+        {
+            StopMovingToTarget();
+            return;
+        }
+
+        _agent.TargetPosition = _moveToTarget.GlobalPosition;
+
+        Vector3 targetFlat = _moveToTarget.GlobalPosition;
+        targetFlat.Y = _npc.GlobalPosition.Y;
+
+        float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
+        if (distance <= _moveToStopDistance)
+        {
+            ApplyGravityAndStop(dt);
+            _spriteAnimator?.SetMoving(false);
+
+            _currentState = NpcState.Idle;
+            _moveToTarget = null;
+
+            _agent.TargetDesiredDistance = ArrivalDistance;
+
+            GD.Print($"[NPC] {_npc.Name} reached its destination.");
+            StopMovingToTarget();
+            EmitSignal(SignalName.MoveToFinished);
+
+            return;
+        }
+
+        MoveTowardTarget(_moveToTarget.GlobalPosition, dt);
+    }
+
+    public void StopMovingToTarget()
+    {
+        if (_npc == null || _agent == null)
+            return;
+
+        _moveToTarget = null;
+        _currentState = NpcState.Idle;
+
+        _agent.TargetDesiredDistance = ArrivalDistance;
+
+        ApplyGravityAndStop(0);
+        _spriteAnimator?.SetMoving(false);
     }
 
     private void ProcessPatrol(double dt)
@@ -232,9 +313,6 @@ public partial class NpcController : Node
             _npc.Rotation.Z
         );
     }
-
-
-
 
     private void OnAttackHitFrame()
     {

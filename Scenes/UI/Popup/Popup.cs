@@ -7,6 +7,9 @@ public partial class Popup : Control
     private RichTextLabel _popupText;
     private CanvasLayer _hud;
 
+    [Signal]
+    public delegate void PopupClosedEventHandler();
+
     public override void _Ready()
     {
         _hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
@@ -26,6 +29,7 @@ public partial class Popup : Control
         GetTree().Paused = false;
         Hide();
         _hud.Visible = true;
+        EmitSignal(SignalName.PopupClosed);
     }
 
     public void ShowPopup(string header, string text)

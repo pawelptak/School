@@ -79,18 +79,18 @@ public partial class SpriteAnimator : Node
             {
                 if (!_currentAnimationLoops)
                 {
-bool wasPlayingAttack = _isPlayingAttack;
+                    bool wasPlayingAttack = _isPlayingAttack;
 
-_isPlayingHit = false;
-_isPlayingAttack = false;
-_attackHitFrameTriggered = false;
+                    _isPlayingHit = false;
+                    _isPlayingAttack = false;
+                    _attackHitFrameTriggered = false;
 
-PlayBaseAnimation();
+                    PlayBaseAnimation();
 
-if (wasPlayingAttack)
-    AttackAnimationFinished?.Invoke();
+                    if (wasPlayingAttack)
+                        AttackAnimationFinished?.Invoke();
 
-return;
+                    return;
                 }
 
                 _currentFrame = 0;

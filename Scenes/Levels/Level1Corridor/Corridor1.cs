@@ -1,4 +1,5 @@
 using Godot;
+using School.Scenes.Levels.Level1Corridor;
 
 public partial class Corridor1 : LevelBase
 {
@@ -44,11 +45,11 @@ public partial class Corridor1 : LevelBase
         _cutsceneController.StartDialogue(
             _mate,
             [
-                new DialogueLine(DialogueSpeaker.Mate, MateText.HomeWorkQuestion, 3.0f),
-                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkResponse, 2.5f),
-                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkRequest, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, Corridor1Text.HomeWorkQuestion, 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, Corridor1Text.HomeworkResponse, 2.5f),
+                new DialogueLine(DialogueSpeaker.Player, Corridor1Text.HomeworkRequest, 2.5f),
                 new DialogueLine(DialogueSpeaker.Mate, string.Empty, 2f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.PlayerResponse2, 4.5f)
+                new DialogueLine(DialogueSpeaker.Mate, Corridor1Text.PlayerResponse2, 4.5f)
             ],
             onFinished: StartHomeworkMinigame,
             cinematic: true
@@ -65,7 +66,7 @@ public partial class Corridor1 : LevelBase
         _cutsceneController.StartDialogue(
             _student,
             [
-                new DialogueLine(DialogueSpeaker.AsianStudentMale, AsianStudentMaleText.InteractionLevel1, 3.0f),
+                new DialogueLine(DialogueSpeaker.AsianStudentMale, Corridor1Text.AsianStudentInteraction, 3.0f),
             ]
         );
     }

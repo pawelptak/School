@@ -1,4 +1,5 @@
 using Godot;
+using School.Scenes.Levels.PolishClass;
 
 public partial class PolishClass : Node3D
 {
@@ -23,9 +24,9 @@ public partial class PolishClass : Node3D
         _cutsceneController.StartDialogue(
             _teacher,
             [
-                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.Introduction, 3.5f),
-                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 3.5f),
-                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.LessonTopic, 3.5f)
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.Introduction, 3.5f),
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.LessonTopic, 3.5f),
+                new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.LessonTopic, 3.5f)
             ],
             cinematic: true,
             onFinished: SwitchToMate,
@@ -40,7 +41,7 @@ public partial class PolishClass : Node3D
 
         _cutsceneController.StartDialogue(
             _mate,
-            [new DialogueLine(DialogueSpeaker.Mate, MateText.PhysicalEdu, 3.5f)],
+            [new DialogueLine(DialogueSpeaker.Mate, PolishClassText.PhysicalEdu, 3.5f)],
             cinematic: true,
             onFinished: BackToTeacher,
             keepPlayerLockedOnFinish: true,
@@ -52,7 +53,7 @@ public partial class PolishClass : Node3D
     {
         _cutsceneController.StartDialogue(
             _teacher,
-            [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.Homework, 3.5f)],
+            [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.Homework, 3.5f)],
             cinematic: true,
             onFinished: BackToMate,
             keepPlayerLockedOnFinish: true
@@ -99,7 +100,7 @@ public partial class PolishClass : Node3D
 
         _cutsceneController.StartDialogue(
             _teacher2,
-            [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishTeacherText.EndOfClass, 3.5f)],
+            [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.EndOfClass, 3.5f)],
             cinematic: true,
             cameraReferencePosition: customCameraPosition,
             onFinished: EndScene,

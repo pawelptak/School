@@ -32,7 +32,7 @@ public partial class PolishClassAfter : LevelBase
 
         _cutsceneController.StartDialogue(
             _mate,
-            [new DialogueLine(DialogueSpeaker.Mate, MateText.AfterClass, 3.0f)],
+            [new DialogueLine(DialogueSpeaker.Mate, PolishClassText.AfterClass, 3.0f)],
             cinematic: true,
             onFinished: ShowGradePopup,
             delaySeconds: 1.0f
@@ -55,12 +55,12 @@ public partial class PolishClassAfter : LevelBase
     {
         return homeworkGrade switch
         {
-            1 => PolishTeacherText.Grade1Interaction,
-            2 => PolishTeacherText.Grade2Interaction,
-            3 => PolishTeacherText.Grade3Interaction,
-            4 => PolishTeacherText.Grade4Interaction,
-            5 => PolishTeacherText.Grade5Interaction,
-            6 => PolishTeacherText.Grade6Interaction,
+            1 => PolishClassText.Grade1Interaction,
+            2 => PolishClassText.Grade2Interaction,
+            3 => PolishClassText.Grade3Interaction,
+            4 => PolishClassText.Grade4Interaction,
+            5 => PolishClassText.Grade5Interaction,
+            6 => PolishClassText.Grade6Interaction,
             _ => string.Empty
         };
     }
@@ -69,12 +69,12 @@ public partial class PolishClassAfter : LevelBase
     {
         return homeworkGrade switch
         {
-            1 => MateText.Grade1Response,
-            2 => MateText.Grade2Response,
-            3 => MateText.Grade3Response,
-            4 => MateText.Grade4Response,
-            5 => MateText.Grade5Response,
-            6 => MateText.Grade6Response,
+            1 => PolishClassText.Grade1Response,
+            2 => PolishClassText.Grade2Response,
+            3 => PolishClassText.Grade3Response,
+            4 => PolishClassText.Grade4Response,
+            5 => PolishClassText.Grade5Response,
+            6 => PolishClassText.Grade6Response,
             _ => string.Empty
         };
     }
@@ -92,8 +92,8 @@ public partial class PolishClassAfter : LevelBase
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
 
         popup.ShowPopup(
-            PolishClassAfterText.JournalUnlockedPopupTitle,
-            string.Format(PolishClassAfterText.JournalUnlockedPopupText, GameManager.Instance.GetActionKeyName("toggle_grade_journal"))
+            PolishClassText.JournalUnlockedPopupTitle,
+            string.Format(PolishClassText.JournalUnlockedPopupText, GameManager.Instance.GetActionKeyName("toggle_grade_journal"))
         );
 
         GameManager.Instance.CurrentSaveData.GradeJournalUnlocked = true;
@@ -102,7 +102,7 @@ public partial class PolishClassAfter : LevelBase
         {
             _cutsceneController.StartDialogue(
                 _mate,
-                [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.OpenJournalInstruction, GameManager.Instance.GetActionKeyName("toggle_grade_journal")), 3.0f)]
+                [new DialogueLine(DialogueSpeaker.Mate, string.Format(PolishClassText.OpenJournalInstruction, GameManager.Instance.GetActionKeyName("toggle_grade_journal")), 3.0f)]
             );
         };
     }
@@ -120,7 +120,7 @@ public partial class PolishClassAfter : LevelBase
             _mate,
             [
                 new DialogueLine(DialogueSpeaker.Mate, nextDialogueText, 3.0f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.ExitPolishClass, 2.0f)],
+                new DialogueLine(DialogueSpeaker.Mate, PolishClassText.ExitPolishClass, 2.0f)],
             onFinished: () =>
             {
                 _door.InteractionEnabled = true;
@@ -131,7 +131,7 @@ public partial class PolishClassAfter : LevelBase
         {
             _cutsceneController.StartDialogue(
                 _mate,
-                [new DialogueLine(DialogueSpeaker.Mate, MateText.ExitPolishClass, 2.0f)]
+                [new DialogueLine(DialogueSpeaker.Mate, PolishClassText.ExitPolishClass, 2.0f)]
             );
         };
     }

@@ -288,8 +288,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        deadShape.Shape = (Shape3D)sourceShape.Shape.Duplicate();
-        deadShape.Transform = sourceShape.Transform;
+        //deadShape.Shape = (Shape3D)sourceShape.Shape.Duplicate();
+        //deadShape.Transform = sourceShape.Transform;
 
         var scene = GetTree().CurrentScene;
 

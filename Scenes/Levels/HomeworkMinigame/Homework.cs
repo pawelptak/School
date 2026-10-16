@@ -126,14 +126,13 @@ public partial class Homework : Node3D
 
         _cutsceneController.StartDialogue(
             GetNode<Node3D>("Mate"),
-            new DialogueLine[]
-            {
+            [
                 new DialogueLine(
                     DialogueSpeaker.Mate,
-                    MateText.EndCutscene,
+                    HomeworkMinigameText.EndCutscene,
                     3.5f
                 )
-            },
+            ],
             cinematic: true,
             onFinished:
             () =>
