@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="School"
-run/main_scene="uid://dp6hibxl5at1e"
+run/main_scene="uid://bso4q4a0mrrmb"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 SceneTransition="*uid://cueht3wplbpc"
 Hud="*uid://pguuxp2w8q1t"
 GameManager="*uid://cc6bq7b5gcw5r"
+GradeJournal="*uid://bxvx2jtg01d6"
 
 [display]
 
@@ -77,6 +78,11 @@ drop={
 take_to_inventory={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
+}
+toggle_grade_journal={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":74,"key_label":0,"unicode":106,"location":0,"echo":false,"script":null)
 ]
 }
 

@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Objects/TeacherDesk/teacher_desk.tscn" id="19_cieiy"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="21_xyxqr"]
 [ext_resource type="PackedScene" uid="uid://djhrbul0hlsa" path="res://Scenes/Characters/PolishTeacher/polish_teacher_inherited.tscn" id="22_cx51t"]
+[ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/Popup/popup.tscn" id="22_q68cl"]
 [ext_resource type="PackedScene" uid="uid://bs431iccjtwv8" path="res://Scenes/Characters/Player/player.tscn" id="23_kg1ui"]
 [ext_resource type="PackedScene" uid="uid://dlpgb5bd061n" path="res://Scenes/Objects/Clock/clock.tscn" id="25_u440g"]
 
@@ -291,6 +292,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.280857, 0.92160004, -2.051
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.91126025, 0.92160004, -8.309488)
 
 [node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("16_26k0k")]
+
+[node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("22_q68cl")]
 
 [editable path="Blackboard"]
 [editable path="Backpack"]

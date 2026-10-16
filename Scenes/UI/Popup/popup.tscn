@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8grku2nbovd7"]
 
-[ext_resource type="Script" uid="uid://2yl0d0ao6ap0" path="res://Scripts/Popup.cs" id="1_2nprw"]
+[ext_resource type="Script" uid="uid://2yl0d0ao6ap0" path="res://Scenes/UI/Popup/Popup.cs" id="1_2nprw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 

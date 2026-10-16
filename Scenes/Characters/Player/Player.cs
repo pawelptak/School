@@ -154,6 +154,21 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        if (@event.IsActionPressed("toggle_grade_journal"))
+        {
+            if (!GameManager.Instance.CurrentSaveData.GradeJournalUnlocked)
+                return;
+
+            var journal = GetNodeOrNull<GradeJournal>("/root/GradeJournal");
+
+            journal?.ToggleJournal();
+
+            MovementLocked = journal.Visible ? true : false;
+            CameraLocked = journal.Visible ? true : false;
+
+            GetViewport().SetInputAsHandled();
+        }
+
         if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.IsEcho())
         {
             if (keyEvent.Keycode >= Key.Key1 && keyEvent.Keycode <= Key.Key9)
