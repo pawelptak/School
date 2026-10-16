@@ -63,6 +63,8 @@ public partial class SceneTransition : CanvasLayer
 
         await ToSignal(GetTree(), SceneTree.SignalName.SceneChanged);
 
+        GameManager.Instance?.LoadGame();
+
         await FadeIn(duration);
 
         _isTransitioning = false;
