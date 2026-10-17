@@ -11,10 +11,14 @@ public partial class NpcHealthController : Node
     public event Action<float> HealthChanged;
     public event Action Died;
 
+    private SpriteAnimator _spriteAnimator;
+
     public override void _Ready()
     {
         CurrentHealth = MaxHealth;
         GD.Print($"[NPC HEALTH] {GetParent().Name}: {CurrentHealth}/{MaxHealth} HP");
+
+        _spriteAnimator = GetParent().GetNodeOrNull<SpriteAnimator>("SpriteAnimator");
     }
 
     public void TakeDamage(float amount)
@@ -23,6 +27,8 @@ public partial class NpcHealthController : Node
             return;
 
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0.0f, MaxHealth);
+
+        _spriteAnimator?.PlayHitFlash(new Color(1.0f, 0.0f, 0.0f));
 
         GD.Print($"[NPC HEALTH] {GetParent().Name} took {amount} damage. Remaining HP: {CurrentHealth}/{MaxHealth}");
 

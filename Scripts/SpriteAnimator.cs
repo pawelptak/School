@@ -50,6 +50,12 @@ public partial class SpriteAnimator : Node
     private int _currentFrame;
     private bool _currentAnimationLoops;
 
+    private float _flashTimer;
+    private float _flashDuration = 0.15f;
+    private Color _originalModulate;
+    private bool _isFlashing;
+    private Tween _hitTween;
+
     public override void _Ready()
     {
         if (Sprite == null)
@@ -60,11 +66,41 @@ public partial class SpriteAnimator : Node
         }
 
         _originalSpritePosition = Sprite.Position;
+        _originalModulate = Sprite.Modulate;
         PlayBaseAnimation();
+    }
+
+
+    public void PlayHitFlash(Color flashColor)
+    {
+        if (Sprite == null || _isDead)
+            return;
+
+        _hitTween?.Kill();
+
+        _hitTween = Sprite.CreateTween();
+
+        Sprite.Modulate = flashColor;
+
+        _hitTween.TweenProperty(Sprite, "modulate", Colors.White, 0.15f);
+
+        Vector3 originalScale = new Vector3(1, 0.9f, 1);
+        Sprite.Scale = originalScale * 1.15f;
+        _hitTween.Parallel().TweenProperty(Sprite, "scale", originalScale, 0.12f);
     }
 
     public override void _Process(double delta)
     {
+        if (_isFlashing)
+        {
+            _flashTimer -= (float)delta;
+            if (_flashTimer <= 0f)
+            {
+                _isFlashing = false;
+                Sprite.Modulate = _originalModulate;
+            }
+        }
+
         if (_isDead || _currentFrames.Count == 0 || _currentFrameDuration <= 0)
             return;
 
