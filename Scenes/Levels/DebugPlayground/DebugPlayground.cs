@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Linq;
 
 public partial class DebugPlayground : Node3D
@@ -8,6 +7,7 @@ public partial class DebugPlayground : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GameManager.Instance.CurrentSaveData.AttackingUnlocked = true;
 		var npcs = GetTree().GetNodesInGroup("NPCs")
 		.OfType<InteractableCharacter>();
 
@@ -26,7 +26,7 @@ public partial class DebugPlayground : Node3D
 
 			var npcController = npc.GetNodeOrNull<NpcController>("NpcController");
 
-			npcController?.StartChase(player);
+			// npcController?.StartChase(player);
 
 			npc.InteractionRequested += (player) =>
 			{

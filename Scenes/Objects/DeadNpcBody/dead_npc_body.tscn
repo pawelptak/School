@@ -6,8 +6,8 @@
 friction = 0.06
 rough = true
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_sfcs7"]
-height = 0.3
+[sub_resource type="BoxShape3D" id="BoxShape3D_ex42r"]
+size = Vector3(0.4, 0.4, 0.4)
 
 [node name="DeadNpcBody" type="RigidBody3D" unique_id=1226804689]
 physics_material_override = SubResource("PhysicsMaterial_6dere")
@@ -15,5 +15,5 @@ linear_damp = 2.0
 angular_damp = 100.0
 script = ExtResource("1_7tcfe")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=899251005]
-shape = SubResource("CylinderShape3D_sfcs7")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1653816418]
+shape = SubResource("BoxShape3D_ex42r")

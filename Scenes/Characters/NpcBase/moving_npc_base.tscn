@@ -51,6 +51,7 @@ script = ExtResource("2_6egfp")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1207255180]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
+avoidance_enabled = true
 
 [node name="NpcHealthController" type="Node" parent="." unique_id=1138413887]
 script = ExtResource("4_wxlht")

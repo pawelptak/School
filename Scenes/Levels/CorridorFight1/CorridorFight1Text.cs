@@ -6,7 +6,7 @@ namespace School.Scenes.Levels.CorridorFight1
         public const string ResponseToMate = "Kurde.";
         public const string What = "Co?";
         public const string ResponseToMate2 = "Ja w ogóle nie mam stroju.";
-        public const string ResponseToPlayer = "Uuuu, to lepiej żebyś zaraz miał. Pan Tomasz nie lubi jak ktoś nie ma stroju.";
+        public const string ResponseToPlayer = "Uuuu, to lepiej żebyś zaraz miał. Pan Skrzypski nie lubi jak ktoś nie ma stroju.";
         public const string ResponseToPlayer2 = "Serio. Lepiej coś załatw.";
 
         public const string BullyApproach = "E, ty!";

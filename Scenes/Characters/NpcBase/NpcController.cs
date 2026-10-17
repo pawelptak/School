@@ -39,13 +39,14 @@ public partial class NpcController : Node
     private NpcState _currentState = NpcState.Patrol;
     private Node3D _chaseTarget;
 
-    private float _attackTimer = 0.0f; // Licznik czasu do kolejnego ataku
+    private float _attackTimer = 0.0f;
 
     private NpcHealthController _healthController;
     private bool _isDefeated;
     private Vector3 _knockbackVelocity;
     private float _stunTimer;
     private bool _isAttacking;
+
     public override async void _Ready()
     {
         _npc = GetParent() as CharacterBody3D;
@@ -65,14 +66,14 @@ public partial class NpcController : Node
             return;
         }
 
+        // Podłączenie sygnału Avoidance
+        _agent.VelocityComputed += OnVelocityComputed;
+
         _agent.PathDesiredDistance = ArrivalDistance;
         _agent.TargetDesiredDistance = ArrivalDistance;
 
         bool hasPatrolPoints = PatrolPointA != null && PatrolPointB != null;
 
-        // Ustawiamy stan pocz\u0105tkowy synchronicznie, zanim NPC odda kontrol\u0119 (await),
-        // aby zewn\u0119trzne wywo\u0142anie StartChase/SetIdleState w tej samej klatce nie zosta\u0142o
-        // pó\u017aniej nadpisane przez logik\u0119 inicjalizacji patrolu.
         _currentState = hasPatrolPoints ? NpcState.Patrol : NpcState.Idle;
 
         if (!hasPatrolPoints)
@@ -244,7 +245,6 @@ public partial class NpcController : Node
         MoveTowardTarget(_currentTarget.GlobalPosition, dt);
     }
 
-
     private void ProcessChase(double dt)
     {
         if (_chaseTarget == null ||
@@ -260,8 +260,6 @@ public partial class NpcController : Node
 
         float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
 
-        // Podczas animacji ataku NPC nie rozpoczyna kolejnego ataku
-        // ani nie goni gracza.
         if (_isAttacking)
         {
             ApplyGravityAndStop(dt);
@@ -285,8 +283,6 @@ public partial class NpcController : Node
                 }
                 else
                 {
-                    // Nie próbuj uruchamiać animacji w każdej klatce,
-                    // jeśli nie skonfigurowano AttackFrames.
                     _attackTimer = AttackCooldown;
                 }
             }
@@ -316,21 +312,11 @@ public partial class NpcController : Node
 
     private void OnAttackHitFrame()
     {
-        GD.Print("[ATTACK DEBUG] OnAttackHitFrame called.");
-
-        GD.Print(
-            $"[ATTACK DEBUG] IsAttacking={_isAttacking}, " +
-            $"IsDefeated={_isDefeated}, " +
-            $"NpcNull={_npc == null}, " +
-            $"TargetNull={_chaseTarget == null}"
-        );
-
         if (_isDefeated ||
             _npc == null ||
             _chaseTarget == null ||
             !GodotObject.IsInstanceValid(_chaseTarget))
         {
-            GD.Print("[ATTACK DEBUG] Returning because attack state or target is invalid.");
             return;
         }
 
@@ -339,36 +325,24 @@ public partial class NpcController : Node
 
         float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
 
-        GD.Print(
-            $"[ATTACK DEBUG] Distance={distance:F2}, " +
-            $"AttackDistance={AttackDistance}"
-        );
-
         if (distance > AttackDistance)
         {
-            GD.Print("[ATTACK DEBUG] Target outside attack range.");
             return;
         }
 
         var healthController =
             _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
 
-        GD.Print($"[ATTACK DEBUG] HealthController found={healthController != null}");
-
         if (healthController != null)
         {
-            GD.Print($"[ATTACK DEBUG] Applying {AttackDamage} damage.");
             healthController.TakeDamage(AttackDamage);
         }
     }
 
-
     private void OnAttackAnimationFinished()
     {
-        GD.Print("[ATTACK DEBUG] Attack animation finished.");
         _isAttacking = false;
     }
-
 
     private void ProcessIdle(double dt)
     {
@@ -385,26 +359,15 @@ public partial class NpcController : Node
         direction.Y = 0;
 
         bool isMoving = false;
+        Vector3 desiredVelocity = _npc.Velocity;
 
         if (direction.LengthSquared() > 0.001f)
         {
             isMoving = true;
             direction = direction.Normalized();
 
-            Vector3 velocity = _npc.Velocity;
-            velocity.X = direction.X * Speed;
-            velocity.Z = direction.Z * Speed;
-
-            if (!_npc.IsOnFloor())
-            {
-                velocity.Y -= 9.8f * (float)dt;
-            }
-            else
-            {
-                velocity.Y = -0.1f;
-            }
-
-            _npc.Velocity = velocity;
+            desiredVelocity.X = direction.X * Speed;
+            desiredVelocity.Z = direction.Z * Speed;
 
             _npc.Rotation = new Vector3(
                 _npc.Rotation.X,
@@ -414,11 +377,22 @@ public partial class NpcController : Node
         }
         else
         {
-            ApplyGravityAndStop(dt);
+            desiredVelocity.X = 0;
+            desiredVelocity.Z = 0;
+        }
+
+        if (!_npc.IsOnFloor())
+        {
+            desiredVelocity.Y -= 9.8f * (float)dt;
+        }
+        else
+        {
+            desiredVelocity.Y = -0.1f;
         }
 
         _spriteAnimator?.SetMoving(isMoving);
-        _npc.MoveAndSlide();
+
+        _agent.SetVelocity(desiredVelocity);
     }
 
     private void ApplyGravityAndStop(double dt)
@@ -436,7 +410,25 @@ public partial class NpcController : Node
             velocity.Y = -0.1f;
         }
 
-        _npc.Velocity = velocity;
+        _agent.SetVelocity(velocity);
+    }
+
+    private void OnVelocityComputed(Vector3 safeVelocity)
+    {
+        if (_stunTimer > 0.0f || _knockbackVelocity.LengthSquared() > 0.001f)
+            return;
+
+        Vector3 horizontalVelocity = new Vector3(safeVelocity.X, 0, safeVelocity.Z);
+        float maxAllowedSpeed = Speed * 1.2f;
+        if (horizontalVelocity.Length() > maxAllowedSpeed)
+        {
+            horizontalVelocity = horizontalVelocity.Normalized() * maxAllowedSpeed;
+        }
+
+        safeVelocity.X = horizontalVelocity.X;
+        safeVelocity.Z = horizontalVelocity.Z;
+
+        _npc.Velocity = safeVelocity;
         _npc.MoveAndSlide();
     }
 
@@ -459,7 +451,7 @@ public partial class NpcController : Node
 
         _currentState = NpcState.Chase;
         _chaseTarget = target;
-        _attackTimer = 0.0f; // Pozwól zaatakować od razu po dobiegnięciu
+        _attackTimer = 0.0f;
         GD.Print($"[COMBAT] {_npc.Name} started chasing {target.Name}.");
     }
 
@@ -504,7 +496,6 @@ public partial class NpcController : Node
         _stunTimer = 0.0f;
 
         _spriteAnimator?.SetMoving(false);
-
         SetPhysicsProcess(false);
 
         GD.Print($"[COMBAT] {_npc.Name} was defeated.");
@@ -512,6 +503,11 @@ public partial class NpcController : Node
 
     public override void _ExitTree()
     {
+        if (_agent != null)
+        {
+            _agent.VelocityComputed -= OnVelocityComputed;
+        }
+
         if (_healthController != null &&
             GodotObject.IsInstanceValid(_healthController))
         {
@@ -519,7 +515,7 @@ public partial class NpcController : Node
         }
 
         if (_spriteAnimator != null &&
-    GodotObject.IsInstanceValid(_spriteAnimator))
+            GodotObject.IsInstanceValid(_spriteAnimator))
         {
             _spriteAnimator.AttackHitFrame -= OnAttackHitFrame;
             _spriteAnimator.AttackAnimationFinished -= OnAttackAnimationFinished;
@@ -535,7 +531,6 @@ public partial class NpcController : Node
             return;
 
         Vector3 direction = _npc.GlobalPosition - throwable.GlobalPosition;
-
         ApplyKnockback(direction, knockback, stunDuration);
     }
 
@@ -568,7 +563,6 @@ public partial class NpcController : Node
         if (isStunned)
             _stunTimer = Mathf.Max(0.0f, _stunTimer - (float)dt);
 
-        // Zmniejszamy odrzut w czasie.
         _knockbackVelocity = _knockbackVelocity.MoveToward(
             Vector3.Zero,
             KnockbackDeceleration * (float)dt
