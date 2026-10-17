@@ -14,7 +14,6 @@ Ideas:
 
 polish class after: reakcja nauczycielki na demolowanie rzeczy. 1 ostrzeżenie. potem leci do dyrektora.
 
-dialogi powinny byc niezalezne od kwesti wypowiadanych przez postacie przy hit, recovery, death. teraz jak rozmawiam z npc a inny npc np wstanie z pokonania - to przerywa moją rozmowe z npc.
 
 - replace asian student woźną w corridor 1
 
