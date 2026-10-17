@@ -11,6 +11,7 @@ public partial class PolishClassAfter : LevelBase
 	private CutsceneController _cutsceneController;
 	private GradeJournal _gradeJournal;
 	private bool GradeJournalClosed = false;
+	private DestructionDetector _destructionDetector;
 
 	private int _homeWorkMinigameGrade;
 
@@ -49,6 +50,14 @@ public partial class PolishClassAfter : LevelBase
 				[new DialogueLine(DialogueSpeaker.PolishTeacher, teacherInteractionText, 3.0f)]
 			);
 		};
+
+		_destructionDetector =
+			GetNode<DestructionDetector>("DestructionDetector");
+
+		_destructionDetector.DestructionThresholdReached +=
+			OnDestructionThresholdReached;
+
+
 	}
 
 	private string GetTeacherInteractionText(int homeworkGrade)
@@ -134,5 +143,19 @@ public partial class PolishClassAfter : LevelBase
 				[new DialogueLine(DialogueSpeaker.Mate, PolishClassText.ExitPolishClass, 2.0f)]
 			);
 		};
+	}
+
+	private void OnDestructionThresholdReached()
+	{
+		_cutsceneController.StartDialogue(
+			_teacher,
+			[
+				new DialogueLine(
+				DialogueSpeaker.PolishTeacher,
+				"Prosze zaprzestać demolowania mojej sali!",
+				3.0f
+			)
+			]
+		);
 	}
 }

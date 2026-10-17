@@ -96,15 +96,23 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
 
 
+
     public void Interact(Player player)
     {
         if (_isDefeated)
             return;
 
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        bool dialogueWasVisible = controller?.IsDialogueVisible == true;
+
         InteractionRequested?.Invoke(player);
 
+        if (controller?.IsCinematicDialogueActive == true)
+            return;
 
-        if (_cutsceneController?.IsCinematicDialogueActive == true)
+        if (!dialogueWasVisible && controller?.IsDialogueVisible == true)
             return;
 
         var dialogue = GetInteractionDialogue();
@@ -115,8 +123,9 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        _cutsceneController?.StartDialogue(this, dialogue);
+        controller?.StartDialogue(this, dialogue);
     }
+
 
 
 
