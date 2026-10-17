@@ -27,5 +27,9 @@ namespace School.Scenes.Levels.PolishClass
 
         public const string JournalUnlockedPopupTitle = "Odblokowano dziennik ocen";
         public const string JournalUnlockedPopupText = "Oceny z każdego przedmiotu zapisywane są w dzienniku ocen. Wciśnij [color=#77777d]{0}[/color], aby go otworzyć.";
+
+        public const string TeacherWarning1 = "Prosze zaprzestać demolowania mojej sali!";
+        public const string TeacherWarning2 = "Ostatnie ostrzeżenie, albo idę do Pani Dyrektor!";
+        public const string TeacherWarningLast = "Miarka się przebrała wandalu!";
     }
 }
