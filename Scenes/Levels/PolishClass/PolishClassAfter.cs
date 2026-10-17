@@ -13,6 +13,7 @@ public partial class PolishClassAfter : LevelBase
 	private bool GradeJournalClosed = false;
 	private DestructionDetector _destructionDetector;
 	private int _teacherWarningCount = 0;
+	private NpcController _teacherController;
 
 	private int _homeWorkMinigameGrade;
 
@@ -43,6 +44,7 @@ public partial class PolishClassAfter : LevelBase
 		_homeWorkMinigameGrade = GameManager.Instance.GetMinigameResult("homework_minigame").Grade;
 
 		_teacher = GetNode<PolishTeacher>("PolishTeacher");
+		_teacherController = _teacher.GetNode<NpcController>("NpcController");
 		_teacher.InteractionRequested += (_player) =>
 		{
 			var teacherInteractionText = GetTeacherInteractionText(_homeWorkMinigameGrade);
@@ -51,6 +53,7 @@ public partial class PolishClassAfter : LevelBase
 				[new DialogueLine(DialogueSpeaker.PolishTeacher, teacherInteractionText, 3.0f)]
 			);
 		};
+		_teacherController.MoveToFinished += HideTeacher;
 
 		_destructionDetector =
 			GetNode<DestructionDetector>("DestructionDetector");
@@ -175,7 +178,9 @@ public partial class PolishClassAfter : LevelBase
 		}
 		else
 		{
-			_cutsceneController.StartDialogue(
+			TeacherExitClassroom();
+
+            _cutsceneController.StartDialogue(
 				_teacher,
 				[
 					new DialogueLine(
@@ -189,5 +194,15 @@ public partial class PolishClassAfter : LevelBase
 
 		_teacherWarningCount++;
 
+	}
+
+	private void TeacherExitClassroom()
+	{
+		_teacherController.MoveTo(_door);
+	}
+
+	private void HideTeacher()
+	{
+		_teacher.QueueFree();
 	}
 }

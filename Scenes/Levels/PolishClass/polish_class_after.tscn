@@ -83,6 +83,9 @@ albedo_color = Color(0.95686275, 0.9372549, 0.49019608, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1g48"]
 albedo_color = Color(0, 0.55596155, 0.010913936, 1)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_q68cl"]
+viewport_path = NodePath("SubViewport")
+
 [node name="PolishClassAfter" type="Node3D" unique_id=513644933]
 script = ExtResource("1_cx51t")
 
@@ -292,6 +295,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.280857, 0.92160004, -2.051
 [node name="PolishTeacher" parent="." unique_id=1106552087 instance=ExtResource("22_cx51t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.91126025, 0.92160004, -8.309488)
 
+[node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_q68cl")
+
 [node name="CutsceneController" parent="." unique_id=148774009 instance=ExtResource("16_26k0k")]
 
 [node name="Popup" parent="." unique_id=1416079734 instance=ExtResource("22_q68cl")]
@@ -307,3 +313,4 @@ script = ExtResource("23_q68cl")
 [editable path="SchoolWall4"]
 [editable path="SchoolWall3"]
 [editable path="Sponge"]
+[editable path="PolishTeacher"]

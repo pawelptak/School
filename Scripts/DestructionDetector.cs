@@ -19,7 +19,7 @@ public partial class DestructionDetector : Node
 	[Export] public float HighSpeedBonus { get; set; } = 1.0f;
 	[Export] public float PointsDecayPerSecond { get; set; } = 0.5f;
 	[ExportGroup("Cooldown")]
-	[Export] public float ReactionCooldown { get; set; } = 10.0f;
+	[Export] public float ReactionCooldown { get; set; } = 3.0f;
 
 	private double _cooldownRemaining;
 

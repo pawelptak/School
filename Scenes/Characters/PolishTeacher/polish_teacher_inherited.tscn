@@ -8,14 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://bykxlcmu4xh5u" path="res://Scenes/Characters/PolishTeacher/talk1.png" id="6_gjhkn"]
 [ext_resource type="Texture2D" uid="uid://biabog76e6vyt" path="res://Scenes/Characters/PolishTeacher/dead.png" id="7_htkna"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4fpfx"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_htkna"]
 viewport_path = NodePath("SubViewport")
 
 [node name="PolishTeacher" unique_id=664278660 instance=ExtResource("1_est7j")]
 script = ExtResource("2_0mcdp")
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_4fpfx")
+texture = SubResource("ViewportTexture_htkna")
 
 [node name="Sprite" parent="." index="1" unique_id=274662881]
 texture = ExtResource("2_celsv")
@@ -26,5 +26,5 @@ TalkingFrames = Array[Texture2D]([ExtResource("4_htkna"), ExtResource("5_4fpfx")
 DeadTexture = ExtResource("7_htkna")
 
 [node name="NpcController" parent="." index="6" unique_id=991182570]
-Speed = 0.5
+Speed = 5.0
 AttackDamage = 5.0
