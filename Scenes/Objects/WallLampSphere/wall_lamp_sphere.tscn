@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bbh8tqy4semif"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nts5u"]
+transparency = 1
+albedo_color = Color(0.69803923, 0.69803923, 0.69803923, 0.99607843)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ury2d"]
+material = SubResource("StandardMaterial3D_nts5u")
+radius = 0.15
+height = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.3, 0.3022949, 0.3)
+
+[node name="WallLampSphere" type="StaticBody3D" unique_id=456797252]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=685582859]
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2065295231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12909046, 0)
+mesh = SubResource("SphereMesh_ury2d")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1911175976]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.11289075, 0)
+light_bake_mode = 1
+spot_range = 1.189
+spot_angle = 66.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=461372378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12570801, 0)
+shape = SubResource("BoxShape3D_lc5oj")
