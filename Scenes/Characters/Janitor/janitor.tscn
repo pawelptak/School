@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bqqa6q33rrnl0"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_dtbaw"]
+[ext_resource type="Script" uid="uid://bklh3005lbasw" path="res://Scenes/Characters/Janitor/Janitor.cs" id="2_qeb8v"]
+[ext_resource type="Texture2D" uid="uid://t34qy51gsuoh" path="res://Scenes/Characters/Janitor/idle1.png" id="2_ykf3y"]
+[ext_resource type="Texture2D" uid="uid://lbu267vmagy5" path="res://Scenes/Characters/Janitor/idle2.png" id="3_po3s0"]
+[ext_resource type="Texture2D" uid="uid://l0v7io1od0yi" path="res://Scenes/Characters/Janitor/talk1.png" id="4_qeb8v"]
+[ext_resource type="Texture2D" uid="uid://fhtp8n5er0lj" path="res://Scenes/Characters/Janitor/talk2.png" id="5_tw7kg"]
+[ext_resource type="Texture2D" uid="uid://bpg05qqtfej" path="res://Scenes/Characters/Janitor/talk3.png" id="6_kqrk8"]
+[ext_resource type="Texture2D" uid="uid://bx63g8u2ccrjp" path="res://Scenes/Characters/Janitor/defeated.png" id="8_tw7kg"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ykf3y"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Janitor" unique_id=664278660 instance=ExtResource("1_dtbaw")]
+script = ExtResource("2_qeb8v")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_ykf3y")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
+texture = ExtResource("2_ykf3y")
+
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
+IdleFrames = Array[Texture2D]([ExtResource("2_ykf3y"), ExtResource("3_po3s0")])
+TalkingFrames = Array[Texture2D]([ExtResource("4_qeb8v"), ExtResource("5_tw7kg"), ExtResource("6_kqrk8")])
+TalkingFrameDuration = 0.07
+DeadTexture = ExtResource("8_tw7kg")

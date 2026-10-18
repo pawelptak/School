@@ -5,6 +5,7 @@ public enum DialogueSpeaker
     Bully,
     PolishTeacher,
     AsianStudentMale,
+    Janitor,
 }
 
 public static class DialogueSpeakerExtensions
@@ -18,6 +19,7 @@ public static class DialogueSpeakerExtensions
             DialogueSpeaker.Bully => BullyText.Name,
             DialogueSpeaker.PolishTeacher => PolishTeacherText.Name,
             DialogueSpeaker.AsianStudentMale => AsianStudentMaleText.Name,
+            DialogueSpeaker.Janitor => JanitorText.Name,
             _ => ""
         };
     }

@@ -9,5 +9,3 @@ Ideas:
 
 - ?? moze spowalniac postac gracza gdy niskie zdrowie???
 -? full screen efekt zadawania obrażeń?
-
-- replace asian student woźną w corridor 1

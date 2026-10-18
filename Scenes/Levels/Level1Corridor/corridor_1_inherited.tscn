@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="11_37od2"]
 [ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="12_w07n8"]
 [ext_resource type="PackedScene" uid="uid://cv67ux1ekjam" path="res://Scenes/Characters/AsianStudentMale/asian_student_male.tscn" id="13_lxc4m"]
+[ext_resource type="PackedScene" uid="uid://bqqa6q33rrnl0" path="res://Scenes/Characters/Janitor/janitor.tscn" id="14_n8pn3"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3ic2f"]
 vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
@@ -40,7 +41,7 @@ uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 texture_filter = 0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_nqvmr"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4jgo3"]
 viewport_path = NodePath("SubViewport")
 
 [node name="Corridor1" unique_id=513644933 instance=ExtResource("1_4fjpg")]
@@ -117,10 +118,10 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)
 
 [node name="AsianStudentMale" parent="." index="21" unique_id=1920044997 instance=ExtResource("13_lxc4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60397, 0.9215998, 2.5093393)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.21281, 0.9215998, -2.3231916)
 
 [node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_nqvmr")
+texture = SubResource("ViewportTexture_4jgo3")
 
 [node name="DialogueLookAtPoint" parent="AsianStudentMale" index="4" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
@@ -133,10 +134,13 @@ PatrolPointB = NodePath("../../PatrolPointB")
 MaxHealth = 10.0
 
 [node name="PatrolPointA" type="Marker3D" parent="." index="22" unique_id=1473423264]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8702726, 0.27974975, 1.7474756)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.092885, 0.27974975, -2.100262)
 
 [node name="PatrolPointB" type="Marker3D" parent="." index="23" unique_id=713287543]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1275034, 0.012534916, 2.1225843)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4520783, 0.012534916, -2.6762552)
+
+[node name="Janitor" parent="." index="24" unique_id=1583186431 instance=ExtResource("14_n8pn3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3887593, 0.9215999, 1.6447859)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
