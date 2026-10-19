@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://k8qcfm144cxr"]
+
+[ext_resource type="Script" uid="uid://civuey3yuaxka" path="res://Scenes/UI/Blocking/BlockingController.cs" id="1_beasb"]
+[ext_resource type="Texture2D" uid="uid://by1j5wjsprcu7" path="res://Scenes/UI/Punching/9.png" id="10_dj7v7"]
+
+[node name="Blocking" type="CanvasLayer" unique_id=355825912]
+script = ExtResource("1_beasb")
+RaiseFrames = Array[Texture2D]([ExtResource("10_dj7v7")])
+LowerFrames = Array[Texture2D]([ExtResource("10_dj7v7")])
+
+[node name="Container" type="MarginContainer" parent="." unique_id=40727117]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -600.0
+offset_right = 600.0
+grow_vertical = 0
+theme_override_constants/margin_left = 200
+
+[node name="TextureRect" type="TextureRect" parent="Container" unique_id=1627358379]
+custom_minimum_size = Vector2(1000, 1000)
+propagate_maximum_size = true
+layout_mode = 2
+texture = ExtResource("10_dj7v7")

@@ -335,7 +335,14 @@ public partial class NpcController : Node
 
         if (healthController != null)
         {
-            healthController.TakeDamage(AttackDamage);
+            float damage = AttackDamage;
+
+            if (_chaseTarget is Player player)
+            {
+                damage = player.CalculateIncomingDamage(damage);
+            }
+
+            healthController.TakeDamage(damage);
         }
     }
 

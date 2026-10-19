@@ -5,6 +5,7 @@ using System;
 public class PlayerSaveData
 {
     public bool AttackingUnlocked { get; set; } = false;
+    public bool BlockingUnlocked { get; set; } = true;
     public bool GradeJournalUnlocked { get; set; } = false;
 
     public List<InventoryItemSaveData> InventoryItems { get; set; } = new List<InventoryItemSaveData>();

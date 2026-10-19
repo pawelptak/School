@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://seodfw7j3jqo" path="res://Scenes/Characters/Player/Player.cs" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bvlx8sd8gxpax" path="res://Scenes/UI/HealthIndicators/low_health_indicator.tscn" id="2_fu1fx"]
 [ext_resource type="PackedScene" uid="uid://c51lwpg4su7xu" path="res://Scenes/UI/HUD/interaction_ui.tscn" id="2_km8w0"]
+[ext_resource type="PackedScene" uid="uid://k8qcfm144cxr" path="res://Scenes/UI/Blocking/blocking.tscn" id="4_cscr0"]
 [ext_resource type="Script" uid="uid://kldg4ox7ja4f" path="res://Scenes/Characters/Player/PlayerCamera.cs" id="4_dxcao"]
 [ext_resource type="Script" uid="uid://bwxb3j5xv802c" path="res://Scripts/HealthController.cs" id="4_qqvsf"]
 [ext_resource type="PackedScene" uid="uid://c7do1x5mvdx2n" path="res://Scenes/UI/Punching/punching.tscn" id="5_apx8m"]
@@ -21,10 +22,13 @@ script = ExtResource("1_4flbx")
 
 [node name="LowHealth" parent="." unique_id=1714133641 instance=ExtResource("2_fu1fx")]
 
-[node name="Vignette" parent="LowHealth" index="0" unique_id=2093352124 node_paths=PackedStringArray("healthController")]
+[node name="Vignette" parent="LowHealth" index="0" unique_id=2093352124 node_paths=PackedStringArray("healthController", "player")]
 healthController = NodePath("../../HealthController")
+player = NodePath("../..")
 
 [node name="Punching" parent="." unique_id=355825912 instance=ExtResource("5_apx8m")]
+
+[node name="Blocking" parent="." unique_id=2115941278 instance=ExtResource("4_cscr0")]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1519013196 node_paths=PackedStringArray("healthController")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)

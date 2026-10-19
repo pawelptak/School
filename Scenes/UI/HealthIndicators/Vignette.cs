@@ -3,8 +3,10 @@ using Godot;
 public partial class Vignette : ColorRect
 {
     [Export] private HealthController healthController;
+    [Export] private Player player;
     [Export] private float maxAlpha = 0.7f;
     [Export] private float threshold = 0.4f;
+
 
     public override void _Ready()
     {
@@ -50,6 +52,9 @@ public partial class Vignette : ColorRect
 
     private void OnTookDamage(float amount)
     {
+        if (player != null && player.IsBlocking)
+            return;
+
         PlayDamageFlash();
     }
 
