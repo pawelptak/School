@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ddo46vjkb7x4d"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_5i374"]
+[ext_resource type="Script" uid="uid://b8r450ntw12ke" path="res://Scenes/Characters/PeTeacher/PeTeacher.cs" id="2_vn7li"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5i374"]
+viewport_path = NodePath("SubViewport")
+
+[node name="PeTeacher" unique_id=664278660 instance=ExtResource("1_5i374")]
+script = ExtResource("2_vn7li")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_5i374")
