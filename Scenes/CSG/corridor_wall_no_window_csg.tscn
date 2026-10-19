@@ -1,7 +1,13 @@
 [gd_scene format=3 uid="uid://b1kdypswbhvhb"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
-albedo_color = Color(0.71067166, 0.69505924, 0.52908987, 1)
+[ext_resource type="Texture2D" uid="uid://cb1hpewofyux8" path="res://Assets/Textures/paint-basic-200.png" id="1_iicai"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wsp2"]
+albedo_color = Color(0.70980394, 0.69411767, 0.5294118, 1)
+albedo_texture = ExtResource("1_iicai")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ei54"]
 albedo_color = Color(0.757661, 0.4805578, 0.28299633, 1)
@@ -16,7 +22,7 @@ size = Vector3(15, 0.1, 0.03)
 use_collision = true
 collision_layer = 65
 size = Vector3(15, 4, 0.5)
-material = SubResource("StandardMaterial3D_lc5oj")
+material = SubResource("StandardMaterial3D_3wsp2")
 
 [node name="Baseboard" type="MeshInstance3D" parent="." unique_id=800031264]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9544133, -0.26449287)

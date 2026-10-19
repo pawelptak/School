@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://cwhjut61jyndn"]
 
+[ext_resource type="Texture2D" uid="uid://cb1hpewofyux8" path="res://Assets/Textures/paint-basic-200.png" id="1_3f1se"]
 [ext_resource type="PackedScene" uid="uid://ma8dl2dn5y2k" path="res://Scenes/Objects/Window/window.tscn" id="1_spw2l"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5oj"]
-albedo_color = Color(0.71067166, 0.69505924, 0.52908987, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mwjh"]
+albedo_color = Color(0.70980394, 0.69411767, 0.5294118, 1)
+albedo_texture = ExtResource("1_3f1se")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
 size = Vector3(2.5, 2.5, 1)
@@ -24,7 +29,7 @@ size = Vector3(10, 0.1, 0.03)
 use_collision = true
 collision_layer = 65
 size = Vector3(10, 4, 0.5)
-material = SubResource("StandardMaterial3D_lc5oj")
+material = SubResource("StandardMaterial3D_7mwjh")
 
 [node name="WindowHole2" type="CSGMesh3D" parent="Wall" unique_id=238473152]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13416243, 0.2016412, 0.058843374)

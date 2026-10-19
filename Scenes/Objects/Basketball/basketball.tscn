@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://d3fcmtc6r5gc7"]
+
+[ext_resource type="Script" uid="uid://d0q023d1k6oog" path="res://Scenes/Objects/Basketball/Basketball.cs" id="1_fpcum"]
+[ext_resource type="Texture2D" uid="uid://dvubh8emou5im" path="res://Scenes/Objects/Basketball/basketball.png" id="2_j40te"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j40te"]
+friction = 0.4
+bounce = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fpcum"]
+albedo_texture = ExtResource("2_j40te")
+texture_filter = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_fpcum")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j40te"]
+radius = 0.2
+
+[node name="Basketball" type="RigidBody3D" unique_id=756961244]
+physics_material_override = SubResource("PhysicsMaterial_j40te")
+script = ExtResource("1_fpcum")
+IsEquippable = true
+Damage = 3.0
+Knockback = 8.0
+StunDuration = 2.0
+PickupTime = 0.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=835838251]
+mesh = SubResource("SphereMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1824723521]
+shape = SubResource("SphereShape3D_j40te")

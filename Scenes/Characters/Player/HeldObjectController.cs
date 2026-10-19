@@ -396,4 +396,12 @@ public partial class HeldObjectController : Node
     {
         return _player?.GetWorld3D();
     }
+
+    public void ClearHeldObjectReference()
+    {
+        _heldObject = null;
+        _heldObjectExclusions.Clear();
+        _heldShapes.Clear();
+        _heldShapeLocals.Clear();
+    }
 }

@@ -1,4 +1,3 @@
-
 using Godot;
 using System;
 
@@ -16,6 +15,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public bool PlayerInRange { get; private set; }
 
+    public abstract new string Name { get; }
+
     public string InteractionText => "Rozmawiaj";
     public Vector3 PromptOffset => new Vector3(0, 2.0f, 0);
 
@@ -31,19 +32,43 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     private bool _isDefeated;
     private PackedScene _deadBodyScene;
     private CutsceneController _cutsceneController;
+
     private const string DeadBodyScenePath =
         "res://Scenes/Objects/DeadNpcBody/dead_npc_body.tscn";
+
+    private NpcHealthBar _healthBarComponent;
+
+    [Signal]
+    public delegate void ThrowableBodyCreatedEventHandler(ThrowableObject deadBody);
 
     public override void _Ready()
     {
         SpriteAnimator = GetNode<SpriteAnimator>("SpriteAnimator");
-        _healthController = GetNodeOrNull<NpcHealthController>("NpcHealthController");
-        _npcController = GetNodeOrNull<NpcController>("NpcController");
+
+        _healthController =
+            GetNodeOrNull<NpcHealthController>("NpcHealthController");
+
+        _npcController =
+            GetNodeOrNull<NpcController>("NpcController");
+
         _deadBodyScene = GD.Load<PackedScene>(DeadBodyScenePath);
-        _cutsceneController = GetTree().CurrentScene?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        _cutsceneController = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        _healthBarComponent =
+            GetNodeOrNull<NpcHealthBar>("NpcHealthBar");
 
         if (_healthController != null)
+        {
             _healthController.Died += OnCharacterDied;
+            _healthController.HealthChanged += OnHealthChanged;
+
+            _healthBarComponent?.UpdateHealth(
+                _healthController.CurrentHealth,
+                _healthController.MaxHealth
+            );
+        }
 
         var interactionArea = GetNode<Area3D>("InteractionArea");
 
@@ -51,27 +76,46 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         interactionArea.BodyExited += OnBodyExited;
     }
 
+
     public bool CanInteract(Player player)
     {
-        return !_isDefeated
-            && PlayerInRange
-            && !player.MovementLocked
-            && !IsDialogueVisible();
+        if (_isDefeated || !PlayerInRange || player.MovementLocked)
+            return false;
+
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        if (controller?.IsCinematicDialogueActive == true)
+            return false;
+
+        return true;
     }
+
 
     public void SetTalking(bool talking)
     {
         SpriteAnimator?.SetTalking(talking);
     }
 
+
+
+
     public void Interact(Player player)
     {
         if (_isDefeated)
             return;
 
+        var controller = GetTree().CurrentScene
+            ?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        bool dialogueWasVisible = controller?.IsDialogueVisible == true;
+
         InteractionRequested?.Invoke(player);
 
-        if (IsDialogueVisible())
+        if (controller?.IsCinematicDialogueActive == true)
+            return;
+
+        if (!dialogueWasVisible && controller?.IsDialogueVisible == true)
             return;
 
         var dialogue = GetInteractionDialogue();
@@ -82,27 +126,32 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-
-        _cutsceneController?.StartDialogue(this, dialogue);
+        controller?.StartDialogue(this, dialogue);
     }
 
-    public void NotifyHitByThrowable(ThrowableObject throwable, float throwForce)
+
+
+
+    public void NotifyHitByThrowable(
+        ThrowableObject throwable,
+        float throwForce)
     {
         if (_isDefeated || throwable == null)
             return;
 
         float damage = throwable.CalculateDamage();
-        float knockback = throwable.CalculateKnockback();
+
         _healthController?.TakeDamage(damage);
 
         GD.Print(
-            $"[COMBAT] {Name} hit by {throwable.Name}. " +
-            $"ThrowForce={throwForce:F1}, Damage={damage:F1}, Knockback={knockback:F1}"
+            $"[COMBAT] {Name} hit by {throwable.Name}. "
+            + $"ThrowForce={throwForce:F1}, Damage={damage:F1}, "
+            + $"Knockback={throwable.Knockback:F1}"
         );
 
         _npcController?.ApplyHitEffects(
             throwable,
-            knockback,
+            throwable.Knockback,
             throwable.StunDuration
         );
 
@@ -121,33 +170,36 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         var dialogue = GetHitReactionDialogue();
 
-        if (controller != null && dialogue != null && dialogue.Length > 0)
-            controller.StartDialogue(this, dialogue);
+        controller?.TryStartReactionDialogue(this, dialogue);
     }
 
-    public void NotifyHitByPunch(Player player, float damage, float knockback)
+    public void NotifyHitByPunch(
+        Player player,
+        float damage,
+        float knockback)
     {
         if (player == null || _isDefeated)
             return;
 
         if (_healthController == null)
         {
-            GD.PushWarning($"{Name}: NpcHealthController not found.");
+            GD.PushWarning(
+                $"{Name}: NpcHealthController not found."
+            );
+
             return;
         }
 
         _healthController.TakeDamage(damage);
 
         GD.Print(
-            $"[COMBAT] {Name} hit by player's punch. " +
-            $"Damage={damage:F1}, Knockback={knockback:F1}"
+            $"[COMBAT] {Name} hit by player's punch. "
+            + $"Damage={damage:F1}, Knockback={knockback:F1}"
         );
 
-        // Obrażenia mogły pokonać NPC.
         if (_isDefeated)
             return;
 
-        // Knockback pięści, bez stuna.
         Vector3 direction = GlobalPosition - player.GlobalPosition;
         direction.Y = 0.0f;
 
@@ -156,20 +208,17 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         var controller = GetTree().CurrentScene
             ?.GetNodeOrNull<CutsceneController>("CutsceneController");
 
-        // Nie przerywaj aktualnego dialogu.
         if (controller?.IsDialogueVisible == true)
             return;
 
         SpriteAnimator?.PlayHit();
 
-        // Reakcja specjalna na pięść, jeśli postać ją obsługuje.
         if (HitReactionOverride?.Invoke(null, 0.0f) == true)
             return;
 
         var dialogue = GetHitReactionDialogue();
 
-        if (controller != null && dialogue != null && dialogue.Length > 0)
-            controller.StartDialogue(this, dialogue);
+        controller?.TryStartReactionDialogue(this, dialogue);
     }
 
     protected abstract DialogueLine[] GetHitReactionDialogue();
@@ -179,7 +228,6 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     protected abstract DialogueLine[] GetDefeatDialogue();
 
     protected abstract DialogueLine[] GetRecoveryDialogue();
-
 
     private bool IsDialogueVisible()
     {
@@ -207,7 +255,14 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
 
         _isDefeated = true;
-        _cutsceneController.StartDialogue(this, GetDefeatDialogue());
+
+        if (_healthBarComponent != null)
+            _healthBarComponent.Visible = false;
+
+        _cutsceneController?.TryStartReactionDialogue(
+            this,
+            GetDefeatDialogue()
+        );
 
         switch (DefeatMode)
         {
@@ -240,7 +295,11 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         _isDefeated = false;
 
-        _cutsceneController.StartDialogue(this, GetRecoveryDialogue());
+        _cutsceneController?.TryStartReactionDialogue(
+            this,
+            GetRecoveryDialogue()
+        );
+
         _npcController?.RecoverFromDefeat();
 
         GD.Print($"[NPC] {Name} got back up.");
@@ -254,12 +313,17 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        var sourceShape = GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+        var sourceShape =
+            GetNodeOrNull<CollisionShape3D>("CollisionShape3D");
+
         var sprite = SpriteAnimator?.Sprite;
 
         if (sourceShape?.Shape == null || sprite == null)
         {
-            GD.PushError($"{Name}: missing CollisionShape3D or Sprite3D.");
+            GD.PushError(
+                $"{Name}: missing CollisionShape3D or Sprite3D."
+            );
+
             return;
         }
 
@@ -279,13 +343,15 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             return;
         }
 
-        deadShape.Shape = (Shape3D)sourceShape.Shape.Duplicate();
-        deadShape.Transform = sourceShape.Transform;
+        //deadShape.Shape = (Shape3D)sourceShape.Shape.Duplicate();
+        //deadShape.Transform = sourceShape.Transform;
 
         var scene = GetTree().CurrentScene;
 
         scene.AddChild(deadBody);
         deadBody.GlobalTransform = GlobalTransform;
+
+        EmitSignal(SignalName.ThrowableBodyCreated, deadBody);
 
         sourceShape.QueueFree();
         sprite.Reparent(deadBody, true);
@@ -301,6 +367,15 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
             GodotObject.IsInstanceValid(_healthController))
         {
             _healthController.Died -= OnCharacterDied;
+            _healthController.HealthChanged -= OnHealthChanged;
         }
+    }
+
+    private void OnHealthChanged(float currentHealth)
+    {
+        _healthBarComponent?.UpdateHealth(
+            currentHealth,
+            _healthController.MaxHealth
+        );
     }
 }

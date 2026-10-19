@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bru8xe3u6wpwx"]
+
+[ext_resource type="Texture2D" uid="uid://bygqt5f7porfv" path="res://Scenes/Objects/BasketballCourt/net3.png" id="2_uvlcn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6y2n6"]
+transparency = 1
+albedo_texture = ExtResource("2_uvlcn")
+uv1_scale = Vector3(20, 5, 1)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_u3w50"]
+material = SubResource("StandardMaterial3D_6y2n6")
+size = Vector2(19.9, 4.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.05, 10, 20)
+
+[node name="CourtNet" type="StaticBody3D" unique_id=693622821]
+collision_layer = 65
+
+[node name="Pole" type="MeshInstance3D" parent="." unique_id=1216935484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4711318, 0)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Pole2" type="MeshInstance3D" parent="." unique_id=78779622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4711318, -9.949575)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Pole3" type="MeshInstance3D" parent="." unique_id=661588481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4711318, 9.912902)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Pole4" type="MeshInstance3D" parent="." unique_id=794708593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4711318, 4.810545)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Pole5" type="MeshInstance3D" parent="." unique_id=934106103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4711318, -5.0488777)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="net" type="MeshInstance3D" parent="." unique_id=1134301693]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.4372401, 0)
+mesh = SubResource("QuadMesh_u3w50")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1265981684]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9826021, 0)
+shape = SubResource("BoxShape3D_lc5oj")

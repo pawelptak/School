@@ -4,13 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="2_8qw4i"]
 [ext_resource type="PackedScene" uid="uid://fj0bm87ekaxu" path="res://Scenes/Objects/Notebook/notebook.tscn" id="3_25i35"]
 [ext_resource type="PackedScene" uid="uid://cteqtw5tay2r7" path="res://Scenes/UI/timer.tscn" id="4_6h1r0"]
-[ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/popup.tscn" id="5_2q1sh"]
+[ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/Popup/popup.tscn" id="5_2q1sh"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="6_e76f7"]
 [ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="7_sxbsr"]
 
 [sub_resource type="Environment" id="Environment_vapn8"]
 ambient_light_source = 2
 ambient_light_color = Color(0.9501192, 0.9501192, 0.9501191, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e76f7"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s1g48"]
 size = Vector3(1, 0.53027344, 1)
@@ -50,16 +53,19 @@ environment = SubResource("Environment_vapn8")
 [node name="Mate" parent="." unique_id=664278660 instance=ExtResource("6_e76f7")]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.149, 0, 3.416)
 
-[node name="Sprite" parent="Mate" index="0" unique_id=274662881]
+[node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_e76f7")
+
+[node name="Sprite" parent="Mate" index="1" unique_id=274662881]
 transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0.27968308, 0)
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 210)
 
-[node name="CollisionShape3D" parent="Mate" index="1" unique_id=2073062423]
+[node name="CollisionShape3D" parent="Mate" index="2" unique_id=2073062423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23486328, 0)
 shape = SubResource("BoxShape3D_s1g48")
 
-[node name="DialogueLookAtPoint" parent="Mate" index="3" unique_id=1460371450]
+[node name="DialogueLookAtPoint" parent="Mate" index="4" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014542282, 0.49833208, -0.032793105)
 
 [node name="CutsceneController" parent="." unique_id=1251273715 instance=ExtResource("7_sxbsr")]

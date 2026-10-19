@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://certklpbjiq4q"]
 
-[ext_resource type="PackedScene" uid="uid://djm0nowbi57x7" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_cenqs"]
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_cenqs"]
 [ext_resource type="Script" uid="uid://j7jp1uw4vav6" path="res://Scenes/Characters/Bully/Bully.cs" id="1_n33nh"]
 [ext_resource type="Texture2D" uid="uid://dycanx07f5wxv" path="res://Scenes/Characters/Bully/bully.png" id="2_tp2y2"]
 [ext_resource type="Texture2D" uid="uid://b0xvru0gcgn3c" path="res://Scenes/Characters/Bully/idle2.png" id="4_td31i"]
@@ -11,15 +11,33 @@
 [ext_resource type="Texture2D" uid="uid://m3sjp1yy5uh2" path="res://Scenes/Characters/Bully/talk4.png" id="9_36pyo"]
 [ext_resource type="Texture2D" uid="uid://02yotjx3fl1a" path="res://Scenes/Characters/Bully/dead.png" id="10_kviak"]
 [ext_resource type="Texture2D" uid="uid://40dfav2k68hh" path="res://Scenes/Characters/Bully/hurt.png" id="10_rib6x"]
+[ext_resource type="Texture2D" uid="uid://cn7oale8wsosf" path="res://Scenes/Characters/Bully/attack1.png" id="11_36pyo"]
+[ext_resource type="Texture2D" uid="uid://c6d0qxpcvliek" path="res://Scenes/Characters/Bully/attack2.png" id="12_s6lq5"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kviak"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Bully" unique_id=664278660 instance=ExtResource("1_cenqs")]
 script = ExtResource("1_n33nh")
 
-[node name="Sprite" parent="." index="0" unique_id=274662881]
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_kviak")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
 texture = ExtResource("2_tp2y2")
 
-[node name="SpriteAnimator" parent="." index="4" unique_id=205470488]
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
 IdleFrames = Array[Texture2D]([ExtResource("2_tp2y2"), ExtResource("4_td31i"), ExtResource("5_eynki"), ExtResource("4_td31i")])
 TalkingFrames = Array[Texture2D]([ExtResource("6_rib6x"), ExtResource("7_kviak"), ExtResource("8_mva3c"), ExtResource("9_36pyo")])
 HitFrames = Array[Texture2D]([ExtResource("10_rib6x")])
+AttackFrames = Array[Texture2D]([ExtResource("11_36pyo"), ExtResource("12_s6lq5")])
+AttackFrameDuration = 0.3
+AttackHitFrameIndex = 1
 DeadTexture = ExtResource("10_kviak")
+
+[node name="NpcController" parent="." index="6" unique_id=991182570]
+Speed = 4.0
+AttackCooldown = 0.8
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+MaxHealth = 200.0

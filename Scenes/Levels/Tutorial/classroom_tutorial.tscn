@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="17_5jrp5"]
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="18_wcjaj"]
 [ext_resource type="PackedScene" uid="uid://n0mv68fne0fi" path="res://Scenes/Objects/Mug/mug.tscn" id="19_183mx"]
+[ext_resource type="PackedScene" uid="uid://dlpgb5bd061n" path="res://Scenes/Objects/Clock/clock.tscn" id="20_s51k5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cqif2"]
 size = Vector3(10, 0.2, 14.840332)
@@ -223,6 +224,9 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.86
 
 [node name="Mug" parent="." index="45" unique_id=846729379 instance=ExtResource("19_183mx")]
 transform = Transform3D(-0.6612439, 0, -0.750171, 0, 1, 0, 0.750171, 0, -0.6612439, -2.7564154, 1.0900002, -6.9538713)
+
+[node name="Clock" parent="." index="46" unique_id=1525051978 instance=ExtResource("20_s51k5")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -3.4533887, 3.0223482, -9.559474)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

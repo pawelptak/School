@@ -1,0 +1,18 @@
+Ideas:
+- dodac odliczanie 3 2 1 po zamknieciu popup z homework minigame
+- efekty splash przy rzucie obiektow typu gąbka, woda, szklanka
+- atak z powietrza to kopniak  (nie wiem czy ma miec wiekszy dmg niz normalny cios)
+
+- podmienic teksture mate
+- dodac walking animacje do mate
+- balans wszystkiego tzn statystyk przedmiotow damange, knockback (w scenach), attack range npc i playera. damage npc i playera
+
+- ?? moze spowalniac postac gracza gdy niskie zdrowie???
+-? full screen efekt zadawania obrażeń?
+-?? - kopanie przez przytrzymanie LPM (lub jakis przycisk). - daje duzy knockback i popycha przedmioty na npc - nawet te ktorych nie da sie podniesc (biurko) (przedmioty maja zadawac dmg)
+
+
+- odporność npc na knockback jako opcja
+- na WF Skrzyp uczy nas Blokowania
+- po WF walka z Bully nr 2 - z dwoma parobkami i bull ma mocny atak i inny stroj. wokół tłum gapiów
+- wiadro woznej

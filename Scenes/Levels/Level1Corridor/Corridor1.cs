@@ -1,6 +1,5 @@
 using Godot;
-
-public partial class Corridor1 : Node3D
+public partial class Corridor1 : LevelBase
 {
     private Mate _mate;
     private NpcController _studentController;
@@ -9,9 +8,12 @@ public partial class Corridor1 : Node3D
     private ObjectiveMarker _objectiveMarker;
 
     private Player _player;
+    private Camera3D _camera;
 
     public override void _Ready()
     {
+        base._Ready();
+
         _mate = GetNode<Mate>("Mate");
         _mate.InteractionRequested += OnMateInteractionRequested;
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
@@ -23,6 +25,11 @@ public partial class Corridor1 : Node3D
 
         _studentController = GetNode<NpcController>("AsianStudentMale/NpcController");
         _player = GetNode<Player>("Player");
+        _camera = _player.GetNode<Camera3D>("Camera3D");
+
+        _cutsceneController.SetCamera(_camera);
+        _cutsceneController.SetPlayer(_player);
+
     }
 
     private void OnMateInteractionRequested(Player player)
@@ -36,13 +43,14 @@ public partial class Corridor1 : Node3D
         _cutsceneController.StartDialogue(
             _mate,
             [
-                new DialogueLine(DialogueSpeaker.Mate, MateText.HomeWorkQuestion, 3.0f),
-                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkResponse, 2.5f),
-                new DialogueLine(DialogueSpeaker.Player, PlayerText.HomeworkRequest, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, Corridor1Text.HomeWorkQuestion, 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, Corridor1Text.HomeworkResponse, 2.5f),
+                new DialogueLine(DialogueSpeaker.Player, Corridor1Text.HomeworkRequest, 2.5f),
                 new DialogueLine(DialogueSpeaker.Mate, string.Empty, 2f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.PlayerResponse2, 4.5f)
+                new DialogueLine(DialogueSpeaker.Mate, Corridor1Text.PlayerResponse2, 4.5f)
             ],
-            onFinished: StartHomeworkMinigame
+            onFinished: StartHomeworkMinigame,
+            cinematic: true
         );
     }
 
@@ -56,7 +64,7 @@ public partial class Corridor1 : Node3D
         _cutsceneController.StartDialogue(
             _student,
             [
-                new DialogueLine(DialogueSpeaker.AsianStudentMale, AsianStudentMaleText.InteractionLevel1, 3.0f),
+                new DialogueLine(DialogueSpeaker.AsianStudentMale, Corridor1Text.AsianStudentInteraction, 3.0f),
             ]
         );
     }

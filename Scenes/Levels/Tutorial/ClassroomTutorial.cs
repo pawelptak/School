@@ -1,6 +1,5 @@
 using Godot;
-
-public partial class ClassroomTutorial : Node3D
+public partial class ClassroomTutorial : LevelBase
 {
     private Mate _mate;
     private Player _player;
@@ -12,9 +11,12 @@ public partial class ClassroomTutorial : Node3D
     private Door _door;
     private RigidBody3D _playerChair;
     private RigidBody3D _playerDesk;
+    private int correctThrowCount = 0;
 
     public override void _Ready()
     {
+        base._Ready();
+
         _mate = GetNode<Mate>("Mate");
         _player = GetNode<Player>("Player");
         _camera = _player.GetNode<Camera3D>("Camera3D");
@@ -102,11 +104,11 @@ public partial class ClassroomTutorial : Node3D
         _cutsceneController.StartDialogue(
             _mate,
             [
-                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUp, 3.5f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.LessonEnding, 4.5f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.BreakEnding, 3.5f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.WakeUpInstruction, 2.5f),
-                new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.TakeBackpackInstruction, "LPM"), 6.0f),
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.WakeUp, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.LessonEnding, 4.5f),
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.BreakEnding, 3.5f),
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.WakeUpInstruction, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, string.Format(TutorialText.TakeBackpackInstruction, "LPM"), 6.0f),
             ],
             cinematic: true,
             onFinished: OnCinematicDialogueFinished,
@@ -116,7 +118,7 @@ public partial class ClassroomTutorial : Node3D
 
     private void OnDoorInteracted()
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Level1Corridor/corridor_1_inherited.tscn");
     }
 
     private void OnCinematicDialogueFinished()
@@ -137,7 +139,7 @@ public partial class ClassroomTutorial : Node3D
     {
         if (throwable != _backpack)
         {
-            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, MateText.ThrowWrongItem, 2.0f)]);
+            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, TutorialText.ThrowWrongItem, 2.0f)]);
 
             return true;
         }
@@ -145,12 +147,17 @@ public partial class ClassroomTutorial : Node3D
         if (_doorObjectiveActive)
             return false;
 
-        if (throwForce < 15.0f)
+
+        if (correctThrowCount < 1)
         {
-            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, string.Format(MateText.ThrowAgain, "LPM"), 4.0f)]);
+            _cutsceneController.StartDialogue(_mate, [new DialogueLine(DialogueSpeaker.Mate, string.Format(TutorialText.ThrowAgain, "LPM"), 4.0f)]);
+
+            correctThrowCount++;
 
             return true;
         }
+
+
 
         _objectiveMarker.Hide();
 
@@ -159,8 +166,8 @@ public partial class ClassroomTutorial : Node3D
         _cutsceneController.StartDialogue(
             _mate,
             [
-                new DialogueLine(DialogueSpeaker.Mate, MateText.ThrowGood, 2.5f),
-                new DialogueLine(DialogueSpeaker.Mate, MateText.GoToDoor, 4.5f)
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.ThrowGood, 2.5f),
+                new DialogueLine(DialogueSpeaker.Mate, TutorialText.GoToDoor, 4.5f)
             ]
         );
 

@@ -14,6 +14,19 @@
 [ext_resource type="PackedScene" uid="uid://chtolar4fv6w1" path="res://Scenes/Objects/FemaleTeacherBag/female_teacher_bag.tscn" id="10_atrwb"]
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Objects/Sponge/sponge.tscn" id="11_xactb"]
 [ext_resource type="PackedScene" uid="uid://8ydauf77nf52" path="res://Scenes/Objects/TeacherChair/teacher_chair.tscn" id="12_421x3"]
+[ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="15_5gj1k"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5gj1k"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_atrwb"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xactb"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_421x3"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
 size = Vector3(30, 5, 1)
@@ -36,25 +49,38 @@ size = Vector3(30, 0.2, 30)
 [node name="DebugPlayground" unique_id=513644933 instance=ExtResource("1_o172t")]
 script = ExtResource("2_s6ct2")
 
-[node name="CollisionShape3D" parent="Player" parent_id_path=PackedInt32Array(195847836) index="3" unique_id=634412986 groups=["NPCs"]]
+[node name="CollisionShape3D" parent="Player" parent_id_path=PackedInt32Array(195847836) index="4" unique_id=634412986 groups=["NPCs"]]
 
 [node name="AsianStudentMale" parent="." index="4" unique_id=559252500 groups=["NPCs"] instance=ExtResource("2_o6scy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132166)
 RecoveryTime = 2.0
 
+[node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_5gj1k")
+
 [node name="Mate" parent="." index="5" unique_id=2067851637 instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
 RecoveryTime = 2.0
 
+[node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_atrwb")
+
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
+DefeatMode = 1
 RecoveryTime = 2.0
+
+[node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_xactb")
 
 [node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
 RecoveryTime = 2.0
 
-[node name="SpriteAnimator" parent="Bully" index="4" unique_id=205470488]
+[node name="NpcHealthBar" parent="Bully" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_421x3")
+
+[node name="SpriteAnimator" parent="Bully" index="5" unique_id=205470488]
 AttackFrames = Array[Texture2D]([ExtResource("7_dhuea")])
 AttackHitFrameIndex = 0
 
@@ -79,35 +105,56 @@ Knockback = 3.0
 [node name="Sponge" parent="." index="13" unique_id=1898702954 instance=ExtResource("11_xactb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.039832, 0.5837808, 6.9308004)
 
-[node name="TeacherChair" parent="." index="14" unique_id=225576235 instance=ExtResource("12_421x3")]
+[node name="Sponge2" parent="." index="14" unique_id=1553528677 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.039832, 0.5837808, 0.38342953)
+
+[node name="Sponge3" parent="." index="15" unique_id=1556332999 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7767215, 0.5837808, 0.38342953)
+
+[node name="Sponge4" parent="." index="16" unique_id=1184777291 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.962341, 0.5837808, 0.38342953)
+
+[node name="Sponge5" parent="." index="17" unique_id=34435595 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.296044, 0.5837808, 0.38342953)
+
+[node name="Sponge6" parent="." index="18" unique_id=1690249763 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.479258, 0.5837808, 0.38342953)
+
+[node name="Sponge7" parent="." index="19" unique_id=1198408815 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.315007, 0.5837808, 0.38342953)
+
+[node name="Sponge8" parent="." index="20" unique_id=1465676784 instance=ExtResource("11_xactb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.315007, 0.5837808, 2.61414)
+
+[node name="TeacherChair" parent="." index="21" unique_id=225576235 instance=ExtResource("12_421x3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.888838, 0.015138438, 5.272296)
 Knockback = 3.0
 
-[node name="Wall" type="CSGMesh3D" parent="." index="15" unique_id=2247746]
+[node name="Wall" type="CSGMesh3D" parent="." index="22" unique_id=2247746]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2284107, 14)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall2" type="CSGMesh3D" parent="." index="16" unique_id=777048014]
+[node name="Wall2" type="CSGMesh3D" parent="." index="23" unique_id=777048014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2284107, -15.124615)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall3" type="CSGMesh3D" parent="." index="17" unique_id=1819969414]
+[node name="Wall3" type="CSGMesh3D" parent="." index="24" unique_id=1819969414]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14.531487, 2.2284107, -0.6325283)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="Wall4" type="CSGMesh3D" parent="." index="18" unique_id=837584821]
+[node name="Wall4" type="CSGMesh3D" parent="." index="25" unique_id=837584821]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.283166, 2.2284107, -0.6325283)
 use_collision = true
 collision_layer = 65
 mesh = SubResource("BoxMesh_crm6m")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="19" unique_id=912610293]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="26" unique_id=912610293]
 navigation_mesh = SubResource("NavigationMesh_crm6m")
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0" unique_id=1566813962]
@@ -119,6 +166,9 @@ shape = SubResource("BoxShape3D_o172t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" index="1" unique_id=923648103]
 mesh = SubResource("BoxMesh_f5wrq")
+
+[node name="PeTeacher" parent="." index="28" unique_id=367615136 groups=["NPCs"] instance=ExtResource("15_5gj1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.63821125, 0.92160004, -0.6083412)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

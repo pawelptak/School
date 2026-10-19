@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://2buu5863y5su"]
+
+[ext_resource type="Script" uid="uid://u72kpds7rpyc" path="res://Scenes/UI/HUD/InventorySlot.cs" id="1_slot"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0, 0, 0, 0.5019608)
+border_color = Color(0.42, 0.48, 0.56, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_selection"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.6666667)
+
+[node name="InventorySlot" type="Panel" unique_id=563188968]
+custom_minimum_size = Vector2(64, 64)
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+script = ExtResource("1_slot")
+
+[node name="ItemIcon" type="TextureRect" parent="." unique_id=258420026]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SelectionBorder" type="Panel" parent="." unique_id=334459306]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_selection")
+
+[node name="CountLabel" type="Label" parent="." unique_id=1805689891]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -24.0
+offset_right = -4.0
+offset_bottom = -4.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "15"
+horizontal_alignment = 2

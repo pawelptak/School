@@ -47,6 +47,28 @@ public partial class CutsceneController : Node
         _player = player;
     }
 
+    /// <summary>
+    /// Starts a reaction dialogue only if no other dialogue or
+    /// cinematic dialogue is currently active.
+    /// Reaction dialogues never interrupt existing conversations.
+    /// </summary>
+    public bool TryStartReactionDialogue(
+        Node3D character,
+        DialogueLine[] messages)
+    {
+        if (_dialogueUI == null)
+            return false;
+
+        if (_dialogueUI.Visible || _cinematicDialogueActive)
+            return false;
+
+        if (messages == null || messages.Length == 0)
+            return false;
+
+        StartDialogue(character, messages);
+        return true;
+    }
+
     public void StopForSceneTransition()
     {
         _dialogueSession++;
@@ -190,7 +212,9 @@ public partial class CutsceneController : Node
         else
         {
             var referencePosition = _originalCameraTransform.Origin;
-            var directionFromCharacterToCamera = referencePosition - character.GlobalPosition;
+            var directionFromCharacterToCamera =
+                referencePosition - character.GlobalPosition;
+
             directionFromCharacterToCamera.Y = 0;
 
             if (directionFromCharacterToCamera.LengthSquared() == 0)
@@ -198,14 +222,19 @@ public partial class CutsceneController : Node
                 directionFromCharacterToCamera = Vector3.Forward;
             }
 
-            directionFromCharacterToCamera = directionFromCharacterToCamera.Normalized();
+            directionFromCharacterToCamera =
+                directionFromCharacterToCamera.Normalized();
 
-            targetPosition = character.GlobalPosition + directionFromCharacterToCamera * 0.9f;
+            targetPosition =
+                character.GlobalPosition
+                + directionFromCharacterToCamera * 0.9f;
+
             targetPosition.Y = lookAtPoint.GlobalPosition.Y;
         }
 
         var targetTransform = new Transform3D();
         targetTransform.Origin = targetPosition;
+
         targetTransform = targetTransform.LookingAt(
             lookAtPoint.GlobalPosition,
             Vector3.Up
@@ -238,6 +267,7 @@ public partial class CutsceneController : Node
     private void SetHudVisibility(bool visible)
     {
         var hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
+
         if (hud != null)
         {
             hud.Visible = visible;
@@ -270,6 +300,7 @@ public partial class CutsceneController : Node
 
         _cameraTween?.Kill();
         _cameraTween = CreateTween();
+
         var tween = _cameraTween;
 
         tween.SetParallel();
@@ -298,6 +329,7 @@ public partial class CutsceneController : Node
                     _player.MovementLocked = false;
                     _player.CameraLocked = false;
                 }
+
                 SetHudVisibility(true);
                 CinematicDialogueFinished?.Invoke();
             })
@@ -311,11 +343,15 @@ public partial class CutsceneController : Node
 
         var currentLine = _dialogueLines[_currentDialogueLine];
 
-        bool playerIsSpeaking = currentLine.Speaker == DialogueSpeaker.Player;
+        bool playerIsSpeaking =
+            currentLine.Speaker == DialogueSpeaker.Player;
 
-        var textEmpty = string.IsNullOrWhiteSpace(currentLine.Text);
+        bool textEmpty =
+            string.IsNullOrWhiteSpace(currentLine.Text);
 
-        _currentCharacter.SetTalking(!playerIsSpeaking && !textEmpty);
+        _currentCharacter.SetTalking(
+            !playerIsSpeaking && !textEmpty
+        );
     }
 
     private void NextDialogueLine()
@@ -336,21 +372,31 @@ public partial class CutsceneController : Node
         StartAutoAdvanceForCurrentLine(_dialogueSession);
     }
 
-    private async void StartAutoAdvanceForCurrentLine(int dialogueSession)
+    private async void StartAutoAdvanceForCurrentLine(
+        int dialogueSession)
     {
         int token = _currentLineToken;
 
-        if ((!_isSkippable && _dialogueLines == null) || (_isSkippable && !_autoAdvanceDialogue) || _dialogueLines == null || _currentDialogueLine >= _dialogueLines.Length)
+        if ((!_isSkippable && _dialogueLines == null)
+            || (_isSkippable && !_autoAdvanceDialogue)
+            || _dialogueLines == null
+            || _currentDialogueLine >= _dialogueLines.Length)
+        {
             return;
+        }
 
-        double duration = _dialogueLines[_currentDialogueLine].DisplayDurationSeconds;
+        double duration =
+            _dialogueLines[_currentDialogueLine].DisplayDurationSeconds;
 
         await ToSignal(
             GetTree().CreateTimer(duration),
             SceneTreeTimer.SignalName.Timeout
         );
 
-        if (token != _currentLineToken || dialogueSession != _dialogueSession || (!_isSkippable ? false : !_autoAdvanceDialogue) || !_dialogueUI.IsVisible())
+        if (token != _currentLineToken
+            || dialogueSession != _dialogueSession
+            || (!_isSkippable ? false : !_autoAdvanceDialogue)
+            || !_dialogueUI.IsVisible())
         {
             return;
         }

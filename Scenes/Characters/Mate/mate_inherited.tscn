@@ -1,19 +1,28 @@
 [gd_scene format=3 uid="uid://c8vl1wfor5yi4"]
 
-[ext_resource type="PackedScene" uid="uid://djm0nowbi57x7" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_tj4r4"]
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_tj4r4"]
 [ext_resource type="Script" uid="uid://cxuumnd152rxs" path="res://Scenes/Characters/Mate/Mate.cs" id="2_vgug4"]
 [ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="3_wgc55"]
 [ext_resource type="Texture2D" uid="uid://7k17hyvt8dek" path="res://Scenes/Characters/Mate/mate_talk_1.png" id="4_fccbm"]
 [ext_resource type="Texture2D" uid="uid://jgmfcer62oo8" path="res://Scenes/Characters/Mate/mate_talk_2.png" id="5_sfckw"]
 [ext_resource type="Texture2D" uid="uid://cjyp12tyaw3s" path="res://Scenes/Characters/Mate/mate_hit.png" id="6_5ygk0"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_vgug4"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Mate" unique_id=664278660 instance=ExtResource("1_tj4r4")]
 script = ExtResource("2_vgug4")
 
-[node name="DialogueLookAtPoint" parent="." index="3" unique_id=1460371450]
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_vgug4")
+
+[node name="DialogueLookAtPoint" parent="." index="4" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014542162, 0.75315595, -0.032793105)
 
-[node name="SpriteAnimator" parent="." index="4" unique_id=205470488]
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
 IdleFrames = Array[Texture2D]([ExtResource("3_wgc55")])
 TalkingFrames = Array[Texture2D]([ExtResource("4_fccbm"), ExtResource("5_sfckw")])
 HitFrames = Array[Texture2D]([ExtResource("6_5ygk0")])
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+IsImmortal = true

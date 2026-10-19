@@ -1,6 +1,7 @@
 
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class SpriteAnimator : Node
 {
@@ -23,6 +24,17 @@ public partial class SpriteAnimator : Node
     [Export] public float AttackFrameDuration { get; set; } = 0.12f;
     [Export] public int AttackHitFrameIndex { get; set; } = 2;
 
+    [ExportGroup("Heavy Attack")]
+    [Export] public Godot.Collections.Array<Texture2D> HeavyAttackFrames { get; set; } = new();
+    [Export] public float HeavyAttackFrameDuration { get; set; } = 0.16f;
+    [Export] public int HeavyAttackHitFrameIndex { get; set; } = 3;
+
+    [ExportGroup("Multi-Hit Attack")]
+    [Export] public Godot.Collections.Array<Texture2D> MultiHitAttackFrames { get; set; } = new();
+    [Export] public float MultiHitAttackFrameDuration { get; set; } = 0.12f;
+
+    [Export] public Godot.Collections.Array<int> MultiHitFrameIndices { get; set; } = new();
+
     [ExportGroup("Moving")]
     [Export] public Godot.Collections.Array<Texture2D> MovingFrames { get; set; } = new();
     [Export] public float MovingFrameDuration { get; set; } = 0.12f;
@@ -30,8 +42,13 @@ public partial class SpriteAnimator : Node
     [ExportGroup("Dead")]
     [Export] public Texture2D DeadTexture { get; set; }
 
+    // Existing events retained for compatibility.
     public event Action AttackHitFrame;
     public event Action AttackAnimationFinished;
+
+    // Provides the attack type to combat logic.
+    public event Action<bool> AttackHitFrameWithType;
+    public event Action MultiHitAttackHitFrame;
 
     private const float TemporaryDeadOffsetY = -0.8f;
 
@@ -39,6 +56,9 @@ public partial class SpriteAnimator : Node
     private bool _isMoving;
     private bool _isPlayingHit;
     private bool _isPlayingAttack;
+    private bool _isPlayingHeavyAttack;
+    private bool _isPlayingMultiHitAttack;
+    private readonly HashSet<int> _triggeredMultiHitFrames = new();
     private bool _isDead;
     private bool _attackHitFrameTriggered;
 
@@ -50,6 +70,9 @@ public partial class SpriteAnimator : Node
     private int _currentFrame;
     private bool _currentAnimationLoops;
 
+    private Color _originalModulate;
+    private Tween _hitTween;
+
     public override void _Ready()
     {
         if (Sprite == null)
@@ -60,7 +83,24 @@ public partial class SpriteAnimator : Node
         }
 
         _originalSpritePosition = Sprite.Position;
+        _originalModulate = Sprite.Modulate;
         PlayBaseAnimation();
+    }
+
+    public void PlayHitFlash(Color flashColor)
+    {
+        if (Sprite == null || _isDead)
+            return;
+
+        _hitTween?.Kill();
+        _hitTween = Sprite.CreateTween();
+
+        Sprite.Modulate = flashColor;
+        _hitTween.TweenProperty(Sprite, "modulate", Colors.White, 0.15f);
+
+        Vector3 originalScale = new Vector3(1, 0.9f, 1);
+        Sprite.Scale = originalScale * 1.15f;
+        _hitTween.Parallel().TweenProperty(Sprite, "scale", originalScale, 0.12f);
     }
 
     public override void _Process(double delta)
@@ -79,18 +119,21 @@ public partial class SpriteAnimator : Node
             {
                 if (!_currentAnimationLoops)
                 {
-bool wasPlayingAttack = _isPlayingAttack;
+                    bool wasPlayingAttack = IsPlayingAttack();
 
-_isPlayingHit = false;
-_isPlayingAttack = false;
-_attackHitFrameTriggered = false;
+                    _isPlayingHit = false;
+                    _isPlayingAttack = false;
+                    _isPlayingHeavyAttack = false;
+                    _isPlayingMultiHitAttack = false;
+                    _attackHitFrameTriggered = false;
+                    _triggeredMultiHitFrames.Clear();
 
-PlayBaseAnimation();
+                    PlayBaseAnimation();
 
-if (wasPlayingAttack)
-    AttackAnimationFinished?.Invoke();
+                    if (wasPlayingAttack)
+                        AttackAnimationFinished?.Invoke();
 
-return;
+                    return;
                 }
 
                 _currentFrame = 0;
@@ -101,6 +144,47 @@ return;
         }
     }
 
+    private bool IsPlayingAttack()
+    {
+        return _isPlayingAttack
+            || _isPlayingHeavyAttack
+            || _isPlayingMultiHitAttack;
+    }
+
+    public bool PlayMultiHitAttack()
+    {
+        if (_isDead || IsPlayingAttack() || MultiHitAttackFrames.Count == 0)
+        {
+            if (!_isDead && MultiHitAttackFrames.Count == 0)
+                GD.PushWarning($"{Name}: MultiHitAttackFrames not set.");
+
+            return false;
+        }
+
+        if (MultiHitFrameIndices.Count == 0)
+        {
+            GD.PushWarning($"{Name}: MultiHitFrameIndices not set.");
+            return false;
+        }
+
+        _isPlayingHit = false;
+        _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = true;
+
+        _triggeredMultiHitFrames.Clear();
+
+        PlayAnimation(
+            MultiHitAttackFrames,
+            MultiHitAttackFrameDuration,
+            false
+        );
+
+        CheckAttackHitFrame();
+
+        return true;
+    }
+
     public void SetTalking(bool talking)
     {
         if (_isDead || _isTalking == talking)
@@ -108,7 +192,7 @@ return;
 
         _isTalking = talking;
 
-        if (!_isPlayingHit && !_isPlayingAttack)
+        if (!_isPlayingHit && !IsPlayingAttack())
             PlayBaseAnimation();
     }
 
@@ -119,7 +203,7 @@ return;
 
         _isMoving = moving;
 
-        if (!_isPlayingHit && !_isPlayingAttack)
+        if (!_isPlayingHit && !IsPlayingAttack())
             PlayBaseAnimation();
     }
 
@@ -140,9 +224,10 @@ return;
         PlayAnimation(HitFrames, HitFrameDuration, false);
     }
 
+
     public bool PlayAttack()
     {
-        if (_isDead || _isPlayingAttack || AttackFrames.Count == 0)
+        if (_isDead || IsPlayingAttack() || AttackFrames.Count == 0)
         {
             if (!_isDead && AttackFrames.Count == 0)
                 GD.PushWarning($"{Name}: AttackFrames not set.");
@@ -152,7 +237,10 @@ return;
 
         _isPlayingHit = false;
         _isPlayingAttack = true;
+        _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = false;
         _attackHitFrameTriggered = false;
+        _triggeredMultiHitFrames.Clear();
 
         PlayAnimation(AttackFrames, AttackFrameDuration, false);
         CheckAttackHitFrame();
@@ -160,13 +248,38 @@ return;
         return true;
     }
 
+
+    public bool PlayHeavyAttack()
+    {
+        if (_isDead || IsPlayingAttack() || HeavyAttackFrames.Count == 0)
+        {
+            if (!_isDead && HeavyAttackFrames.Count == 0)
+                GD.PushWarning($"{Name}: HeavyAttackFrames not set.");
+
+            return false;
+        }
+
+        _isPlayingHit = false;
+        _isPlayingAttack = false;
+        _isPlayingHeavyAttack = true;
+        _attackHitFrameTriggered = false;
+
+        PlayAnimation(HeavyAttackFrames, HeavyAttackFrameDuration, false);
+        CheckAttackHitFrame();
+
+        return true;
+    }
+
     public void CancelAttack()
     {
-        if (!_isPlayingAttack)
+        if (!IsPlayingAttack())
             return;
 
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         AttackAnimationFinished?.Invoke();
         PlayBaseAnimation();
@@ -174,11 +287,32 @@ return;
 
     private void CheckAttackHitFrame()
     {
-        if (!_isPlayingAttack || _attackHitFrameTriggered)
+        if (!IsPlayingAttack())
             return;
 
+        if (_isPlayingMultiHitAttack)
+        {
+            if (!MultiHitFrameIndices.Contains(_currentFrame))
+                return;
+
+            if (!_triggeredMultiHitFrames.Add(_currentFrame))
+                return;
+
+            GD.Print($"[ATTACK DEBUG] Multi-hit frame reached: {_currentFrame}");
+
+            MultiHitAttackHitFrame?.Invoke();
+            return;
+        }
+
+        if (_attackHitFrameTriggered)
+            return;
+
+        int configuredHitFrame = _isPlayingHeavyAttack
+            ? HeavyAttackHitFrameIndex
+            : AttackHitFrameIndex;
+
         int hitFrame = Mathf.Clamp(
-            AttackHitFrameIndex,
+            configuredHitFrame,
             0,
             _currentFrames.Count - 1
         );
@@ -191,6 +325,7 @@ return;
         GD.Print($"[ATTACK DEBUG] Hit frame reached: {_currentFrame}");
 
         AttackHitFrame?.Invoke();
+        AttackHitFrameWithType?.Invoke(_isPlayingHeavyAttack);
     }
 
     public void PlayPermanentDead()
@@ -218,6 +353,9 @@ return;
         _isMoving = false;
         _isPlayingHit = false;
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         _currentFrames = new Godot.Collections.Array<Texture2D>();
         _currentFrame = 0;
@@ -245,7 +383,10 @@ return;
         _isMoving = false;
         _isPlayingHit = false;
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         Sprite.Position = _originalSpritePosition;
 
@@ -261,7 +402,7 @@ return;
 
     private void PlayBaseAnimation()
     {
-        if (_isDead || _isPlayingHit || _isPlayingAttack)
+        if (_isDead || _isPlayingHit || IsPlayingAttack())
             return;
 
         if (_isTalking && TalkingFrames.Count > 0)

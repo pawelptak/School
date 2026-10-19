@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 1024" width="2048" height="1024">
+  <defs>
+    <!-- Tło i faktura gumy -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#e8631c" />
+      <stop offset="60%" stop-color="#c84c0c" />
+      <stop offset="100%" stop-color="#9e3500" />
+    </radialGradient>
+
+    <!-- Wzór mikro-kropek (bump map / faktura skóry) -->
+    <pattern id="bumpPattern" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.8" fill="#000000" opacity="0.15" />
+      <circle cx="12" cy="12" r="1.8" fill="#000000" opacity="0.15" />
+      <circle cx="4" cy="12" r="1.8" fill="#ffffff" opacity="0.1" />
+      <circle cx="12" cy="4" r="1.8" fill="#ffffff" opacity="0.1" />
+    </pattern>
+
+    <!-- Styl czarnych linii biegnących po piłce -->
+    <style>
+      .ribs {
+        fill: none;
+        stroke: #111111;
+        stroke-width: 28;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .rib-glow {
+        fill: none;
+        stroke: #000000;
+        stroke-width: 44;
+        opacity: 0.3;
+        stroke-linecap: round;
+      }
+    </style>
+  </defs>
+
+  <!-- Base Leather Layer -->
+  <rect width="2048" height="1024" fill="url(#bgGrad)" />
+  <rect width="2048" height="1024" fill="url(#bumpPattern)" />
+
+  <!-- Horizontal Main Seam (Equator) -->
+  <line x1="0" y1="512" x2="2048" y2="512" class="rib-glow" />
+  <line x1="0" y1="512" x2="2048" y2="512" class="ribs" />
+
+  <!-- Vertical Main Seams (Meridians) -->
+  <g class="rib-glow">
+    <line x1="512" y1="0" x2="512" y2="1024" />
+    <line x1="1536" y1="0" x2="1536" y2="1024" />
+  </g>
+  <g class="ribs">
+    <line x1="512" y1="0" x2="512" y2="1024" />
+    <line x1="1536" y1="0" x2="1536" y2="1024" />
+  </g>
+
+  <!-- Curved Basketball Rib Lines Side A (Left/Center Hemispheres) -->
+  <path d="M 0,256 C 300,256 512,350 512,512 C 512,674 300,768 0,768" class="rib-glow" />
+  <path d="M 0,256 C 300,256 512,350 512,512 C 512,674 300,768 0,768" class="ribs" />
+
+  <path d="M 1024,256 C 724,256 512,350 512,512 C 512,674 724,768 1024,768" class="rib-glow" />
+  <path d="M 1024,256 C 724,256 512,350 512,512 C 512,674 724,768 1024,768" class="ribs" />
+
+  <!-- Curved Basketball Rib Lines Side B (Right Hemispheres) -->
+  <path d="M 1024,256 C 1324,256 1536,350 1536,512 C 1536,674 1324,768 1024,768" class="rib-glow" />
+  <path d="M 1024,256 C 1324,256 1536,350 1536,512 C 1536,674 1324,768 1024,768" class="ribs" />
+
+  <path d="M 2048,256 C 1748,256 1536,350 1536,512 C 1536,674 1748,768 2048,768" class="rib-glow" />
+  <path d="M 2048,256 C 1748,256 1536,350 1536,512 C 1536,674 1748,768 2048,768" class="ribs" />
+</svg>

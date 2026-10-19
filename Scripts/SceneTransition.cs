@@ -46,6 +46,8 @@ public partial class SceneTransition : CanvasLayer
 
         await ToSignal(tweenOut, Tween.SignalName.Finished);
 
+        GameManager.Instance?.SaveGame();
+
         Error error = GetTree().ChangeSceneToFile(targetScenePath);
 
         if (error != Error.Ok)
@@ -60,6 +62,8 @@ public partial class SceneTransition : CanvasLayer
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.SceneChanged);
+
+        //GameManager.Instance?.LoadGame();
 
         await FadeIn(duration);
 

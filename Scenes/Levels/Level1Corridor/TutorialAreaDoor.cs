@@ -6,6 +6,8 @@ public partial class TutorialAreaDoor : AnimatableBody3D, IInteractable
 
     public Vector3 PromptOffset => new Vector3(0, 1.5f, 0);
 
+    string IInteractable.Name => "Drzwi";
+
     public bool CanInteract(Player player)
     {
         return true;
@@ -13,6 +15,6 @@ public partial class TutorialAreaDoor : AnimatableBody3D, IInteractable
 
     public void Interact(Player player)
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/TutorialArea/tutorial_area.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/TutorialArea/tutorial_area_inherited.tscn");
     }
 }

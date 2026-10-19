@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cjje40j8dl4g2"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_dh3gs"]
+[ext_resource type="PackedScene" uid="uid://bexxx5hlgvvgn" path="res://Scenes/Objects/BasketballCourt/basketball_court.tscn" id="2_4qbhs"]
+[ext_resource type="Texture2D" uid="uid://bmwe5r8bj2q81" path="res://Scenes/Levels/OutsideCourt/paving.png" id="3_4qbhs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh3gs"]
+albedo_texture = ExtResource("3_4qbhs")
+uv1_scale = Vector3(80, 35, 60)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_dh3gs")
+size = Vector3(100, 1, 50)
+
+[node name="OutsideCourt" unique_id=513644933 instance=ExtResource("1_dh3gs")]
+
+[node name="Player" parent="." index="1" unique_id=195847836]
+ChargeThrowEnabled = true
+
+[node name="BasketballCourt" parent="." index="4" unique_id=83723086 instance=ExtResource("2_4qbhs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+
+[node name="Ground" type="StaticBody3D" parent="." index="5" unique_id=2124211250]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" index="0" unique_id=1160091533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51743174, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]

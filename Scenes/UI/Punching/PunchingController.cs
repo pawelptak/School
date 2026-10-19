@@ -131,6 +131,22 @@ public partial class PunchingController : CanvasLayer
         }
     }
 
+    public void CancelPunch()
+    {
+        if (!_isPlaying)
+            return;
+
+        _isPlaying = false;
+        _isReversing = false;
+        _hitFrameTriggered = false;
+        _frameTimer = 0.0f;
+        _currentFrame = 0;
+
+        _leftTexture.Hide();
+        _rightTexture.Hide();
+        Hide();
+    }
+
     private void ApplyFrame()
     {
         if (_currentFrame < 0 ||

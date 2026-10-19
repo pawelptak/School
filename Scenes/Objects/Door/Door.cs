@@ -9,6 +9,8 @@ public partial class Door : Node3D, IInteractable
     public string InteractionText => "Wejdź";
     public Vector3 PromptOffset => new Vector3(0, 1.5f, 0);
 
+    string IInteractable.Name => "Drzwi";
+
     public event Action Interacted;
 
     public bool CanInteract(Player player)
