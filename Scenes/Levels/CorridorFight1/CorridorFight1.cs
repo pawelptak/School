@@ -6,6 +6,7 @@ public partial class CorridorFight1 : LevelBase
     private NpcController _mateController;
     private Bully _bully;
     private NpcController _bullyController;
+    private NpcHealthController _bullyHealthController;
     private CutsceneController _cutsceneController;
     private ObjectiveMarker _objectiveMarker;
 
@@ -28,6 +29,8 @@ public partial class CorridorFight1 : LevelBase
 
         _bully = GetNode<Bully>("Bully");
         _bullyController = _bully.GetNode<NpcController>("NpcController");
+        _bullyHealthController = _bully.GetNode<NpcHealthController>("NpcHealthController");
+        _bullyHealthController.Died += OnBullyDefeated;
         _bullyController.MoveToFinished += StartBullyDialogue;
 
         _player = GetNode<Player>("Player");
@@ -103,5 +106,19 @@ public partial class CorridorFight1 : LevelBase
     private void StartFight()
     {
         _bullyController.StartChase(_player);
+    }
+
+    private void OnBullyDefeated()
+    {
+        _cutsceneController.StartDialogue(
+            _mate,
+            [
+                new DialogueLine(DialogueSpeaker.Player, "Uff...", 1.0f),
+                new DialogueLine(DialogueSpeaker.Player, "Nie wiedziałem, że tak potrafię.", 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, "Ok, muszę załatwić sobie strój na WF.", 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, "Hmm", 1.0f),
+                new DialogueLine(DialogueSpeaker.Player, "No w sumie.", 1.0f)
+            ]
+        );
     }
 }

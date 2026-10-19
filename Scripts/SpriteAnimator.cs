@@ -224,6 +224,7 @@ public partial class SpriteAnimator : Node
         PlayAnimation(HitFrames, HitFrameDuration, false);
     }
 
+
     public bool PlayAttack()
     {
         if (_isDead || IsPlayingAttack() || AttackFrames.Count == 0)
@@ -235,7 +236,7 @@ public partial class SpriteAnimator : Node
         }
 
         _isPlayingHit = false;
-        _isPlayingAttack = false;
+        _isPlayingAttack = true;
         _isPlayingHeavyAttack = false;
         _isPlayingMultiHitAttack = false;
         _attackHitFrameTriggered = false;
@@ -246,6 +247,7 @@ public partial class SpriteAnimator : Node
 
         return true;
     }
+
 
     public bool PlayHeavyAttack()
     {
