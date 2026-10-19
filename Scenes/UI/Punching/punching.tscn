@@ -27,6 +27,7 @@ grow_vertical = 0
 theme_override_constants/margin_left = 200
 
 [node name="TextureRect" type="TextureRect" parent="PunchLeft" unique_id=1627358379]
+texture_filter = 1
 custom_minimum_size = Vector2(1000, 1000)
 propagate_maximum_size = true
 layout_mode = 2
@@ -45,6 +46,7 @@ grow_vertical = 0
 theme_override_constants/margin_right = 200
 
 [node name="TextureRect" type="TextureRect" parent="PunchRight" unique_id=1652705350]
+texture_filter = 1
 custom_minimum_size = Vector2(1000, 1000)
 propagate_maximum_size = true
 layout_mode = 2

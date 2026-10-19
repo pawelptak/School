@@ -81,8 +81,8 @@ public partial class Player : CharacterBody3D
 	public float BlockDamageMultiplier { get; set; } = 0.3f;
 	[Export] public float PerfectBlockWindow { get; set; } = 0.2f;
 	[Export] public float PerfectBlockStunDuration { get; set; } = 1.2f;
-    [Export] public bool PerfectBlockEnabled { get; set; } = true;
-    private float _perfectBlockTimer;
+	[Export] public bool PerfectBlockEnabled { get; set; } = true;
+	private float _perfectBlockTimer;
 
 	public float CalculateIncomingDamage(float damage)
 	{
