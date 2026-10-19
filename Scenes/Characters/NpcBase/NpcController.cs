@@ -310,6 +310,7 @@ public partial class NpcController : Node
         );
     }
 
+
     private void OnAttackHitFrame()
     {
         if (_isDefeated ||
@@ -326,25 +327,33 @@ public partial class NpcController : Node
         float distance = _npc.GlobalPosition.DistanceTo(targetFlat);
 
         if (distance > AttackDistance)
-        {
             return;
-        }
 
         var healthController =
             _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
 
-        if (healthController != null)
-        {
-            float damage = AttackDamage;
+        if (healthController == null)
+            return;
 
-            if (_chaseTarget is Player player)
+        if (_chaseTarget is Player player)
+        {
+            if (player.TryPerfectBlock(this))
             {
-                damage = player.CalculateIncomingDamage(damage);
+                _isAttacking = false;
+                _attackTimer = AttackCooldown;
+                return;
             }
 
-            healthController.TakeDamage(damage);
+            healthController.TakeDamage(
+                player.CalculateIncomingDamage(AttackDamage)
+            );
+
+            return;
         }
+
+        healthController.TakeDamage(AttackDamage);
     }
+
 
     private void OnAttackAnimationFinished()
     {
@@ -557,7 +566,16 @@ public partial class NpcController : Node
             _knockbackVelocity += direction * knockback;
         }
 
-        _stunTimer = Mathf.Max(_stunTimer, stunDuration);
+        if (stunDuration > 0.0f)
+        {
+            _stunTimer = Mathf.Max(_stunTimer, stunDuration);
+
+            if (_isAttacking)
+            {
+                _isAttacking = false;
+                _spriteAnimator?.CancelAttack();
+            }
+        }
     }
 
     private bool ProcessHitEffects(double dt)

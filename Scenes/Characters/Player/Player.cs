@@ -75,13 +75,18 @@ public partial class Player : CharacterBody3D
 	private BlockingController _blockingController;
 	private bool _blockButtonHeld;
 
+
 	[ExportGroup("Blocking")]
 	[Export(PropertyHint.Range, "0,1,0.05")]
 	public float BlockDamageMultiplier { get; set; } = 0.3f;
+	[Export] public float PerfectBlockWindow { get; set; } = 0.2f;
+	[Export] public float PerfectBlockStunDuration { get; set; } = 1.2f;
+    [Export] public bool PerfectBlockEnabled { get; set; } = true;
+    private float _perfectBlockTimer;
 
 	public float CalculateIncomingDamage(float damage)
 	{
-		if (!IsBlocking)
+		if (!_blockButtonHeld)
 			return damage;
 
 		return damage * Mathf.Clamp(BlockDamageMultiplier, 0.0f, 1.0f);
@@ -171,6 +176,27 @@ public partial class Player : CharacterBody3D
 		}
 	}
 
+	public bool TryPerfectBlock(NpcController attacker)
+	{
+		if (!PerfectBlockEnabled || _perfectBlockTimer <= 0.0f || !_blockButtonHeld)
+			return false;
+
+		_perfectBlockTimer = 0.0f;
+
+		if (attacker != null)
+		{
+			attacker.ApplyKnockback(
+				Vector3.Zero,
+				0.0f,
+				PerfectBlockStunDuration
+			);
+		}
+
+		GD.Print("[COMBAT] Perfect block!");
+
+		return true;
+	}
+
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton rightMouseButton
@@ -181,6 +207,7 @@ public partial class Player : CharacterBody3D
 				if (_blockButtonHeld)
 				{
 					_blockButtonHeld = false;
+					_perfectBlockTimer = 0.0f;
 					_blockingController.StopBlocking();
 					GetViewport().SetInputAsHandled();
 				}
@@ -201,12 +228,14 @@ public partial class Player : CharacterBody3D
 				return;
 			}
 
+			_blockButtonHeld = true;
+			_perfectBlockTimer = PerfectBlockWindow;
+
 			if (_punchingController.IsPlaying)
 			{
 				_punchingController.CancelPunch();
 			}
 
-			_blockButtonHeld = true;
 			_blockingController.StartBlocking();
 			GetViewport().SetInputAsHandled();
 			return;
@@ -519,6 +548,14 @@ public partial class Player : CharacterBody3D
 		if (!IsCinematicDialogueActive()) UpdateInteractionTarget();
 
 		HandleHoldInteraction((float)delta);
+
+		if (_perfectBlockTimer > 0.0f)
+		{
+			_perfectBlockTimer = Mathf.Max(
+				0.0f,
+				_perfectBlockTimer - (float)delta
+			);
+		}
 	}
 
 	private void ThrowHeldObject(float force)
