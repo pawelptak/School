@@ -9,6 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://b0obb8xda7ewl" path="res://Scenes/Characters/PeTeacher/talk2.png" id="7_axnm8"]
 [ext_resource type="Texture2D" uid="uid://csanplv5xsd73" path="res://Scenes/Characters/PeTeacher/talk3.png" id="8_ebnfm"]
 [ext_resource type="Texture2D" uid="uid://dtswetnjs1pqt" path="res://Scenes/Characters/PeTeacher/talk4.png" id="9_qvlen"]
+[ext_resource type="Texture2D" uid="uid://dpif8ypnr4apa" path="res://Scenes/Characters/PeTeacher/walk1.png" id="10_280po"]
+[ext_resource type="Texture2D" uid="uid://dh7l2u6rl4slb" path="res://Scenes/Characters/PeTeacher/walk2.png" id="11_v2jlq"]
+[ext_resource type="Texture2D" uid="uid://btjd35mjj2www" path="res://Scenes/Characters/PeTeacher/walk3.png" id="12_ebx4i"]
+[ext_resource type="Texture2D" uid="uid://cetc6qgjujvbn" path="res://Scenes/Characters/PeTeacher/walk4.png" id="13_hniue"]
+[ext_resource type="Texture2D" uid="uid://cku8eyig2slxh" path="res://Scenes/Characters/PeTeacher/walk5.png" id="14_rgfeo"]
+[ext_resource type="Texture2D" uid="uid://dahlc7qr3b4ey" path="res://Scenes/Characters/PeTeacher/walk6.png" id="15_gg61v"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_5wapp"]
 viewport_path = NodePath("SubViewport")
@@ -26,3 +32,7 @@ texture = ExtResource("3_vn7li")
 IdleFrames = Array[Texture2D]([ExtResource("3_vn7li"), ExtResource("3_vn7li"), ExtResource("3_vn7li"), ExtResource("4_5wapp"), ExtResource("4_5wapp"), ExtResource("5_d1826")])
 IdleFrameDuration = 0.5
 TalkingFrames = Array[Texture2D]([ExtResource("6_is5nx"), ExtResource("7_axnm8"), ExtResource("8_ebnfm"), ExtResource("9_qvlen")])
+MovingFrames = Array[Texture2D]([ExtResource("10_280po"), ExtResource("11_v2jlq"), ExtResource("12_ebx4i"), ExtResource("13_hniue"), ExtResource("14_rgfeo"), ExtResource("15_gg61v")])
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+IsImmortal = true
