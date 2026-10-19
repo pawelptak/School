@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/Popup/popup.tscn" id="11_kvpfl"]
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="12_b7thx"]
 [ext_resource type="Texture2D" uid="uid://bl3wru4y2htei" path="res://Scenes/Objects/Door/white_door.jpg" id="13_08po8"]
+[ext_resource type="PackedScene" uid="uid://bqqa6q33rrnl0" path="res://Scenes/Characters/Janitor/janitor.tscn" id="15_08po8"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_oquhe"]
 vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
@@ -136,6 +137,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.368522, 0, 2.5309386)
 
 [node name="Popup" parent="." index="23" unique_id=1416079734 instance=ExtResource("11_kvpfl")]
+
+[node name="Janitor" parent="." index="24" unique_id=468207104 instance=ExtResource("15_08po8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6062107, 0.92160004, -1.83147)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

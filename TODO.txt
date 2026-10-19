@@ -13,8 +13,6 @@ Ideas:
 
 
 - odporność npc na knockback jako opcja
-- specjalne mocne ataki niektórych NPC
-
-
 - na WF Skrzyp uczy nas Blokowania
 - po WF walka z Bully nr 2 - z dwoma parobkami i bull ma mocny atak i inny stroj. wokół tłum gapiów
+- wiadro woznej

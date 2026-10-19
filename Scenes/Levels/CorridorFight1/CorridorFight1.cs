@@ -21,6 +21,8 @@ public partial class CorridorFight1 : LevelBase
     private Door _menDoor;
     private Door _womenDoor;
 
+    private Janitor _janitor;
+
     private bool _toiletDialoguePlayed;
 
     public override void _Ready()
@@ -40,6 +42,8 @@ public partial class CorridorFight1 : LevelBase
         _bullyHealthController = _bully.GetNode<NpcHealthController>("NpcHealthController");
         _bullyHealthController.Died += OnBullyDefeated;
         _bullyController.MoveToFinished += StartBullyDialogue;
+
+        _janitor = GetNode<Janitor>("Janitor");
 
         _player = GetNode<Player>("Player");
         _player.ObjectPickedUp += OnObjectPickedUp;
@@ -64,7 +68,6 @@ public partial class CorridorFight1 : LevelBase
         _womenDoor.Interacted += () => OnDoorInteracted(_womenDoor);
 
         StartMateDialogue();
-
     }
 
     private void StartMateDialogue()
@@ -123,9 +126,19 @@ public partial class CorridorFight1 : LevelBase
 
     }
 
-    private void StartFight()
+    private async void StartFight()
     {
         _bullyController.StartChase(_player);
+
+        await ToSignal(GetTree().CreateTimer(0.5f), SceneTreeTimer.SignalName.Timeout);
+
+        _cutsceneController.StartDialogue(
+            _janitor,
+            [
+                new DialogueLine(DialogueSpeaker.Janitor, CorridorFight1Text.JanitorShout, 2.0f)
+            ]
+        );
+
     }
 
     private void OnBullyDefeated()
