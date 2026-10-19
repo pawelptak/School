@@ -23,6 +23,11 @@ public partial class SpriteAnimator : Node
     [Export] public float AttackFrameDuration { get; set; } = 0.12f;
     [Export] public int AttackHitFrameIndex { get; set; } = 2;
 
+    [ExportGroup("Heavy Attack")]
+    [Export] public Godot.Collections.Array<Texture2D> HeavyAttackFrames { get; set; } = new();
+    [Export] public float HeavyAttackFrameDuration { get; set; } = 0.16f;
+    [Export] public int HeavyAttackHitFrameIndex { get; set; } = 3;
+
     [ExportGroup("Moving")]
     [Export] public Godot.Collections.Array<Texture2D> MovingFrames { get; set; } = new();
     [Export] public float MovingFrameDuration { get; set; } = 0.12f;
@@ -30,8 +35,12 @@ public partial class SpriteAnimator : Node
     [ExportGroup("Dead")]
     [Export] public Texture2D DeadTexture { get; set; }
 
+    // Existing events retained for compatibility.
     public event Action AttackHitFrame;
     public event Action AttackAnimationFinished;
+
+    // Provides the attack type to combat logic.
+    public event Action<bool> AttackHitFrameWithType;
 
     private const float TemporaryDeadOffsetY = -0.8f;
 
@@ -39,6 +48,7 @@ public partial class SpriteAnimator : Node
     private bool _isMoving;
     private bool _isPlayingHit;
     private bool _isPlayingAttack;
+    private bool _isPlayingHeavyAttack;
     private bool _isDead;
     private bool _attackHitFrameTriggered;
 
@@ -50,10 +60,7 @@ public partial class SpriteAnimator : Node
     private int _currentFrame;
     private bool _currentAnimationLoops;
 
-    private float _flashTimer;
-    private float _flashDuration = 0.15f;
     private Color _originalModulate;
-    private bool _isFlashing;
     private Tween _hitTween;
 
     public override void _Ready()
@@ -70,18 +77,15 @@ public partial class SpriteAnimator : Node
         PlayBaseAnimation();
     }
 
-
     public void PlayHitFlash(Color flashColor)
     {
         if (Sprite == null || _isDead)
             return;
 
         _hitTween?.Kill();
-
         _hitTween = Sprite.CreateTween();
 
         Sprite.Modulate = flashColor;
-
         _hitTween.TweenProperty(Sprite, "modulate", Colors.White, 0.15f);
 
         Vector3 originalScale = new Vector3(1, 0.9f, 1);
@@ -91,16 +95,6 @@ public partial class SpriteAnimator : Node
 
     public override void _Process(double delta)
     {
-        if (_isFlashing)
-        {
-            _flashTimer -= (float)delta;
-            if (_flashTimer <= 0f)
-            {
-                _isFlashing = false;
-                Sprite.Modulate = _originalModulate;
-            }
-        }
-
         if (_isDead || _currentFrames.Count == 0 || _currentFrameDuration <= 0)
             return;
 
@@ -115,10 +109,11 @@ public partial class SpriteAnimator : Node
             {
                 if (!_currentAnimationLoops)
                 {
-                    bool wasPlayingAttack = _isPlayingAttack;
+                    bool wasPlayingAttack = IsPlayingAttack();
 
                     _isPlayingHit = false;
                     _isPlayingAttack = false;
+                    _isPlayingHeavyAttack = false;
                     _attackHitFrameTriggered = false;
 
                     PlayBaseAnimation();
@@ -137,6 +132,11 @@ public partial class SpriteAnimator : Node
         }
     }
 
+    private bool IsPlayingAttack()
+    {
+        return _isPlayingAttack || _isPlayingHeavyAttack;
+    }
+
     public void SetTalking(bool talking)
     {
         if (_isDead || _isTalking == talking)
@@ -144,7 +144,7 @@ public partial class SpriteAnimator : Node
 
         _isTalking = talking;
 
-        if (!_isPlayingHit && !_isPlayingAttack)
+        if (!_isPlayingHit && !IsPlayingAttack())
             PlayBaseAnimation();
     }
 
@@ -155,7 +155,7 @@ public partial class SpriteAnimator : Node
 
         _isMoving = moving;
 
-        if (!_isPlayingHit && !_isPlayingAttack)
+        if (!_isPlayingHit && !IsPlayingAttack())
             PlayBaseAnimation();
     }
 
@@ -178,7 +178,7 @@ public partial class SpriteAnimator : Node
 
     public bool PlayAttack()
     {
-        if (_isDead || _isPlayingAttack || AttackFrames.Count == 0)
+        if (_isDead || IsPlayingAttack() || AttackFrames.Count == 0)
         {
             if (!_isDead && AttackFrames.Count == 0)
                 GD.PushWarning($"{Name}: AttackFrames not set.");
@@ -188,6 +188,7 @@ public partial class SpriteAnimator : Node
 
         _isPlayingHit = false;
         _isPlayingAttack = true;
+        _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
 
         PlayAnimation(AttackFrames, AttackFrameDuration, false);
@@ -196,12 +197,34 @@ public partial class SpriteAnimator : Node
         return true;
     }
 
+    public bool PlayHeavyAttack()
+    {
+        if (_isDead || IsPlayingAttack() || HeavyAttackFrames.Count == 0)
+        {
+            if (!_isDead && HeavyAttackFrames.Count == 0)
+                GD.PushWarning($"{Name}: HeavyAttackFrames not set.");
+
+            return false;
+        }
+
+        _isPlayingHit = false;
+        _isPlayingAttack = false;
+        _isPlayingHeavyAttack = true;
+        _attackHitFrameTriggered = false;
+
+        PlayAnimation(HeavyAttackFrames, HeavyAttackFrameDuration, false);
+        CheckAttackHitFrame();
+
+        return true;
+    }
+
     public void CancelAttack()
     {
-        if (!_isPlayingAttack)
+        if (!IsPlayingAttack())
             return;
 
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
 
         AttackAnimationFinished?.Invoke();
@@ -210,11 +233,15 @@ public partial class SpriteAnimator : Node
 
     private void CheckAttackHitFrame()
     {
-        if (!_isPlayingAttack || _attackHitFrameTriggered)
+        if (!IsPlayingAttack() || _attackHitFrameTriggered)
             return;
 
+        int configuredHitFrame = _isPlayingHeavyAttack
+            ? HeavyAttackHitFrameIndex
+            : AttackHitFrameIndex;
+
         int hitFrame = Mathf.Clamp(
-            AttackHitFrameIndex,
+            configuredHitFrame,
             0,
             _currentFrames.Count - 1
         );
@@ -227,6 +254,7 @@ public partial class SpriteAnimator : Node
         GD.Print($"[ATTACK DEBUG] Hit frame reached: {_currentFrame}");
 
         AttackHitFrame?.Invoke();
+        AttackHitFrameWithType?.Invoke(_isPlayingHeavyAttack);
     }
 
     public void PlayPermanentDead()
@@ -254,6 +282,7 @@ public partial class SpriteAnimator : Node
         _isMoving = false;
         _isPlayingHit = false;
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
 
         _currentFrames = new Godot.Collections.Array<Texture2D>();
         _currentFrame = 0;
@@ -281,6 +310,7 @@ public partial class SpriteAnimator : Node
         _isMoving = false;
         _isPlayingHit = false;
         _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
 
         Sprite.Position = _originalSpritePosition;
@@ -297,7 +327,7 @@ public partial class SpriteAnimator : Node
 
     private void PlayBaseAnimation()
     {
-        if (_isDead || _isPlayingHit || _isPlayingAttack)
+        if (_isDead || _isPlayingHit || IsPlayingAttack())
             return;
 
         if (_isTalking && TalkingFrames.Count > 0)

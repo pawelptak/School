@@ -8,7 +8,8 @@ public partial class DebugPlayground : Node3D
 	public override void _Ready()
 	{
 		GameManager.Instance.CurrentSaveData.AttackingUnlocked = true;
-		var npcs = GetTree().GetNodesInGroup("NPCs")
+		GameManager.Instance.CurrentSaveData.BlockingUnlocked = true;
+        var npcs = GetTree().GetNodesInGroup("NPCs")
 		.OfType<InteractableCharacter>();
 
 		_cutsceneController = GetNode<CutsceneController>("CutsceneController");
