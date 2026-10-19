@@ -1,6 +1,7 @@
 
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class SpriteAnimator : Node
 {
@@ -28,6 +29,12 @@ public partial class SpriteAnimator : Node
     [Export] public float HeavyAttackFrameDuration { get; set; } = 0.16f;
     [Export] public int HeavyAttackHitFrameIndex { get; set; } = 3;
 
+    [ExportGroup("Multi-Hit Attack")]
+    [Export] public Godot.Collections.Array<Texture2D> MultiHitAttackFrames { get; set; } = new();
+    [Export] public float MultiHitAttackFrameDuration { get; set; } = 0.12f;
+
+    [Export] public Godot.Collections.Array<int> MultiHitFrameIndices { get; set; } = new();
+
     [ExportGroup("Moving")]
     [Export] public Godot.Collections.Array<Texture2D> MovingFrames { get; set; } = new();
     [Export] public float MovingFrameDuration { get; set; } = 0.12f;
@@ -41,6 +48,7 @@ public partial class SpriteAnimator : Node
 
     // Provides the attack type to combat logic.
     public event Action<bool> AttackHitFrameWithType;
+    public event Action MultiHitAttackHitFrame;
 
     private const float TemporaryDeadOffsetY = -0.8f;
 
@@ -49,6 +57,8 @@ public partial class SpriteAnimator : Node
     private bool _isPlayingHit;
     private bool _isPlayingAttack;
     private bool _isPlayingHeavyAttack;
+    private bool _isPlayingMultiHitAttack;
+    private readonly HashSet<int> _triggeredMultiHitFrames = new();
     private bool _isDead;
     private bool _attackHitFrameTriggered;
 
@@ -114,7 +124,9 @@ public partial class SpriteAnimator : Node
                     _isPlayingHit = false;
                     _isPlayingAttack = false;
                     _isPlayingHeavyAttack = false;
+                    _isPlayingMultiHitAttack = false;
                     _attackHitFrameTriggered = false;
+                    _triggeredMultiHitFrames.Clear();
 
                     PlayBaseAnimation();
 
@@ -134,7 +146,43 @@ public partial class SpriteAnimator : Node
 
     private bool IsPlayingAttack()
     {
-        return _isPlayingAttack || _isPlayingHeavyAttack;
+        return _isPlayingAttack
+            || _isPlayingHeavyAttack
+            || _isPlayingMultiHitAttack;
+    }
+
+    public bool PlayMultiHitAttack()
+    {
+        if (_isDead || IsPlayingAttack() || MultiHitAttackFrames.Count == 0)
+        {
+            if (!_isDead && MultiHitAttackFrames.Count == 0)
+                GD.PushWarning($"{Name}: MultiHitAttackFrames not set.");
+
+            return false;
+        }
+
+        if (MultiHitFrameIndices.Count == 0)
+        {
+            GD.PushWarning($"{Name}: MultiHitFrameIndices not set.");
+            return false;
+        }
+
+        _isPlayingHit = false;
+        _isPlayingAttack = false;
+        _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = true;
+
+        _triggeredMultiHitFrames.Clear();
+
+        PlayAnimation(
+            MultiHitAttackFrames,
+            MultiHitAttackFrameDuration,
+            false
+        );
+
+        CheckAttackHitFrame();
+
+        return true;
     }
 
     public void SetTalking(bool talking)
@@ -187,9 +235,11 @@ public partial class SpriteAnimator : Node
         }
 
         _isPlayingHit = false;
-        _isPlayingAttack = true;
+        _isPlayingAttack = false;
         _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = false;
         _attackHitFrameTriggered = false;
+        _triggeredMultiHitFrames.Clear();
 
         PlayAnimation(AttackFrames, AttackFrameDuration, false);
         CheckAttackHitFrame();
@@ -226,6 +276,8 @@ public partial class SpriteAnimator : Node
         _isPlayingAttack = false;
         _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         AttackAnimationFinished?.Invoke();
         PlayBaseAnimation();
@@ -233,7 +285,24 @@ public partial class SpriteAnimator : Node
 
     private void CheckAttackHitFrame()
     {
-        if (!IsPlayingAttack() || _attackHitFrameTriggered)
+        if (!IsPlayingAttack())
+            return;
+
+        if (_isPlayingMultiHitAttack)
+        {
+            if (!MultiHitFrameIndices.Contains(_currentFrame))
+                return;
+
+            if (!_triggeredMultiHitFrames.Add(_currentFrame))
+                return;
+
+            GD.Print($"[ATTACK DEBUG] Multi-hit frame reached: {_currentFrame}");
+
+            MultiHitAttackHitFrame?.Invoke();
+            return;
+        }
+
+        if (_attackHitFrameTriggered)
             return;
 
         int configuredHitFrame = _isPlayingHeavyAttack
@@ -283,6 +352,8 @@ public partial class SpriteAnimator : Node
         _isPlayingHit = false;
         _isPlayingAttack = false;
         _isPlayingHeavyAttack = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         _currentFrames = new Godot.Collections.Array<Texture2D>();
         _currentFrame = 0;
@@ -312,6 +383,8 @@ public partial class SpriteAnimator : Node
         _isPlayingAttack = false;
         _isPlayingHeavyAttack = false;
         _attackHitFrameTriggered = false;
+        _isPlayingMultiHitAttack = false;
+        _triggeredMultiHitFrames.Clear();
 
         Sprite.Position = _originalSpritePosition;
 

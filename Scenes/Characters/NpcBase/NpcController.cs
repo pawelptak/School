@@ -36,6 +36,17 @@ public partial class NpcController : Node
     [Export] public float HeavyAttackCooldown { get; set; } = 4.0f;
     [Export] public float HeavyAttackDamage { get; set; } = 25.0f;
 
+    [ExportGroup("Multi-Hit Attack")]
+
+    [Export]
+    public bool CanUseMultiHitAttack { get; set; } = false;
+
+    [Export(PropertyHint.Range, "0,1,0.05")]
+    public float MultiHitAttackChance { get; set; } = 0.25f;
+
+    [Export]
+    public float MultiHitAttackCooldown { get; set; } = 5.0f;
+
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -52,6 +63,7 @@ public partial class NpcController : Node
     private float _attackTimer = 0.0f;
     private float _heavyAttackTimer;
     private bool _currentAttackIsHeavy;
+    private float _multiHitAttackTimer;
 
 
     private NpcHealthController _healthController;
@@ -70,6 +82,7 @@ public partial class NpcController : Node
         {
             _spriteAnimator.AttackHitFrameWithType += OnAttackHitFrame;
             _spriteAnimator.AttackAnimationFinished += OnAttackAnimationFinished;
+            _spriteAnimator.MultiHitAttackHitFrame += OnMultiHitAttackHitFrame;
         }
 
         if (_npc == null || _agent == null)
@@ -131,6 +144,11 @@ public partial class NpcController : Node
         if (_heavyAttackTimer > 0.0f)
         {
             _heavyAttackTimer -= (float)dt;
+        }
+
+        if (_multiHitAttackTimer > 0.0f)
+        {
+            _multiHitAttackTimer -= (float)dt;
         }
 
         if (ProcessHitEffects(dt))
@@ -300,6 +318,12 @@ public partial class NpcController : Node
                     && _heavyAttackTimer <= 0.0f
                     && GD.Randf() < Mathf.Clamp(HeavyAttackChance, 0.0f, 1.0f);
 
+                bool useMultiHitAttack =
+                    !useHeavyAttack
+                    && CanUseMultiHitAttack
+                    && _multiHitAttackTimer <= 0.0f
+                    && GD.Randf() < Mathf.Clamp(MultiHitAttackChance, 0.0f, 1.0f);
+
                 bool attackStarted = false;
 
                 if (_spriteAnimator != null)
@@ -308,10 +332,15 @@ public partial class NpcController : Node
                     {
                         attackStarted = _spriteAnimator.PlayHeavyAttack();
                     }
+                    else if (useMultiHitAttack)
+                    {
+                        attackStarted = _spriteAnimator.PlayMultiHitAttack();
+                    }
 
                     if (!attackStarted)
                     {
                         useHeavyAttack = false;
+                        useMultiHitAttack = false;
                         attackStarted = _spriteAnimator.PlayAttack();
                     }
                 }
@@ -325,6 +354,11 @@ public partial class NpcController : Node
                     if (useHeavyAttack)
                     {
                         _heavyAttackTimer = Mathf.Max(0.0f, HeavyAttackCooldown);
+                    }
+
+                    if (useMultiHitAttack)
+                    {
+                        _multiHitAttackTimer = Mathf.Max(0.0f, MultiHitAttackCooldown);
                     }
                 }
                 else
@@ -361,16 +395,23 @@ public partial class NpcController : Node
 
     private void OnAttackHitFrame(bool isHeavyAttack)
     {
-        if (_isDefeated ||
-            _npc == null ||
-            _chaseTarget == null ||
-            !GodotObject.IsInstanceValid(_chaseTarget))
+        ApplyAttackHit(_currentAttackIsHeavy);
+    }
+
+    private void OnMultiHitAttackHitFrame()
+    {
+        ApplyAttackHit(false);
+    }
+
+    private void ApplyAttackHit(bool isHeavyAttack)
+    {
+        if (_isDefeated
+            || _npc == null
+            || _chaseTarget == null
+            || !GodotObject.IsInstanceValid(_chaseTarget))
         {
             return;
         }
-
-        // Korzystamy z rodzaju ataku faktycznie rozpoczętego przez NPC.
-        isHeavyAttack = _currentAttackIsHeavy;
 
         float attackDistance = isHeavyAttack
             ? HeavyAttackDistance
@@ -388,16 +429,14 @@ public partial class NpcController : Node
         if (distance > attackDistance)
             return;
 
+        if (_chaseTarget is not Player player)
+            return;
+
         var healthController =
-            _chaseTarget.GetNodeOrNull<HealthController>("HealthController");
+            player.GetNodeOrNull<HealthController>("HealthController");
 
         if (healthController == null)
             return;
-
-        if (_chaseTarget is not Player player)
-        {
-            return;
-        }
 
         bool canBlock = player.IsBlocking
             && player.IsAttackingFromFront(_npc);
@@ -412,7 +451,6 @@ public partial class NpcController : Node
 
         if (isHeavyAttack)
         {
-            // Silny atak przerywa blok i zadaje pełne obrażenia.
             player.BreakBlock();
             healthController.TakeDamage(attackDamage);
 
@@ -420,12 +458,10 @@ public partial class NpcController : Node
             return;
         }
 
-        // Zwykły atak nadal jest redukowany przez blok.
         healthController.TakeDamage(
             player.CalculateIncomingDamage(attackDamage)
         );
     }
-
 
 
     private void OnAttackAnimationFinished()
@@ -608,6 +644,7 @@ public partial class NpcController : Node
         {
             _spriteAnimator.AttackHitFrameWithType -= OnAttackHitFrame;
             _spriteAnimator.AttackAnimationFinished -= OnAttackAnimationFinished;
+            _spriteAnimator.MultiHitAttackHitFrame -= OnMultiHitAttackHitFrame;
         }
     }
 
