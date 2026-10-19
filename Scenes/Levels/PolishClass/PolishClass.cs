@@ -1,6 +1,4 @@
 using Godot;
-using School.Scenes.Levels.PolishClass;
-
 public partial class PolishClass : Node3D
 {
     private Mate _mate;

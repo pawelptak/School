@@ -1,6 +1,4 @@
 using Godot;
-using School.Scenes.Levels.Tutorial;
-
 public partial class ClassroomTutorial : LevelBase
 {
     private Mate _mate;

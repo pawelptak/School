@@ -1,5 +1,3 @@
-using School.Scenes.Characters.PeTeacher;
-
 public partial class PeTeacher : InteractableCharacter
 {
     public override string Name => PeTeacherText.Name;

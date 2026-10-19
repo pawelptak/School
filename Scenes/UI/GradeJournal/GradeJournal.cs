@@ -1,7 +1,5 @@
 
 using Godot;
-using School.Scenes.UI.GradeJournal;
-
 public partial class GradeJournal : CanvasLayer
 {
     [Signal]

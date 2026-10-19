@@ -1,6 +1,4 @@
 using Godot;
-using School.Scenes.Levels.Level1Corridor;
-
 public partial class Corridor1 : LevelBase
 {
     private Mate _mate;

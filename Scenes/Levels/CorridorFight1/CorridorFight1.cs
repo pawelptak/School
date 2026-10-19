@@ -1,5 +1,4 @@
 using Godot;
-using School.Scenes.Levels.CorridorFight1;
 
 public partial class CorridorFight1 : LevelBase
 {
