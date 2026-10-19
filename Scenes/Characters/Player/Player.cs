@@ -197,6 +197,14 @@ public partial class Player : CharacterBody3D
 		return true;
 	}
 
+	public void ReactToBlockedHit()
+	{
+		if (_blockButtonHeld)
+		{
+			_blockingController?.PlayHitReaction();
+		}
+	}
+
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton rightMouseButton

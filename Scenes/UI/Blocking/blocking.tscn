@@ -21,12 +21,12 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -810.0
+offset_left = -500.0
 offset_top = -1000.0
-offset_right = 390.0
+offset_right = 500.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 200
+theme_override_constants/margin_bottom = -20
 
 [node name="TextureRect" type="TextureRect" parent="Container" unique_id=1627358379]
 texture_filter = 1

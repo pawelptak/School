@@ -337,6 +337,8 @@ public partial class NpcController : Node
 
         if (_chaseTarget is Player player)
         {
+            player.ReactToBlockedHit();
+
             if (player.TryPerfectBlock(this))
             {
                 _isAttacking = false;
