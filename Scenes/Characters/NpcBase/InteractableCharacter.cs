@@ -38,6 +38,9 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     private NpcHealthBar _healthBarComponent;
 
+    [Signal]
+    public delegate void ThrowableBodyCreatedEventHandler(ThrowableObject deadBody);
+
     public override void _Ready()
     {
         SpriteAnimator = GetNode<SpriteAnimator>("SpriteAnimator");
@@ -347,6 +350,8 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
         scene.AddChild(deadBody);
         deadBody.GlobalTransform = GlobalTransform;
+
+        EmitSignal(SignalName.ThrowableBodyCreated, deadBody);
 
         sourceShape.QueueFree();
         sprite.Reparent(deadBody, true);

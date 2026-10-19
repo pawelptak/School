@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bbh8tqy4semif" path="res://Scenes/Objects/WallLampSphere/wall_lamp_sphere.tscn" id="6_0pfes"]
 [ext_resource type="PackedScene" uid="uid://daindnvtwgwfe" path="res://Scenes/Objects/Tap/tap.tscn" id="8_rgrde"]
 [ext_resource type="PackedScene" uid="uid://c2yulmra8yp4q" path="res://Scenes/Objects/Sink/sink.tscn" id="9_86jgr"]
+[ext_resource type="PackedScene" uid="uid://cymevkkf607x8" path="res://Scenes/Levels/Bathroom/BullyBody.tscn" id="11_bt5tp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64afw"]
 albedo_texture = ExtResource("4_64afw")
@@ -98,10 +99,10 @@ size = Vector3(0.005, 0.566, 0.567498)
 [node name="LevelBase" unique_id=513644933 instance=ExtResource("1_0fju4")]
 script = ExtResource("2_v0bik")
 
-[node name="Door" parent="." index="0" unique_id=519980075 instance=ExtResource("4_tt6jl")]
+[node name="ExitDoor" parent="." index="0" unique_id=519980075 instance=ExtResource("4_tt6jl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.9943132, 1.5617943, -1.3778543)
 
-[node name="MeshInstance3D" parent="Door/Door" parent_id_path=PackedInt32Array(519980075, 803142521) index="1" unique_id=501593287]
+[node name="MeshInstance3D" parent="ExitDoor/Door" parent_id_path=PackedInt32Array(519980075, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
 
@@ -216,6 +217,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -1.4
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.5054853, 1.9927464, -2.935342)
 
 [node name="PaperGiver" type="StaticBody3D" parent="." index="17" unique_id=1295248734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4532044, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PaperGiver" index="0" unique_id=1715164711]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8468003, 2.308592, -1.4200783)
@@ -233,6 +235,9 @@ mesh = SubResource("BoxMesh_bt5tp")
 transform = Transform3D(0.9999772, 0.0051020063, -0.0044274842, -0.0049235676, 0.9992107, 0.03942059, 0.004625104, -0.0393979, 0.99921304, -4.7021194, 2.154734, -1.424039)
 mesh = SubResource("BoxMesh_bt5tp")
 
-[editable path="Door"]
+[node name="BullyBody" parent="." index="18" unique_id=1772085910 instance=ExtResource("11_bt5tp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2826023, 0.33656824, 0.054540426)
+
+[editable path="ExitDoor"]
 [editable path="Player"]
 [editable path="Player/LowHealth"]
