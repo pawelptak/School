@@ -337,23 +337,31 @@ public partial class NpcController : Node
 
         if (_chaseTarget is Player player)
         {
-            player.ReactToBlockedHit();
+            bool canBlock = player.IsBlocking
+                && player.IsAttackingFromFront(_npc);
 
-            if (player.TryPerfectBlock(this))
+            if (canBlock)
             {
-                _isAttacking = false;
-                _attackTimer = AttackCooldown;
+                player.ReactToBlockedHit();
+
+                if (player.TryPerfectBlock(this))
+                {
+                    _isAttacking = false;
+                    _attackTimer = AttackCooldown;
+                    return;
+                }
+
+                healthController.TakeDamage(
+                    player.CalculateIncomingDamage(AttackDamage)
+                );
+
                 return;
             }
 
-            healthController.TakeDamage(
-                player.CalculateIncomingDamage(AttackDamage)
-            );
+            healthController.TakeDamage(AttackDamage);
 
             return;
         }
-
-        healthController.TakeDamage(AttackDamage);
     }
 
 

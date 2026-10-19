@@ -905,4 +905,25 @@ public partial class Player : CharacterBody3D
 			}
 		}
 	}
+
+	public bool IsAttackingFromFront(Node3D attacker)
+	{
+		if (attacker == null || !GodotObject.IsInstanceValid(attacker))
+			return false;
+
+		Vector3 toAttacker = attacker.GlobalPosition - GlobalPosition;
+
+		toAttacker.Y = 0.0f;
+
+		if (toAttacker.LengthSquared() < 0.001f)
+			return true;
+
+		toAttacker = toAttacker.Normalized();
+
+		Vector3 forward = -GlobalTransform.Basis.Z;
+		forward.Y = 0.0f;
+		forward = forward.Normalized();
+
+		return forward.Dot(toAttacker) > 0.0f;
+	}
 }
