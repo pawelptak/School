@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cixir8siiw054" path="res://Scenes/Objects/Stairs/stairs.tscn" id="16_xe0e0"]
 [ext_resource type="PackedScene" uid="uid://b2tu54k6ky6bo" path="res://Scenes/Objects/Stains/basic_splash.tscn" id="17_8alk1"]
 [ext_resource type="Script" uid="uid://by1waw4jja7g2" path="res://Scenes/Levels/CorridorAfterFight/CorridorSplash.cs" id="18_e5xkn"]
+[ext_resource type="PackedScene" uid="uid://bm3gd3i32tocv" path="res://Scenes/Objects/Stains/long_splash.tscn" id="19_3o36i"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_oquhe"]
 vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
@@ -43,8 +44,12 @@ roughness = 0.8
 material = SubResource("StandardMaterial3D_roycm")
 size = Vector3(3, 1, 2)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ip7ly"]
+albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
+roughness = 0.8
+
 [sub_resource type="BoxMesh" id="BoxMesh_ud54i"]
-material = SubResource("StandardMaterial3D_ubwdy")
+material = SubResource("StandardMaterial3D_ip7ly")
 size = Vector3(15, 0.2, 8.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ovfpj"]
@@ -76,6 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5921943, 1.5567296, -0.0769
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.4242008, 1, -2.990718)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="6" unique_id=1915701160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018455982, 0, 0.002349615)
 navigation_mesh = SubResource("NavigationMesh_oquhe")
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0" unique_id=467446609]
@@ -179,7 +185,7 @@ shape = SubResource("BoxShape3D_bsnnw")
 mesh = SubResource("BoxMesh_oipeu")
 
 [node name="StairCollision" type="StaticBody3D" parent="." index="28" unique_id=643492403]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.574703, 1.9116658, 2.2816799)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.391, 1.912, 2.2)
 collision_layer = 65
 script = ExtResource("15_hbk04")
 
@@ -204,6 +210,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11494064, 0)
 shape = SubResource("BoxShape3D_lc5oj")
 
 [node name="BasicSplash" parent="Splash/StaticBody3D" index="1" unique_id=1767202832 instance=ExtResource("17_8alk1")]
+
+[node name="LongSplash" parent="." index="32" unique_id=2116098766 instance=ExtResource("19_3o36i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5612833, 0.010027647, 0.61160755)
+visible = false
+
+[node name="LongSplash2" parent="." index="33" unique_id=243862612 instance=ExtResource("19_3o36i")]
+transform = Transform3D(0.26736668, 0, -0.32647014, 0, 1, 0, 0.29071048, 0, 0.30025488, 4.4192805, 0.0012331009, 2.7321453)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

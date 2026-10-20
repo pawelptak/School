@@ -25,6 +25,6 @@ public partial class StairCollision : StaticBody3D, IInteractable
 
     public void Interact(Player player)
     {
-        // SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Downstairs/downstairs.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Downstairs/downstairs.tscn");
     }
 }

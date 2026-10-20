@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dapyoe0ylcyn1"]
+
+[ext_resource type="Texture2D" uid="uid://x0h5p63006cx" path="res://Scenes/Objects/Stains/splash2.png" id="1_negh3"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lc5oj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgmli"]
+transparency = 1
+albedo_texture = ExtResource("1_negh3")
+texture_filter = 0
+
+[node name="BasicSplash2" type="MeshInstance3D" unique_id=1767202832]
+mesh = SubResource("PlaneMesh_lc5oj")
+surface_material_override/0 = SubResource("StandardMaterial3D_hgmli")
