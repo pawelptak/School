@@ -36,7 +36,7 @@ public partial class Bathroom : LevelBase
         _bullyBody.InteractionEnabled = false;
         _cutsceneController.StartDialogue(
             _player,
-            [new DialogueLine(DialogueSpeaker.Player, "Teraz szybko na WF", 3.0f)]
+            [new DialogueLine(DialogueSpeaker.Player, BathroomText.AfterClothesChange, 3.0f)]
         );
     }
 

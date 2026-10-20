@@ -153,11 +153,11 @@ public partial class CorridorFight1 : LevelBase
         _cutsceneController.StartDialogue(
             _player,
             [
-                new DialogueLine(DialogueSpeaker.Player, "Uff...", 1.0f)
-                //new DialogueLine(DialogueSpeaker.Player, "Nie wiedziałem, że tak potrafię.", 3.0f),
-                //new DialogueLine(DialogueSpeaker.Player, "Ok, muszę załatwić sobie strój na WF.", 3.0f),
-                //new DialogueLine(DialogueSpeaker.Player, "Hmm", 1.0f),
-                //new DialogueLine(DialogueSpeaker.Player, "No w sumie on jest na sportowo.", 1.0f)
+                new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterFight1, 1.0f),
+                new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterFight2, 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterFight3, 3.0f),
+                new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterFight4, 1.0f),
+                new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterFight5, 1.0f)
             ],
             onFinished: SetMarkerToBody
         );
@@ -185,11 +185,11 @@ public partial class CorridorFight1 : LevelBase
 
         if (!_toiletDialoguePlayed)
         {
-            lines.Add(new DialogueLine(DialogueSpeaker.Player, "Nie będę się na korytarzu przebierał.", 3.0f));
+            lines.Add(new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterBodyPickedUp1, 3.0f));
             _toiletDialoguePlayed = true;
         }
 
-        lines.Add(new DialogueLine(DialogueSpeaker.Player, "Muszę go zanieść do kibla.", 3.0f));
+        lines.Add(new DialogueLine(DialogueSpeaker.Player, CorridorFight1Text.AfterBodyPickedUp2, 3.0f));
 
         _cutsceneController.StartDialogue(_player, lines.ToArray(), onFinished: SetMarkerToToilet);
     }
@@ -214,7 +214,7 @@ public partial class CorridorFight1 : LevelBase
                 [
                     new DialogueLine(
                     DialogueSpeaker.Player,
-                    "Bez Łysego nie wchodzę.",
+                    CorridorFight1Text.DoorNoBody,
                     2.0f)
                 ]
             );

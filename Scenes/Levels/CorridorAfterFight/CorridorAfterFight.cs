@@ -30,7 +30,7 @@ public partial class CorridorAfterFight : LevelBase
     {
         _cutsceneController.StartDialogue(
             _player,
-            [new DialogueLine(DialogueSpeaker.Player, "Kto przynosi barszcz do szkoły?", 3.0f)]
+            [new DialogueLine(DialogueSpeaker.Player, CorridorAfterFightText.SplashInvestigated, 3.0f)]
         );
     }
 }

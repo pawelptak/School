@@ -17,5 +17,15 @@ public static class CorridorFight1Text
     public const string FightTutorialPoupText = "Wciśnij {0}, aby uderzyć napastnika z pięści. Podnoś przedmioty znalezione w otoczeniu i rzucaj nimi w przeciwnika. Różne przedmioty zadają różne obrażenia. Trafienie przedmiotem takim jak gąbka czy butelka oszołomi przeciwnika.\n\n Pokonaj go!";
 
     public const string JanitorShout = "Chłopcy, przestańcie!";
+
+    public const string AfterFight1 = "Uff...";
+    public const string AfterFight2 = "Nie wiedziałem, że tak potrafię.";
+    public const string AfterFight3 = "Ok, muszę załatwić sobie strój na WF.";
+    public const string AfterFight4 = "Hmm";
+    public const string AfterFight5  = "No w sumie on jest na sportowo.";
+
+    public const string AfterBodyPickedUp1 = "Nie będę się na korytarzu przebierał.";
+    public const string AfterBodyPickedUp2 = "Muszę go zanieść do kibla.";
+    public const string DoorNoBody = "Bez Łysego nie wchodzę.";
 }
 
