@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bh730yiitjcri"]
+
+[ext_resource type="Script" uid="uid://jnkye3n072jx" path="res://Scenes/Objects/LiquidSoap/LiquidSoap.cs" id="1_x84w7"]
+[ext_resource type="Texture2D" uid="uid://ufu7d8opef1n" path="res://Scenes/Objects/LiquidSoap/icon.png" id="2_om33k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4mh8"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.28627452)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_l4mh8")
+top_radius = 0.08
+bottom_radius = 0.11
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_om33k"]
+transparency = 1
+albedo_color = Color(0.9254902, 0.5058824, 0.47058824, 0.88235295)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uh2ss"]
+material = SubResource("StandardMaterial3D_om33k")
+top_radius = 0.079
+bottom_radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ury2d"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_b6qnm"]
+material = SubResource("StandardMaterial3D_ury2d")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.05
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nghd7"]
+material = SubResource("StandardMaterial3D_ury2d")
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.03
+
+[sub_resource type="PrismMesh" id="PrismMesh_u3w50"]
+material = SubResource("StandardMaterial3D_ury2d")
+size = Vector3(0.04, 0.07, 0.005)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.22485352, 0.38476563, 0.21850586)
+
+[node name="LiquidSoap" type="RigidBody3D" unique_id=1692467585]
+script = ExtResource("1_x84w7")
+IsEquippable = true
+Icon = ExtResource("2_om33k")
+Damage = 3.0
+Knockback = 0.0
+StunDuration = 3.0
+PickupTime = 0.2
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=301539174]
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Liquid2" type="MeshInstance3D" parent="." unique_id=20074514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.049776934, 0)
+mesh = SubResource("CylinderMesh_uh2ss")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1391883776]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17513633, 0)
+mesh = SubResource("CylinderMesh_b6qnm")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=162691367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21382505, 0)
+mesh = SubResource("CylinderMesh_nghd7")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1902771451]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.23167492, 0.006963093)
+mesh = SubResource("PrismMesh_u3w50")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1285056673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04296875, 0)
+shape = SubResource("BoxShape3D_lc5oj")

@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://daindnvtwgwfe" path="res://Scenes/Objects/Tap/tap.tscn" id="8_rgrde"]
 [ext_resource type="PackedScene" uid="uid://c2yulmra8yp4q" path="res://Scenes/Objects/Sink/sink.tscn" id="9_86jgr"]
 [ext_resource type="PackedScene" uid="uid://cymevkkf607x8" path="res://Scenes/Levels/Bathroom/BullyBody.tscn" id="11_bt5tp"]
+[ext_resource type="PackedScene" uid="uid://bh730yiitjcri" path="res://Scenes/Objects/LiquidSoap/liquid_soap.tscn" id="12_e6aei"]
+[ext_resource type="PackedScene" uid="uid://d0kvx2xkpf2uq" path="res://Scenes/Objects/Toilet/toilet.scn" id="13_75jk4"]
+[ext_resource type="PackedScene" uid="uid://fjtk1tn7tuqg" path="res://Scenes/Objects/Toilet/gowno.tscn" id="14_ommbu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64afw"]
 albedo_texture = ExtResource("4_64afw")
@@ -237,6 +240,15 @@ mesh = SubResource("BoxMesh_bt5tp")
 
 [node name="BullyBody" parent="." index="18" unique_id=1772085910 instance=ExtResource("11_bt5tp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2826023, 0.33656824, 0.054540426)
+
+[node name="LiquidSoap3" parent="." index="19" unique_id=480292282 instance=ExtResource("12_e6aei")]
+transform = Transform3D(0.19123682, -0.9808112, -0.037919886, 0.96208, 0.1949601, -0.19076851, 0.19450074, 0, 0.9809024, -3.6327412, 0.2545017, -2.2355218)
+
+[node name="Toilet" parent="." index="20" unique_id=1836050276 instance=ExtResource("13_75jk4")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.2599764, 0.20174773, 2.0468068)
+
+[node name="Gowno" parent="." index="21" unique_id=1943757123 instance=ExtResource("14_ommbu")]
+transform = Transform3D(0.47349003, 0.6935956, -0.5428926, -0.45589495, 0.72036463, 0.5227185, 0.7536358, 0, 0.6572922, -1.3016411, 0.69181573, 2.0926173)
 
 [editable path="ExitDoor"]
 [editable path="Player"]

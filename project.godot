@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="School"
-run/main_scene="uid://ke0sskddhurk"
+run/main_scene="uid://bjd2bj7bt068j"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
