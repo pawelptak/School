@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bm3gd3i32tocv"]
+
+[ext_resource type="Texture2D" uid="uid://by8urrtdv35te" path="res://Scenes/Objects/Stains/long_splash.png" id="1_ofcvb"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lc5oj"]
+size = Vector2(3, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgmli"]
+transparency = 1
+albedo_texture = ExtResource("1_ofcvb")
+texture_filter = 0
+
+[node name="LongSplash" type="MeshInstance3D" unique_id=1767202832]
+mesh = SubResource("PlaneMesh_lc5oj")
+surface_material_override/0 = SubResource("StandardMaterial3D_hgmli")

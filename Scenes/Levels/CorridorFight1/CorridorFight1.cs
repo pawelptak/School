@@ -31,6 +31,8 @@ public partial class CorridorFight1 : LevelBase
 
         _mate = GetNode<Mate>("Mate");
         _mateController = _mate.GetNode<NpcController>("NpcController");
+        _mateController.MoveToFinished += HideMate;
+
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _objectiveMarker = GetNode<ObjectiveMarker>("ObjectiveMarker");
         _objectiveMarker.Hide();
@@ -101,6 +103,11 @@ public partial class CorridorFight1 : LevelBase
                 new DialogueLine(DialogueSpeaker.Bully, CorridorFight1Text.BullyApproach, 1.0f),
             ]
         );
+    }
+
+    private void HideMate()
+    {
+        _mate.QueueFree();
     }
 
     private void StartBullyDialogue()

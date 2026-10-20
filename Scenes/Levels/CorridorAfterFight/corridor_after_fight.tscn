@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://ke0sskddhurk"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_fbys8"]
+[ext_resource type="Script" uid="uid://c6mfxyd2wtxje" path="res://Scenes/Levels/CorridorAfterFight/CorridorAfterFight.cs" id="2_hbk04"]
+[ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Objects/ObjectiveMarker/objective_marker.tscn" id="3_dsp2q"]
+[ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="4_vynxn"]
+[ext_resource type="PackedScene" uid="uid://cchbt647pdgli" path="res://Scenes/Objects/SchoolWalls/corridor_wall_no_window.tscn" id="5_a8lxs"]
+[ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/CSG/door_csg.tscn" id="6_vwdct"]
+[ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="8_xmkq5"]
+[ext_resource type="PackedScene" uid="uid://bt44pqep3jbil" path="res://Scenes/Objects/SchoolWalls/corridor_wall_window.tscn" id="9_h5oav"]
+[ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="10_ug2b0"]
+[ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="12_a0x0k"]
+[ext_resource type="Texture2D" uid="uid://bl3wru4y2htei" path="res://Scenes/Objects/Door/white_door.jpg" id="13_s558x"]
+[ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/Popup/popup.tscn" id="14_mpfxm"]
+[ext_resource type="Script" uid="uid://cpgb5nh0qfwrr" path="res://Scenes/Levels/CorridorAfterFight/StairCollision.cs" id="15_hbk04"]
+[ext_resource type="PackedScene" uid="uid://lpjw8lqx20gb" path="res://Scenes/Objects/Mop/mop.tscn" id="16_8alk1"]
+[ext_resource type="PackedScene" uid="uid://cxuqgg6pxn7f6" path="res://Scenes/Objects/Bucket/bucket.tscn" id="16_jijee"]
+[ext_resource type="PackedScene" uid="uid://cixir8siiw054" path="res://Scenes/Objects/Stairs/stairs.tscn" id="16_xe0e0"]
+[ext_resource type="PackedScene" uid="uid://b2tu54k6ky6bo" path="res://Scenes/Objects/Stains/basic_splash.tscn" id="17_8alk1"]
+[ext_resource type="Script" uid="uid://by1waw4jja7g2" path="res://Scenes/Levels/CorridorAfterFight/CorridorSplash.cs" id="18_e5xkn"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_oquhe"]
+vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_radius = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bsnnw"]
+size = Vector3(15.009766, 0.2, 9.904297)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
+albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_oipeu"]
+material = SubResource("StandardMaterial3D_ubwdy")
+size = Vector3(15, 0.2, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_roycm"]
+albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_08po8"]
+material = SubResource("StandardMaterial3D_roycm")
+size = Vector3(3, 1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ud54i"]
+material = SubResource("StandardMaterial3D_ubwdy")
+size = Vector3(15, 0.2, 8.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ovfpj"]
+albedo_texture = ExtResource("4_vynxn")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64afw"]
+albedo_texture = ExtResource("13_s558x")
+uv1_scale = Vector3(0.63, 0.33, 1)
+uv1_offset = Vector3(0.5, 0.5, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3w50"]
+size = Vector3(3.279663, 4.0219116, 2.199707)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(1, 0.16064453, 1)
+
+[node name="CorridorAfterFight" unique_id=513644933 instance=ExtResource("1_fbys8")]
+script = ExtResource("2_hbk04")
+
+[node name="ObjectiveMarker" parent="." index="0" unique_id=1928698264 instance=ExtResource("3_dsp2q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5921943, 1.5567296, -0.0769403)
+
+[node name="Player" parent="." index="2" unique_id=195847836]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.4242008, 1, -2.990718)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." index="6" unique_id=1915701160]
+navigation_mesh = SubResource("NavigationMesh_oquhe")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" index="0" unique_id=467446609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" index="0" unique_id=671531993]
+shape = SubResource("BoxShape3D_bsnnw")
+
+[node name="MeshInstance3D" type="CSGMesh3D" parent="NavigationRegion3D/Floor" index="1" unique_id=1011810503]
+mesh = SubResource("BoxMesh_oipeu")
+
+[node name="StairHole" type="CSGMesh3D" parent="NavigationRegion3D/Floor/MeshInstance3D" index="0" unique_id=1960370413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.305268, -0.31225967, 2.1896725)
+operation = 2
+mesh = SubResource("BoxMesh_08po8")
+
+[node name="Ceiling" type="StaticBody3D" parent="." index="7" unique_id=494809655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" index="0" unique_id=2121426534]
+shape = SubResource("BoxShape3D_bsnnw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" index="1" unique_id=162609489]
+mesh = SubResource("BoxMesh_ud54i")
+surface_material_override/0 = SubResource("StandardMaterial3D_ovfpj")
+
+[node name="WallSouth" parent="." index="8" unique_id=1023627450 instance=ExtResource("5_a8lxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 3.6445372)
+
+[node name="WallSouth2" parent="." index="9" unique_id=467339408 instance=ExtResource("5_a8lxs")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2, -3.9792082)
+
+[node name="ObjectiveDoor" parent="." index="10" unique_id=1410858223 instance=ExtResource("6_vwdct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.381708, 1.5, 3.3713093)
+
+[node name="Bench" parent="." index="11" unique_id=1804631136 instance=ExtResource("8_xmkq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.838889, 0.3057264, -3.2610345)
+
+[node name="Bench2" parent="." index="12" unique_id=1978595107 instance=ExtResource("8_xmkq5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.5194016, 0.3057264, -0.17131406)
+
+[node name="SchoolWall" parent="." index="13" unique_id=1887432893 instance=ExtResource("9_h5oav")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.3419886, 2.0044143, -0.024910927)
+
+[node name="SchoolWall3" parent="." index="14" unique_id=798817445 instance=ExtResource("9_h5oav")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.3419886, 2.0044143, -0.024910927)
+
+[node name="SchoolWall2" parent="." index="15" unique_id=803799648 instance=ExtResource("9_h5oav")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.354212, 2.0044143, -0.024910927)
+
+[node name="CeilingLamp" parent="." index="16" unique_id=2054856090 instance=ExtResource("10_ug2b0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.3501334, 3.7067113, -0.011970043)
+
+[node name="CeilingLamp2" parent="." index="17" unique_id=1021857322 instance=ExtResource("10_ug2b0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.032859325, 3.7067113, -0.011970043)
+
+[node name="CeilingLamp3" parent="." index="18" unique_id=1195517558 instance=ExtResource("10_ug2b0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5527244, 3.7067113, -0.011970043)
+
+[node name="WomenBathroomDoor" parent="." index="19" unique_id=519980075 instance=ExtResource("12_a0x0k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3871496, 1.5361857, -3.701747)
+
+[node name="MeshInstance3D" parent="WomenBathroomDoor/Door" parent_id_path=PackedInt32Array(519980075, 803142521) index="1" unique_id=501593287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
+
+[node name="MenBathroomDoor" parent="." index="20" unique_id=44964191 instance=ExtResource("12_a0x0k")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.017833471, 1.5361857, -3.701747)
+
+[node name="MeshInstance3D" parent="MenBathroomDoor/Door" parent_id_path=PackedInt32Array(44964191, 803142521) index="1" unique_id=501593287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
+
+[node name="ExitMarker" type="Marker3D" parent="." index="21" unique_id=688752100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4593673, 0, 2.5309386)
+
+[node name="Popup" parent="." index="22" unique_id=1416079734 instance=ExtResource("14_mpfxm")]
+
+[node name="Stairs" parent="." index="23" unique_id=1118793448 instance=ExtResource("16_xe0e0")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.5052996, -1.3000001, 2.1897001)
+
+[node name="Stairs2" parent="." index="24" unique_id=1453169503 instance=ExtResource("16_xe0e0")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6.7052994, -2.5, 2.1897001)
+
+[node name="Stairs3" parent="." index="25" unique_id=59306391 instance=ExtResource("16_xe0e0")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.905299, -3.7, 2.1897001)
+
+[node name="WallDownstair" parent="." index="26" unique_id=1764467308 instance=ExtResource("5_a8lxs")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 11.903421, -1.9552171, 0)
+
+[node name="Floor2" type="StaticBody3D" parent="." index="27" unique_id=1047060448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.168132, -3.836923, 0)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor2" index="0" unique_id=92641013]
+shape = SubResource("BoxShape3D_bsnnw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor2" index="1" unique_id=659892315]
+mesh = SubResource("BoxMesh_oipeu")
+
+[node name="StairCollision" type="StaticBody3D" parent="." index="28" unique_id=643492403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.574703, 1.9116658, 2.2816799)
+collision_layer = 65
+script = ExtResource("15_hbk04")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StairCollision" index="0" unique_id=394510737]
+shape = SubResource("BoxShape3D_u3w50")
+
+[node name="Bucket" parent="." index="29" unique_id=169350368 instance=ExtResource("16_jijee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3199635, 0.17500024, -2.3135774)
+
+[node name="Mop" parent="." index="30" unique_id=1481090822 instance=ExtResource("16_8alk1")]
+transform = Transform3D(0.81208354, -0.5835412, 2.5507397e-08, 0, -4.371139e-08, -1, 0.5835412, 0.81208354, -3.5497298e-08, -4.226881, 0.3035333, -2.4210677)
+
+[node name="Splash" type="Node3D" parent="." index="31" unique_id=1459621118]
+transform = Transform3D(0.56155384, 0, -0.8274402, 0, 1, 0, 0.8274402, 0, 0.56155384, -5.3964815, 0.04204619, -0.51714265)
+script = ExtResource("18_e5xkn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Splash" index="0" unique_id=187656513]
+disable_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Splash/StaticBody3D" index="0" unique_id=1448479088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11494064, 0)
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="BasicSplash" parent="Splash/StaticBody3D" index="1" unique_id=1767202832 instance=ExtResource("17_8alk1")]
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]
+[editable path="WomenBathroomDoor"]
+[editable path="MenBathroomDoor"]

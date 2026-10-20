@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://b7ucm5jbfwjp1"]
+
+[ext_resource type="Script" uid="uid://dygoiwqyofe3r" path="res://Scenes/Objects/Bucket/Bucket.cs" id="1_ahwgu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vp0m"]
+albedo_color = Color(0.1254902, 0.19215687, 0.6156863, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+size = Vector3(0.5, 0.1, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.44335938, 0.359375, 0.44921875)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xbvax"]
+albedo_color = Color(1, 0.3647059, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_xbvax")
+top_radius = 0.22
+bottom_radius = 0.2
+height = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wtlk"]
+albedo_color = Color(1, 0.3647059, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xbvax"]
+material = SubResource("StandardMaterial3D_3wtlk")
+top_radius = 0.24
+bottom_radius = 0.25
+height = 0.04
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5l0qg"]
+albedo_color = Color(1, 0.3647059, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8vp0m"]
+material = SubResource("StandardMaterial3D_5l0qg")
+top_radius = 0.21
+bottom_radius = 0.19
+height = 0.35
+
+[node name="Bucket" type="RigidBody3D" unique_id=169350368]
+script = ExtResource("1_ahwgu")
+Damage = 5.0
+Knockback = 0.5
+StunDuration = 3.0
+
+[node name="Handle" type="CSGTorus3D" parent="." unique_id=1273845371]
+transform = Transform3D(1, 0, 0, 0, 0.99572587, 0.33661446, 0, -0.47298524, 0.70863885, 0, 0.09293342, -0.096456975)
+inner_radius = 0.253616
+outer_radius = 0.23164026
+sides = 25
+material = SubResource("StandardMaterial3D_8vp0m")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Handle" unique_id=2041065156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3540058)
+operation = 2
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=601633213]
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="Body" type="CSGMesh3D" parent="." unique_id=2091391182]
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Collar" type="CSGMesh3D" parent="Body" unique_id=466333282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15509644, 0)
+mesh = SubResource("CylinderMesh_xbvax")
+
+[node name="CollarHole" type="CSGMesh3D" parent="Body/Collar" unique_id=351782462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1080482, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_8vp0m")
+
+[node name="Hole" type="CSGMesh3D" parent="Body" unique_id=1805176296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04704824, 0)
+operation = 2
+mesh = SubResource("CylinderMesh_8vp0m")

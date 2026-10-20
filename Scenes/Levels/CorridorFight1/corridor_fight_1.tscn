@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dncbd4tk6grkp" path="res://Scenes/Levels/CorridorFight1/CorridorFight1.cs" id="2_d4447"]
 [ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="3_cjrax"]
 [ext_resource type="PackedScene" uid="uid://c1t5ws580fjk" path="res://Scenes/Objects/ObjectiveMarker/objective_marker.tscn" id="3_rm5tw"]
+[ext_resource type="PackedScene" uid="uid://cixir8siiw054" path="res://Scenes/Objects/Stairs/stairs.tscn" id="4_6i8nh"]
 [ext_resource type="PackedScene" uid="uid://cchbt647pdgli" path="res://Scenes/Objects/SchoolWalls/corridor_wall_no_window.tscn" id="4_kvpfl"]
 [ext_resource type="PackedScene" uid="uid://bk1kf07jmnpe0" path="res://Scenes/CSG/door_csg.tscn" id="5_rm5tw"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="6_myn0h"]
@@ -15,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="12_b7thx"]
 [ext_resource type="Texture2D" uid="uid://bl3wru4y2htei" path="res://Scenes/Objects/Door/white_door.jpg" id="13_08po8"]
 [ext_resource type="PackedScene" uid="uid://bqqa6q33rrnl0" path="res://Scenes/Characters/Janitor/janitor.tscn" id="15_08po8"]
+[ext_resource type="PackedScene" uid="uid://cxuqgg6pxn7f6" path="res://Scenes/Objects/Bucket/bucket.tscn" id="17_roycm"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_oquhe"]
 vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
@@ -32,6 +34,14 @@ roughness = 0.8
 material = SubResource("StandardMaterial3D_ubwdy")
 size = Vector3(15, 0.2, 10)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_roycm"]
+albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_08po8"]
+material = SubResource("StandardMaterial3D_roycm")
+size = Vector3(3, 1, 2)
+
 [sub_resource type="BoxMesh" id="BoxMesh_ud54i"]
 material = SubResource("StandardMaterial3D_ubwdy")
 size = Vector3(15, 0.2, 8.5)
@@ -48,6 +58,9 @@ uv1_scale = Vector3(0.63, 0.33, 1)
 uv1_offset = Vector3(0.5, 0.5, 0)
 uv1_triplanar = true
 texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3w50"]
+size = Vector3(2.2836914, 4.0219116, 2.199707)
 
 [node name="CorridorFight1" unique_id=513644933 instance=ExtResource("1_bho8n")]
 script = ExtResource("2_d4447")
@@ -68,8 +81,13 @@ collision_layer = 65
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" index="0" unique_id=671531993]
 shape = SubResource("BoxShape3D_bsnnw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" index="1" unique_id=1756345960]
+[node name="MeshInstance3D" type="CSGMesh3D" parent="NavigationRegion3D/Floor" index="1" unique_id=1011810503]
 mesh = SubResource("BoxMesh_oipeu")
+
+[node name="StairHole" type="CSGMesh3D" parent="NavigationRegion3D/Floor/MeshInstance3D" index="0" unique_id=1960370413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.305268, -0.31225967, 2.1896725)
+operation = 2
+mesh = SubResource("BoxMesh_08po8")
 
 [node name="Ceiling" type="StaticBody3D" parent="." index="7" unique_id=494809655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
@@ -103,43 +121,78 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.5
 [node name="SchoolWall" parent="." index="14" unique_id=1887432893 instance=ExtResource("8_08po8")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.3419886, 2.0044143, -0.024910927)
 
-[node name="SchoolWall2" parent="." index="15" unique_id=803799648 instance=ExtResource("8_08po8")]
+[node name="SchoolWall3" parent="." index="15" unique_id=798817445 instance=ExtResource("8_08po8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.3419886, 2.0044143, -0.024910927)
+
+[node name="SchoolWall2" parent="." index="16" unique_id=803799648 instance=ExtResource("8_08po8")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.354212, 2.0044143, -0.024910927)
 
-[node name="CeilingLamp" parent="." index="16" unique_id=2054856090 instance=ExtResource("9_6i8nh")]
+[node name="CeilingLamp" parent="." index="17" unique_id=2054856090 instance=ExtResource("9_6i8nh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.3501334, 3.7067113, -0.011970043)
 
-[node name="CeilingLamp2" parent="." index="17" unique_id=1021857322 instance=ExtResource("9_6i8nh")]
+[node name="CeilingLamp2" parent="." index="18" unique_id=1021857322 instance=ExtResource("9_6i8nh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.032859325, 3.7067113, -0.011970043)
 
-[node name="CeilingLamp3" parent="." index="18" unique_id=1195517558 instance=ExtResource("9_6i8nh")]
+[node name="CeilingLamp3" parent="." index="19" unique_id=1195517558 instance=ExtResource("9_6i8nh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5527244, 3.7067113, -0.011970043)
 
-[node name="Bully" parent="." index="19" unique_id=2062201313 instance=ExtResource("10_roycm")]
+[node name="Bully" parent="." index="20" unique_id=2062201313 instance=ExtResource("10_roycm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)
 DefeatMode = 1
 
-[node name="WomenBathroomDoor" parent="." index="20" unique_id=519980075 instance=ExtResource("12_b7thx")]
+[node name="WomenBathroomDoor" parent="." index="21" unique_id=519980075 instance=ExtResource("12_b7thx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3871496, 1.5361857, -3.701747)
 
 [node name="MeshInstance3D" parent="WomenBathroomDoor/Door" parent_id_path=PackedInt32Array(519980075, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
 
-[node name="MenBathroomDoor" parent="." index="21" unique_id=44964191 instance=ExtResource("12_b7thx")]
+[node name="MenBathroomDoor" parent="." index="22" unique_id=44964191 instance=ExtResource("12_b7thx")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.017833471, 1.5361857, -3.701747)
 
 [node name="MeshInstance3D" parent="MenBathroomDoor/Door" parent_id_path=PackedInt32Array(44964191, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_64afw")
 
-[node name="ExitMarker" type="Marker3D" parent="." index="22" unique_id=688752100]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.368522, 0, 2.5309386)
+[node name="ExitMarker" type="Marker3D" parent="." index="23" unique_id=688752100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4593673, 0, 2.5309386)
 
-[node name="Popup" parent="." index="23" unique_id=1416079734 instance=ExtResource("11_kvpfl")]
+[node name="Popup" parent="." index="24" unique_id=1416079734 instance=ExtResource("11_kvpfl")]
 
-[node name="Janitor" parent="." index="24" unique_id=468207104 instance=ExtResource("15_08po8")]
+[node name="Janitor" parent="." index="25" unique_id=468207104 instance=ExtResource("15_08po8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6062107, 0.92160004, -1.83147)
+
+[node name="Stairs" parent="." index="26" unique_id=1118793448 instance=ExtResource("4_6i8nh")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.5052996, -1.3000001, 2.1897001)
+
+[node name="Stairs2" parent="." index="27" unique_id=1453169503 instance=ExtResource("4_6i8nh")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6.7052994, -2.5, 2.1897001)
+
+[node name="Stairs3" parent="." index="28" unique_id=59306391 instance=ExtResource("4_6i8nh")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.905299, -3.7, 2.1897001)
+
+[node name="WallDownstair" parent="." index="29" unique_id=1764467308 instance=ExtResource("4_kvpfl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 11.903421, -1.9552171, 0)
+
+[node name="Floor2" type="StaticBody3D" parent="." index="30" unique_id=1047060448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.168132, -3.836923, 0)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor2" index="0" unique_id=92641013]
+shape = SubResource("BoxShape3D_bsnnw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor2" index="1" unique_id=659892315]
+mesh = SubResource("BoxMesh_oipeu")
+
+[node name="StairCollision" type="StaticBody3D" parent="." index="31" unique_id=643492403]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StairCollision" index="0" unique_id=394510737]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9609838, 1.8295013, 2.2855384)
+shape = SubResource("BoxShape3D_u3w50")
+
+[node name="Bucket" parent="." index="32" unique_id=169350368 instance=ExtResource("17_roycm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.937874, 0.15, -2.5384011)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cixir8siiw054"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+size = Vector3(1, 0.2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(0.8466797, 1.7129517, 2.0002441)
+
+[node name="Stairs" type="StaticBody3D" unique_id=1118793448]
+
+[node name="Stair" type="MeshInstance3D" parent="." unique_id=678508419]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair2" type="MeshInstance3D" parent="." unique_id=1353423332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.2, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair3" type="MeshInstance3D" parent="." unique_id=979260219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.4, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair4" type="MeshInstance3D" parent="." unique_id=725607893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.6, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair5" type="MeshInstance3D" parent="." unique_id=1884711053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.8, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair6" type="MeshInstance3D" parent="." unique_id=706679772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Stair7" type="MeshInstance3D" parent="." unique_id=218170635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 1.2, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=106012891]
+transform = Transform3D(0.71150947, 0.70267653, 0, -0.70267653, 0.71150947, 0, 0, 0, 1, 0.3960061, 0.40098405, 0)
+shape = SubResource("BoxShape3D_lc5oj")

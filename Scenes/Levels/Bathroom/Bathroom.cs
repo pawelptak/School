@@ -42,6 +42,6 @@ public partial class Bathroom : LevelBase
 
     private void OnDoorInteracted()
     {
-        return;
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/CorridorAfterFight/corridor_after_fight.tscn");
     }
 }

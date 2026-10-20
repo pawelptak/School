@@ -1,0 +1,617 @@
+[gd_scene format=3 uid="uid://lpjw8lqx20gb"]
+
+[ext_resource type="Script" uid="uid://bpelljsn5q6fi" path="res://Scenes/Objects/Mop/Mop.cs" id="1_o5d3q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hk01o"]
+albedo_color = Color(1, 0.50980395, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_hk01o")
+size = Vector3(1, 0.04, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w4a3c"]
+material = SubResource("StandardMaterial3D_hk01o")
+size = Vector3(0.43371582, 0.02, 0.28295898)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+size = Vector2(0.15, 0.27)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15yc5"]
+albedo_color = Color(0.96867496, 0.7964368, 0.5878078, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u3w50"]
+material = SubResource("StandardMaterial3D_15yc5")
+top_radius = 0.02
+bottom_radius = 0.02
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w4a3c"]
+material = SubResource("StandardMaterial3D_hk01o")
+top_radius = 0.035
+bottom_radius = 0.03
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5d3q"]
+albedo_color = Color(1, 0.3882353, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_o5d3q")
+radius = 0.01
+height = 0.07
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(1, 0.032226563, 0.30371094)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5d3q"]
+size = Vector3(0.038085938, 1.9703674, 0.037109375)
+
+[node name="Mop" type="RigidBody3D" unique_id=1481090822]
+script = ExtResource("1_o5d3q")
+
+[node name="Mop" type="MeshInstance3D" parent="." unique_id=1294504794]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Part" type="MeshInstance3D" parent="Mop" unique_id=176459564]
+transform = Transform3D(0.9994739, -0.032431558, 0, 0.032431558, 0.9994739, 0, 0, 0, 1, -0.26257312, 0.025374115, 0)
+mesh = SubResource("BoxMesh_w4a3c")
+
+[node name="Part2" type="MeshInstance3D" parent="Mop" unique_id=315202845]
+transform = Transform3D(0.9994501, -0.033155177, 0, -0.033155177, -0.9994501, 8.742278e-08, -2.8985174e-09, -8.737471e-08, -1, 0.26424012, 0.026448965, 0)
+mesh = SubResource("BoxMesh_w4a3c")
+
+[node name="White" type="MeshInstance3D" parent="Mop" unique_id=1257660570]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40923724, 0.0331738, 0)
+mesh = SubResource("PlaneMesh_lc5oj")
+
+[node name="White2" type="MeshInstance3D" parent="Mop" unique_id=814575052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41188088, 0.035680562, 0)
+mesh = SubResource("PlaneMesh_lc5oj")
+
+[node name="Stick" type="MeshInstance3D" parent="." unique_id=978514023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0181658, 0)
+mesh = SubResource("CylinderMesh_u3w50")
+
+[node name="Stick2" type="MeshInstance3D" parent="." unique_id=1593812718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11762178, 0)
+mesh = SubResource("CylinderMesh_w4a3c")
+
+[node name="Fis" type="MeshInstance3D" parent="." unique_id=154653034]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, 0, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis2" type="MeshInstance3D" parent="." unique_id=331985854]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, 0.022751182, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis3" type="MeshInstance3D" parent="." unique_id=1993846330]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, 0.05004815, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis4" type="MeshInstance3D" parent="." unique_id=367868010]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.07852172, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis5" type="MeshInstance3D" parent="." unique_id=1392187148]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, 0.09796303, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis6" type="MeshInstance3D" parent="." unique_id=2132651390]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, 0.12517905, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis7" type="MeshInstance3D" parent="." unique_id=572358353]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, 0.14793023, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis8" type="MeshInstance3D" parent="." unique_id=760324662]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, 0.1752272, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis9" type="MeshInstance3D" parent="." unique_id=599753554]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.20370078, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis10" type="MeshInstance3D" parent="." unique_id=770197016]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, 0.22314209, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis11" type="MeshInstance3D" parent="." unique_id=491398888]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, 0.24360216, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis12" type="MeshInstance3D" parent="." unique_id=875757967]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, 0.26635334, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis13" type="MeshInstance3D" parent="." unique_id=1188056573]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, 0.2936503, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis14" type="MeshInstance3D" parent="." unique_id=661746991]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.3221239, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis15" type="MeshInstance3D" parent="." unique_id=1577174521]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, 0.3415652, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis16" type="MeshInstance3D" parent="." unique_id=348930887]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, 0.36311284, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis17" type="MeshInstance3D" parent="." unique_id=1071073961]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, 0.38586402, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis18" type="MeshInstance3D" parent="." unique_id=1781884072]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, 0.41316098, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis19" type="MeshInstance3D" parent="." unique_id=49047583]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.44163457, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis20" type="MeshInstance3D" parent="." unique_id=1916680657]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, 0.46107587, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis21" type="MeshInstance3D" parent="." unique_id=207707402]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, 0.4078019, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis22" type="MeshInstance3D" parent="." unique_id=1736992240]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, 0.43055308, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis23" type="MeshInstance3D" parent="." unique_id=675440535]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, 0.45785004, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis24" type="MeshInstance3D" parent="." unique_id=2119383919]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.48632362, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis66" type="MeshInstance3D" parent="." unique_id=1159641890]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, -0.4697348, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis67" type="MeshInstance3D" parent="." unique_id=804713973]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, -0.4469836, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis68" type="MeshInstance3D" parent="." unique_id=1191604525]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, -0.41968665, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis69" type="MeshInstance3D" parent="." unique_id=764339863]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, -0.39121306, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis70" type="MeshInstance3D" parent="." unique_id=681480394]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, -0.37177175, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis71" type="MeshInstance3D" parent="." unique_id=1044500387]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, -0.34455574, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis72" type="MeshInstance3D" parent="." unique_id=1975496871]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, -0.32180455, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis73" type="MeshInstance3D" parent="." unique_id=1920906700]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, -0.2945076, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis74" type="MeshInstance3D" parent="." unique_id=1896394246]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, -0.266034, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis75" type="MeshInstance3D" parent="." unique_id=671211268]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, -0.2465927, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis76" type="MeshInstance3D" parent="." unique_id=1261305994]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, -0.22613263, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis77" type="MeshInstance3D" parent="." unique_id=1392300975]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, -0.20338145, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis78" type="MeshInstance3D" parent="." unique_id=376431496]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, -0.17608449, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis79" type="MeshInstance3D" parent="." unique_id=587301568]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, -0.1476109, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis80" type="MeshInstance3D" parent="." unique_id=602777963]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, -0.1281696, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis81" type="MeshInstance3D" parent="." unique_id=960718847]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, -0.10662195, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis82" type="MeshInstance3D" parent="." unique_id=1315298107]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, -0.08387077, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis83" type="MeshInstance3D" parent="." unique_id=1367207216]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, -0.05657381, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis84" type="MeshInstance3D" parent="." unique_id=1621003239]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, -0.028100222, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis85" type="MeshInstance3D" parent="." unique_id=991118558]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, -0.008658916, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis86" type="MeshInstance3D" parent="." unique_id=1976866198]
+transform = Transform3D(1, 0, 0, 0, 0.31475255, -0.94917375, 0, 0.94917375, 0.31475255, -0.06193289, 0.030479655, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis87" type="MeshInstance3D" parent="." unique_id=1554106876]
+transform = Transform3D(1, 0, 0, 0, 0.18176731, -0.9833416, 0, 0.9833416, 0.18176731, -0.03918171, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis88" type="MeshInstance3D" parent="." unique_id=700267429]
+transform = Transform3D(1, 0, 0, 0, 0.27350795, -0.9618698, 0, 0.9618698, 0.27350795, -0.011884749, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis89" type="MeshInstance3D" parent="." unique_id=322653838]
+transform = Transform3D(1, 0, 0, 0, 0.14613391, -0.98926485, 0, 0.98926485, 0.14613391, 0.016588837, 0.022503883, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis90" type="MeshInstance3D" parent="." unique_id=877073228]
+transform = Transform3D(-0.99930966, 0.035263248, 0.011693535, 0, 0.31475255, -0.94917375, -0.03715152, -0.9485185, -0.31453526, 0.027305558, 0.030479655, -0.17342368)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis91" type="MeshInstance3D" parent="." unique_id=1026945406]
+transform = Transform3D(-0.99930966, 0.036532633, 0.006752932, 0, 0.18176731, -0.9833416, -0.03715152, -0.98266274, -0.18164183, 0.004570082, 0.022503883, -0.17426892)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis92" type="MeshInstance3D" parent="." unique_id=2117369065]
+transform = Transform3D(-0.99930966, 0.03573492, 0.010161235, 0, 0.2735079, -0.9618697, -0.037151515, -0.9612057, -0.2733191, -0.022708029, 0.022503883, -0.17528304)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis93" type="MeshInstance3D" parent="." unique_id=9170941]
+transform = Transform3D(-0.99930966, 0.036752693, 0.005429097, 0, 0.14613391, -0.98926485, -0.03715152, -0.9885819, -0.14603303, -0.05116196, 0.022503883, -0.17634088)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis94" type="MeshInstance3D" parent="." unique_id=1285128350]
+transform = Transform3D(-0.99930966, 0.034037456, 0.014889159, 0, 0.40076852, -0.91617936, -0.03715152, -0.9155469, -0.40049186, -0.07058984, 0.024353147, -0.17706315)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis95" type="MeshInstance3D" parent="." unique_id=578876702]
+transform = Transform3D(-0.99930966, 0.035263248, 0.011693535, 0, 0.31475255, -0.94917375, -0.03715152, -0.9485185, -0.31453526, -0.09778707, 0.030479655, -0.17807427)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis96" type="MeshInstance3D" parent="." unique_id=1560296512]
+transform = Transform3D(-0.99930966, 0.036532633, 0.006752932, 0, 0.18176731, -0.9833416, -0.03715152, -0.98266274, -0.18164183, -0.12052255, 0.022503883, -0.17891951)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis97" type="MeshInstance3D" parent="." unique_id=1164628263]
+transform = Transform3D(-0.99930966, 0.03573492, 0.010161235, 0, 0.2735079, -0.9618697, -0.037151515, -0.9612057, -0.2733191, -0.14780067, 0.022503883, -0.17993364)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis98" type="MeshInstance3D" parent="." unique_id=212516465]
+transform = Transform3D(-0.99930966, 0.036752693, 0.005429097, 0, 0.14613391, -0.98926485, -0.03715152, -0.9885819, -0.14603303, -0.17625459, 0.022503883, -0.18099147)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis99" type="MeshInstance3D" parent="." unique_id=290486849]
+transform = Transform3D(-0.99930966, 0.034037456, 0.014889159, 0, 0.40076852, -0.91617936, -0.03715152, -0.9155469, -0.40049186, -0.19568248, 0.024353147, -0.17569879)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis100" type="MeshInstance3D" parent="." unique_id=567236069]
+transform = Transform3D(-0.99930966, 0.035263248, 0.011693535, 0, 0.31475255, -0.94917375, -0.03715152, -0.9485185, -0.31453526, -0.21612842, 0.030479655, -0.17645891)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis101" type="MeshInstance3D" parent="." unique_id=594153246]
+transform = Transform3D(-0.99930966, 0.036532633, 0.006752932, 0, 0.18176731, -0.9833416, -0.03715152, -0.98266274, -0.18164183, -0.2388639, 0.022503883, -0.17730415)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis102" type="MeshInstance3D" parent="." unique_id=692866742]
+transform = Transform3D(-0.99930966, 0.03573492, 0.010161235, 0, 0.2735079, -0.9618697, -0.037151515, -0.9612057, -0.2733191, -0.266142, 0.022503883, -0.17013209)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis103" type="MeshInstance3D" parent="." unique_id=184993098]
+transform = Transform3D(-0.99930966, 0.036752693, 0.005429097, 0, 0.14613391, -0.98926485, -0.03715152, -0.9885819, -0.14603303, -0.29459596, 0.022503883, -0.17118992)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis104" type="MeshInstance3D" parent="." unique_id=343115244]
+transform = Transform3D(-0.99930966, 0.034037456, 0.014889159, 0, 0.40076852, -0.91617936, -0.03715152, -0.9155469, -0.40049186, -0.31402385, 0.024353147, -0.1719122)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis105" type="MeshInstance3D" parent="." unique_id=1182277998]
+transform = Transform3D(-0.99930966, 0.035263248, 0.011693535, 0, 0.31475255, -0.94917375, -0.03715152, -0.9485185, -0.31453526, -0.33555663, 0.030479655, -0.17271273)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis106" type="MeshInstance3D" parent="." unique_id=1456100993]
+transform = Transform3D(-0.99930966, 0.036532633, 0.006752932, 0, 0.18176731, -0.9833416, -0.03715152, -0.98266274, -0.18164183, -0.3582921, 0.022503883, -0.17355797)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis107" type="MeshInstance3D" parent="." unique_id=1824689612]
+transform = Transform3D(-0.99930966, 0.03573492, 0.010161235, 0, 0.2735079, -0.9618697, -0.037151515, -0.9612057, -0.2733191, -0.38557017, 0.022503883, -0.1745721)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis108" type="MeshInstance3D" parent="." unique_id=943727119]
+transform = Transform3D(-0.99930966, 0.036752693, 0.005429097, 0, 0.14613391, -0.98926485, -0.03715152, -0.9885819, -0.14603303, -0.4140241, 0.022503883, -0.18164489)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis109" type="MeshInstance3D" parent="." unique_id=1980237365]
+transform = Transform3D(-0.99930966, 0.034037456, 0.014889159, 0, 0.40076852, -0.91617936, -0.03715152, -0.9155469, -0.40049186, -0.433452, 0.024353147, -0.18236716)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis110" type="MeshInstance3D" parent="." unique_id=327855502]
+transform = Transform3D(-0.99930966, 0.035263248, 0.011693535, 0, 0.31475255, -0.94917375, -0.03715152, -0.9485185, -0.31453526, -0.3802148, 0.030479655, -0.18038794)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis111" type="MeshInstance3D" parent="." unique_id=1316155469]
+transform = Transform3D(-0.99930966, 0.036532633, 0.006752932, 0, 0.18176731, -0.9833416, -0.03715152, -0.98266274, -0.18164183, -0.4029503, 0.022503883, -0.18123318)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis112" type="MeshInstance3D" parent="." unique_id=279416300]
+transform = Transform3D(-0.99930966, 0.03573492, 0.010161235, 0, 0.2735079, -0.9618697, -0.037151515, -0.9612057, -0.2733191, -0.4302284, 0.022503883, -0.18224731)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis113" type="MeshInstance3D" parent="." unique_id=26468009]
+transform = Transform3D(-0.99930966, 0.036752693, 0.005429097, 0, 0.14613391, -0.98926485, -0.03715152, -0.9885819, -0.14603303, -0.4586823, 0.022503883, -0.18330514)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis114" type="MeshInstance3D" parent="." unique_id=942626052]
+transform = Transform3D(-0.99999803, 0.0019232742, 0.00063777156, 1.1072016e-09, 0.31475267, -0.949174, -0.0020262562, -0.9491719, -0.31475198, 0.48182, 0.030479655, -0.1828477)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis115" type="MeshInstance3D" parent="." unique_id=111660870]
+transform = Transform3D(-0.9999979, 0.0019925013, 0.0003683078, 4.6533982e-10, 0.18176733, -0.9833417, -0.0020262562, -0.98333967, -0.18176697, 0.45906883, 0.022503883, -0.18289378)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis116" type="MeshInstance3D" parent="." unique_id=1053202389]
+transform = Transform3D(-0.99999803, 0.0019489974, 0.00055419933, 0, 0.27350792, -0.96186984, -0.0020262524, -0.9618679, -0.2735074, 0.43177193, 0.022503883, -0.18294911)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis117" type="MeshInstance3D" parent="." unique_id=1838362395]
+transform = Transform3D(-0.9999979, 0.0020045042, 0.0002961047, 0, 0.14613391, -0.98926485, -0.0020262487, -0.98926276, -0.1461336, 0.4032984, 0.022503883, -0.1830068)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis118" type="MeshInstance3D" parent="." unique_id=853354244]
+transform = Transform3D(-0.9999979, 0.0018564165, 0.0008120602, 0, 0.40076858, -0.9161795, -0.0020262524, -0.9161776, -0.40076774, 0.38385713, 0.024353147, -0.18304619)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis119" type="MeshInstance3D" parent="." unique_id=489922017]
+transform = Transform3D(-0.99999803, 0.0019232742, 0.00063777156, 1.1072016e-09, 0.31475267, -0.949174, -0.0020262562, -0.9491719, -0.31475198, 0.35664123, 0.030479655, -0.18310134)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis120" type="MeshInstance3D" parent="." unique_id=791637548]
+transform = Transform3D(-0.9999979, 0.0019925013, 0.0003683078, 4.6533982e-10, 0.18176733, -0.9833417, -0.0020262562, -0.98333967, -0.18176697, 0.33389005, 0.022503883, -0.18314743)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis121" type="MeshInstance3D" parent="." unique_id=1583494132]
+transform = Transform3D(-0.99999803, 0.0019489974, 0.00055419933, 0, 0.27350792, -0.96186984, -0.0020262524, -0.9618679, -0.2735074, 0.30659318, 0.022503883, -0.18320274)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis122" type="MeshInstance3D" parent="." unique_id=2037539699]
+transform = Transform3D(-0.9999979, 0.0020045042, 0.0002961047, 0, 0.14613391, -0.98926485, -0.0020262487, -0.98926276, -0.1461336, 0.27811962, 0.022503883, -0.18326044)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis123" type="MeshInstance3D" parent="." unique_id=1570292963]
+transform = Transform3D(-0.9999979, 0.0018564165, 0.0008120602, 0, 0.40076858, -0.9161795, -0.0020262524, -0.9161776, -0.40076774, 0.25867835, 0.024353147, -0.18329984)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis124" type="MeshInstance3D" parent="." unique_id=2060758762]
+transform = Transform3D(-0.99999803, 0.0019232742, 0.00063777156, 1.1072016e-09, 0.31475267, -0.949174, -0.0020262562, -0.9491719, -0.31475198, 0.23821834, 0.030479655, -0.1833413)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis125" type="MeshInstance3D" parent="." unique_id=883037904]
+transform = Transform3D(-0.9999979, 0.0019925013, 0.0003683078, 4.6533982e-10, 0.18176733, -0.9833417, -0.0020262562, -0.98333967, -0.18176697, 0.2154672, 0.022503883, -0.18338738)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis126" type="MeshInstance3D" parent="." unique_id=1091592241]
+transform = Transform3D(-0.99999803, 0.0019489974, 0.00055419933, 0, 0.27350792, -0.96186984, -0.0020262524, -0.9618679, -0.2735074, 0.1881703, 0.022503883, -0.18344271)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis127" type="MeshInstance3D" parent="." unique_id=817922501]
+transform = Transform3D(-0.9999979, 0.0020045042, 0.0002961047, 0, 0.14613391, -0.98926485, -0.0020262487, -0.98926276, -0.1461336, 0.15969676, 0.022503883, -0.1835004)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis128" type="MeshInstance3D" parent="." unique_id=2061994165]
+transform = Transform3D(-0.9999979, 0.0018564165, 0.0008120602, 0, 0.40076858, -0.9161795, -0.0020262524, -0.9161776, -0.40076774, 0.14025548, 0.024353147, -0.1835398)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis129" type="MeshInstance3D" parent="." unique_id=275347736]
+transform = Transform3D(-0.99999803, 0.0019232742, 0.00063777156, 1.1072016e-09, 0.31475267, -0.949174, -0.0020262562, -0.9491719, -0.31475198, 0.11870787, 0.030479655, -0.18358345)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis130" type="MeshInstance3D" parent="." unique_id=57978988]
+transform = Transform3D(-0.9999979, 0.0019925013, 0.0003683078, 4.6533982e-10, 0.18176733, -0.9833417, -0.0020262562, -0.98333967, -0.18176697, 0.09595674, 0.022503883, -0.18362956)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis131" type="MeshInstance3D" parent="." unique_id=586493407]
+transform = Transform3D(-0.99999803, 0.0019489974, 0.00055419933, 0, 0.27350792, -0.96186984, -0.0020262524, -0.9618679, -0.2735074, 0.06865989, 0.022503883, -0.18368487)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis132" type="MeshInstance3D" parent="." unique_id=1070482834]
+transform = Transform3D(-0.9999979, 0.0020045042, 0.0002961047, 0, 0.14613391, -0.98926485, -0.0020262487, -0.98926276, -0.1461336, 0.040186346, 0.022503883, -0.18374257)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis134" type="MeshInstance3D" parent="." unique_id=1676820367]
+transform = Transform3D(-0.99999803, 0.0019232742, 0.00063777156, 1.1072016e-09, 0.31475267, -0.949174, -0.0020262562, -0.9491719, -0.31475198, 0.07401894, 0.030479655, -0.183674)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis25" type="MeshInstance3D" parent="." unique_id=1358164258]
+transform = Transform3D(1, 0, 0, 0, 0.40076852, -0.91617936, 0, 0.91617936, 0.40076852, 0.50576496, 0.024353147, 0.18781123)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis26" type="MeshInstance3D" parent="." unique_id=2002782007]
+transform = Transform3D(0.045192152, 0.94820404, 0.31443095, 3.6881054e-09, 0.31475255, -0.94917375, -0.9989783, 0.042895183, 0.014224337, 0.525987, 0.021158487, 0.15840203)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis27" type="MeshInstance3D" parent="." unique_id=2077315977]
+transform = Transform3D(0.045192137, 0.98233694, 0.18158163, -2.1001585e-09, 0.1817673, -0.9833416, -0.9989783, 0.04443931, 0.008214455, 0.5270152, 0.013182715, 0.13567409)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis28" type="MeshInstance3D" parent="." unique_id=522553775]
+transform = Transform3D(0.045192145, 0.9608871, 0.27322847, -1.776357e-15, 0.27350792, -0.96186984, -0.9989784, 0.043468945, 0.012360401, 0.5282488, 0.013182715, 0.10840502)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis29" type="MeshInstance3D" parent="." unique_id=1559874877]
+transform = Transform3D(0.04519213, 0.9882542, 0.1459846, 2.1001585e-09, 0.14613393, -0.98926485, -0.99897844, 0.044706985, 0.0066041006, 0.5295356, 0.013182715, 0.079960555)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis30" type="MeshInstance3D" parent="." unique_id=29818355]
+transform = Transform3D(0.045192145, 0.9152433, 0.40035903, 0, 0.40076852, -0.91617936, -0.99897844, 0.04140409, 0.018111575, 0.5304142, 0.0150319785, 0.06053905)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis31" type="MeshInstance3D" parent="." unique_id=1756805337]
+transform = Transform3D(-0.0746996, 0.94652194, 0.31387314, 2.3412743e-09, 0.31475252, -0.94917375, -0.9972062, -0.070902936, -0.023511898, 0.5319644, 0.021158487, 0.045593586)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis32" type="MeshInstance3D" parent="." unique_id=1044070624]
+transform = Transform3D(-0.07469961, 0.98059416, 0.18125948, -2.1001583e-09, 0.18176728, -0.9833415, -0.9972061, -0.073455244, -0.01357795, 0.530265, 0.013182715, 0.022905968)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis33" type="MeshInstance3D" parent="." unique_id=1400508872]
+transform = Transform3D(-0.07469962, 0.95918244, 0.27274373, 9.3036934e-10, 0.2735079, -0.9618698, -0.9972061, -0.07185131, -0.02043094, 0.52822584, 0.013182715, -0.0043147244)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis34" type="MeshInstance3D" parent="." unique_id=1322353986]
+transform = Transform3D(-0.07469964, 0.98650104, 0.14572562, 1.8919286e-09, 0.1461339, -0.9892648, -0.9972062, -0.07389772, -0.010916149, 0.5260989, 0.013182715, -0.032708727)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis35" type="MeshInstance3D" parent="." unique_id=958602800]
+transform = Transform3D(-0.074699625, 0.9136197, 0.39964882, 0, 0.4007685, -0.9161793, -0.9972061, -0.06843825, -0.02993726, 0.5246467, 0.0150319785, -0.052095786)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis36" type="MeshInstance3D" parent="." unique_id=1012740592]
+transform = Transform3D(-0.0746996, 0.94652194, 0.31387314, 2.3412743e-09, 0.31475252, -0.94917375, -0.9972062, -0.070902936, -0.023511898, 0.5319644, 0.021158487, -0.033686075)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis37" type="MeshInstance3D" parent="." unique_id=28055933]
+transform = Transform3D(-0.07469961, 0.98059416, 0.18125948, -2.1001583e-09, 0.18176728, -0.9833415, -0.9972061, -0.073455244, -0.01357795, 0.530265, 0.013182715, -0.056373693)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis38" type="MeshInstance3D" parent="." unique_id=1371507141]
+transform = Transform3D(-0.07469962, 0.95918244, 0.27274373, 9.3036934e-10, 0.2735079, -0.9618698, -0.9972061, -0.07185131, -0.02043094, 0.52822584, 0.013182715, -0.08359438)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis39" type="MeshInstance3D" parent="." unique_id=765909500]
+transform = Transform3D(-0.07469964, 0.98650104, 0.14572562, 1.8919286e-09, 0.1461339, -0.9892648, -0.9972062, -0.07389772, -0.010916149, 0.5260989, 0.013182715, -0.11198839)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis40" type="MeshInstance3D" parent="." unique_id=1876614553]
+transform = Transform3D(-0.074699625, 0.9136197, 0.39964882, 0, 0.4007685, -0.9161793, -0.9972061, -0.06843825, -0.02993726, 0.5246467, 0.0150319785, -0.13137545)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis41" type="MeshInstance3D" parent="." unique_id=1421888852]
+transform = Transform3D(-0.0746996, 0.94652194, 0.31387314, 2.3412743e-09, 0.31475252, -0.94917375, -0.9972062, -0.070902936, -0.023511898, 0.5319644, 0.021158487, -0.033686075)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis42" type="MeshInstance3D" parent="." unique_id=946287893]
+transform = Transform3D(-0.07469961, 0.98059416, 0.18125948, -2.1001583e-09, 0.18176728, -0.9833415, -0.9972061, -0.073455244, -0.01357795, 0.530265, 0.013182715, -0.056373693)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis43" type="MeshInstance3D" parent="." unique_id=1566022354]
+transform = Transform3D(-0.07469962, 0.95918244, 0.27274373, 9.3036934e-10, 0.2735079, -0.9618698, -0.9972061, -0.07185131, -0.02043094, 0.52822584, 0.013182715, -0.08359438)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis44" type="MeshInstance3D" parent="." unique_id=726405490]
+transform = Transform3D(-0.07469964, 0.98650104, 0.14572562, 1.8919286e-09, 0.1461339, -0.9892648, -0.9972062, -0.07389772, -0.010916149, 0.5260989, 0.013182715, -0.11198839)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis45" type="MeshInstance3D" parent="." unique_id=1946413120]
+transform = Transform3D(-0.074699625, 0.9136197, 0.39964882, 0, 0.4007685, -0.9161793, -0.9972061, -0.06843825, -0.02993726, 0.5246467, 0.0150319785, -0.13137545)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis46" type="MeshInstance3D" parent="." unique_id=1995743689]
+transform = Transform3D(-0.030020673, -0.9487459, -0.3146107, 3.2716447e-09, 0.31475258, -0.94917375, 0.99954927, -0.028494824, -0.009449078, -0.526843, 0.021158487, -0.14126275)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis47" type="MeshInstance3D" parent="." unique_id=259046152]
+transform = Transform3D(-0.03002064, -0.9828983, -0.1816854, -3.03053e-09, 0.18176734, -0.9833416, 0.99954927, -0.029520545, -0.0054567764, -0.527526, 0.013182715, -0.118521824)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis48" type="MeshInstance3D" parent="." unique_id=1713250904]
+transform = Transform3D(-0.030020654, -0.96143615, -0.27338478, -1.3468336e-09, 0.273508, -0.9618697, 0.9995492, -0.028875954, -0.008210892, -0.52834547, 0.013182715, -0.09123716)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis49" type="MeshInstance3D" parent="." unique_id=1018132383]
+transform = Transform3D(-0.030020555, -0.98881906, -0.14606781, 3.0305263e-09, 0.14613368, -0.9892648, 0.9995494, -0.029698282, -0.004387011, -0.52920026, 0.013182715, -0.06277643)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis50" type="MeshInstance3D" parent="." unique_id=1430673066]
+transform = Transform3D(-0.030020654, -0.91576636, -0.40058783, 1.346832e-09, 0.40076852, -0.9161793, 0.9995493, -0.027504303, -0.01203133, -0.52978396, 0.0150319785, -0.04334382)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis51" type="MeshInstance3D" parent="." unique_id=1359271330]
+transform = Transform3D(0.08983045, -0.94533616, -0.31348002, 6.4249397e-09, 0.31475258, -0.94917375, 0.99595714, 0.0852647, 0.028274374, -0.53110707, 0.021158487, -0.02837655)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis52" type="MeshInstance3D" parent="." unique_id=650320970]
+transform = Transform3D(0.089830354, -0.97936594, -0.18103248, -4.14199e-09, 0.18176736, -0.98334163, 0.99595714, 0.08833393, 0.01632822, -0.5290634, 0.013182715, -0.0057173483)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis53" type="MeshInstance3D" parent="." unique_id=396058068]
+transform = Transform3D(0.08983045, -0.957981, -0.27240205, 9.303691e-10, 0.27350783, -0.9618698, 0.995957, 0.08640519, 0.024569333, -0.5266112, 0.013182715, 0.021469247)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis54" type="MeshInstance3D" parent="." unique_id=2089307318]
+transform = Transform3D(0.089830436, -0.98526543, -0.14554287, 2.8206466e-09, 0.14613369, -0.9892648, 0.99595714, 0.08886611, 0.013127256, -0.52405345, 0.013182715, 0.049827687)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis55" type="MeshInstance3D" parent="." unique_id=2129011345]
+transform = Transform3D(0.08983045, -0.91247535, -0.3991481, 1.8574411e-09, 0.4007684, -0.91617936, 0.995957, 0.082300805, 0.03600121, -0.5223071, 0.0150319785, 0.06919046)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis56" type="MeshInstance3D" parent="." unique_id=203067605]
+transform = Transform3D(0.08983045, -0.94533616, -0.31348002, 6.4249397e-09, 0.31475258, -0.94917375, 0.99595714, 0.0852647, 0.028274374, -0.5299035, 0.021158487, 0.05089397)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis57" type="MeshInstance3D" parent="." unique_id=922855251]
+transform = Transform3D(0.089830354, -0.97936594, -0.18103248, -4.14199e-09, 0.18176736, -0.98334163, 0.99595714, 0.08833393, 0.01632822, -0.5278598, 0.013182715, 0.073553175)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis58" type="MeshInstance3D" parent="." unique_id=548569622]
+transform = Transform3D(0.08983045, -0.957981, -0.27240205, 9.303691e-10, 0.27350783, -0.9618698, 0.995957, 0.08640519, 0.024569333, -0.5254076, 0.013182715, 0.10073977)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis59" type="MeshInstance3D" parent="." unique_id=1631920168]
+transform = Transform3D(0.089830436, -0.98526543, -0.14554287, 2.8206466e-09, 0.14613369, -0.9892648, 0.99595714, 0.08886611, 0.013127256, -0.52284986, 0.013182715, 0.1290982)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis60" type="MeshInstance3D" parent="." unique_id=607674614]
+transform = Transform3D(0.08983045, -0.91247535, -0.3991481, 1.8574411e-09, 0.4007684, -0.91617936, 0.995957, 0.082300805, 0.03600121, -0.5211035, 0.0150319785, 0.14846098)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis61" type="MeshInstance3D" parent="." unique_id=1453123276]
+transform = Transform3D(0.08983045, -0.94533616, -0.31348002, 6.4249397e-09, 0.31475258, -0.94917375, 0.99595714, 0.0852647, 0.028274374, -0.5299035, 0.021158487, 0.05089397)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis62" type="MeshInstance3D" parent="." unique_id=1224667995]
+transform = Transform3D(0.089830354, -0.97936594, -0.18103248, -4.14199e-09, 0.18176736, -0.98334163, 0.99595714, 0.08833393, 0.01632822, -0.5278598, 0.013182715, 0.073553175)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis63" type="MeshInstance3D" parent="." unique_id=2057667086]
+transform = Transform3D(0.08983045, -0.957981, -0.27240205, 9.303691e-10, 0.27350783, -0.9618698, 0.995957, 0.08640519, 0.024569333, -0.5254076, 0.013182715, 0.10073977)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis64" type="MeshInstance3D" parent="." unique_id=1465794937]
+transform = Transform3D(0.089830436, -0.98526543, -0.14554287, 2.8206466e-09, 0.14613369, -0.9892648, 0.99595714, 0.08886611, 0.013127256, -0.52284986, 0.013182715, 0.1290982)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="Fis65" type="MeshInstance3D" parent="." unique_id=773505135]
+transform = Transform3D(0.08983045, -0.91247535, -0.3991481, 1.8574411e-09, 0.4007684, -0.91617936, 0.995957, 0.082300805, 0.03600121, -0.5211035, 0.0150319785, 0.14846098)
+mesh = SubResource("CapsuleMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=975839809]
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1665761346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0266362, 0)
+shape = SubResource("BoxShape3D_o5d3q")
