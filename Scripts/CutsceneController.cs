@@ -126,7 +126,8 @@ public partial class CutsceneController : Node
         bool keepPlayerLockedOnFinish = false,
         Vector3? cameraReferencePosition = null,
         float delaySeconds = 0f,
-        bool isSkippable = true)
+        bool isSkippable = true,
+        bool smoothCameraTransition = true)
     {
         _keepPlayerLockedOnFinish = keepPlayerLockedOnFinish;
         _isSkippable = isSkippable;
@@ -241,27 +242,36 @@ public partial class CutsceneController : Node
         );
 
         _cameraTween?.Kill();
-        _cameraTween = CreateTween();
-        var tween = _cameraTween;
+        _cameraTween = null;
 
-        tween.SetTrans(Tween.TransitionType.Cubic);
-        tween.SetEase(Tween.EaseType.Out);
+        if (smoothCameraTransition)
+        {
+            _cameraTween = CreateTween();
+            var tween = _cameraTween;
 
-        tween.SetParallel();
+            tween.SetTrans(Tween.TransitionType.Cubic);
+            tween.SetEase(Tween.EaseType.Out);
+            tween.SetParallel();
 
-        tween.TweenProperty(
-            _camera,
-            "global_transform",
-            targetTransform,
-            0.4
-        );
+            tween.TweenProperty(
+                _camera,
+                "global_transform",
+                targetTransform,
+                0.4
+            );
 
-        tween.TweenProperty(
-            _camera,
-            "fov",
-            CinematicFov,
-            0.4
-        );
+            tween.TweenProperty(
+                _camera,
+                "fov",
+                CinematicFov,
+                0.4
+            );
+        }
+        else
+        {
+            _camera.GlobalTransform = targetTransform;
+            _camera.Fov = CinematicFov;
+        }
     }
 
     private void SetHudVisibility(bool visible)

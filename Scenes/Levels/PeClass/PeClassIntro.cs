@@ -17,9 +17,32 @@ public partial class PeClassIntro : LevelBase
         _onCrowdCamera = GetNode<Camera3D>("OnCrowdCamera");
         _onTeacherCameraFront = GetNode<Camera3D>("OnTeacherCameraFront");
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
-        _cutsceneController.SetCamera(_playerCamera);
+        _cutsceneController.SetCamera(_onCrowdCamera);
         _cutsceneController.SetPlayer(_player);
         _peTeacher = GetNode<PeTeacher>("PeTeacher");
+
+        //_cutsceneController.StartDialogue(
+        //    _peTeacher,
+        //    [
+        //        new DialogueLine(DialogueSpeaker.PeTeacher, PolishClassText.Introduction, 2.0f),
+        //    ],
+        //    cinematic: true,
+        //    onFinished: SwitchToMate,
+        //    keepPlayerLockedOnFinish: true,
+        //    delaySeconds: 2.0f
+        //);
+
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PolishClassText.Introduction, 2.0f),
+            ],
+            cinematic: true,
+            onFinished: SwitchToMate,
+            keepPlayerLockedOnFinish: true,
+            delaySeconds: 2.0f
+        );
+
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
