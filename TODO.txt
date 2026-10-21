@@ -15,3 +15,9 @@ Ideas:
 - odporność npc na knockback jako opcja
 - na WF Skrzyp uczy nas Blokowania
 - po WF walka z Bully nr 2 - z dwoma parobkami i bull ma mocny atak i inny stroj. wokół tłum gapiów
+
+- bully walking animation missing?
+- dodac postacie przydupasy bulliego
+- dodac przydupasa wariany bez spodni i drugiego wariant bez koszulki
+- add skrzypski basic attack
+- heavy attak zmienić na liscia
