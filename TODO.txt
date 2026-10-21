@@ -21,3 +21,5 @@ Ideas:
 - dodac przydupasa wariany bez spodni i drugiego wariant bez koszulki
 - add skrzypski basic attack
 - heavy attak zmienić na liscia
+
+- gdzies pod koniec gry - opcja zajumania dziennika i zmienienia sobie ocen

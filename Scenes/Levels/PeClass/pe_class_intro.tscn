@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://q7y8u4v8qtwk"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_1i852"]
+[ext_resource type="Script" uid="uid://bhr8hqptjepcg" path="res://Scenes/Levels/PeClass/PeClassIntro.cs" id="2_50wve"]
+[ext_resource type="PackedScene" uid="uid://8vwknvurhmg4" path="res://Scenes/Levels/PeClass/gymnasium.tscn" id="3_50wve"]
+
+[node name="PeClassIntro" unique_id=513644933 instance=ExtResource("1_1i852")]
+script = ExtResource("2_50wve")
+
+[node name="Gymnasium" parent="." index="5" unique_id=430271837 instance=ExtResource("3_50wve")]
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]

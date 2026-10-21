@@ -137,7 +137,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0
 mesh = SubResource("PlaneMesh_lc5oj")
 
 [node name="BasketAttachment" type="StaticBody3D" parent="." unique_id=1749491006]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9694047, 0.632054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71412605, 0.632054)
 collision_layer = 65
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BasketAttachment" unique_id=167094377]
@@ -147,10 +147,11 @@ mesh = SubResource("BoxMesh_l4mh8")
 shape = SubResource("BoxShape3D_icc63")
 
 [node name="BasketNet" type="MeshInstance3D" parent="." unique_id=1705966154]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7208582, 1.0208482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46557957, 1.0208482)
 mesh = SubResource("CylinderMesh_j2owf")
 
 [node name="BasketHole" type="StaticBody3D" parent="." unique_id=1019219855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25527865, 0)
 collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BasketHole" unique_id=2026588180]

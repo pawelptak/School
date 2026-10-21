@@ -1,0 +1,1566 @@
+[gd_scene format=4 uid="uid://8vwknvurhmg4"]
+
+[ext_resource type="Texture2D" uid="uid://d03l4ca3d2851" path="res://Assets/Textures/plank50_rotated.jpg" id="1_lpgno"]
+[ext_resource type="PackedScene" uid="uid://ma8dl2dn5y2k" path="res://Scenes/Objects/Window/window.tscn" id="1_y6ntd"]
+[ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="2_fw24q"]
+[ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="4_1ihtv"]
+[ext_resource type="Texture2D" uid="uid://cix4664ecvgxw" path="res://Scenes/Objects/Door/metal_door2.jpg" id="5_2n2vo"]
+[ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="6_2n2vo"]
+[ext_resource type="Texture2D" uid="uid://cacnudvkmcb2c" path="res://Scenes/Levels/PeClass/court_lines.png" id="7_4hh3p"]
+[ext_resource type="Texture2D" uid="uid://ckjjgsg42itky" path="res://Scenes/Levels/PeClass/goal_lines.png" id="8_fpe4t"]
+[ext_resource type="PackedScene" uid="uid://br13kty8w1its" path="res://Scenes/Levels/PeClass/hanging_basket.tscn" id="9_cuj3t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6ntd"]
+albedo_color = Color(1.0309138, 0.9348456, 0.82505333, 1)
+albedo_texture = ExtResource("1_lpgno")
+uv1_scale = Vector3(20, 10, 15)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
+material = SubResource("StandardMaterial3D_y6ntd")
+size = Vector3(20, 0.1, 15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d20kp"]
+size = Vector3(20, 0.1, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpgno"]
+albedo_texture = ExtResource("2_fw24q")
+uv1_scale = Vector3(10, 5, 1)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_d20kp"]
+material = SubResource("StandardMaterial3D_lpgno")
+size = Vector3(22, 0.1, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xgl2"]
+material = SubResource("StandardMaterial3D_lpgno")
+size = Vector3(20, 10, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fw24q"]
+size = Vector3(20, 10, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y6ntd"]
+size = Vector3(20, 10, 0.2)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_y6ntd"]
+_surfaces = [{
+"aabb": AABB(-10, -5, -0.25, 20, 10, 0.5),
+"attribute_data": PackedByteArray("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ICKiPgAAAD+WmRk+AAAAP5aZGT4AAIA/q6qqPmhmBj+rqqo+aGZGP6uqKj9oZkY/ICKiPgAAAD+WmRk+AACAPyAioj4AAIA/AACAP2hmBj+rqio/aGYGPwAAgD9oZkY/q6oqP2hmBj+rqqo+aGYGP6uqKj9oZkY/NjOzPgAAAD9GRAQ/AAAAADYzsz4AAAAAq6oqP2hmBj+rqio/aGZGPwAAgD9oZkY/RkQEPwAAAD9GRAQ/AAAAADYzsz4AAAA/ICKiPgAAAD+WmRk+AACAPyAioj4AAIA/AACAP2hmBj+rqio/aGYGPwAAgD9oZkY/ICKiPgAAAD+WmRk+AAAAP5aZGT4AAIA/q6qqPmhmBj+rqqo+aGZGP6uqKj9oZkY/q6oqP2hmBj+rqqo+aGYGP6uqKj9oZkY/NjOzPgAAAD9GRAQ/AAAAADYzsz4AAAAAICKiPgAAAD+WmRk+AAAAP5aZGT4AAIA/q6oqP2hmBj+rqio/aGZGPwAAgD9oZkY/RkQEPwAAAD9GRAQ/AAAAADYzsz4AAAA/q6qqPmhmBj+rqqo+aGZGP6uqKj9oZkY/ICKiPgAAAD+WmRk+AACAPyAioj4AAIA/AACAP2hmBj+rqio/aGYGPwAAgD9oZkY/q6oqP2hmBj+rqqo+aGYGP6uqKj9oZkY/NjOzPgAAAD9GRAQ/AAAAADYzsz4AAAAA"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 516,
+"vertex_data": PackedByteArray("AAAgwQAAoMAAAIC+dEWVwNxczb8AAIC+dEXlwNxczb8AAIC+AAAgwQAAoMAAAIC+sYNKwNxczb8AAIC+dEWVwNxczb8AAIC+AAAgwQAAoMAAAIC+dEXlwNxczb8AAIC+dEXlwEhGZT8AAIC+AAAgwQAAoMAAAIC+xA4qv9xczb8AAIC+sYNKwNxczb8AAIC+AAAgwQAAoMAAAIC+AAAgQQAAoMAAAIC+xA4qv9xczb8AAIC+dEWVwNxczb8AAIC+sYNKwNxczb8AAIC+dEWVwEhGZT8AAIC+PPFVP9xczb8AAIC+xA4qv0hGZT8AAIC+xA4qv9xczb8AAIC+AAAgwQAAoMAAAIA+dEXlwNxczb8AAIA+dEWVwNxczb8AAIA+AAAgwQAAoMAAAIA+dEWVwNxczb8AAIA+sYNKwNxczb8AAIA+AAAgwQAAoMAAAIC+AAAgwQAAoEAAAIA+AAAgwQAAoMAAAIA+AAAgwQAAoMAAAIA+dEXlwEhGZT8AAIA+dEXlwNxczb8AAIA+AAAgwQAAoMAAAIC+AAAgwQAAoMAAAIA+AAAgQQAAoMAAAIA+AAAgwQAAoMAAAIA+sYNKwNxczb8AAIA+xA4qv9xczb8AAIA+AAAgwQAAoMAAAIA+xA4qv9xczb8AAIA+PPFVP9xczb8AAIA+sYNKwNxczb8AAIA+dEWVwNxczb8AAIA+sYNKwEhGZT8AAIA+AAAgwQAAoMAAAIC+dEXlwEhGZT8AAIC+AAAgwQAAoEAAAIC+AAAgwQAAoEAAAIC+dEXlwEhGZT8AAIC+c0XlwFBGZT8AAIC+dEXlwEhGZT8AAIC+c0WVwFBGZT8AAIC+c0XlwFBGZT8AAIC+dEXlwEhGZT8AAIC+dEWVwEhGZT8AAIC+c0WVwFBGZT8AAIC+AAAgwQAAoMAAAIC+AAAgwQAAoEAAAIC+AAAgwQAAoEAAAIA+AAAgwQAAoEAAAIC+c0XlwFBGZT8AAIC+c0XlwJRRWUAAAIC+AAAgwQAAoEAAAIC+c0XlwJRRWUAAAIC+c0WVwJRRWUAAAIC+AAAgwQAAoEAAAIC+c0WVwJRRWUAAAIC+sYNKwJRRWUAAAIC+sYNKwNxczb8AAIC+c0WVwFBGZT8AAIC+dEWVwEhGZT8AAIC+sYNKwNxczb8AAIC+sYNKwEhGZT8AAIC+c0WVwFBGZT8AAIC+sYNKwEhGZT8AAIC+sYNKwFBGZT8AAIC+c0WVwFBGZT8AAIC+sYNKwFBGZT8AAIC+c0WVwJRRWUAAAIC+c0WVwFBGZT8AAIC+sYNKwEhGZT8AAIC+xA4qv1BGZT8AAIC+sYNKwFBGZT8AAIC+xA4qv0hGZT8AAIC+xA4qv1BGZT8AAIC+sYNKwEhGZT8AAIC+xA4qv0hGZT8AAIC+PPFVP0hGZT8AAIC+xA4qv1BGZT8AAIC+xA4qv1BGZT8AAIC+PPFVP1BGZT8AAIC+xA4qv5RRWUAAAIC+c0WVwJRRWUAAAIC+sYNKwFBGZT8AAIC+sYNKwJRRWUAAAIC+AAAgwQAAoEAAAIC+sYNKwJRRWUAAAIC+xA4qv5RRWUAAAIC+AAAgwQAAoEAAAIC+xA4qv5RRWUAAAIC+PPFVP5RRWUAAAIC+AAAgwQAAoEAAAIC+AAAgQQAAoEAAAIC+AAAgwQAAoEAAAIA+AAAgwQAAoMAAAIA+AAAgwQAAoEAAAIA+dEXlwEhGZT8AAIA+dEXlwEhGZT8AAIA+c0XlwFBGZT8AAIA+dEWVwEhGZT8AAIA+dEWVwEhGZT8AAIA+c0XlwFBGZT8AAIA+c0WVwFBGZT8AAIA+dEXlwEhGZT8AAIA+c0XlwJRRWUAAAIA+c0XlwFBGZT8AAIA+AAAgwQAAoEAAAIA+c0XlwJRRWUAAAIA+dEXlwEhGZT8AAIA+AAAgwQAAoEAAAIA+c0WVwJRRWUAAAIA+c0XlwJRRWUAAAIA+AAAgwQAAoEAAAIA+sYNKwJRRWUAAAIA+c0WVwJRRWUAAAIA+dEWVwNxczb8AAIA+dEWVwEhGZT8AAIA+sYNKwEhGZT8AAIA+sYNKwEhGZT8AAIA+dEWVwEhGZT8AAIA+c0WVwFBGZT8AAIA+sYNKwEhGZT8AAIA+c0WVwFBGZT8AAIA+sYNKwFBGZT8AAIA+c0WVwFBGZT8AAIA+sYNKwJRRWUAAAIA+sYNKwFBGZT8AAIA+sYNKwEhGZT8AAIA+sYNKwFBGZT8AAIA+xA4qv0hGZT8AAIA+xA4qv0hGZT8AAIA+sYNKwFBGZT8AAIA+xA4qv1BGZT8AAIA+xA4qv9xczb8AAIA+xA4qv0hGZT8AAIA+PPFVP0hGZT8AAIA+xA4qv0hGZT8AAIA+xA4qv1BGZT8AAIA+PPFVP1BGZT8AAIA+c0WVwFBGZT8AAIA+c0WVwJRRWUAAAIA+sYNKwJRRWUAAAIA+AAAgwQAAoEAAAIA+xA4qv5RRWUAAAIA+sYNKwJRRWUAAAIA+AAAgwQAAoEAAAIA+PPFVP5RRWUAAAIA+xA4qv5RRWUAAAIA+xA4qv1BGZT8AAIA+xA4qv5RRWUAAAIA+PPFVP5RRWUAAAIA+AAAgwQAAoEAAAIA+T3xVQJRRWUAAAIA+PPFVP5RRWUAAAIA+AAAgQQAAoMAAAIC+PPFVP9xczb8AAIC+xA4qv9xczb8AAIC+AAAgQQAAoMAAAIC+T3xVQNxczb8AAIC+PPFVP9xczb8AAIC+AAAgwQAAoMAAAIC+AAAgQQAAoMAAAIA+AAAgQQAAoMAAAIC+T3xVQNxczb8AAIC+KL6aQNxczb8AAIC+T3xVQEhGZT8AAIC+AAAgQQAAoMAAAIC+KL6aQNxczb8AAIC+T3xVQNxczb8AAIC+AAAgQQAAoMAAAIC+KL7qQNxczb8AAIC+KL6aQNxczb8AAIC+AAAgQQAAoMAAAIC+KL7qQEhGZT8AAIC+KL7qQNxczb8AAIC+AAAgQQAAoMAAAIC+AAAgQQAAoMAAAIA+AAAgQQAAoEAAAIC+AAAgwQAAoMAAAIA+PPFVP9xczb8AAIA+AAAgQQAAoMAAAIA+AAAgQQAAoMAAAIA+PPFVP9xczb8AAIA+T3xVQNxczb8AAIA+xA4qv9xczb8AAIA+PPFVP0hGZT8AAIA+PPFVP9xczb8AAIA+T3xVQNxczb8AAIA+KL6aQEhGZT8AAIA+KL6aQNxczb8AAIA+AAAgQQAAoMAAAIA+T3xVQNxczb8AAIA+KL6aQNxczb8AAIA+AAAgQQAAoMAAAIA+KL6aQNxczb8AAIA+KL7qQNxczb8AAIA+AAAgQQAAoMAAAIA+KL7qQNxczb8AAIA+KL7qQEhGZT8AAIA+xA4qv0hGZT8AAIC+PPFVP9xczb8AAIC+PPFVP0hGZT8AAIC+xA4qv1BGZT8AAIC+PPFVP0hGZT8AAIC+PPFVP1BGZT8AAIC+PPFVP0hGZT8AAIC+T3xVQFBGZT8AAIC+PPFVP1BGZT8AAIC+T3xVQEhGZT8AAIC+T3xVQFBGZT8AAIC+PPFVP0hGZT8AAIC+T3xVQEhGZT8AAIC+KL6aQNxczb8AAIC+KL6aQEhGZT8AAIC+KL6aQEhGZT8AAIC+T3xVQFBGZT8AAIC+T3xVQEhGZT8AAIC+KL6aQEhGZT8AAIC+KL6aQFBGZT8AAIC+T3xVQFBGZT8AAIC+T3xVQFBGZT8AAIC+KL6aQFBGZT8AAIC+T3xVQJRRWUAAAIC+xA4qv5RRWUAAAIC+PPFVP1BGZT8AAIC+PPFVP5RRWUAAAIC+AAAgwQAAoEAAAIC+PPFVP5RRWUAAAIC+AAAgQQAAoEAAAIC+T3xVQJRRWUAAAIC+KL6aQFBGZT8AAIC+KL6aQJRRWUAAAIC+AAAgQQAAoEAAAIC+PPFVP5RRWUAAAIC+T3xVQJRRWUAAAIC+KL6aQEhGZT8AAIC+KL7qQFBGZT8AAIC+KL6aQFBGZT8AAIC+KL7qQEhGZT8AAIC+KL7qQFBGZT8AAIC+KL6aQEhGZT8AAIC+AAAgQQAAoMAAAIC+AAAgQQAAoEAAAIC+KL7qQEhGZT8AAIC+AAAgQQAAoEAAAIC+KL7qQFBGZT8AAIC+KL7qQEhGZT8AAIC+AAAgQQAAoEAAAIC+T3xVQJRRWUAAAIC+KL6aQJRRWUAAAIC+AAAgQQAAoEAAAIC+KL6aQJRRWUAAAIC+KL7qQJRRWUAAAIC+AAAgQQAAoEAAAIC+KL7qQJRRWUAAAIC+KL7qQFBGZT8AAIC+xA4qv0hGZT8AAIA+PPFVP1BGZT8AAIA+PPFVP0hGZT8AAIA+PPFVP0hGZT8AAIA+PPFVP1BGZT8AAIA+T3xVQEhGZT8AAIA+xA4qv1BGZT8AAIA+PPFVP5RRWUAAAIA+PPFVP1BGZT8AAIA+T3xVQEhGZT8AAIA+PPFVP1BGZT8AAIA+T3xVQFBGZT8AAIA+T3xVQNxczb8AAIA+T3xVQEhGZT8AAIA+KL6aQFBGZT8AAIA+T3xVQNxczb8AAIA+KL6aQFBGZT8AAIA+KL6aQEhGZT8AAIA+T3xVQEhGZT8AAIA+T3xVQFBGZT8AAIA+KL6aQFBGZT8AAIA+T3xVQFBGZT8AAIA+KL6aQJRRWUAAAIA+KL6aQFBGZT8AAIA+AAAgwQAAoEAAAIA+AAAgQQAAoEAAAIC+AAAgQQAAoEAAAIA+AAAgwQAAoEAAAIA+AAAgQQAAoEAAAIA+T3xVQJRRWUAAAIA+T3xVQFBGZT8AAIA+T3xVQJRRWUAAAIA+KL6aQJRRWUAAAIA+AAAgQQAAoMAAAIA+AAAgQQAAoEAAAIA+AAAgQQAAoEAAAIC+KL6aQEhGZT8AAIA+KL6aQFBGZT8AAIA+KL7qQEhGZT8AAIA+KL7qQEhGZT8AAIA+KL6aQFBGZT8AAIA+KL7qQFBGZT8AAIA+AAAgQQAAoMAAAIA+KL7qQEhGZT8AAIA+AAAgQQAAoEAAAIA+AAAgQQAAoEAAAIA+KL7qQEhGZT8AAIA+KL7qQFBGZT8AAIA+AAAgQQAAoEAAAIA+KL6aQJRRWUAAAIA+T3xVQJRRWUAAAIA+AAAgQQAAoEAAAIA+KL7qQJRRWUAAAIA+KL6aQJRRWUAAAIA+AAAgQQAAoEAAAIA+KL7qQFBGZT8AAIA+KL7qQJRRWUAAAIA+dEWVwNxczb8AAIC+dEXlwNxczb8AAIA+dEXlwNxczb8AAIC+dEWVwNxczb8AAIC+dEWVwEhGZT8AAIC+dEWVwNxczb8AAIA+dEWVwNxczb8AAIC+dEWVwNxczb8AAIA+dEXlwNxczb8AAIA+dEXlwNxczb8AAIC+dEXlwNxczb8AAIA+dEXlwEhGZT8AAIA+dEXlwNxczb8AAIC+dEXlwEhGZT8AAIA+dEXlwEhGZT8AAIC+dEXlwEhGZT8AAIC+dEWVwEhGZT8AAIA+dEWVwEhGZT8AAIC+dEXlwEhGZT8AAIC+dEXlwEhGZT8AAIA+dEWVwEhGZT8AAIA+dEWVwEhGZT8AAIC+dEWVwEhGZT8AAIA+dEWVwNxczb8AAIA+c0WVwFBGZT8AAIC+c0XlwFBGZT8AAIA+c0XlwFBGZT8AAIC+c0XlwFBGZT8AAIC+c0XlwJRRWUAAAIA+c0XlwJRRWUAAAIC+c0XlwJRRWUAAAIC+c0WVwJRRWUAAAIA+c0WVwJRRWUAAAIC+c0WVwFBGZT8AAIC+c0WVwJRRWUAAAIC+c0WVwFBGZT8AAIA+c0WVwFBGZT8AAIC+c0WVwFBGZT8AAIA+c0XlwFBGZT8AAIA+c0XlwFBGZT8AAIC+c0XlwFBGZT8AAIA+c0XlwJRRWUAAAIA+c0XlwJRRWUAAAIC+c0XlwJRRWUAAAIA+c0WVwJRRWUAAAIA+c0WVwJRRWUAAAIC+c0WVwJRRWUAAAIA+c0WVwFBGZT8AAIA+xA4qv9xczb8AAIC+sYNKwNxczb8AAIA+sYNKwNxczb8AAIC+xA4qv9xczb8AAIC+xA4qv0hGZT8AAIC+xA4qv9xczb8AAIA+sYNKwNxczb8AAIA+sYNKwEhGZT8AAIA+sYNKwNxczb8AAIC+xA4qv9xczb8AAIC+xA4qv9xczb8AAIA+sYNKwNxczb8AAIA+sYNKwNxczb8AAIC+sYNKwEhGZT8AAIA+sYNKwEhGZT8AAIC+xA4qv0hGZT8AAIA+xA4qv0hGZT8AAIC+sYNKwEhGZT8AAIC+sYNKwEhGZT8AAIC+sYNKwEhGZT8AAIA+xA4qv0hGZT8AAIA+xA4qv0hGZT8AAIC+xA4qv0hGZT8AAIA+xA4qv9xczb8AAIA+xA4qv1BGZT8AAIC+sYNKwFBGZT8AAIA+sYNKwFBGZT8AAIC+xA4qv1BGZT8AAIC+xA4qv5RRWUAAAIC+xA4qv1BGZT8AAIA+sYNKwJRRWUAAAIA+sYNKwJRRWUAAAIC+sYNKwFBGZT8AAIC+xA4qv5RRWUAAAIA+xA4qv5RRWUAAAIC+sYNKwJRRWUAAAIC+sYNKwFBGZT8AAIC+sYNKwFBGZT8AAIA+sYNKwJRRWUAAAIA+xA4qv1BGZT8AAIA+sYNKwFBGZT8AAIA+xA4qv1BGZT8AAIC+sYNKwJRRWUAAAIA+xA4qv5RRWUAAAIA+sYNKwJRRWUAAAIC+xA4qv1BGZT8AAIA+xA4qv5RRWUAAAIC+xA4qv5RRWUAAAIA+T3xVQNxczb8AAIC+PPFVP9xczb8AAIA+PPFVP9xczb8AAIC+T3xVQNxczb8AAIC+T3xVQEhGZT8AAIC+T3xVQNxczb8AAIA+PPFVP0hGZT8AAIA+PPFVP9xczb8AAIC+PPFVP9xczb8AAIA+T3xVQNxczb8AAIA+PPFVP9xczb8AAIA+T3xVQNxczb8AAIC+PPFVP9xczb8AAIC+PPFVP0hGZT8AAIA+PPFVP0hGZT8AAIC+T3xVQEhGZT8AAIA+T3xVQEhGZT8AAIC+PPFVP0hGZT8AAIC+PPFVP0hGZT8AAIA+T3xVQEhGZT8AAIA+PPFVP0hGZT8AAIC+T3xVQNxczb8AAIA+T3xVQEhGZT8AAIC+T3xVQEhGZT8AAIA+PPFVP1BGZT8AAIA+PPFVP1BGZT8AAIC+T3xVQFBGZT8AAIC+T3xVQFBGZT8AAIC+T3xVQJRRWUAAAIC+T3xVQFBGZT8AAIA+PPFVP5RRWUAAAIA+PPFVP5RRWUAAAIC+PPFVP1BGZT8AAIC+T3xVQJRRWUAAAIA+T3xVQJRRWUAAAIC+PPFVP5RRWUAAAIC+PPFVP5RRWUAAAIA+PPFVP1BGZT8AAIC+PPFVP1BGZT8AAIA+T3xVQFBGZT8AAIA+PPFVP1BGZT8AAIA+T3xVQFBGZT8AAIC+PPFVP5RRWUAAAIA+T3xVQJRRWUAAAIA+PPFVP5RRWUAAAIC+T3xVQFBGZT8AAIA+T3xVQJRRWUAAAIC+T3xVQJRRWUAAAIA+KL6aQNxczb8AAIA+KL6aQNxczb8AAIC+KL7qQNxczb8AAIC+KL7qQNxczb8AAIC+KL7qQEhGZT8AAIC+KL7qQNxczb8AAIA+KL6aQEhGZT8AAIA+KL6aQNxczb8AAIC+KL6aQNxczb8AAIA+KL7qQNxczb8AAIA+KL6aQNxczb8AAIA+KL7qQNxczb8AAIC+KL6aQEhGZT8AAIA+KL6aQEhGZT8AAIC+KL6aQNxczb8AAIC+KL7qQEhGZT8AAIA+KL7qQEhGZT8AAIC+KL6aQEhGZT8AAIC+KL6aQEhGZT8AAIA+KL7qQEhGZT8AAIA+KL6aQEhGZT8AAIC+KL7qQNxczb8AAIA+KL7qQEhGZT8AAIC+KL7qQEhGZT8AAIA+KL6aQJRRWUAAAIA+KL6aQJRRWUAAAIC+KL6aQFBGZT8AAIC+KL6aQFBGZT8AAIA+KL6aQFBGZT8AAIC+KL7qQFBGZT8AAIC+KL7qQFBGZT8AAIC+KL7qQJRRWUAAAIC+KL7qQFBGZT8AAIA+KL7qQJRRWUAAAIA+KL7qQJRRWUAAAIC+KL6aQJRRWUAAAIC+KL6aQJRRWUAAAIA+KL6aQFBGZT8AAIC+KL6aQFBGZT8AAIA+KL7qQFBGZT8AAIA+KL6aQFBGZT8AAIA+KL7qQFBGZT8AAIC+KL6aQJRRWUAAAIA+KL7qQJRRWUAAAIA+KL6aQJRRWUAAAIC+KL7qQFBGZT8AAIA+KL7qQJRRWUAAAIC+KL7qQJRRWUAAAIA+/////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8SC4jF/////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//3//f////7//f/9//v//v/9//3////+//3//f////7//f/9/////v/9//3////+/AAD/f/9//78AAP9//3//vwAA/3//f/+//3//f////7//f/9///p/vf9//3/+//+//38AAP///7//fwAA////v/9/AAD///+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//////wAA/7//////EguIxf////8AAP+//////wAA/7//////EguIxf////+yDdjG/////xILiMX/////AAD/v/////+yDdjG/////xILiMX/////AAD/v/////8AAP+/AAD/f/9//78AAP9//3//vwAA/3//f/+//////wAA/7//////sg3Yxv////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f////7//f/9//v//v/9//3//+n+9/3//f//6f73/f/9/9/H7uP9//3////+//3//f////7//f/9/9/H7uP9//3////+//3//f//6f73/f/9/////v/9//3/38fu4/3//f/7//7//f/9/////v/9//3//+n+9/3//f/7//7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3////+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//38AAP///7//fwAA////v/9/AAD///+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////hgq7uv////8AAP+/////f/////////9//////////3///////3//f////7//f/9/////v/9//3/+//+//3//f/7//7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3////+//3//f/7//7//f/9/////v/9//3/+//+//3//f/7//7//f/9//v//v/9//3949ULF/////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////Nijkq/////8AAP+//////4YKu7r/////Nijkq/////8AAP+//////wAA/7//////AAD/v/////+GCru6/////wAA/7//////Nijkq/////+GCru6/////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////82KOSr/3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/7//7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+/////f/////////9//////////3///////3//f////7//f/9/////v/9//3949ULF/3//f3j1QsX/f/9/////v/9//3/I1xrU/3//f/7//7//f/9/ePVCxf9//3////+//3//f////7//f/9/ePVCxf9//3/I1xrU/3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/yNca1P9//3////+//3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA/3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8/////f/9//z////9//3//P////3//f/8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8/AAD/f///AAAAAP9///8AAAAA/3///wAA/38AAAAA/z//fwAAAAD/P/9/AAAAAP8/////f/9//z////9//3//P////3//f/8//3///////z//f///////P/9///////8//38AAAAA/z//fwAAAAD/P/9/AAAAAP8/AAD/f///AAAAAP9///8AAAAA/3///wAA")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ihtv"]
+albedo_texture = ExtResource("2_fw24q")
+uv1_scale = Vector3(10, 5, 1)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hh3p"]
+albedo_texture = ExtResource("5_2n2vo")
+uv1_scale = Vector3(0.63, 0.33, 1)
+uv1_offset = Vector3(0.5, 0.5, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2n2vo"]
+albedo_color = Color(0.9999997, 0.75035036, 0.4545197, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hwk1f"]
+material = SubResource("StandardMaterial3D_2n2vo")
+size = Vector3(0.05, 4, 0.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_crm6m"]
+material = SubResource("StandardMaterial3D_2n2vo")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crm6m"]
+size = Vector3(1.0610352, 4.012268, 0.20715332)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fpe4t"]
+transparency = 1
+albedo_color = Color(2.067836, 2.067836, 2.067836, 1)
+albedo_texture = ExtResource("7_4hh3p")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_crm6m"]
+material = SubResource("StandardMaterial3D_fpe4t")
+size = Vector2(20, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cuj3t"]
+transparency = 1
+albedo_texture = ExtResource("8_fpe4t")
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_crm6m"]
+material = SubResource("StandardMaterial3D_cuj3t")
+size = Vector2(4, 2.5)
+
+[node name="Gymnasium" type="Node3D" unique_id=430271837]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=468089255]
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1442728481]
+mesh = SubResource("BoxMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=352544475]
+shape = SubResource("BoxShape3D_d20kp")
+
+[node name="Ceiling" type="StaticBody3D" parent="." unique_id=1147120317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.029146, 0)
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling" unique_id=305152974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.033633232, 0)
+mesh = SubResource("BoxMesh_d20kp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling" unique_id=1688286764]
+shape = SubResource("BoxShape3D_d20kp")
+
+[node name="Wall" type="StaticBody3D" parent="." unique_id=1022730681]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 5.05, 7.6000013)
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall" unique_id=2097150131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3113379e-08, 0, -0.14999962)
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall" unique_id=1768855247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3113379e-08, 0, -0.14999962)
+shape = SubResource("BoxShape3D_fw24q")
+
+[node name="Wall2" type="StaticBody3D" parent="." unique_id=237073825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05, -7.6000004)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2" unique_id=1772262233]
+shape = SubResource("BoxShape3D_y6ntd")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Wall2" unique_id=752251026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14999962)
+mesh = SubResource("ArrayMesh_y6ntd")
+surface_material_override/0 = SubResource("StandardMaterial3D_1ihtv")
+
+[node name="Window3" parent="Wall2/CSGBakedMeshInstance3D" unique_id=334649296 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9142878, -0.35439634, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window4" parent="Wall2/CSGBakedMeshInstance3D" unique_id=1549889953 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9142878, 2.1456037, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window5" parent="Wall2/CSGBakedMeshInstance3D" unique_id=1074545411 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0857122, -0.35439634, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window6" parent="Wall2/CSGBakedMeshInstance3D" unique_id=936750143 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0857122, 2.1456037, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window7" parent="Wall2/CSGBakedMeshInstance3D" unique_id=1887932993 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0857124, -0.35439634, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window8" parent="Wall2/CSGBakedMeshInstance3D" unique_id=2142867168 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0857124, 2.1456037, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window2" parent="Wall2/CSGBakedMeshInstance3D" unique_id=394781134 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9147277, 2.1456037, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Window" parent="Wall2/CSGBakedMeshInstance3D" unique_id=1784381390 instance=ExtResource("1_y6ntd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9147277, -0.35439634, -0.3536167)
+metadata/_edit_group_ = true
+
+[node name="Wall3" type="StaticBody3D" parent="." unique_id=1902488620]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10.120613, 5.05, -0.4799657)
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3" unique_id=160526217]
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3" unique_id=1619718510]
+shape = SubResource("BoxShape3D_y6ntd")
+
+[node name="Wall4" type="StaticBody3D" parent="." unique_id=1161409093]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.143972, 5.05, -0.4799657)
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall4" unique_id=1742261093]
+mesh = SubResource("BoxMesh_4xgl2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4" unique_id=1867803972]
+shape = SubResource("BoxShape3D_y6ntd")
+
+[node name="GymnasiumDoorLeft" parent="." unique_id=519980075 instance=ExtResource("4_1ihtv")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.86882, 1.486118, 4.0887113)
+script = null
+
+[node name="MeshInstance3D" parent="GymnasiumDoorLeft/Door" parent_id_path=PackedInt32Array(519980075, 803142521) index="1" unique_id=501593287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_4hh3p")
+
+[node name="GymnasiumDoorRight" parent="." unique_id=1545774272 instance=ExtResource("4_1ihtv")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9.86882, 1.486118, 5.6613345)
+script = null
+
+[node name="MeshInstance3D" parent="GymnasiumDoorRight/Door" parent_id_path=PackedInt32Array(1545774272, 803142521) index="1" unique_id=501593287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_4hh3p")
+
+[node name="Ladder" type="StaticBody3D" parent="." unique_id=949235878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder" unique_id=590643203]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder" unique_id=406865422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder" unique_id=76363007]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder" unique_id=1279201894]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder" unique_id=1910834967]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder" unique_id=1284704666]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder" unique_id=1659216311]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder" unique_id=1171814573]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder" unique_id=1746860092]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder" unique_id=534231662]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder" unique_id=257040271]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder" unique_id=117404175]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder" unique_id=971474279]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder" unique_id=1116839884]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder" unique_id=978013906]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder" unique_id=1251297091]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder" unique_id=1172955811]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder" unique_id=2097008978]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder" unique_id=2124155537]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder" unique_id=1962906793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder2" type="StaticBody3D" parent="." unique_id=868263866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder2" unique_id=263766638]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder2" unique_id=1097297864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder2" unique_id=373431257]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder2" unique_id=578409399]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder2" unique_id=1842231176]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder2" unique_id=1030571249]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder2" unique_id=1605578990]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder2" unique_id=445710234]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder2" unique_id=994392425]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder2" unique_id=1571364851]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder2" unique_id=753433528]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder2" unique_id=1541953473]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder2" unique_id=1258839961]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder2" unique_id=2015631684]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder2" unique_id=595364459]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder2" unique_id=1438324838]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder2" unique_id=408309355]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder2" unique_id=1991207016]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder2" unique_id=1723603920]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder2" unique_id=799035503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder3" type="StaticBody3D" parent="." unique_id=1136931907]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder3" unique_id=119569116]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder3" unique_id=1330750486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder3" unique_id=370192371]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder3" unique_id=1737409357]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder3" unique_id=1831829641]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder3" unique_id=660872178]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder3" unique_id=1113650664]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder3" unique_id=1574849523]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder3" unique_id=1729782332]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder3" unique_id=401190962]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder3" unique_id=1223690552]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder3" unique_id=1593731226]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder3" unique_id=499487580]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder3" unique_id=852636127]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder3" unique_id=129804340]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder3" unique_id=1969507667]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder3" unique_id=544229778]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder3" unique_id=1097955169]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder3" unique_id=2068795066]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder3" unique_id=1564665138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder4" type="StaticBody3D" parent="." unique_id=1036680793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder4" unique_id=1844608578]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder4" unique_id=2002548044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder4" unique_id=41052117]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder4" unique_id=1568574316]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder4" unique_id=1552010513]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder4" unique_id=1678930693]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder4" unique_id=811346737]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder4" unique_id=1895849111]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder4" unique_id=367316924]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder4" unique_id=1352509506]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder4" unique_id=1024533771]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder4" unique_id=1573102869]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder4" unique_id=676712925]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder4" unique_id=1881311766]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder4" unique_id=1498684277]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder4" unique_id=464153170]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder4" unique_id=147067837]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder4" unique_id=373090302]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder4" unique_id=1836430311]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder4" unique_id=1668698762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder5" type="StaticBody3D" parent="." unique_id=964274620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder5" unique_id=2123336614]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder5" unique_id=1732224389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder5" unique_id=1187878456]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder5" unique_id=1962026532]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder5" unique_id=2091978794]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder5" unique_id=1121386762]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder5" unique_id=1326436785]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder5" unique_id=505108105]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder5" unique_id=363087050]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder5" unique_id=1753127121]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder5" unique_id=1608749845]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder5" unique_id=538891648]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder5" unique_id=606710176]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder5" unique_id=1052548803]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder5" unique_id=2138994678]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder5" unique_id=1129485204]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder5" unique_id=1441015256]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder5" unique_id=1845685355]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder5" unique_id=252683667]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder5" unique_id=354439308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder6" type="StaticBody3D" parent="." unique_id=649719149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2000003, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder6" unique_id=1102674502]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder6" unique_id=1311349646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder6" unique_id=1002310741]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder6" unique_id=167991084]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder6" unique_id=350920821]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder6" unique_id=2140688253]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder6" unique_id=1651379257]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder6" unique_id=188914992]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder6" unique_id=1731058767]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder6" unique_id=459731531]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder6" unique_id=760387269]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder6" unique_id=591384440]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder6" unique_id=1116312919]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder6" unique_id=2013598531]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder6" unique_id=1915617145]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder6" unique_id=556681577]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder6" unique_id=1095091724]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder6" unique_id=41383672]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder6" unique_id=1204212720]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder6" unique_id=1595631338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder7" type="StaticBody3D" parent="." unique_id=1117487641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2000003, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder7" unique_id=413759575]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder7" unique_id=1981501579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder7" unique_id=585856492]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder7" unique_id=280183898]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder7" unique_id=185401276]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder7" unique_id=1215668861]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder7" unique_id=103700768]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder7" unique_id=2072899605]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder7" unique_id=1275213674]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder7" unique_id=534313561]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder7" unique_id=1850938229]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder7" unique_id=1359720152]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder7" unique_id=803075270]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder7" unique_id=768436444]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder7" unique_id=1748056065]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder7" unique_id=1361870995]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder7" unique_id=1310588650]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder7" unique_id=1902317344]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder7" unique_id=2048722958]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder7" unique_id=1818421435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder8" type="StaticBody3D" parent="." unique_id=110530964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2499995, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder8" unique_id=1471228077]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder8" unique_id=1667025423]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder8" unique_id=381516182]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder8" unique_id=85366006]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder8" unique_id=899016562]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder8" unique_id=1063649494]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder8" unique_id=1918781285]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder8" unique_id=1705828633]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder8" unique_id=1986920226]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder8" unique_id=762719167]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder8" unique_id=687065167]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder8" unique_id=259562837]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder8" unique_id=1311905235]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder8" unique_id=1973688603]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder8" unique_id=954888063]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder8" unique_id=1631510319]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder8" unique_id=88032401]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder8" unique_id=780911915]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder8" unique_id=449233495]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder8" unique_id=599241201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder9" type="StaticBody3D" parent="." unique_id=1106045111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1499996, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder9" unique_id=1623342368]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder9" unique_id=1293504912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder9" unique_id=859219143]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder9" unique_id=1078667006]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder9" unique_id=2134557817]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder9" unique_id=1094108618]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder9" unique_id=963474629]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder9" unique_id=807267118]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder9" unique_id=1964819444]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder9" unique_id=1184693197]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder9" unique_id=2143553110]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder9" unique_id=1367917524]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder9" unique_id=868718785]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder9" unique_id=1867441357]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder9" unique_id=649339369]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder9" unique_id=49457465]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder9" unique_id=1875405855]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder9" unique_id=2091142703]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder9" unique_id=2033995509]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder9" unique_id=647674147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder10" type="StaticBody3D" parent="." unique_id=1335586111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0999992, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder10" unique_id=2073412873]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder10" unique_id=798318682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder10" unique_id=1896213591]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder10" unique_id=1744223196]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder10" unique_id=176933632]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder10" unique_id=25540685]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder10" unique_id=1102128570]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder10" unique_id=342279079]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder10" unique_id=738880245]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder10" unique_id=1496198363]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder10" unique_id=2076524558]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder10" unique_id=875066080]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder10" unique_id=1053099139]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder10" unique_id=972483131]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder10" unique_id=637235530]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder10" unique_id=473132207]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder10" unique_id=1453661576]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder10" unique_id=1333427015]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder10" unique_id=699748149]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder10" unique_id=235780374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder11" type="StaticBody3D" parent="." unique_id=239702406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0999992, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder11" unique_id=1941567093]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder11" unique_id=668995621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder11" unique_id=1274457084]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder11" unique_id=1712865605]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder11" unique_id=526661372]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder11" unique_id=1450864282]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder11" unique_id=237819832]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder11" unique_id=738184102]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder11" unique_id=1886116015]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder11" unique_id=1177217927]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder11" unique_id=2110861028]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder11" unique_id=2064834813]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder11" unique_id=1681082807]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder11" unique_id=944713070]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder11" unique_id=68192102]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder11" unique_id=364194585]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder11" unique_id=313028414]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder11" unique_id=1321392343]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder11" unique_id=1919101367]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder11" unique_id=877827095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder12" type="StaticBody3D" parent="." unique_id=1673846849]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder12" unique_id=1539453604]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder12" unique_id=1878366646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder12" unique_id=1551055039]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder12" unique_id=93519358]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder12" unique_id=2098859697]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder12" unique_id=1759097356]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder12" unique_id=365492242]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder12" unique_id=1787766882]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder12" unique_id=584459952]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder12" unique_id=1447181862]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder12" unique_id=2070088860]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder12" unique_id=2049331914]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder12" unique_id=1974194966]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder12" unique_id=681142247]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder12" unique_id=954893595]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder12" unique_id=366766993]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder12" unique_id=916657142]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder12" unique_id=1388359371]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder12" unique_id=752754912]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder12" unique_id=1245542637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder13" type="StaticBody3D" parent="." unique_id=1140767275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder13" unique_id=1282533974]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder13" unique_id=2121534015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder13" unique_id=1472124830]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder13" unique_id=1071978042]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder13" unique_id=391962073]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder13" unique_id=2082722993]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder13" unique_id=1149079682]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder13" unique_id=1775234561]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder13" unique_id=303418654]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder13" unique_id=1929682714]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder13" unique_id=356452536]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder13" unique_id=1805793652]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder13" unique_id=2121702455]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder13" unique_id=306986267]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder13" unique_id=2049757370]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder13" unique_id=288885578]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder13" unique_id=1847164661]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder13" unique_id=1412269274]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder13" unique_id=1635143862]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder13" unique_id=1409140580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder14" type="StaticBody3D" parent="." unique_id=826245859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.249999, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder14" unique_id=262166480]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder14" unique_id=503055822]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder14" unique_id=1963191228]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder14" unique_id=95950830]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder14" unique_id=2020053117]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder14" unique_id=202628547]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder14" unique_id=402714785]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder14" unique_id=2122599639]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder14" unique_id=678718506]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder14" unique_id=1688946635]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder14" unique_id=319092410]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder14" unique_id=1585157698]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder14" unique_id=1235724184]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder14" unique_id=1518220640]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder14" unique_id=1818941246]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder14" unique_id=1148678055]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder14" unique_id=1589109368]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder14" unique_id=1010270056]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder14" unique_id=779107882]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder14" unique_id=269962331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder15" type="StaticBody3D" parent="." unique_id=59460719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.249999, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder15" unique_id=1800938434]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder15" unique_id=1123848231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder15" unique_id=1805759631]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder15" unique_id=248266764]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder15" unique_id=722667614]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder15" unique_id=1865635404]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder15" unique_id=629445695]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder15" unique_id=562649793]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder15" unique_id=1978533050]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder15" unique_id=1578656950]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder15" unique_id=834817581]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder15" unique_id=341464369]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder15" unique_id=687720297]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder15" unique_id=1927889247]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder15" unique_id=1605012349]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder15" unique_id=469959990]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder15" unique_id=1718274690]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder15" unique_id=1519691469]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder15" unique_id=1471259943]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder15" unique_id=1581130285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="Ladder16" type="StaticBody3D" parent="." unique_id=1778784840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 2.051284, 7.154001)
+
+[node name="Left" type="MeshInstance3D" parent="Ladder16" unique_id=1435896082]
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Right" type="MeshInstance3D" parent="Ladder16" unique_id=1948886002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_hwk1f")
+
+[node name="Stick1" type="MeshInstance3D" parent="Ladder16" unique_id=1709233311]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.8406403, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick2" type="MeshInstance3D" parent="Ladder16" unique_id=1589488972]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.641, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick3" type="MeshInstance3D" parent="Ladder16" unique_id=1478165825]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.441, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick4" type="MeshInstance3D" parent="Ladder16" unique_id=102022510]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -1.229724, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick5" type="MeshInstance3D" parent="Ladder16" unique_id=1681104661]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -1.0300838, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick6" type="MeshInstance3D" parent="Ladder16" unique_id=1760944917]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.8300837, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick7" type="MeshInstance3D" parent="Ladder16" unique_id=240299939]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.6490512, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick8" type="MeshInstance3D" parent="Ladder16" unique_id=1226449969]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.44941092, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick9" type="MeshInstance3D" parent="Ladder16" unique_id=1680294793]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, -0.24941087, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick10" type="MeshInstance3D" parent="Ladder16" unique_id=238196022]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, -0.05023241, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick11" type="MeshInstance3D" parent="Ladder16" unique_id=1998672731]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.14940786, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick12" type="MeshInstance3D" parent="Ladder16" unique_id=1964325057]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.3494079, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick13" type="MeshInstance3D" parent="Ladder16" unique_id=1059345702]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.4964357, 0.53044033, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick14" type="MeshInstance3D" parent="Ladder16" unique_id=851137630]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.7300806, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick15" type="MeshInstance3D" parent="Ladder16" unique_id=2047203453]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 0.93008065, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick16" type="MeshInstance3D" parent="Ladder16" unique_id=122912572]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.6555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="Stick17" type="MeshInstance3D" parent="Ladder16" unique_id=2042926442]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.496, 1.8555281, -0.015)
+mesh = SubResource("CylinderMesh_crm6m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder16" unique_id=1428994304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49487305, 0.0018005371, 0.0005493164)
+shape = SubResource("BoxShape3D_crm6m")
+
+[node name="CeilingLamp" parent="." unique_id=2054856090 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(1, 0, 0, 0, 0.7643221, -0.64483464, 0, 0.64483464, 0.7643221, -6.0758944, 9.532505, 7.3364534)
+
+[node name="CeilingLamp2" parent="." unique_id=199178971 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(1, 0, 0, 0, 0.7643221, -0.64483464, 0, 0.64483464, 0.7643221, 0.95627165, 9.532505, 7.3364534)
+
+[node name="CeilingLamp3" parent="." unique_id=790534836 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(1, 0, 0, 0, 0.7643221, -0.64483464, 0, 0.64483464, 0.7643221, 8.179033, 9.532505, 7.3364534)
+
+[node name="CeilingLamp4" parent="." unique_id=1391272138 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(-1, -5.6373235e-08, -6.681916e-08, 0, 0.7643221, -0.64483464, 8.742278e-08, -0.64483464, -0.7643221, -6.0758944, 9.532505, -7.354002)
+
+[node name="CeilingLamp5" parent="." unique_id=453486671 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(-1, -5.6373235e-08, -6.681916e-08, 0, 0.7643221, -0.64483464, 8.742278e-08, -0.64483464, -0.7643221, 0.95627165, 9.532505, -7.354002)
+
+[node name="CeilingLamp6" parent="." unique_id=1451475444 instance=ExtResource("6_2n2vo")]
+transform = Transform3D(-1, -5.6373235e-08, -6.681916e-08, 0, 0.7643221, -0.64483464, 8.742278e-08, -0.64483464, -0.7643221, 8.179033, 9.532505, -7.354002)
+
+[node name="CourtLines" type="MeshInstance3D" parent="." unique_id=769318624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.051885366, 0)
+mesh = SubResource("PlaneMesh_crm6m")
+
+[node name="GoalLines1" type="MeshInstance3D" parent="." unique_id=1997718237]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.889576, 1.1508508, 0)
+mesh = SubResource("QuadMesh_crm6m")
+
+[node name="GoalLines2" type="MeshInstance3D" parent="." unique_id=1800567988]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.863393, 1.1508508, 0)
+mesh = SubResource("QuadMesh_crm6m")
+
+[node name="HangingBasket" parent="." unique_id=2069645483 instance=ExtResource("9_cuj3t")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.907154, 2.1072266, -0.0597775)
+
+[node name="HangingBasket2" parent="." unique_id=384663610 instance=ExtResource("9_cuj3t")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.945017, 2.1072266, -0.0597775)
+
+[editable path="GymnasiumDoorLeft"]
+[editable path="GymnasiumDoorRight"]

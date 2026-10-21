@@ -47,7 +47,7 @@ public partial class Downstairs : LevelBase
 
     private void OnGymnasiumDoorInteracted()
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PeClass/pe_class.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PeClass/pe_class_intro.tscn");
     }
 
     private void OnTeacherRoomDoorInteracted()
