@@ -4,7 +4,7 @@ public static class PolishClassText
     public const string LessonTopic = "\"Bolesław Prus - życie i twórczość\"";
     public const string PhysicalEdu = "Zapomniałem butów zmiennych. Chłop od wuefu się zesra.";
     public const string Homework = "Pod koniec lekcji oddajcie mi zeszyty i posprawdzam wasze zadania domowe. Dobrze?";
-    public const string EndOfClass = "No dobrze, zaraz koniec lekcji, to dajcie te wasze wypracowania.";
+    public const string EndOfClass = "No dobrze, niedługo przerwa, to dajcie te wasze wypracowania.";
 
     public const string AfterClass = "No i? Co dostałeś? Mi dała 4.";
     public const string OpenJournalInstruction = "Wciśnij [color=#77777d]{0}[/color], żeby otworzyć dziennik ocen.";
