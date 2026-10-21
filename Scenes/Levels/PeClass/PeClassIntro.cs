@@ -8,6 +8,7 @@ public partial class PeClassIntro : LevelBase
     private Camera3D _onTeacherCameraFront;
 	private CutsceneController _cutsceneController;
 	private PeTeacher _peTeacher;
+    private GroupOfStudentsFront _groupOfStudents;
 
     public override void _Ready()
 	{
@@ -17,10 +18,10 @@ public partial class PeClassIntro : LevelBase
         _onCrowdCamera = GetNode<Camera3D>("OnCrowdCamera");
         _onTeacherCameraFront = GetNode<Camera3D>("OnTeacherCameraFront");
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
-        _cutsceneController.SetCamera(_onCrowdCamera);
+        _cutsceneController.SetCamera(_playerCamera);
         _cutsceneController.SetPlayer(_player);
         _peTeacher = GetNode<PeTeacher>("PeTeacher");
-
+        _groupOfStudents = GetNode<GroupOfStudentsFront>("GroupOfStudents");
         //_cutsceneController.StartDialogue(
         //    _peTeacher,
         //    [
@@ -33,15 +34,24 @@ public partial class PeClassIntro : LevelBase
         //);
 
         _cutsceneController.StartDialogue(
-            _peTeacher,
-            [
-                new DialogueLine(DialogueSpeaker.PeTeacher, PolishClassText.Introduction, 2.0f),
-            ],
-            cinematic: true,
-            onFinished: SwitchToMate,
-            keepPlayerLockedOnFinish: true,
-            delaySeconds: 2.0f
-        );
+                _groupOfStudents,
+                [new DialogueLine(DialogueSpeaker.Player, string.Empty, 2.0f)],
+                cinematic: true,
+                onFinished: ShowTeacher,
+                keepPlayerLockedOnFinish: true,
+                smoothCameraTransition: false,
+                referenceCamera: _onCrowdCamera
+            );
+
+        //_cutsceneController.StartDialogue(
+        //    _peTeacher,
+        //    [
+        //        new DialogueLine(DialogueSpeaker.PeTeacher, PolishClassText.Introduction, 2.0f),
+        //    ],
+        //    cinematic: true,
+        //    keepPlayerLockedOnFinish: true,
+        //    delaySeconds: 2.0f
+        //);
 
     }
 
@@ -49,4 +59,16 @@ public partial class PeClassIntro : LevelBase
 	public override void _Process(double delta)
 	{
 	}
+
+    private void ShowTeacher()
+    {
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherIntro, 2.0f),
+            ],
+            cinematic: true,
+            smoothCameraTransition: false
+        );
+    }
 }

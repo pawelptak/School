@@ -80,7 +80,8 @@ mesh = SubResource("BoxMesh_lc5oj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8066146, 0)
 shape = SubResource("BoxShape3D_e76f7")
 
-[node name="CustomCamera" type="Node3D" parent="." unique_id=562374628]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6562252, 2.6831415, 2.0808728)
+[node name="CustomCamera" type="Camera3D" parent="." unique_id=806890580]
+transform = Transform3D(0.018315678, 0, -0.9998323, 0, 1, 0, 0.9998323, 0, 0.018315678, 1.274529, 2.8453243, 3.3684416)
+fov = 50.0
 
 [editable path="Mate"]

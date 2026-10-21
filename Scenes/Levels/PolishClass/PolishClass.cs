@@ -35,7 +35,7 @@ public partial class PolishClass : Node3D
 
     private void SwitchToMate()
     {
-        var customCameraPosition = GetNode<Node3D>("CustomCameraFar").GlobalPosition;
+        var customCamera = GetNode<Camera3D>("CustomCameraFar");
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -43,7 +43,7 @@ public partial class PolishClass : Node3D
             cinematic: true,
             onFinished: BackToTeacher,
             keepPlayerLockedOnFinish: true,
-            customCameraPosition
+            referenceCamera: customCamera
         );
     }
 
@@ -60,7 +60,7 @@ public partial class PolishClass : Node3D
 
     private void BackToMate()
     {
-        var customCameraPosition = GetNode<Node3D>("CustomCameraClose").GlobalPosition;
+        var customCamera = GetNode<Camera3D>("CustomCameraClose");
 
         _cutsceneController.StartDialogue(
             _mate,
@@ -68,13 +68,13 @@ public partial class PolishClass : Node3D
             cinematic: true,
             onFinished: CameraOnClock,
             keepPlayerLockedOnFinish: true,
-            customCameraPosition
+            referenceCamera: customCamera
         );
     }
 
     private void CameraOnClock()
     {
-        var customCameraPosition = GetNode<Node3D>("CustomCameraClock").GlobalPosition;
+        var customCamera = GetNode<Camera3D>("CustomCameraClock");
 
         _cutsceneController.StartDialogue(
             _clock,
@@ -82,7 +82,7 @@ public partial class PolishClass : Node3D
             cinematic: true,
             onFinished: RunClockTimelapse,
             keepPlayerLockedOnFinish: true,
-            customCameraPosition
+            referenceCamera: customCamera
         );
     }
 
@@ -90,7 +90,7 @@ public partial class PolishClass : Node3D
     {
         _teacher2.Visible = true;
         _teacher.Visible = false;
-        var customCameraPosition = GetNode<Node3D>("CustomCameraEnd").GlobalPosition;
+        var customCamera = GetNode<Camera3D>("CustomCameraEnd");
 
         _clock.StartTimelapse(20.5f, 3.0f);
 
@@ -100,7 +100,7 @@ public partial class PolishClass : Node3D
             _teacher2,
             [new DialogueLine(DialogueSpeaker.PolishTeacher, PolishClassText.EndOfClass, 3.5f)],
             cinematic: true,
-            cameraReferencePosition: customCameraPosition,
+            referenceCamera: customCamera,
             onFinished: EndScene,
             keepPlayerLockedOnFinish: true
         );

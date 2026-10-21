@@ -122,7 +122,7 @@ public partial class Homework : Node3D
 
     private void StartEndCutscene()
     {
-        var customCameraPosition = GetNode<Node3D>("CustomCamera").GlobalPosition;
+        var customCamera = GetNode<Camera3D>("CustomCamera");
 
         _cutsceneController.StartDialogue(
             GetNode<Node3D>("Mate"),
@@ -139,8 +139,8 @@ public partial class Homework : Node3D
             {
                 SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PolishClass/polish_class.tscn");
             },
-            cameraReferencePosition: customCameraPosition,
-            isSkippable: false
+            isSkippable: false,
+            referenceCamera: customCamera
         );
     }
 

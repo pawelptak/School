@@ -24,6 +24,7 @@ public partial class CutsceneController : Node
     private bool _isSkippable = true;
 
     private const float CinematicFov = 50f;
+    private const double CameraTransitionDuration = 0.4;
 
     public bool IsDialogueVisible => _dialogueUI.Visible;
     public bool IsCinematicDialogueActive => _cinematicDialogueActive;
@@ -124,10 +125,10 @@ public partial class CutsceneController : Node
         bool cinematic = false,
         Action onFinished = null,
         bool keepPlayerLockedOnFinish = false,
-        Vector3? cameraReferencePosition = null,
         float delaySeconds = 0f,
         bool isSkippable = true,
-        bool smoothCameraTransition = true)
+        bool smoothCameraTransition = true,
+        Camera3D referenceCamera = null)
     {
         _keepPlayerLockedOnFinish = keepPlayerLockedOnFinish;
         _isSkippable = isSkippable;
@@ -185,33 +186,45 @@ public partial class CutsceneController : Node
         if (!cinematic)
             return;
 
-        if (!_hasCapturedOriginalCamera && _camera != null)
+        if (_camera == null)
+        {
+            GD.PrintErr("CutsceneController: nie ustawiono kamery przez SetCamera().");
+            return;
+        }
+
+        // Save the original player-camera view only once for a sequence
+        // of cinematic dialogues.
+        if (!_hasCapturedOriginalCamera)
         {
             _originalCameraTransform = _camera.GlobalTransform;
             _originalCameraFov = _camera.Fov;
             _hasCapturedOriginalCamera = true;
         }
 
-        var lookAtPoint =
-            character.GetNodeOrNull<Marker3D>("DialogueLookAtPoint");
+        Transform3D targetTransform;
+        float targetFov;
 
-        if (lookAtPoint == null)
+        if (referenceCamera != null)
         {
-            GD.PrintErr(
-                $"Nie znaleziono DialogueLookAtPoint w {character.Name}!"
-            );
-
-            return;
-        }
-
-        Vector3 targetPosition;
-
-        if (cameraReferencePosition.HasValue)
-        {
-            targetPosition = cameraReferencePosition.Value;
+            // Manual shot: use the editor-configured camera transform and FOV.
+            targetTransform = referenceCamera.GlobalTransform;
+            targetFov = referenceCamera.Fov;
         }
         else
         {
+            // Automatic shot: calculate a position near the character and
+            // point the camera at DialogueLookAtPoint.
+            var lookAtPoint =
+                character.GetNodeOrNull<Marker3D>("DialogueLookAtPoint");
+
+            if (lookAtPoint == null)
+            {
+                GD.PrintErr(
+                    $"Nie znaleziono DialogueLookAtPoint w {character.Name}!"
+                );
+                return;
+            }
+
             var referencePosition = _originalCameraTransform.Origin;
             var directionFromCharacterToCamera =
                 referencePosition - character.GlobalPosition;
@@ -219,27 +232,26 @@ public partial class CutsceneController : Node
             directionFromCharacterToCamera.Y = 0;
 
             if (directionFromCharacterToCamera.LengthSquared() == 0)
-            {
                 directionFromCharacterToCamera = Vector3.Forward;
-            }
 
             directionFromCharacterToCamera =
                 directionFromCharacterToCamera.Normalized();
 
-            targetPosition =
+            Vector3 targetPosition =
                 character.GlobalPosition
                 + directionFromCharacterToCamera * 0.9f;
 
             targetPosition.Y = lookAtPoint.GlobalPosition.Y;
+
+            targetTransform = new Transform3D();
+            targetTransform.Origin = targetPosition;
+            targetTransform = targetTransform.LookingAt(
+                lookAtPoint.GlobalPosition,
+                Vector3.Up
+            );
+
+            targetFov = CinematicFov;
         }
-
-        var targetTransform = new Transform3D();
-        targetTransform.Origin = targetPosition;
-
-        targetTransform = targetTransform.LookingAt(
-            lookAtPoint.GlobalPosition,
-            Vector3.Up
-        );
 
         _cameraTween?.Kill();
         _cameraTween = null;
@@ -257,20 +269,21 @@ public partial class CutsceneController : Node
                 _camera,
                 "global_transform",
                 targetTransform,
-                0.4
+                CameraTransitionDuration
             );
 
             tween.TweenProperty(
                 _camera,
                 "fov",
-                CinematicFov,
-                0.4
+                targetFov,
+                CameraTransitionDuration
             );
         }
         else
         {
+            // Hard cut: apply the full target view immediately.
             _camera.GlobalTransform = targetTransform;
-            _camera.Fov = CinematicFov;
+            _camera.Fov = targetFov;
         }
     }
 
@@ -279,9 +292,7 @@ public partial class CutsceneController : Node
         var hud = GetNodeOrNull<CanvasLayer>("/root/Hud");
 
         if (hud != null)
-        {
             hud.Visible = visible;
-        }
     }
 
     private void OnDialogueFinished()
@@ -306,11 +317,16 @@ public partial class CutsceneController : Node
             return;
         }
 
-        _hasCapturedOriginalCamera = false;
-
         _cameraTween?.Kill();
-        _cameraTween = CreateTween();
+        _cameraTween = null;
 
+        if (_camera == null)
+        {
+            _hasCapturedOriginalCamera = false;
+            return;
+        }
+
+        _cameraTween = CreateTween();
         var tween = _cameraTween;
 
         tween.SetParallel();
@@ -319,14 +335,14 @@ public partial class CutsceneController : Node
             _camera,
             "global_transform",
             _originalCameraTransform,
-            0.4
+            CameraTransitionDuration
         );
 
         tween.TweenProperty(
             _camera,
             "fov",
             _originalCameraFov,
-            0.4
+            CameraTransitionDuration
         );
 
         tween.SetParallel(false);
@@ -334,6 +350,8 @@ public partial class CutsceneController : Node
         tween.TweenCallback(
             Callable.From(() =>
             {
+                _hasCapturedOriginalCamera = false;
+
                 if (_player != null)
                 {
                     _player.MovementLocked = false;

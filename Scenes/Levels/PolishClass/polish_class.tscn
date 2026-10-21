@@ -416,17 +416,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7348375, 0.9215998, -7.2740
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27478647, 0.9215998, -7.274063)
 visible = false
 
-[node name="CustomCameraClose" type="Node3D" parent="." unique_id=243858672]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6209226, 1.2625248, -2.466542)
+[node name="CustomCameraClose" type="Camera3D" parent="." unique_id=846565612]
+transform = Transform3D(-0.07210018, 0, 0.9973974, 0, 1, 0, -0.9973974, 0, -0.07210018, -2.8339672, 1.2625248, -2.2281866)
+fov = 50.0
 
-[node name="CustomCameraFar" type="Node3D" parent="." unique_id=559754141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8099766, 1.1510559, -2.393251)
+[node name="CustomCameraFar" type="Camera3D" parent="." unique_id=1683794908]
+transform = Transform3D(0.03372392, 0, 0.9994312, 0, 1, 0, -0.9994312, 0, 0.03372392, -1.4686856, 1.1510559, -2.2593367)
 
-[node name="CustomCameraClock" type="Node3D" parent="." unique_id=691433615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0873837, 3.153599, -4.0767136)
+[node name="CustomCameraClock" type="Camera3D" parent="." unique_id=1512432894]
+transform = Transform3D(0.009792838, 0, -0.9999521, 0, 1, 0, 0.9999521, 0, 0.009792838, 4.0873837, 3.1702862, -4.0767136)
+fov = 50.0
 
-[node name="CustomCameraEnd" type="Node3D" parent="." unique_id=2029022428]
+[node name="CustomCameraEnd" type="Camera3D" parent="." unique_id=2030570626]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.053161293, 1.5337123, -6.152248)
+fov = 50.0
 
 [node name="Clock" parent="." unique_id=1525051978 instance=ExtResource("25_ageul")]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 4.9423637, 3.1732903, -4.09756)

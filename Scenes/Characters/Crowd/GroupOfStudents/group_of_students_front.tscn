@@ -2,17 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_l8p4y"]
 [ext_resource type="Texture2D" uid="uid://cy6l7br1cr2b3" path="res://Scenes/Characters/Crowd/GroupOfStudents/front.png" id="2_1804j"]
+[ext_resource type="Script" uid="uid://br8m3yv0j13p0" path="res://Scenes/Characters/Crowd/GroupOfStudents/GroupOfStudentsFront.cs" id="2_aoc6s"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_trv6m"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jy0mf"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tu7wy"]
 size = Vector3(2, 2, 2)
 
 [node name="GroupOfStudents" unique_id=664278660 instance=ExtResource("1_l8p4y")]
+script = ExtResource("2_aoc6s")
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_trv6m")
+texture = SubResource("ViewportTexture_jy0mf")
 
 [node name="Sprite" parent="." index="1" unique_id=274662881]
 texture = ExtResource("2_1804j")

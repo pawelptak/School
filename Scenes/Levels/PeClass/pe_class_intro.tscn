@@ -26,7 +26,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08820224, 0.59, -4.512974)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1338382, 0.9716, -2.6697278)
 
 [node name="OnCrowdCamera" type="Camera3D" parent="." index="9" unique_id=261597590]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14282656, 0.6401043, -4.487751)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14282656, 1.0850866, -4.487751)
 fov = 50.0
 
 [node name="OnTeacherCameraFront" type="Camera3D" parent="." index="10" unique_id=869150440]
