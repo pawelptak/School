@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://1ws6sswoyy8p"]
+[gd_scene format=3 uid="uid://cjs84scoxd5pk"]
 
-[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_vqggm"]
-[ext_resource type="Texture2D" uid="uid://nfacwqo05d0g" path="res://Scenes/Characters/Crowd/GroupOfStudents/rear.png" id="2_wccla"]
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_l8p4y"]
+[ext_resource type="Texture2D" uid="uid://cy6l7br1cr2b3" path="res://Scenes/Characters/Crowd/GroupOfStudents/front.png" id="2_1804j"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_trv6m"]
 viewport_path = NodePath("SubViewport")
@@ -9,13 +9,13 @@ viewport_path = NodePath("SubViewport")
 [sub_resource type="BoxShape3D" id="BoxShape3D_tu7wy"]
 size = Vector3(2, 2, 2)
 
-[node name="GroupOfStudentsFront" unique_id=664278660 instance=ExtResource("1_vqggm")]
+[node name="GroupOfStudents" unique_id=664278660 instance=ExtResource("1_l8p4y")]
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
 texture = SubResource("ViewportTexture_trv6m")
 
 [node name="Sprite" parent="." index="1" unique_id=274662881]
-texture = ExtResource("2_wccla")
+texture = ExtResource("2_1804j")
 
 [node name="CollisionShape3D" parent="." index="2" unique_id=2073062423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46702337, -0.00012207031)

@@ -3,11 +3,38 @@
 [ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_1i852"]
 [ext_resource type="Script" uid="uid://bhr8hqptjepcg" path="res://Scenes/Levels/PeClass/PeClassIntro.cs" id="2_50wve"]
 [ext_resource type="PackedScene" uid="uid://8vwknvurhmg4" path="res://Scenes/Levels/PeClass/gymnasium.tscn" id="3_50wve"]
+[ext_resource type="PackedScene" uid="uid://cjs84scoxd5pk" path="res://Scenes/Characters/Crowd/GroupOfStudents/group_of_students_front.tscn" id="4_w62hg"]
+[ext_resource type="PackedScene" uid="uid://1ws6sswoyy8p" path="res://Scenes/Characters/Crowd/GroupOfStudents/group_of_students_rear.tscn" id="5_1cwq8"]
+[ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="6_1cwq8"]
+[ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="7_28lbh"]
 
 [node name="PeClassIntro" unique_id=513644933 instance=ExtResource("1_1i852")]
 script = ExtResource("2_50wve")
 
+[node name="Player" parent="." index="1" unique_id=195847836]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.3095721, -0.0503639, -5.819357)
+
 [node name="Gymnasium" parent="." index="5" unique_id=430271837 instance=ExtResource("3_50wve")]
+
+[node name="GroupOfStudents" parent="." index="6" unique_id=664278660 instance=ExtResource("4_w62hg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14539921, 0.59, -5.716328)
+
+[node name="GroupOfStudentsRear" parent="." index="7" unique_id=1180533348 instance=ExtResource("5_1cwq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08820224, 0.59, -4.512974)
+
+[node name="PeTeacher" parent="." index="8" unique_id=629554487 instance=ExtResource("6_1cwq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1338382, 0.9716, -2.6697278)
+
+[node name="OnCrowdCamera" type="Camera3D" parent="." index="9" unique_id=261597590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14282656, 0.6401043, -4.487751)
+fov = 50.0
+
+[node name="OnTeacherCameraFront" type="Camera3D" parent="." index="10" unique_id=869150440]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.14282656, 0.9402031, -5.230451)
+fov = 50.0
+
+[node name="Mate" parent="." index="11" unique_id=1241314784 instance=ExtResource("7_28lbh")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.39307106, 0.54990566, -5.645509)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

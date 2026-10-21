@@ -23,3 +23,5 @@ Ideas:
 - heavy attak zmienić na liscia
 
 - gdzies pod koniec gry - opcja zajumania dziennika i zmienienia sobie ocen
+
+- napisy typu tytuly misji na custscenkach jak w gta
