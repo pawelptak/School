@@ -9,7 +9,7 @@ public static class PeClassText
     public const string PeTeacherObjective2 = "Poczekajcie tutaj. Ja pójde po piłke, dam wam centralnie, coś tam tego, se pokopiecie, nie?";
     public const string PeTeacherObjective3 = "No jestem.";
     public const string PeTeacherObjective4 = "Słuchaj!";
-    public const string PeTeacherObjective5 = "Nie mogłem znaleść piłki do kopania.";
+    public const string PeTeacherObjective5 = "Nie mogłem znaleźć piłki do kopania.";
     public const string PeTeacherObjective6 = "Jest tylko lekarska.";
     public const string PeTeacherObjective7 = "Hmmm...";
     public const string PeTeacherObjective8 = "Dobra dzisiaj zrobimy..";

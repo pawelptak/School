@@ -9,6 +9,9 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
         PermanentBody
     }
 
+    [Export]
+    public bool PhysicsLocked { get; set; } = false;
+
     [ExportGroup("Defeat")]
     [Export] public DefeatBehavior DefeatMode { get; set; }
     [Export] public float RecoveryTime { get; set; } = 10.0f;
@@ -41,8 +44,25 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     [Signal]
     public delegate void ThrowableBodyCreatedEventHandler(ThrowableObject deadBody);
 
+    private Vector3 _initialPosition;
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (PhysicsLocked)
+        {
+            GlobalPosition = _initialPosition;
+            Velocity = Vector3.Zero;
+
+            return;
+        }
+
+        base._PhysicsProcess(delta);
+    }
+
     public override void _Ready()
     {
+        _initialPosition = GlobalPosition;
+
         SpriteAnimator = GetNode<SpriteAnimator>("SpriteAnimator");
 
         _healthController =
