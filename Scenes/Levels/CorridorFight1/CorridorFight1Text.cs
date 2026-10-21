@@ -14,7 +14,7 @@ public static class CorridorFight1Text
     public const string BullyResponse2 = "Cho tu, sam sprawdzę czy nie masz.";
 
     public const string FightTutorialPoupHeader = "Walka";
-    public const string FightTutorialPoupText = "Wciśnij {0}, aby uderzyć napastnika z pięści. Podnoś przedmioty znalezione w otoczeniu i rzucaj nimi w przeciwnika. Różne przedmioty zadają różne obrażenia. Trafienie przedmiotem takim jak gąbka czy butelka oszołomi przeciwnika.\n\n Pokonaj go!";
+    public const string FightTutorialPoupText = "Wciśnij [color=#77777d]{0}[/color], aby uderzyć napastnika z pięści. Podnoś przedmioty znalezione w otoczeniu i rzucaj nimi w przeciwnika. Różne przedmioty zadają różne obrażenia. Trafienie przedmiotem takim jak gąbka czy butelka oszołomi przeciwnika.\n\n Pokonaj go!";
 
     public const string JanitorShout = "Chłopcy, przestańcie!";
 
