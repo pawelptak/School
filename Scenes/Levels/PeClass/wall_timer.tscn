@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bc138obv3quyu"]
+
+[ext_resource type="FontFile" uid="uid://clj42qoha8t1p" path="res://Assets/Fonts/BitcountSingle-Regular.ttf" id="1_cna7r"]
+[ext_resource type="Script" uid="uid://ys8ou6x5hilj" path="res://Scenes/Levels/PeClass/WallTimer.cs" id="1_dmhlf"]
+[ext_resource type="Script" uid="uid://bih0uht3l4ltj" path="res://Scenes/Levels/PeClass/WallTimerLabel.cs" id="3_lbhx0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+size = Vector3(1.1708984, 0.36499023, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cna7r"]
+albedo_color = Color(0.1452662, 0.1452662, 0.1452662, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cna7r"]
+material = SubResource("StandardMaterial3D_cna7r")
+size = Vector3(1.0917969, 0.3125, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_74p11"]
+size = Vector3(1.1708984, 0.36499023, 0.2)
+
+[node name="WallTimer" type="StaticBody3D" unique_id=1912559265]
+script = ExtResource("1_dmhlf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2062461241]
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1556827952]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0038309991)
+mesh = SubResource("BoxMesh_cna7r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1851296124]
+shape = SubResource("BoxShape3D_74p11")
+
+[node name="WallTimerLabel" type="Label3D" parent="." unique_id=511568122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.10790917)
+pixel_size = 0.007
+modulate = Color(0.7670247, 2.5268644e-06, 9.62615e-07, 1)
+text = "00:00"
+font = ExtResource("1_cna7r")
+font_size = 40
+outline_size = 0
+script = ExtResource("3_lbhx0")

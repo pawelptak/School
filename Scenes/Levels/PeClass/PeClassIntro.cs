@@ -3,6 +3,7 @@ using Godot;
 public partial class PeClassIntro : LevelBase
 {
     private Player _player;
+    private Mate _mate;
     private Camera3D _playerCamera;
     private Camera3D _onCrowdCamera;
     private Camera3D _onTeacherCameraFront;
@@ -11,8 +12,15 @@ public partial class PeClassIntro : LevelBase
     private NpcController _teacherController;
     private Marker3D _teacherGoToMarker;
     private Marker3D _teacherInitialPosition;
-    private GroupOfStudentsFront _groupOfStudents;
-    private Basketball _basketball; // TODO: change for doctor ball xd
+    private GroupOfStudentsFront _groupOfStudentsFront;
+    private GroupOfStudentsRear _groupOfStudentsRear;
+    private Basketball _basketball; // TODO: change to doctor ball xd
+    private RigidBody3D _goat; // TODO: change to goat
+    private Camera3D _goatCamera;
+    private WallTimer _wallTimer; // TODO: change to goat
+    private Camera3D _timerCamera;
+    private StaticBody3D _playerConstraints;
+   // private Camera3D _teacherCameraClose;
 
     public override void _Ready()
 	{
@@ -26,15 +34,28 @@ public partial class PeClassIntro : LevelBase
         _cutsceneController.SetPlayer(_player);
         _peTeacher = GetNode<PeTeacher>("PeTeacher");
         _teacherController = _peTeacher.GetNode<NpcController>("NpcController");
-        _groupOfStudents = GetNode<GroupOfStudentsFront>("GroupOfStudents");
+        _groupOfStudentsFront = GetNode<GroupOfStudentsFront>("GroupOfStudentsFront");
+        _groupOfStudentsRear = GetNode<GroupOfStudentsRear>("GroupOfStudentsRear");
 
         _teacherGoToMarker = GetNode<Marker3D>("TeacherGoToMarker");
         _teacherInitialPosition = GetNode<Marker3D>("TeacherInitialPosition");
 
         _basketball = GetNode<Basketball>("Basketball");
+        _goat = GetNode<RigidBody3D>("Goat");
+        _goatCamera = GetNode<Camera3D>("GoatCamera");
+
+        _wallTimer = GetNode<WallTimer>("WallTimer");
+        _timerCamera = GetNode<Camera3D>("TimerCamera");
+
+        _mate = GetNode<Mate>("Mate");
+        _playerConstraints = GetNode<StaticBody3D>("PlayerConstraints");
+
+        TogglePlayerCollisions(false);
+
+        // _teacherCameraClose = GetNode<Camera3D>("TeacherCameraClose");
 
         _cutsceneController.StartDialogue(
-                _groupOfStudents,
+                _groupOfStudentsFront,
                 [new DialogueLine(DialogueSpeaker.Player, string.Empty, 3.0f)],
                 cinematic: true,
                 onFinished: ShowTeacher,
@@ -44,6 +65,17 @@ public partial class PeClassIntro : LevelBase
             );
     }
 
+
+    private void TogglePlayerCollisions(bool enable)
+    {
+        foreach (Node child in _playerConstraints.GetChildren())
+        {
+            if (child is CollisionShape3D collisionShape)
+            {
+                collisionShape.Disabled = !enable;
+            }
+        }
+    }
 
     private void ShowTeacher()
     {
@@ -70,7 +102,7 @@ public partial class PeClassIntro : LevelBase
         _teacherController.MoveTo(_teacherInitialPosition);
 
         _cutsceneController.StartDialogue( // sets camera on teacher
-            _groupOfStudents,
+            _groupOfStudentsFront,
             [
                 new DialogueLine(DialogueSpeaker.PeTeacher, string.Empty, 0.1f)
             ],
@@ -127,7 +159,7 @@ public partial class PeClassIntro : LevelBase
         //await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 
         _cutsceneController.StartDialogue(
-            _groupOfStudents,
+            _groupOfStudentsFront,
             [new DialogueLine(DialogueSpeaker.Player, string.Empty, 2.0f)],
             cinematic: true,
             onFinished: ShowTeacher2,
@@ -140,6 +172,60 @@ public partial class PeClassIntro : LevelBase
 
     private void ShowGoat()
     {
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective10, 2.0f),
+            ],
+            cinematic: true,
+            referenceCamera: _goatCamera,
+            keepPlayerLockedOnFinish: true,
+            onFinished: ShowTimer
+        );
         return;
+    }
+
+    private void ShowTimer()
+    {
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective11, 2.0f),
+            ],
+            cinematic: true,
+            referenceCamera: _timerCamera,
+            keepPlayerLockedOnFinish: true,
+            delaySeconds: 1.0f,
+            onFinished: BackToTeacher
+        );
+    }
+
+    private void BackToTeacher()
+    {
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective12, 2.0f),
+            ],
+            cinematic: true,
+            onFinished: PlayComeOnDialogue
+        );
+    }
+
+    private void PlayComeOnDialogue()
+    {
+        _groupOfStudentsRear.Hide();
+        _groupOfStudentsFront.Scale = new Vector3(2.0f, 2.0f, 2.0f);
+        _mate.Scale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        TogglePlayerCollisions(true);
+
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective13, 2.0f),
+            ],
+            cinematic: false
+        );
     }
 }

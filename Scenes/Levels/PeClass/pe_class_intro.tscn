@@ -9,32 +9,47 @@
 [ext_resource type="Script" uid="uid://cm332hlhx6t1h" path="res://Scenes/Characters/Crowd/GroupOfStudents/GroupOfStudentsRear.cs" id="6_mxkny"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="7_28lbh"]
 [ext_resource type="PackedScene" uid="uid://d3fcmtc6r5gc7" path="res://Scenes/Objects/Basketball/basketball.tscn" id="9_3ic0g"]
+[ext_resource type="PackedScene" uid="uid://bc138obv3quyu" path="res://Scenes/Levels/PeClass/wall_timer.tscn" id="10_jkgmw"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_28lbh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jkgmw"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_28lbh"]
 size = Vector3(0.3310547, 0.7335205, 1.3100586)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_mxkny"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_517mh"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ic0g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
+size = Vector3(3.5585938, 2.6257324, 0.07006836)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jkgmw"]
+size = Vector3(5.5444336, 2.6257324, 0.07006836)
 
 [node name="PeClassIntro" unique_id=513644933 instance=ExtResource("1_1i852")]
 script = ExtResource("2_50wve")
 
 [node name="Player" parent="." index="1" unique_id=195847836]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3095721, 0.4093352, -3.3810139)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.3095721, 0.4093352, -4.862)
+collision_layer = 1
+
+[node name="InteractRay" parent="Player/Camera3D" parent_id_path=PackedInt32Array(195847836, 1519013196) index="1" unique_id=1232106511]
+collision_mask = 69
 
 [node name="Gymnasium" parent="." index="5" unique_id=430271837 instance=ExtResource("3_50wve")]
 
-[node name="GroupOfStudents" parent="." index="6" unique_id=664278660 instance=ExtResource("4_w62hg")]
+[node name="GroupOfStudentsFront" parent="." index="6" unique_id=664278660 instance=ExtResource("4_w62hg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14539921, 0.59, -5.716328)
 collision_layer = 2
 
-[node name="NpcHealthBar" parent="GroupOfStudents" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_28lbh")
+[node name="NpcHealthBar" parent="GroupOfStudentsFront" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_jkgmw")
 
-[node name="CollisionShape3D" parent="GroupOfStudents" index="2" unique_id=2073062423]
+[node name="CollisionShape3D" parent="GroupOfStudentsFront" index="2" unique_id=2073062423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6770561, -0.011553347, -0.34509277)
 shape = SubResource("BoxShape3D_28lbh")
 
@@ -43,14 +58,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08820224, 0.59, -4.512974)
 script = ExtResource("6_mxkny")
 
 [node name="NpcHealthBar" parent="GroupOfStudentsRear" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_mxkny")
+texture = SubResource("ViewportTexture_517mh")
 
 [node name="CollisionShape3D" parent="GroupOfStudentsRear" index="2" unique_id=2073062423]
 disabled = true
 
 [node name="PeTeacher" parent="." index="8" unique_id=629554487 instance=ExtResource("6_1cwq8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1338382, 0.9716, -2.6697278)
-collision_layer = 2
+collision_layer = 64
 
 [node name="OnCrowdCamera" type="Camera3D" parent="." index="9" unique_id=261597590]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2007746, 0.6275952, -4.5000196)
@@ -73,9 +88,52 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29627514, 0, -2.67)
 
 [node name="Basketball" parent="." index="14" unique_id=756961244 instance=ExtResource("9_3ic0g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.243539, 0.36234426, -5.166913)
-collision_layer = 4
+collision_layer = 16
+
+[node name="Goat" type="RigidBody3D" parent="." index="15" unique_id=786963755]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Goat" index="0" unique_id=976102682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.393055, 0.927161, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Goat" index="1" unique_id=447419117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.393055, 0.927161, 0)
+shape = SubResource("BoxShape3D_3ic0g")
+
+[node name="GoatCamera" type="Camera3D" parent="." index="16" unique_id=1903589880]
+transform = Transform3D(-0.4917136, 0.1751075, -0.85296845, 0.08745396, 0.98454934, 0.1517051, 0.86635417, 0, -0.49943015, 3.9472184, 1.5581491, -1.3570766)
+fov = 50.0
+
+[node name="TimerCamera" type="Camera3D" parent="." index="17" unique_id=1494930792]
+transform = Transform3D(0.45094156, -0.1893286, -0.8722422, 0.06563909, 0.9816319, -0.17913786, 0.8901367, 0.023527516, 0.45508596, 7.890526, 4.1692305, 0.90480185)
+fov = 50.0
+
+[node name="WallTimer" parent="." index="18" unique_id=1912559265 instance=ExtResource("10_jkgmw")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.807224, 4.6358767, -0.082256645)
+
+[node name="WallTimer2" parent="." index="19" unique_id=733015176 instance=ExtResource("10_jkgmw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.788967, 4.6358767, -0.082256645)
+
+[node name="PlayerConstraints" type="StaticBody3D" parent="." index="20" unique_id=1580293710]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerConstraints" index="0" unique_id=1896894937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64282346, -5.7231503)
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="PlayerConstraints" index="1" unique_id=953816586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64282346, -1.8623298)
+shape = SubResource("BoxShape3D_lc5oj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="PlayerConstraints" index="2" unique_id=1804381510]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.82714987, 0.64282346, -3.7941775)
+shape = SubResource("BoxShape3D_jkgmw")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="PlayerConstraints" index="3" unique_id=2020026563]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.9072516, 0.64282346, -3.7941775)
+shape = SubResource("BoxShape3D_jkgmw")
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
-[editable path="GroupOfStudents"]
+[editable path="GroupOfStudentsFront"]
 [editable path="GroupOfStudentsRear"]

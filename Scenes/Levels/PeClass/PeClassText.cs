@@ -12,7 +12,7 @@ public static class PeClassText
     public const string PeTeacherObjective5 = "Nie mogłem znaleźć piłki do kopania.";
     public const string PeTeacherObjective6 = "Jest tylko lekarska.";
     public const string PeTeacherObjective7 = "Hmmm...";
-    public const string PeTeacherObjective8 = "Dobra dzisiaj zrobimy..";
+    public const string PeTeacherObjective8 = "Dobra dzisiaj zrobimy...";
     public const string PeTeacherObjective9 = "Rzut piłką lekarską...";
     public const string PeTeacherObjective10 = "... w kozła...";
     public const string PeTeacherObjective11 = "... na czas.";

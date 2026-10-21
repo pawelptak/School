@@ -99,7 +99,7 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
 
     public bool CanInteract(Player player)
     {
-        if (_isDefeated || !PlayerInRange || player.MovementLocked)
+        if (_isDefeated || player.MovementLocked)
             return false;
 
         var controller = GetTree().CurrentScene
