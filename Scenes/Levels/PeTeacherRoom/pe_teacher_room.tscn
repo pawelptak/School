@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://coogaesd3smto"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_32nj3"]
+[ext_resource type="Script" uid="uid://c3mmeg71tquir" path="res://Scenes/Levels/PeTeacherRoom/PeTeacherRoom.cs" id="2_deeqd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
+albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_bfbiu"]
+material = SubResource("StandardMaterial3D_ubwdy")
+size = Vector3(10, 0.2, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lvrkr"]
+size = Vector3(10, 0.2, 10)
+
+[node name="PeTeacherRoom" unique_id=513644933 instance=ExtResource("1_32nj3")]
+script = ExtResource("2_deeqd")
+
+[node name="Player" parent="." index="1" unique_id=195847836]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.4697037, 1, 1.0880889)
+
+[node name="Floor" type="StaticBody3D" parent="." index="5" unique_id=1911317405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+collision_layer = 65
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" index="0" unique_id=76132125]
+mesh = SubResource("BoxMesh_bfbiu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" index="1" unique_id=1834529749]
+shape = SubResource("BoxShape3D_lvrkr")
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]
