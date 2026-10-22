@@ -27,14 +27,14 @@
 [ext_resource type="Texture2D" uid="uid://b6ic81gs8ue2l" path="res://Scenes/Characters/PeTeacher/attak9.png" id="18_nkd7g"]
 [ext_resource type="Texture2D" uid="uid://cs7u7507elyhs" path="res://Scenes/Characters/PeTeacher/defeated.png" id="26_tk0ve"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ul3y5"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_tk0ve"]
 viewport_path = NodePath("SubViewport")
 
 [node name="PeTeacher" unique_id=664278660 instance=ExtResource("1_5i374")]
 script = ExtResource("2_vn7li")
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_ul3y5")
+texture = SubResource("ViewportTexture_tk0ve")
 
 [node name="Sprite" parent="." index="1" unique_id=274662881]
 texture = ExtResource("3_vn7li")
@@ -53,3 +53,6 @@ DeadTexture = ExtResource("26_tk0ve")
 [node name="NpcController" parent="." index="6" unique_id=991182570]
 CanUseHeavyAttack = true
 CanUseMultiHitAttack = true
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+MaxHealth = 500.0

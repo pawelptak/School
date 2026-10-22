@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public abstract partial class ThrowableObject : RigidBody3D, IInteractable
 {
@@ -37,6 +38,7 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
     public float GetPickupDuration() => PickupTime;
 
     public bool CanInteract(Player player) => !Freeze;
+    public event Action<ThrowableObject, Node> HitSomething;
 
     private NavigationObstacle3D _navObstacle;
 
@@ -46,6 +48,20 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
             _navObstacle.AvoidanceEnabled = false;
 
         player.TryPickup(this);
+    }
+
+    public void SetHeldTransparency(bool held)
+    {
+        SetTransparencyRecursive(this, held ? 0.3f : 0.0f);
+    }
+
+    private void SetTransparencyRecursive(Node node, float transparency)
+    {
+        if (node is GeometryInstance3D geometry)
+            geometry.Transparency = transparency;
+
+        foreach (Node child in node.GetChildren())
+            SetTransparencyRecursive(child, transparency);
     }
 
     public override void _Ready()
@@ -127,5 +143,7 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
     {
         if (body is InteractableCharacter character)
             character.NotifyHitByThrowable(this, ThrowForce);
+
+        HitSomething?.Invoke(this, body);
     }
 }

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://ddx6k2oe1qr3"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_7lauj"]
+[ext_resource type="PackedScene" uid="uid://8vwknvurhmg4" path="res://Scenes/Levels/PeClass/gymnasium.tscn" id="2_2h8jc"]
+[ext_resource type="Script" uid="uid://d2ux5ljfg01ww" path="res://Scenes/Levels/PeClass/PeClass.cs" id="2_qs6hb"]
+[ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="3_qs6hb"]
+[ext_resource type="PackedScene" uid="uid://bm0j3t1nu6q7y" path="res://Scenes/Objects/DoctorBall/doctor_ball.tscn" id="4_sc3xa"]
+[ext_resource type="PackedScene" uid="uid://ci1t7c7hhpkd2" path="res://Scenes/Objects/Goat/goat.tscn" id="5_b46sd"]
+[ext_resource type="PackedScene" uid="uid://bc138obv3quyu" path="res://Scenes/Levels/PeClass/wall_timer.tscn" id="6_nob4u"]
+[ext_resource type="Script" uid="uid://bc3dql0r01ds7" path="res://Scenes/Levels/PeClass/GoatMinigameController.cs" id="8_sc3xa"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uhhho"]
+viewport_path = NodePath("SubViewport")
+
+[node name="PeClass" unique_id=513644933 instance=ExtResource("1_7lauj")]
+script = ExtResource("2_qs6hb")
+
+[node name="Gymnasium" parent="." index="0" unique_id=430271837 instance=ExtResource("2_2h8jc")]
+
+[node name="PeTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("3_qs6hb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1338382, 0.9716, -5.8933372)
+collision_layer = 64
+
+[node name="NpcHealthBar" parent="PeTeacher" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_uhhho")
+
+[node name="NpcHealthController" parent="PeTeacher" index="8" unique_id=1138413887]
+IsImmortal = true
+
+[node name="Goat" parent="." index="7" unique_id=2081243668 node_paths=PackedStringArray("Player", "ArenaCenter") instance=ExtResource("5_b46sd")]
+transform = Transform3D(0.9130019, 0, 0.4079553, 0, 1, 0, -0.4079553, 0, 0.9130019, 6.2237477, 0.5804163, -0.46929055)
+Player = NodePath("../Player")
+ArenaCenter = NodePath("../AreaCenter")
+Speed = 10.0
+Acceleration = 24.0
+JumpVelocity = 7.0
+EscapeDistance = 10.0
+DodgeStrength = 2.0
+ArenaHalfSize = Vector2(10, 7.5)
+RandomMovementStrength = 0.7
+
+[node name="WallTimer1" parent="." index="8" unique_id=1912559265 instance=ExtResource("6_nob4u")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.807224, 4.6358767, -0.082256645)
+
+[node name="WallTimer2" parent="." index="9" unique_id=58517586 instance=ExtResource("6_nob4u")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.788967, 4.6358767, -0.082256645)
+
+[node name="Minigame" type="Node" parent="." index="10" unique_id=745409160 node_paths=PackedStringArray("Player")]
+script = ExtResource("8_sc3xa")
+Player = NodePath("../Player")
+MedicalBallScene = ExtResource("4_sc3xa")
+BallRespawnDelay = 0.7
+
+[node name="AreaCenter" type="Node3D" parent="." index="11" unique_id=1578491180]
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]
+[editable path="PeTeacher"]

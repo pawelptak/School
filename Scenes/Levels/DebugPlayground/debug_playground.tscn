@@ -15,17 +15,18 @@
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Objects/Sponge/sponge.tscn" id="11_xactb"]
 [ext_resource type="PackedScene" uid="uid://8ydauf77nf52" path="res://Scenes/Objects/TeacherChair/teacher_chair.tscn" id="12_421x3"]
 [ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="15_5gj1k"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_5gj1k"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_atrwb"]
-viewport_path = NodePath("SubViewport")
+[ext_resource type="PackedScene" uid="uid://bm0j3t1nu6q7y" path="res://Scenes/Objects/DoctorBall/doctor_ball.tscn" id="16_atrwb"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xactb"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_421x3"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nvvgx"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qqyuo"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
@@ -56,14 +57,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_5gj1k")
+texture = SubResource("ViewportTexture_xactb")
 
 [node name="Mate" parent="." index="5" unique_id=2067851637 instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_atrwb")
+texture = SubResource("ViewportTexture_421x3")
 
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
@@ -71,14 +72,14 @@ DefeatMode = 1
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_xactb")
+texture = SubResource("ViewportTexture_nvvgx")
 
 [node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Bully" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_421x3")
+texture = SubResource("ViewportTexture_qqyuo")
 
 [node name="SpriteAnimator" parent="Bully" index="5" unique_id=205470488]
 AttackFrames = Array[Texture2D]([ExtResource("7_dhuea")])
@@ -169,6 +170,9 @@ mesh = SubResource("BoxMesh_f5wrq")
 
 [node name="PeTeacher" parent="." index="28" unique_id=367615136 groups=["NPCs"] instance=ExtResource("15_5gj1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.63821125, 0.92160004, -0.6083412)
+
+[node name="DoctorBall" parent="." index="29" unique_id=309636505 instance=ExtResource("16_atrwb")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.7124155, 0.18594407, 2.4579687)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

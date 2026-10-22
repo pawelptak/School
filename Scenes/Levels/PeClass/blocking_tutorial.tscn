@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c5hmqqjdl558t"]
+
+[ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_tiscp"]
+[ext_resource type="Script" uid="uid://cobweg1a5aeog" path="res://Scenes/Levels/PeClass/BlockingTutorial.cs" id="2_tiscp"]
+[ext_resource type="PackedScene" uid="uid://8vwknvurhmg4" path="res://Scenes/Levels/PeClass/gymnasium.tscn" id="3_31g8a"]
+[ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="4_fqxe4"]
+[ext_resource type="PackedScene" uid="uid://ci1t7c7hhpkd2" path="res://Scenes/Objects/Goat/goat.tscn" id="5_c6icr"]
+[ext_resource type="PackedScene" uid="uid://bc138obv3quyu" path="res://Scenes/Levels/PeClass/wall_timer.tscn" id="6_f5twb"]
+[ext_resource type="PackedScene" uid="uid://bm0j3t1nu6q7y" path="res://Scenes/Objects/DoctorBall/doctor_ball.tscn" id="8_t3dah"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_h1wr7"]
+viewport_path = NodePath("SubViewport")
+
+[node name="BlockingTutorial" unique_id=513644933 instance=ExtResource("1_tiscp")]
+script = ExtResource("2_tiscp")
+
+[node name="Gymnasium" parent="." index="0" unique_id=430271837 instance=ExtResource("3_31g8a")]
+
+[node name="Player" parent="." index="2" unique_id=195847836]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.8034775, 1, -0.07688612)
+
+[node name="Goat" parent="." index="6" unique_id=2081243668 instance=ExtResource("5_c6icr")]
+transform = Transform3D(0.9130019, -1.5475057e-09, 0.40795526, -0.39227456, -0.27458557, 0.87790847, 0.11201862, -0.9615626, -0.2506971, -6.5870514, 0.97099817, 0.9221336)
+script = null
+
+[node name="WallTimer1" parent="." index="7" unique_id=1912559265 instance=ExtResource("6_f5twb")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.807224, 4.6358767, -0.082256645)
+
+[node name="WallTimer2" parent="." index="8" unique_id=58517586 instance=ExtResource("6_f5twb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.788967, 4.6358767, -0.082256645)
+
+[node name="AreaCenter" type="Node3D" parent="." index="9" unique_id=1578491180]
+
+[node name="DoctorBall" parent="." index="10" unique_id=309636505 instance=ExtResource("8_t3dah")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -6.6369123, 0.3996036, -1.347611)
+
+[node name="PeTeacher" parent="." index="11" unique_id=664278660 instance=ExtResource("4_fqxe4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8527942, 0.97159976, -0.016451135)
+
+[node name="NpcHealthBar" parent="PeTeacher" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_h1wr7")
+
+[node name="NpcHealthController" parent="PeTeacher" index="8" unique_id=1138413887]
+IsImmortal = true
+
+[editable path="Player"]
+[editable path="Player/LowHealth"]
+[editable path="PeTeacher"]

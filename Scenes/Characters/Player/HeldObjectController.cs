@@ -30,6 +30,9 @@ public partial class HeldObjectController : Node
     private readonly Godot.Collections.Array<CollisionShape3D> _heldShapes = new();
     private readonly List<Transform3D> _heldShapeLocals = new();
 
+    [Signal]
+    public delegate void ObjectThrownEventHandler(ThrowableObject thrownObject);
+
     public override void _Ready()
     {
         _player = GetParent<Player>();
@@ -95,6 +98,7 @@ public partial class HeldObjectController : Node
         body.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
 
         ObjectPickedUp?.Invoke(body);
+        body.SetHeldTransparency(true);
 
         return true;
     }
@@ -159,6 +163,8 @@ public partial class HeldObjectController : Node
 
         body.ThrowForce = throwForce;
         body.ApplyCentralImpulse(throwDirection * throwForce);
+
+        EmitSignal(SignalName.ObjectThrown, body);
     }
 
     private void ReleaseHeldObject(uint restoreCollisionMask)
@@ -178,6 +184,7 @@ public partial class HeldObjectController : Node
         _heldShapeLocals.Clear();
 
         _heldObject = null;
+        body.SetHeldTransparency(false);
     }
 
     private bool TryPlaceHeld(

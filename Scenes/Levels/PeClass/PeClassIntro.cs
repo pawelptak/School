@@ -14,7 +14,7 @@ public partial class PeClassIntro : LevelBase
 	private Marker3D _teacherInitialPosition;
 	private GroupOfStudentsFront _groupOfStudentsFront;
 	private GroupOfStudentsRear _groupOfStudentsRear;
-	private Basketball _basketball; // TODO: change to doctor ball xd
+	private DoctorBall _ball;
 	private Goat _goat;
 	private Camera3D _goatCamera;
 	private WallTimer _wallTimer;
@@ -40,7 +40,7 @@ public partial class PeClassIntro : LevelBase
 		_teacherGoToMarker = GetNode<Marker3D>("TeacherGoToMarker");
 		_teacherInitialPosition = GetNode<Marker3D>("TeacherInitialPosition");
 
-		_basketball = GetNode<Basketball>("Basketball");
+		_ball = GetNode<DoctorBall>("DoctorBall");
 		_goat = GetNode<Goat>("Goat");
 		_goatCamera = GetNode<Camera3D>("GoatCamera");
 
@@ -132,7 +132,7 @@ public partial class PeClassIntro : LevelBase
 
 	private void ShowBall()
 	{
-		_basketball.Position = new Vector3(-0.137f, 1.236f, -2.881f);
+		_ball.Position = new Vector3(-0.137f, 1.236f, -2.881f);
 
 		_cutsceneController.StartDialogue(
 			_peTeacher,
@@ -227,5 +227,31 @@ public partial class PeClassIntro : LevelBase
 			],
 			cinematic: false
 		);
-	}
+
+        _peTeacher.InteractionRequested += OnTeacherInteractionRequested;
+    }
+
+	private void OnTeacherInteractionRequested(Player player)
+    {
+        _peTeacher.InteractionRequested -= OnTeacherInteractionRequested;
+        _cutsceneController.StartDialogue(
+            _peTeacher,
+            [
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective14, 2.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective15, 1.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective16, 2.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective17, 2.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective18, 3.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective19, 2.0f),
+                new DialogueLine(DialogueSpeaker.PeTeacher, PeClassText.PeTeacherObjective20, 2.0f)
+            ],
+            cinematic: true,
+            onFinished: StartMinigame
+        );
+    }
+
+	private void StartMinigame()
+    {
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PeClass/pe_class.tscn");
+    }
 }

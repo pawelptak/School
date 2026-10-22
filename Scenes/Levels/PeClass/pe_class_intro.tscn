@@ -8,17 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="6_1cwq8"]
 [ext_resource type="Script" uid="uid://cm332hlhx6t1h" path="res://Scenes/Characters/Crowd/GroupOfStudents/GroupOfStudentsRear.cs" id="6_mxkny"]
 [ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="7_28lbh"]
-[ext_resource type="PackedScene" uid="uid://d3fcmtc6r5gc7" path="res://Scenes/Objects/Basketball/basketball.tscn" id="9_3ic0g"]
+[ext_resource type="PackedScene" uid="uid://bm0j3t1nu6q7y" path="res://Scenes/Objects/DoctorBall/doctor_ball.tscn" id="9_517mh"]
 [ext_resource type="PackedScene" uid="uid://ci1t7c7hhpkd2" path="res://Scenes/Objects/Goat/goat.tscn" id="10_517mh"]
 [ext_resource type="PackedScene" uid="uid://bc138obv3quyu" path="res://Scenes/Levels/PeClass/wall_timer.tscn" id="10_jkgmw"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_jkgmw"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_517mh"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_28lbh"]
 size = Vector3(0.3310547, 0.7335205, 1.3100586)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_517mh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_3ogr3"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lc5oj"]
@@ -44,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14539921, 0.59, -5.716328)
 collision_layer = 2
 
 [node name="NpcHealthBar" parent="GroupOfStudentsFront" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_jkgmw")
+texture = SubResource("ViewportTexture_517mh")
 
 [node name="CollisionShape3D" parent="GroupOfStudentsFront" index="2" unique_id=2073062423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6770561, -0.011553347, -0.34509277)
@@ -55,7 +55,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08820224, 0.59, -4.512974)
 script = ExtResource("6_mxkny")
 
 [node name="NpcHealthBar" parent="GroupOfStudentsRear" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_517mh")
+texture = SubResource("ViewportTexture_3ogr3")
 
 [node name="CollisionShape3D" parent="GroupOfStudentsRear" index="2" unique_id=2073062423]
 disabled = true
@@ -82,9 +82,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.377308, 0, -3.792783)
 [node name="TeacherInitialPosition" type="Marker3D" parent="." index="13" unique_id=160509027]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29627514, 0, -2.67)
 
-[node name="Basketball" parent="." index="14" unique_id=756961244 instance=ExtResource("9_3ic0g")]
+[node name="DoctorBall" parent="." index="14" unique_id=309636505 instance=ExtResource("9_517mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.243539, 0.36234426, -5.166913)
-collision_layer = 16
 
 [node name="Goat" parent="." index="15" unique_id=2081243668 instance=ExtResource("10_517mh")]
 transform = Transform3D(0.9130019, 0, 0.4079553, 0, 1, 0, -0.4079553, 0, 0.9130019, 6.2237477, 0.5804163, -0.46929055)
@@ -111,7 +110,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64282346, -5.7231503)
 shape = SubResource("BoxShape3D_lc5oj")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="PlayerConstraints" index="1" unique_id=953816586]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64282346, -1.8623298)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64282346, -0.9962286)
 shape = SubResource("BoxShape3D_lc5oj")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="PlayerConstraints" index="2" unique_id=1804381510]

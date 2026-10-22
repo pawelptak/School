@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bm0j3t1nu6q7y"]
+
+[ext_resource type="Script" uid="uid://dvjwmy67tb2qj" path="res://Scenes/Objects/DoctorBall/DoctorBall.cs" id="1_3uvrg"]
+[ext_resource type="Texture2D" uid="uid://cvbdvbbq14igq" path="res://Scenes/Objects/DoctorBall/doctor_ball.jpg" id="2_ri8qb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hlvv1"]
+friction = 0.8
+bounce = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hlvv1"]
+albedo_texture = ExtResource("2_ri8qb")
+uv1_scale = Vector3(0.97, 0.955, 1)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ghuwe"]
+material = SubResource("StandardMaterial3D_hlvv1")
+radius = 0.35
+height = 0.7
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u3w50"]
+radius = 0.35075104
+
+[node name="DoctorBall" type="RigidBody3D" unique_id=309636505]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mass = 1.5
+physics_material_override = SubResource("PhysicsMaterial_hlvv1")
+continuous_cd = true
+linear_damp = 0.5
+angular_damp = 1.0
+script = ExtResource("1_3uvrg")
+PickupTime = 0.2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=768968271]
+mesh = SubResource("SphereMesh_ghuwe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=945667670]
+shape = SubResource("SphereShape3D_u3w50")
