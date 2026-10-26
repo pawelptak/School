@@ -56,9 +56,5 @@ MultiHitFrameIndices = Array[int]([1, 2, 3, 4, 5, 6, 7, 8])
 MovingFrames = Array[Texture2D]([ExtResource("10_280po"), ExtResource("11_v2jlq"), ExtResource("12_ebx4i"), ExtResource("13_hniue"), ExtResource("14_rgfeo"), ExtResource("15_gg61v")])
 DeadTexture = ExtResource("26_tk0ve")
 
-[node name="NpcController" parent="." index="6" unique_id=991182570]
-CanUseHeavyAttack = true
-CanUseMultiHitAttack = true
-
 [node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
 MaxHealth = 500.0
