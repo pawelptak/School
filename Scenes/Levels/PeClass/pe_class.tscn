@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bc138obv3quyu" path="res://Scenes/Levels/PeClass/wall_timer.tscn" id="6_nob4u"]
 [ext_resource type="Script" uid="uid://bc3dql0r01ds7" path="res://Scenes/Levels/PeClass/GoatMinigameController.cs" id="8_sc3xa"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_uhhho"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_w0xqb"]
 viewport_path = NodePath("SubViewport")
 
 [node name="PeClass" unique_id=513644933 instance=ExtResource("1_7lauj")]
@@ -22,7 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1338382, 0.9716, -5.893337
 collision_layer = 64
 
 [node name="NpcHealthBar" parent="PeTeacher" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_uhhho")
+texture = SubResource("ViewportTexture_w0xqb")
 
 [node name="NpcHealthController" parent="PeTeacher" index="8" unique_id=1138413887]
 IsImmortal = true

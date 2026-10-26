@@ -447,7 +447,7 @@ public partial class NpcController : Node
             return;
         }
 
-        player.ReactToBlockedHit();
+        player.ReactToBlockedHit(GetParent() as Node3D);
 
         if (isHeavyAttack)
         {

@@ -50,6 +50,8 @@ public partial class Player : CharacterBody3D
     private HeldObjectController _heldObjectController;
     private PunchingController _punchingController;
 
+    public event Action<Node3D> AttackBlocked;
+
     public class InventoryItem
     {
         public string ItemName { get; set; }
@@ -183,12 +185,13 @@ public partial class Player : CharacterBody3D
         GD.Print("[COMBAT] Player's block was broken!");
     }
 
-    public void ReactToBlockedHit()
+    public void ReactToBlockedHit(Node3D attacker)
     {
-        if (_blockButtonHeld)
-        {
-            _blockingController?.PlayHitReaction();
-        }
+        if (!_blockButtonHeld || !_blockingController.IsBlocking)
+            return;
+
+        _blockingController.PlayHitReaction();
+        AttackBlocked?.Invoke(attacker);
     }
 
     public override void _UnhandledInput(InputEvent @event)

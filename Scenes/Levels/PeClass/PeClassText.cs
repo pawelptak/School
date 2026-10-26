@@ -26,7 +26,7 @@ public static class PeClassText
     public const string PeTeacherObjective19 = "Na ocenę!";
     public const string PeTeacherObjective20 = "Do roboty!";
 
-    public const string Grade1Text = "Chłopie co ty żeś odwalił. Widzimy się na poprawie.";
+    public const string Grade1Text = "Chłopie, co ty żeś odwalił? Widzimy się na poprawie.";
     public const string Grade2Text = "Nie jest źle. Ale nie jest dobrze. Jest słabo.";
     public const string Grade3Text = "No, coś tam umisz rzucać.";
     public const string Grade4Text = "Nieźle rzucasz. Ale ja rzucam lepiej.";
@@ -35,8 +35,11 @@ public static class PeClassText
 
     public const string BlockingTutorial1 = "Słuchaj Jeremiaszu.";
     public const string BlockingTutorial2 = "Widzę, że ty jesteś kumatym gościem centralnie.";
-    public const string BlockingTutorial3 = "Pokażę, ci coś żebyś sobie poradził w życiu.";
+    public const string BlockingTutorial3 = "Pokażę ci coś, żebyś sobie poradził w życiu.";
     public const string BlockingTutorial4 = "Ja będę cię teraz bił, a ty przytrzymaj [color=#77777d]{0}[/color], żeby blokować ciosy.";
     public const string BlockingTutorial5 = "Nie bój. Będę bił letko.";
+
+    public const string BlockingTutorialCompleted1 = "Dobra. Widzę że pojąłeś.";
+    public const string BlockingTutorialCompleted2 = "To tyle. Zmykaj!";
 
 }
