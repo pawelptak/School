@@ -9,8 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="7_b0prn"]
 [ext_resource type="Texture2D" uid="uid://dd3lsoaq61m7j" path="res://Scenes/Objects/Door/metal_door.jpg" id="8_yukts"]
 [ext_resource type="Texture2D" uid="uid://cix4664ecvgxw" path="res://Scenes/Objects/Door/metal_door2.jpg" id="9_nxuvi"]
-[ext_resource type="PackedScene" uid="uid://bm3gd3i32tocv" path="res://Scenes/Objects/Stains/long_splash.tscn" id="10_83cq7"]
-[ext_resource type="PackedScene" uid="uid://dapyoe0ylcyn1" path="res://Scenes/Objects/Stains/basic_splash2.tscn" id="11_yodqo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
 albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
@@ -322,12 +320,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 5.06
 [node name="MeshInstance3D" parent="TeacherRoomDoor/Door" parent_id_path=PackedInt32Array(1107109814, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0.047718525)
 surface_material_override/0 = SubResource("StandardMaterial3D_j4aw7")
-
-[node name="LongSplash" parent="." index="36" unique_id=1767202832 instance=ExtResource("10_83cq7")]
-transform = Transform3D(-0.0964602, 0, -0.4288491, 0, 1, 0, -0.20903863, 0, 0.19789101, -5.444518, -2.5808675, 2.2397807)
-
-[node name="BasicSplash2" parent="." index="37" unique_id=1578184014 instance=ExtResource("11_yodqo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4711914, -2.5717976, 3.5244977)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
