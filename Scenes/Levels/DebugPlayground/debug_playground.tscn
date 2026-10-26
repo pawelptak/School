@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://djhrbul0hlsa" path="res://Scenes/Characters/PolishTeacher/polish_teacher_inherited.tscn" id="5_vkp4y"]
 [ext_resource type="PackedScene" uid="uid://certklpbjiq4q" path="res://Scenes/Characters/Bully/bully.tscn" id="6_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://cauxrqvdp5r8u" path="res://Scenes/Objects/Backpack/backpack.tscn" id="6_y8sep"]
+[ext_resource type="PackedScene" uid="uid://dl6d8udhv8xrn" path="res://Scenes/Characters/BullyMinion1/bully_minion_1.tscn" id="7_atrwb"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="7_s6ct2"]
 [ext_resource type="PackedScene" uid="uid://q7ydkpfus1ty" path="res://Scenes/Objects/Chair/chair.tscn" id="8_dhuea"]
 [ext_resource type="PackedScene" uid="uid://byvb4k1u7ftvj" path="res://Scenes/Objects/Desk/desk.tscn" id="9_5gj1k"]
@@ -16,16 +17,22 @@
 [ext_resource type="PackedScene" uid="uid://ddo46vjkb7x4d" path="res://Scenes/Characters/PeTeacher/pe_teacher.tscn" id="15_5gj1k"]
 [ext_resource type="PackedScene" uid="uid://bm0j3t1nu6q7y" path="res://Scenes/Objects/DoctorBall/doctor_ball.tscn" id="16_atrwb"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_5gj1k"]
-viewport_path = NodePath("SubViewport")
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_atrwb"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
+radius = 0.35
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_crm6m"]
+radius = 1.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xactb"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_421x3"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nvvgx"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
@@ -56,14 +63,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_5gj1k")
+texture = SubResource("ViewportTexture_atrwb")
+
+[node name="CollisionShape3D" parent="AsianStudentMale" index="2" unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="CollisionShape3D" parent="AsianStudentMale/InteractionArea" parent_id_path=PackedInt32Array(559252500, 219048047) index="0" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
 
 [node name="Mate" parent="." index="5" unique_id=2067851637 instance=ExtResource("3_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.1205328)
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_atrwb")
+texture = SubResource("ViewportTexture_xactb")
+
+[node name="CollisionShape3D" parent="Mate" index="2" unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="CollisionShape3D" parent="Mate/InteractionArea" parent_id_path=PackedInt32Array(2067851637, 219048047) index="0" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
 
 [node name="PolishTeacher" parent="." index="6" unique_id=664278660 instance=ExtResource("5_vkp4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3741424, 0.92160004, 4.9365206)
@@ -71,14 +90,26 @@ DefeatMode = 1
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_xactb")
+texture = SubResource("ViewportTexture_421x3")
+
+[node name="CollisionShape3D" parent="PolishTeacher" index="2" unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="CollisionShape3D" parent="PolishTeacher/InteractionArea" parent_id_path=PackedInt32Array(664278660, 219048047) index="0" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
 
 [node name="Bully" parent="." index="7" unique_id=1119105328 groups=["NPCs"] instance=ExtResource("6_s6ct2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790193)
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Bully" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_421x3")
+texture = SubResource("ViewportTexture_nvvgx")
+
+[node name="CollisionShape3D" parent="Bully" index="2" unique_id=2073062423]
+shape = SubResource("CapsuleShape3D_crm6m")
+
+[node name="CollisionShape3D" parent="Bully/InteractionArea" parent_id_path=PackedInt32Array(1119105328, 219048047) index="0" unique_id=509559402]
+shape = SubResource("SphereShape3D_crm6m")
 
 [node name="NpcController" parent="Bully" index="6" unique_id=991182570]
 CanUseHeavyAttack = true
@@ -171,6 +202,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.63821125, 0.92160004, -0.6
 
 [node name="DoctorBall" parent="." index="29" unique_id=309636505 instance=ExtResource("16_atrwb")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.7124155, 0.18594407, 2.4579687)
+
+[node name="BullyMinion1" parent="." index="30" unique_id=904654322 groups=["NPCs"] instance=ExtResource("7_atrwb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7148876, 0.9215998, -2.617568)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

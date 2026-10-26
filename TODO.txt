@@ -24,3 +24,7 @@ Ideas:
 
 - napisy typu tytuly misji na custscenkach jak w gta
 - popup: nowa ocena w dzienniku
+
+
+- visual stun -> powtarzac hit animation i może jakas ikona
+- fix: atak musi czekac na koniec animacji bloku
