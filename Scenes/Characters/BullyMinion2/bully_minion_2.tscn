@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://d0sk3mp6fxxq6"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_id50y"]
+[ext_resource type="Script" uid="uid://cvxt5082acney" path="res://Scenes/Characters/BullyMinion2/BullyMinion2.cs" id="2_vg2xx"]
+[ext_resource type="Texture2D" uid="uid://vado6bj63xqp" path="res://Scenes/Characters/BullyMinion2/idle_shirtless.png" id="3_ppnk4"]
+[ext_resource type="Texture2D" uid="uid://isuob4d8qf1e" path="res://Scenes/Characters/BullyMinion2/hit_shirtless.png" id="4_g2nb0"]
+[ext_resource type="Texture2D" uid="uid://bv1kfrvh7arxm" path="res://Scenes/Characters/BullyMinion2/attack1.png" id="5_0bjbb"]
+[ext_resource type="Texture2D" uid="uid://bl2v6krfkbwar" path="res://Scenes/Characters/BullyMinion2/attack2.png" id="6_0r0vg"]
+[ext_resource type="Texture2D" uid="uid://bo3ngchmxfus0" path="res://Scenes/Characters/BullyMinion2/walk1.png" id="7_qmyny"]
+[ext_resource type="Texture2D" uid="uid://e8tnltdehren" path="res://Scenes/Characters/BullyMinion2/walk2.png" id="8_l6w3k"]
+[ext_resource type="Texture2D" uid="uid://dqgcblumscpxj" path="res://Scenes/Characters/BullyMinion2/walk3.png" id="9_um2mc"]
+[ext_resource type="Texture2D" uid="uid://de8i3rb8ork2r" path="res://Scenes/Characters/BullyMinion2/dead.png" id="10_6q4ud"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ug438"]
+viewport_path = NodePath("SubViewport")
+
+[node name="BullyMinion2" unique_id=664278660 instance=ExtResource("1_id50y")]
+script = ExtResource("2_vg2xx")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_ug438")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
+texture = ExtResource("3_ppnk4")
+
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
+IdleFrames = Array[Texture2D]([ExtResource("3_ppnk4")])
+HitFrames = Array[Texture2D]([ExtResource("4_g2nb0")])
+AttackFrames = Array[Texture2D]([ExtResource("5_0bjbb"), ExtResource("6_0r0vg")])
+AttackFrameDuration = 0.2
+AttackHitFrameIndex = 1
+MovingFrames = Array[Texture2D]([ExtResource("7_qmyny"), ExtResource("8_l6w3k"), ExtResource("9_um2mc")])
+MovingFrameDuration = 0.2
+DeadTexture = ExtResource("10_6q4ud")

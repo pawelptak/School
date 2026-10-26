@@ -1,6 +1,6 @@
 public partial class BullyMinion1 : InteractableCharacter
 {
-    public override string Name => "Krzysiek";
+    public override string Name => BullyMinion1Text.Name;
 
     protected override DialogueLine[] GetDefeatDialogue()
     {

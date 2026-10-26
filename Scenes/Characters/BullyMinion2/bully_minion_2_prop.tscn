@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cu7p8fqrgwq72"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_lsu6q"]
+[ext_resource type="Script" uid="uid://dblrjfnbs8s8r" path="res://Scenes/Characters/BullyMinion2/BullyMinion2Prop.cs" id="2_u271h"]
+[ext_resource type="Texture2D" uid="uid://34nnuma5nbem" path="res://Scenes/Characters/BullyMinion2/idle.png" id="3_rtcnm"]
+[ext_resource type="Texture2D" uid="uid://dm8qckuykp2hl" path="res://Scenes/Characters/BullyMinion2/talk.png" id="4_jdqst"]
+[ext_resource type="Texture2D" uid="uid://pphboka6bcv6" path="res://Scenes/Characters/BullyMinion2/hit.png" id="5_ghy0v"]
+[ext_resource type="Texture2D" uid="uid://de8i3rb8ork2r" path="res://Scenes/Characters/BullyMinion2/dead.png" id="6_3xtad"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1kp72"]
+viewport_path = NodePath("SubViewport")
+
+[node name="BullyMinion2" unique_id=664278660 instance=ExtResource("1_lsu6q")]
+script = ExtResource("2_u271h")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_1kp72")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
+texture = ExtResource("3_rtcnm")
+
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
+IdleFrames = Array[Texture2D]([ExtResource("3_rtcnm")])
+TalkingFrames = Array[Texture2D]([ExtResource("4_jdqst")])
+HitFrames = Array[Texture2D]([ExtResource("5_ghy0v")])
+DeadTexture = ExtResource("6_3xtad")
