@@ -26,7 +26,7 @@ Ideas:
 - popup: nowa ocena w dzienniku
 
 
-- visual stun -> powtarzac hit animation i może jakas ikona
+- visual stun -> może jakas ikona
 - fix: atak musi czekac na koniec animacji bloku
 
 - dialogi gracza innym kolorem
