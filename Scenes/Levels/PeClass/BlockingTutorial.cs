@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class BlockingTutorial : Node3D
+public partial class BlockingTutorial : LevelBase
 {
     private CutsceneController _cutsceneController;
 
@@ -17,6 +17,8 @@ public partial class BlockingTutorial : Node3D
 
     public override void _Ready()
     {
+        base._Ready();
+
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _player = GetNode<Player>("Player");
         _camera = _player.GetNode<Camera3D>("Camera3D");
