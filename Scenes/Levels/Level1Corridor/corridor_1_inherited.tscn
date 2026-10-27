@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bqqa6q33rrnl0" path="res://Scenes/Characters/Janitor/janitor.tscn" id="14_n8pn3"]
 [ext_resource type="PackedScene" uid="uid://c0x2b3xajqpwh" path="res://Scenes/Characters/BullyMinion1/bully_minion_1_prop.tscn" id="15_4jgo3"]
 [ext_resource type="PackedScene" uid="uid://cu7p8fqrgwq72" path="res://Scenes/Characters/BullyMinion2/bully_minion_2_prop.tscn" id="16_nf1yq"]
+[ext_resource type="PackedScene" uid="uid://cxuqgg6pxn7f6" path="res://Scenes/Objects/Bucket/bucket.tscn" id="17_udx6c"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_3ic2f"]
 vertices = PackedVector3Array(-7.004883, 0.3, -4.5, -7.004883, 0.3, 4.5, 6.995117, 0.3, 4.5, 6.995117, 0.3, -4.5)
@@ -43,7 +44,7 @@ uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 texture_filter = 0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_udx6c"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_wvpec"]
 viewport_path = NodePath("SubViewport")
 
 [node name="Corridor1" unique_id=513644933 instance=ExtResource("1_4fjpg")]
@@ -123,7 +124,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.193072, 0.9215998, -2.35892
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.21281, 0.9215998, -2.3231916)
 
 [node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_udx6c")
+texture = SubResource("ViewportTexture_wvpec")
 
 [node name="DialogueLookAtPoint" parent="AsianStudentMale" index="4" unique_id=1460371450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21753246, 0.7609645, 0.06882274)
@@ -149,6 +150,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.55581, 0.9216003, -3.144525
 
 [node name="BullyMinion2" parent="." index="26" unique_id=1296282755 instance=ExtResource("16_nf1yq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.516007, 0.92160004, -1.8959225)
+
+[node name="Bucket" parent="." index="27" unique_id=169350368 instance=ExtResource("17_udx6c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32875013, 0.17500024, 1.9659603)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

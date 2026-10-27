@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://34nnuma5nbem" path="res://Scenes/Characters/BullyMinion2/idle.png" id="3_rtcnm"]
 [ext_resource type="Texture2D" uid="uid://dm8qckuykp2hl" path="res://Scenes/Characters/BullyMinion2/talk.png" id="4_jdqst"]
 [ext_resource type="Texture2D" uid="uid://pphboka6bcv6" path="res://Scenes/Characters/BullyMinion2/hit.png" id="5_ghy0v"]
-[ext_resource type="Texture2D" uid="uid://de8i3rb8ork2r" path="res://Scenes/Characters/BullyMinion2/dead.png" id="6_3xtad"]
+[ext_resource type="Texture2D" uid="uid://dk0e1mpl67ka6" path="res://Scenes/Characters/BullyMinion1/dead.png" id="6_1kp72"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1kp72"]
 viewport_path = NodePath("SubViewport")
@@ -24,4 +24,4 @@ texture = ExtResource("3_rtcnm")
 IdleFrames = Array[Texture2D]([ExtResource("3_rtcnm")])
 TalkingFrames = Array[Texture2D]([ExtResource("4_jdqst")])
 HitFrames = Array[Texture2D]([ExtResource("5_ghy0v")])
-DeadTexture = ExtResource("6_3xtad")
+DeadTexture = ExtResource("6_1kp72")
