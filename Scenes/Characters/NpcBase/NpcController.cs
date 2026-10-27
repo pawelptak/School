@@ -47,6 +47,28 @@ public partial class NpcController : Node
     [Export]
     public float MultiHitAttackCooldown { get; set; } = 5.0f;
 
+    [ExportGroup("Combat Improvements")]
+
+    [Export]
+    public float AttackStartDistance { get; set; } = 1.9f;
+
+    [Export]
+    public float AttackHitRangeBonus { get; set; } = 0.4f;
+
+    [Export]
+    public float AttackLungeSpeed { get; set; } = 3.0f;
+
+    [Export]
+    public float AttackLungeDuration { get; set; } = 0.4f;
+
+    [Export]
+    public float AttackWindupTime { get; set; } = 0.3f;
+
+
+    private float _attackLungeTimer;
+    private Vector3 _attackLungeDirection;
+    private float _attackWindupTimer;
+    private bool _attackHitApplied;
 
     private CharacterBody3D _npc;
     private NavigationAgent3D _agent;
@@ -298,13 +320,12 @@ public partial class NpcController : Node
 
         if (_isAttacking)
         {
-            ApplyGravityAndStop(dt);
-            _spriteAnimator?.SetMoving(false);
             FaceTarget(targetFlat);
+            ProcessAttackMovement(dt);
             return;
         }
 
-        if (distance <= AttackDistance)
+        if (distance <= AttackStartDistance)
         {
             ApplyGravityAndStop(dt);
             _spriteAnimator?.SetMoving(false);
@@ -351,6 +372,20 @@ public partial class NpcController : Node
                     _currentAttackIsHeavy = useHeavyAttack;
                     _attackTimer = Mathf.Max(0.0f, AttackCooldown);
 
+                    _attackHitApplied = false;
+                    _attackWindupTimer = AttackWindupTime;
+
+                    Vector3 direction =
+                        _chaseTarget.GlobalPosition - _npc.GlobalPosition;
+
+                    direction.Y = 0f;
+
+                    _attackLungeDirection = direction.LengthSquared() > 0.001f
+                        ? direction.Normalized()
+                        : Vector3.Zero;
+
+                    _attackLungeTimer = AttackLungeDuration;
+
                     if (useHeavyAttack)
                     {
                         _heavyAttackTimer = Mathf.Max(0.0f, HeavyAttackCooldown);
@@ -372,6 +407,39 @@ public partial class NpcController : Node
         }
 
         MoveTowardTarget(_chaseTarget.GlobalPosition, dt);
+    }
+
+    private void ProcessAttackMovement(double dt)
+    {
+        float delta = (float)dt;
+
+        Vector3 velocity = _npc.Velocity;
+
+        if (_attackLungeTimer > 0f)
+        {
+            _attackLungeTimer = Mathf.Max(
+                0f,
+                _attackLungeTimer - delta
+            );
+
+            velocity.X = _attackLungeDirection.X * AttackLungeSpeed;
+            velocity.Z = _attackLungeDirection.Z * AttackLungeSpeed;
+        }
+        else
+        {
+            velocity.X = 0f;
+            velocity.Z = 0f;
+        }
+
+        if (!_npc.IsOnFloor())
+            velocity.Y -= 9.8f * delta;
+        else
+            velocity.Y = -0.1f;
+
+        _npc.Velocity = velocity;
+        _npc.MoveAndSlide();
+
+        _spriteAnimator?.SetMoving(false);
     }
 
     private void FaceTarget(Vector3 targetPosition)
@@ -413,9 +481,14 @@ public partial class NpcController : Node
             return;
         }
 
+        if (_attackHitApplied)
+            return;
+
+        _attackHitApplied = true;
+
         float attackDistance = isHeavyAttack
-            ? HeavyAttackDistance
-            : AttackDistance;
+            ? HeavyAttackDistance + AttackHitRangeBonus
+            : AttackDistance + AttackHitRangeBonus;
 
         float attackDamage = isHeavyAttack
             ? HeavyAttackDamage
