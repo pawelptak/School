@@ -52,6 +52,9 @@ uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 texture_filter = 0
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_roycm"]
+viewport_path = NodePath("SubViewport")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64afw"]
 albedo_texture = ExtResource("13_08po8")
 uv1_scale = Vector3(0.63, 0.33, 1)
@@ -140,6 +143,12 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0061226, 0.9215998, -2.921363)
 DefeatMode = 1
 
+[node name="NpcHealthBar" parent="Bully" index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_roycm")
+
+[node name="NpcController" parent="Bully" index="6" unique_id=991182570]
+AttackCooldown = 1.2
+
 [node name="WomenBathroomDoor" parent="." index="21" unique_id=519980075 instance=ExtResource("12_b7thx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3871496, 1.5361857, -3.701747)
 
@@ -196,5 +205,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.937874, 0.15, -2.5384011)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
+[editable path="Bully"]
 [editable path="WomenBathroomDoor"]
 [editable path="MenBathroomDoor"]

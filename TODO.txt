@@ -28,3 +28,6 @@ Ideas:
 
 - visual stun -> powtarzac hit animation i może jakas ikona
 - fix: atak musi czekac na koniec animacji bloku
+
+- dialogi gracza innym kolorem
+- bug: interakcja z npc przenika przez popupy i death screen itd.
