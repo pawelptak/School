@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://443af4ynyuxq"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_yj74k"]
+[ext_resource type="Script" uid="uid://dhy8rpdsjgi7x" path="res://Scenes/Characters/GermanTeacher/GermanTeacher.cs" id="2_jx888"]
+[ext_resource type="Texture2D" uid="uid://cf8rnji8fn0ut" path="res://Scenes/Characters/GermanTeacher/idle1.png" id="3_10wop"]
+[ext_resource type="Texture2D" uid="uid://cw42yk21w6alm" path="res://Scenes/Characters/GermanTeacher/idle2.png" id="4_xn4td"]
+[ext_resource type="Texture2D" uid="uid://bu768uwxvvmtu" path="res://Scenes/Characters/GermanTeacher/talk1.png" id="5_uvp48"]
+[ext_resource type="Texture2D" uid="uid://727ghrqs5u10" path="res://Scenes/Characters/GermanTeacher/talk2.png" id="6_h6xk6"]
+[ext_resource type="Texture2D" uid="uid://cbgrhpp12ux2j" path="res://Scenes/Characters/GermanTeacher/talk3.png" id="7_1srm6"]
+[ext_resource type="Texture2D" uid="uid://ettsmsf1wt7d" path="res://Scenes/Characters/GermanTeacher/talk4.png" id="8_545ye"]
+[ext_resource type="Texture2D" uid="uid://bc0yn3o8isy8w" path="res://Scenes/Characters/GermanTeacher/hit.png" id="9_h6xk6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jx888"]
+viewport_path = NodePath("SubViewport")
+
+[node name="GermanTeacher" unique_id=664278660 instance=ExtResource("1_yj74k")]
+script = ExtResource("2_jx888")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_jx888")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
+texture = ExtResource("3_10wop")
+
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
+IdleFrames = Array[Texture2D]([ExtResource("3_10wop"), ExtResource("4_xn4td")])
+IdleFrameDuration = 0.5
+TalkingFrames = Array[Texture2D]([ExtResource("5_uvp48"), ExtResource("6_h6xk6"), ExtResource("7_1srm6"), ExtResource("8_545ye")])
+HitFrames = Array[Texture2D]([ExtResource("9_h6xk6")])

@@ -31,3 +31,4 @@ Ideas:
 
 - dialogi gracza innym kolorem
 - bug: interakcja z npc przenika przez popupy i death screen itd.
+- smolski - walk animation
