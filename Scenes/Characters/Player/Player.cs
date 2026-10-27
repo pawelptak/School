@@ -717,10 +717,19 @@ public partial class Player : CharacterBody3D
             return;
         }
 
-        _interactionTextLabel.Text = _currentInteractable.GetPromptText();
         _interactableNameLabel.Text = _currentInteractable.Name;
-        _interactionTextLabel.Show();
         _interactableNameLabel.Show();
+
+        if (_currentInteractable is InteractableCharacter character
+            && !character.ShowInteractionText)
+        {
+            _interactionTextLabel.Hide();
+        }
+        else
+        {
+            _interactionTextLabel.Text = _currentInteractable.GetPromptText();
+            _interactionTextLabel.Show();
+        }
 
         if (_interactionProgressBar != null)
             _interactionProgressBar.Modulate = new Color(1, 1, 1, 0);

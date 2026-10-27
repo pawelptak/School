@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class BullyMinion2 : InteractableCharacter
 {
     public override string Name => BullyMinion2Text.Name;

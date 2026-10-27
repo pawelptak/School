@@ -12,6 +12,7 @@ viewport_path = NodePath("SubViewport")
 
 [node name="BullyMinion2" unique_id=664278660 instance=ExtResource("1_lsu6q")]
 script = ExtResource("2_u271h")
+ShowInteractionText = false
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
 texture = SubResource("ViewportTexture_1kp72")

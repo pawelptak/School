@@ -11,14 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://c57eaor2hqtf4" path="res://Scenes/Characters/BullyMinion1/walk2.png" id="7_1e1t2"]
 [ext_resource type="Texture2D" uid="uid://51c6680ppbkg" path="res://Scenes/Characters/BullyMinion1/walk3.png" id="8_o2t62"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rxq3n"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_r1f05"]
 viewport_path = NodePath("SubViewport")
 
 [node name="BullyMinion1" unique_id=664278660 instance=ExtResource("1_nmjef")]
 script = ExtResource("2_lbf26")
 
 [node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_rxq3n")
+texture = SubResource("ViewportTexture_r1f05")
 
 [node name="Sprite" parent="." index="1" unique_id=274662881]
 texture = ExtResource("3_cjur3")

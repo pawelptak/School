@@ -16,6 +16,9 @@ public abstract partial class InteractableCharacter : CharacterBody3D, IInteract
     [Export] public DefeatBehavior DefeatMode { get; set; }
     [Export] public float RecoveryTime { get; set; } = 10.0f;
 
+    [ExportGroup("Interaction")]
+    [Export] public bool ShowInteractionText { get; set; } = true;
+
     public bool PlayerInRange { get; private set; }
 
     public abstract new string Name { get; }
