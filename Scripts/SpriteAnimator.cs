@@ -72,6 +72,7 @@ public partial class SpriteAnimator : Node
 
     private Color _originalModulate;
     private Tween _hitTween;
+    private float _stunTimer;
 
     public override void _Ready()
     {
@@ -103,9 +104,41 @@ public partial class SpriteAnimator : Node
         _hitTween.Parallel().TweenProperty(Sprite, "scale", originalScale, 0.12f);
     }
 
+    public void PlayStunned(float duration)
+    {
+        if (_isDead || HitFrames.Count == 0 || duration <= 0)
+            return;
+
+        _stunTimer = Mathf.Max(_stunTimer, duration);
+
+        CancelAttack();
+
+        _isPlayingHit = true;
+
+        if (_currentFrames == HitFrames && _currentAnimationLoops)
+            return;
+
+        PlayAnimation(HitFrames, HitFrameDuration, true);
+    }
+
     public override void _Process(double delta)
     {
-        if (_isDead || _currentFrames.Count == 0 || _currentFrameDuration <= 0)
+        if (_isDead)
+            return;
+
+        if (_stunTimer > 0)
+        {
+            _stunTimer -= (float)delta;
+
+            if (_stunTimer <= 0)
+            {
+                _stunTimer = 0;
+                _isPlayingHit = false;
+                PlayBaseAnimation();
+            }
+        }
+
+        if (_currentFrames.Count == 0 || _currentFrameDuration <= 0)
             return;
 
         _frameTimer += (float)delta;
@@ -120,6 +153,12 @@ public partial class SpriteAnimator : Node
                 if (!_currentAnimationLoops)
                 {
                     bool wasPlayingAttack = IsPlayingAttack();
+
+                    if (_isPlayingHit && _stunTimer > 0)
+                    {
+                        PlayAnimation(HitFrames, HitFrameDuration, true);
+                        return;
+                    }
 
                     _isPlayingHit = false;
                     _isPlayingAttack = false;

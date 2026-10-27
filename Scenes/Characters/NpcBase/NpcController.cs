@@ -753,10 +753,11 @@ public partial class NpcController : Node
         {
             _stunTimer = Mathf.Max(_stunTimer, stunDuration);
 
+            _spriteAnimator?.PlayStunned(_stunTimer);
+
             if (_isAttacking)
             {
                 _isAttacking = false;
-                _spriteAnimator?.CancelAttack();
             }
         }
     }
