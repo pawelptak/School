@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class Player : CharacterBody3D
 {
     [ExportGroup("Melee")]
-    [Export] public float AttackDamage { get; set; } = 20.0f;
+    [Export] public float AttackDamage { get; set; } = 10.0f;
     [Export] public float AttackDistance { get; set; } = 1.8f;
     [Export] public float AttackKnockback { get; set; } = 5.0f;
 

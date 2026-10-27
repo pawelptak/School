@@ -32,3 +32,6 @@ AttackHitFrameIndex = 1
 MovingFrames = Array[Texture2D]([ExtResource("7_qmyny"), ExtResource("8_l6w3k"), ExtResource("9_um2mc")])
 MovingFrameDuration = 0.2
 DeadTexture = ExtResource("10_6q4ud")
+
+[node name="NpcController" parent="." index="6" unique_id=991182570]
+AttackCooldown = 1.0
