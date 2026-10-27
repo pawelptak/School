@@ -9,6 +9,9 @@ public partial class Downstairs : LevelBase
     private Door _doorLeft;
     private Door _doorRight;
     private Door _teacherDoor;
+    private GermanTeacher _teacher;
+    private NpcController _teacherController;
+    private Marker3D _teacherGoToPoint;
 
     public override void _Ready()
     {
@@ -35,6 +38,13 @@ public partial class Downstairs : LevelBase
         _doorLeft.Interacted += OnGymnasiumDoorInteracted;
         _doorRight.Interacted += OnGymnasiumDoorInteracted;
         _teacherDoor.Interacted += OnTeacherRoomDoorInteracted;
+
+        _teacher = GetNode<GermanTeacher>("GermanTeacher");
+        _teacherController = _teacher.GetNode<NpcController>("NpcController");
+        _teacherController.MoveToFinished += Dissapear;
+
+        _teacherGoToPoint = GetNode<Marker3D>("TeacherGoToPoint");
+        _teacherController.MoveTo(_teacherGoToPoint);
     }
 
     private void OnCeilingDoorInteracted()
@@ -53,5 +63,10 @@ public partial class Downstairs : LevelBase
     private void OnTeacherRoomDoorInteracted()
     {
         SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PeTeacherRoom/pe_teacher_room.tscn");
+    }
+
+    private void Dissapear()
+    {
+        _teacher.QueueFree();
     }
 }

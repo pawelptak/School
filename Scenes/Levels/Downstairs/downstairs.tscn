@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cix4664ecvgxw" path="res://Scenes/Objects/Door/metal_door2.jpg" id="9_tsq1v"]
 [ext_resource type="PackedScene" uid="uid://bm3gd3i32tocv" path="res://Scenes/Objects/Stains/long_splash.tscn" id="10_nx5ja"]
 [ext_resource type="PackedScene" uid="uid://dapyoe0ylcyn1" path="res://Scenes/Objects/Stains/basic_splash2.tscn" id="11_6qd28"]
+[ext_resource type="PackedScene" uid="uid://443af4ynyuxq" path="res://Scenes/Characters/GermanTeacher/german_teacher.tscn" id="12_6qd28"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
 albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
@@ -328,6 +329,12 @@ transform = Transform3D(-0.0964602, 0, -0.4288491, 0, 1, 0, -0.20903863, 0, 0.19
 
 [node name="BasicSplash2" parent="." index="37" unique_id=1578184014 instance=ExtResource("11_6qd28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4711914, -2.5717976, 3.5244977)
+
+[node name="TeacherGoToPoint" type="Marker3D" parent="." index="38" unique_id=1593205984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03351, -2.594254, 10.044529)
+
+[node name="GermanTeacher" parent="." index="39" unique_id=664278660 instance=ExtResource("12_6qd28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9982533, -1.6764657, 5.0009828)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
