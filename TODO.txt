@@ -13,12 +13,8 @@ Ideas:
 
 
 - odporność npc na knockback jako opcja
-- na WF Skrzyp uczy nas Blokowania
 - po WF walka z Bully nr 2 - z dwoma parobkami i bull ma mocny atak i inny stroj. wokół tłum gapiów
 
-- dodac postacie przydupasy bulliego
-- dodac przydupasa wariany bez spodni i drugiego wariant bez koszulki
-- heavy attak zmienić na liscia
 
 - gdzies pod koniec gry - opcja zajumania dziennika i zmienienia sobie ocen
 
@@ -27,8 +23,11 @@ Ideas:
 
 
 - visual stun -> może jakas ikona
-- fix: atak musi czekac na koniec animacji bloku
+- fix: atak musi czekac na koniec animacji OPUSZCZANIA bloku
 
 - dialogi gracza innym kolorem
 - bug: interakcja z npc przenika przez popupy i death screen itd.
 - smolski - walk animation
+
+- bonusy do statow za oceny
+- rzucane obiekty znikają po trafieniu w cokolwiek

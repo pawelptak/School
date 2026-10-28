@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cyx70tcsd82rq"]
+
+[ext_resource type="PackedScene" uid="uid://bq5i3o82aqfkf" path="res://Scenes/Characters/NpcBase/moving_npc_base.tscn" id="1_dqgs1"]
+[ext_resource type="Script" uid="uid://bis580uonscys" path="res://Scenes/Characters/Bully2/Bully2.cs" id="2_k5lpt"]
+[ext_resource type="Texture2D" uid="uid://bc3r1apraf27s" path="res://Scenes/Characters/Bully2/idle1.png" id="3_k5lpt"]
+[ext_resource type="Texture2D" uid="uid://die8p2ygddsfg" path="res://Scenes/Characters/Bully2/idle2.png" id="4_1tdj3"]
+[ext_resource type="Texture2D" uid="uid://fssqm4e25q3s" path="res://Scenes/Characters/Bully2/idle3.png" id="5_3cb4n"]
+[ext_resource type="Texture2D" uid="uid://blvf1cyedwljg" path="res://Scenes/Characters/Bully2/talk1.png" id="6_yvxbt"]
+[ext_resource type="Texture2D" uid="uid://ke3mtswd480j" path="res://Scenes/Characters/Bully2/talk2.png" id="7_djmfh"]
+[ext_resource type="Texture2D" uid="uid://cdek046hx2wl4" path="res://Scenes/Characters/Bully2/talk3.png" id="8_is74v"]
+[ext_resource type="Texture2D" uid="uid://hcf1x8tb8h2t" path="res://Scenes/Characters/Bully2/talk4.png" id="9_lj5il"]
+[ext_resource type="Texture2D" uid="uid://bbipt5d6b120s" path="res://Scenes/Characters/Bully2/hurt.png" id="10_ouc0l"]
+[ext_resource type="Texture2D" uid="uid://ivdlsj2nw4yd" path="res://Scenes/Characters/Bully2/attack1.png" id="11_yhdf4"]
+[ext_resource type="Texture2D" uid="uid://boqagqaeoilcp" path="res://Scenes/Characters/Bully2/attack2.png" id="12_r386t"]
+[ext_resource type="Texture2D" uid="uid://debbr86l0o0t1" path="res://Scenes/Characters/Bully2/heavy1.png" id="13_aq7nf"]
+[ext_resource type="Texture2D" uid="uid://jgjnmp5mvewq" path="res://Scenes/Characters/Bully2/heavy2.png" id="14_f6h17"]
+[ext_resource type="Texture2D" uid="uid://wxgs1e7tevot" path="res://Scenes/Characters/Bully2/heavy3.png" id="15_lcfpx"]
+[ext_resource type="Texture2D" uid="uid://dpichscrbd55j" path="res://Scenes/Characters/Bully2/walk1.png" id="16_ocxuc"]
+[ext_resource type="Texture2D" uid="uid://cjq2et8wco2iv" path="res://Scenes/Characters/Bully2/walk2.png" id="17_e512n"]
+[ext_resource type="Texture2D" uid="uid://kf6jhvcf1mi0" path="res://Scenes/Characters/Bully2/walk3.png" id="18_a0dya"]
+[ext_resource type="Texture2D" uid="uid://cdpgi1568lce4" path="res://Scenes/Characters/Bully2/walk4.png" id="19_loeng"]
+[ext_resource type="Texture2D" uid="uid://chl4yyn1r8mlu" path="res://Scenes/Characters/Bully2/walk5.png" id="20_dntct"]
+[ext_resource type="Texture2D" uid="uid://dtbkteaulrcos" path="res://Scenes/Characters/Bully2/walk6.png" id="21_ivjcf"]
+[ext_resource type="Texture2D" uid="uid://csr252udh4d5m" path="res://Scenes/Characters/Bully2/dead.png" id="22_5yqyb"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1tdj3"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Bully2" unique_id=664278660 instance=ExtResource("1_dqgs1")]
+script = ExtResource("2_k5lpt")
+
+[node name="NpcHealthBar" parent="." index="0" unique_id=1649321529]
+texture = SubResource("ViewportTexture_1tdj3")
+
+[node name="Sprite" parent="." index="1" unique_id=274662881]
+texture = ExtResource("3_k5lpt")
+
+[node name="SpriteAnimator" parent="." index="5" unique_id=205470488]
+IdleFrames = Array[Texture2D]([ExtResource("3_k5lpt"), ExtResource("4_1tdj3"), ExtResource("5_3cb4n")])
+TalkingFrames = Array[Texture2D]([ExtResource("6_yvxbt"), ExtResource("7_djmfh"), ExtResource("8_is74v"), ExtResource("9_lj5il")])
+HitFrames = Array[Texture2D]([ExtResource("10_ouc0l")])
+AttackFrames = Array[Texture2D]([ExtResource("11_yhdf4"), ExtResource("12_r386t")])
+AttackFrameDuration = 0.3
+AttackHitFrameIndex = 1
+HeavyAttackFrames = Array[Texture2D]([ExtResource("13_aq7nf"), ExtResource("14_f6h17"), ExtResource("15_lcfpx")])
+HeavyAttackHitFrameIndex = 2
+MovingFrames = Array[Texture2D]([ExtResource("16_ocxuc"), ExtResource("17_e512n"), ExtResource("18_a0dya"), ExtResource("19_loeng"), ExtResource("20_dntct"), ExtResource("21_ivjcf")])
+DeadTexture = ExtResource("22_5yqyb")
+
+[node name="NpcController" parent="." index="6" unique_id=991182570]
+Speed = 4.0
+AttackCooldown = 0.8
+CanUseHeavyAttack = true
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+MaxHealth = 200.0
