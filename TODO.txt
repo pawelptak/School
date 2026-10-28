@@ -1,5 +1,4 @@
 Ideas:
-- dodac odliczanie 3 2 1 po zamknieciu popup z homework minigame
 - efekty splash przy rzucie obiektow typu gąbka, woda, szklanka, wiadro, mydlo w plynie
 
 - podmienic teksture mate
