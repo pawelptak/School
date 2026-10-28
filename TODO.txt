@@ -21,7 +21,7 @@ Ideas:
 - popup: nowa ocena w dzienniku
 
 
-- visual stun -> może jakas ikona
+- visual stun -> może jakas ikona + indykator czasu stuna
 - fix: atak musi czekac na koniec animacji OPUSZCZANIA bloku
 
 - dialogi gracza innym kolorem
@@ -32,4 +32,4 @@ Ideas:
 - rzucane obiekty znikają po trafieniu w cokolwiek
 - lustro w kiblu
 
-- bug: jak szybko po wybraniu itemu go rzucisz to leci gdzies wpizdu
+- bug: ekran śmierci nie usuwa blocku 

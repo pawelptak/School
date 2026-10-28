@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cyx70tcsd82rq" path="res://Scenes/Characters/Bully2/bully_2.tscn" id="10_mdq4l"]
 [ext_resource type="PackedScene" uid="uid://dl6d8udhv8xrn" path="res://Scenes/Characters/BullyMinion1/bully_minion_1.tscn" id="11_7qkat"]
 [ext_resource type="PackedScene" uid="uid://d0sk3mp6fxxq6" path="res://Scenes/Characters/BullyMinion2/bully_minion_2.tscn" id="12_tnnpf"]
+[ext_resource type="PackedScene" uid="uid://c8vl1wfor5yi4" path="res://Scenes/Characters/Mate/mate_inherited.tscn" id="13_mdq4l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
 albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
@@ -335,6 +336,10 @@ DefeatMode = 1
 [node name="PrawyKrzys" parent="." index="38" unique_id=1198252240 instance=ExtResource("12_tnnpf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.883, -1.676, 2.167)
 DefeatMode = 1
+
+[node name="Mate" parent="." index="39" unique_id=1470596956 instance=ExtResource("13_mdq4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1799807, -1.6049503, 3.6649184)
+visible = false
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
