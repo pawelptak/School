@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dejs5miilg3oh" path="res://Scenes/Levels/HomeworkMinigame/Homework.cs" id="1_e76f7"]
 [ext_resource type="PackedScene" uid="uid://cxpjb2h1qsogu" path="res://Scenes/Objects/Bench/bench.tscn" id="2_8qw4i"]
+[ext_resource type="PackedScene" uid="uid://isqmv23mt3kr" path="res://Scenes/UI/Countdown/countdown_screen.tscn" id="2_25i35"]
 [ext_resource type="PackedScene" uid="uid://fj0bm87ekaxu" path="res://Scenes/Objects/Notebook/notebook.tscn" id="3_25i35"]
 [ext_resource type="PackedScene" uid="uid://cteqtw5tay2r7" path="res://Scenes/UI/timer.tscn" id="4_6h1r0"]
 [ext_resource type="PackedScene" uid="uid://b8grku2nbovd7" path="res://Scenes/UI/Popup/popup.tscn" id="5_2q1sh"]
@@ -12,7 +13,7 @@
 ambient_light_source = 2
 ambient_light_color = Color(0.9501192, 0.9501192, 0.9501191, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_e76f7"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6h1r0"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s1g48"]
@@ -26,6 +27,8 @@ size = Vector3(30, 0.5, 30)
 
 [node name="Homework" type="Node3D" unique_id=579107592]
 script = ExtResource("1_e76f7")
+
+[node name="CountdownScreen" parent="." unique_id=10485890 instance=ExtResource("2_25i35")]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=481157542]
 transform = Transform3D(1, 0, 0, 0, 0.18437006, 0.9828569, 0, -0.9828569, 0.18437006, 0.74339783, 2.1948953, 1.1023476)
@@ -54,7 +57,7 @@ environment = SubResource("Environment_vapn8")
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 5.149, 0, 3.416)
 
 [node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_e76f7")
+texture = SubResource("ViewportTexture_6h1r0")
 
 [node name="Sprite" parent="Mate" index="1" unique_id=274662881]
 transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0.27968308, 0)

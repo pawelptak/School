@@ -11,6 +11,7 @@ public partial class PeClass : LevelBase
     private Camera3D _camera;
 
     private PeTeacher _teacher;
+    private CountdownScreen _countdownScreen;
 
     public override void _Ready()
     {
@@ -32,17 +33,26 @@ public partial class PeClass : LevelBase
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _cutsceneController.SetPlayer(_player);
         _cutsceneController.SetCamera(_camera);
+
+        GameManager.Instance.CurrentSaveData.AttackingUnlocked = false;
+        _countdownScreen = GetNode<CountdownScreen>("CountdownScreen");
+        _countdownScreen.StartCountdown();
+
+        _countdownScreen.CountdownFinished += () => _goatMinigameController.StartMinigame();
     }
 
     private void OnMinigameFinished(int hits, int grade)
     {
+        GameManager.Instance.CurrentSaveData.AttackingUnlocked = true;
+
         _cutsceneController.StartDialogue(
             _teacher,
             [
                 new DialogueLine(DialogueSpeaker.PeTeacher, GetTeacherInteractionText(grade), 3.0f),
             ],
             onFinished: () => SceneTransition.Instance.ChangeScene("res://Scenes/Levels/PeClass/blocking_tutorial.tscn"),
-            cinematic: true
+            cinematic: true,
+            isSkippable: false
         );
     }
 

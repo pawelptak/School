@@ -8,6 +8,7 @@ public partial class Homework : Node3D
     private SubViewport _targetViewport;
     private Label _targetLabel;
     private CutsceneController _cutsceneController;
+    private CountdownScreen _countdownScreen;
 
     private readonly string[] _texts =
     {
@@ -45,6 +46,12 @@ public partial class Homework : Node3D
 
         var popup = GetNode<Popup>("Popup");
         popup.ShowPopup(HomeworkMinigameText.PopupHeader, HomeworkMinigameText.PopupText);
+        _countdownScreen = GetNode<CountdownScreen>("CountdownScreen");
+
+        popup.PopupClosed += () =>
+        {
+            _countdownScreen.StartCountdown();
+        };
 
         _cutsceneController = GetNode<CutsceneController>("CutsceneController");
         _cutsceneController.SetCamera(GetNode<Camera3D>("Camera3D"));

@@ -46,10 +46,10 @@ public partial class GoatMinigameController : Node
 
         _heldObjectController.ObjectThrown += OnObjectThrown;
 
-        CallDeferred(nameof(StartMinigame));
+        //CallDeferred(nameof(StartMinigame));
     }
 
-    private async void StartMinigame()
+    public async void StartMinigame()
     {
         if (_heldObjectController.HeldObject != null)
         {
