@@ -450,16 +450,28 @@ public partial class Player : CharacterBody3D
 
     private void EquipItemFromInventory(int index)
     {
-        if (_heldObjectController.HeldObject != null) StoreHeldObjectToInventoryQuietly();
+        if (_heldObjectController.HeldObject != null)
+            StoreHeldObjectToInventoryQuietly();
+
+        if (index < 0 || index >= _inventory.Count)
+            return;
 
         var item = _inventory[index];
-        if (item.ObjectScene != null)
-        {
-            var newObj = item.ObjectScene.Instantiate<ThrowableObject>();
-            GetTree().CurrentScene.AddChild(newObj);
-            if (_heldObjectController.TryPickup(newObj)) _heldObjectFromInventory = true;
-            else newObj.QueueFree();
-        }
+
+        if (item.ObjectScene == null)
+            return;
+
+        var newObj = item.ObjectScene.Instantiate<ThrowableObject>();
+        GetTree().CurrentScene.AddChild(newObj);
+
+        var holdPoint = _camera.GetNode<Node3D>("HoldPoint");
+        newObj.GlobalTransform = holdPoint.GlobalTransform;
+
+        if (_heldObjectController.TryPickup(newObj))
+            _heldObjectFromInventory = true;
+        else
+            newObj.QueueFree();
+
         UpdatePickedUpUIState();
     }
 

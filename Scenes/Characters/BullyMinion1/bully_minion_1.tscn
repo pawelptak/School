@@ -34,4 +34,7 @@ MovingFrameDuration = 0.2
 DeadTexture = ExtResource("6_rxq3n")
 
 [node name="NpcController" parent="." index="6" unique_id=991182570]
-AttackCooldown = 1.0
+AttackDamage = 5.0
+
+[node name="NpcHealthController" parent="." index="8" unique_id=1138413887]
+MaxHealth = 50.0

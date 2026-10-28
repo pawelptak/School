@@ -103,6 +103,6 @@ public partial class BlockingTutorial : LevelBase
 
     private void OnGymnasiumDoorInteracted()
     {
-        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/DownstairsFight/downstairs_fight.tscn");
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/DownstairsFight/downstairs_fight_intro.tscn");
     }
 }

@@ -31,3 +31,5 @@ Ideas:
 - bonusy do statow za oceny
 - rzucane obiekty znikają po trafieniu w cokolwiek
 - lustro w kiblu
+
+- bug: jak szybko po wybraniu itemu go rzucisz to leci gdzies wpizdu

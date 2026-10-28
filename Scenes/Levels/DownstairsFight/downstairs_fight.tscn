@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://y0gbyxj7p5c6"]
+[gd_scene format=3 uid="uid://bjjbt2nqmtn4"]
 
 [ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_r22le"]
-[ext_resource type="Script" uid="uid://7mmk6fpcyoon" path="res://Scenes/Levels/DownstairsFight/DownstairsFight.cs" id="2_ck1tc"]
+[ext_resource type="Script" uid="uid://4coy4l5v6r1i" path="res://Scenes/Levels/DownstairsFight/DownstairsFight.cs" id="2_ck1tc"]
 [ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="3_btjwt"]
 [ext_resource type="PackedScene" uid="uid://cixir8siiw054" path="res://Scenes/Objects/Stairs/stairs.tscn" id="4_e6uph"]
 [ext_resource type="PackedScene" uid="uid://d0wr3l4elpq5y" path="res://Scenes/Levels/Downstairs/downstairs_wall.tscn" id="5_mai61"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="7_b0prn"]
 [ext_resource type="Texture2D" uid="uid://dd3lsoaq61m7j" path="res://Scenes/Objects/Door/metal_door.jpg" id="8_yukts"]
 [ext_resource type="Texture2D" uid="uid://cix4664ecvgxw" path="res://Scenes/Objects/Door/metal_door2.jpg" id="9_nxuvi"]
+[ext_resource type="PackedScene" uid="uid://cyx70tcsd82rq" path="res://Scenes/Characters/Bully2/bully_2.tscn" id="10_mdq4l"]
+[ext_resource type="PackedScene" uid="uid://dl6d8udhv8xrn" path="res://Scenes/Characters/BullyMinion1/bully_minion_1.tscn" id="11_7qkat"]
+[ext_resource type="PackedScene" uid="uid://d0sk3mp6fxxq6" path="res://Scenes/Characters/BullyMinion2/bully_minion_2.tscn" id="12_tnnpf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubwdy"]
 albedo_color = Color(0.47064754, 0.4722993, 0.45974076, 1)
@@ -105,7 +108,7 @@ texture_filter = 0
 script = ExtResource("2_ck1tc")
 
 [node name="Player" parent="." index="1" unique_id=195847836]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.368742, -1.6561714, 8.793074)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.329152, -1.6561714, 11.430813)
 
 [node name="Ceiling" type="StaticBody3D" parent="." index="5" unique_id=909436222]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
@@ -320,6 +323,18 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 5.06
 [node name="MeshInstance3D" parent="TeacherRoomDoor/Door" parent_id_path=PackedInt32Array(1107109814, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0.047718525)
 surface_material_override/0 = SubResource("StandardMaterial3D_j4aw7")
+
+[node name="Bully2" parent="." index="36" unique_id=664278660 instance=ExtResource("10_mdq4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.435, -1.621, 3.502)
+DefeatMode = 1
+
+[node name="LewyKrzys" parent="." index="37" unique_id=1314045787 instance=ExtResource("11_7qkat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.418, -1.676, 2.428)
+DefeatMode = 1
+
+[node name="PrawyKrzys" parent="." index="38" unique_id=1198252240 instance=ExtResource("12_tnnpf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.883, -1.676, 2.167)
+DefeatMode = 1
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
