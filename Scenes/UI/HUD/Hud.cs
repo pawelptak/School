@@ -88,11 +88,14 @@ public partial class Hud : CanvasLayer
 
         var player = GetTree().GetFirstNodeInGroup("player");
 
-        if (player != null)
+        if (player is Player playerCharacter)
         {
-            player.SetProcess(false);
-            player.SetPhysicsProcess(false);
-            player.SetProcessInput(false);
+            playerCharacter.SetInteractionUIBlocked(true);
+
+            playerCharacter.SetProcess(false);
+            playerCharacter.SetPhysicsProcess(false);
+            playerCharacter.SetProcessInput(false);
+            playerCharacter.SetProcessUnhandledInput(false);
         }
     }
 

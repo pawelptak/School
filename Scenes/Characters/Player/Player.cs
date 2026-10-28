@@ -76,6 +76,7 @@ public partial class Player : CharacterBody3D
 
     private BlockingController _blockingController;
     private bool _blockButtonHeld;
+    private bool _interactionUiBlocked;
 
 
     [ExportGroup("Blocking")]
@@ -668,6 +669,13 @@ public partial class Player : CharacterBody3D
 
     private void UpdateInteractionTarget()
     {
+        if (_interactionUiBlocked)
+        {
+            _interactionUiCanvas.Hide();
+            _pickedUpObjectCanvas.Hide();
+            return;
+        }
+
         if (_interactionCooldownTimer > 0.0f && _chargingThrowObject == null)
         {
             _interactionUiCanvas.Hide();
@@ -913,5 +921,18 @@ public partial class Player : CharacterBody3D
         forward = forward.Normalized();
 
         return forward.Dot(toAttacker) > 0.0f;
+    }
+
+    public void SetInteractionUIBlocked(bool blocked)
+    {
+        _interactionUiBlocked = blocked;
+
+        if (blocked)
+        {
+            _currentInteractable = null;
+            ResetHoldInteraction();
+            _interactionUiCanvas.Hide();
+            _pickedUpObjectCanvas.Hide();
+        }
     }
 }

@@ -32,12 +32,14 @@ public partial class GradeJournal : CanvasLayer
         {
             CloseJournal();
             _hud.Visible = true;
+            SetPlayerInteractionUIBlocked(false);
 
             return;
         }
 
         RefreshGrades();
         _hud.Visible = false;
+        SetPlayerInteractionUIBlocked(true);
         Show();
         EmitSignal(SignalName.JournalOpened);
     }
@@ -81,5 +83,11 @@ public partial class GradeJournal : CanvasLayer
         row.AddChild(subjectLabel);
         row.AddChild(gradeLabel);
         _gradesList.AddChild(row);
+    }
+
+    private void SetPlayerInteractionUIBlocked(bool blocked)
+    {
+        var player = GetTree().GetFirstNodeInGroup("player") as Player;
+        player?.SetInteractionUIBlocked(blocked);
     }
 }

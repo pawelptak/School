@@ -26,8 +26,9 @@ Ideas:
 - fix: atak musi czekac na koniec animacji OPUSZCZANIA bloku
 
 - dialogi gracza innym kolorem
-- bug: interakcja z npc przenika przez popupy i death screen itd.
+- bug: interakcja z npc nie znika gdy to npc do nas zagada a nie my do niego.
 - smolski - walk animation
 
 - bonusy do statow za oceny
 - rzucane obiekty znikają po trafieniu w cokolwiek
+- lustro w kiblu

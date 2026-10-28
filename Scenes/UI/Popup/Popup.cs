@@ -27,8 +27,9 @@ public partial class Popup : Control
     public void ShowPopup(string header, string text)
     {
         Input.MouseMode = Input.MouseModeEnum.Visible;
-
         ProcessMode = ProcessModeEnum.Always;
+
+        SetPlayerInteractionUIBlocked(true);
 
         if (_hud != null)
             _hud.Visible = false;
@@ -46,11 +47,19 @@ public partial class Popup : Control
         GetTree().Paused = false;
         Hide();
 
+        SetPlayerInteractionUIBlocked(false);
+
         if (_hud != null)
             _hud.Visible = true;
 
         Input.MouseMode = Input.MouseModeEnum.Captured;
 
         EmitSignal(SignalName.PopupClosed);
+    }
+
+    private void SetPlayerInteractionUIBlocked(bool blocked)
+    {
+        var player = GetTree().GetFirstNodeInGroup("player") as Player;
+        player?.SetInteractionUIBlocked(blocked);
     }
 }
