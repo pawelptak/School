@@ -24,7 +24,6 @@ Ideas:
 - visual stun -> może jakas ikona + indykator czasu stuna
 - fix: atak musi czekac na koniec animacji OPUSZCZANIA bloku
 
-- dialogi gracza innym kolorem
 - bug: interakcja z npc nie znika gdy to npc do nas zagada a nie my do niego.
 
 - bonusy do statow za oceny
