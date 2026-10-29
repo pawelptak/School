@@ -245,4 +245,21 @@ public partial class BlockingController : CanvasLayer
 		_texture.Position = _restPosition;
 		_texture.Rotation = _restRotation;
 	}
+
+    public void CancelLowerAnimation()
+    {
+        if (!_isPlaying || _isRaising || _isHolding)
+            return;
+
+        _isPlaying = false;
+        _isRaising = false;
+        _isHolding = false;
+
+        _frameTimer = 0.0f;
+        _currentFrame = 0;
+
+        ResetPose();
+        _texture.Hide();
+        Hide();
+    }
 }

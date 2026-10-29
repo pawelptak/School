@@ -297,6 +297,8 @@ public partial class Player : CharacterBody3D
 
             if (_selectedInventoryIndex == 0 && _heldObjectController.HeldObject == null && CanStartPunch())
             {
+                _blockingController.CancelLowerAnimation();
+
                 if (_punchingController.StartPunch())
                     GetViewport().SetInputAsHandled();
             }
@@ -801,13 +803,13 @@ public partial class Player : CharacterBody3D
 
     private bool CanStartPunch()
     {
-        var isAttackUnlocked = GameManager.Instance != null && GameManager.Instance.CurrentSaveData.AttackingUnlocked;
+        var isAttackUnlocked = GameManager.Instance != null
+            && GameManager.Instance.CurrentSaveData.AttackingUnlocked;
 
         if (!isAttackUnlocked
             || MovementLocked
             || _punchingController.IsPlaying
-            || _blockingController.IsBlocking
-            || _blockingController.IsPlaying)
+            || _blockingController.IsBlocking)
         {
             return false;
         }

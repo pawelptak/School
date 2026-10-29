@@ -8,7 +8,8 @@ Ideas:
 - ?? moze spowalniac postac gracza gdy niskie zdrowie???
 -? full screen efekt zadawania obrażeń?
 -?? - kopanie przez przytrzymanie LPM (lub jakis przycisk). - daje duzy knockback i popycha przedmioty na npc - nawet te ktorych nie da sie podniesc (biurko) (przedmioty maja zadawac dmg)
-??- atak z powietrza to kopniak  (nie wiem czy ma miec wiekszy dmg niz normalny cios)
+
+- +1 atak z powietrza to kopniak  (nie wiem czy ma miec wiekszy dmg niz normalny cios. może niech daje knockback)
 
 
 - odporność npc na knockback jako opcja
@@ -20,8 +21,6 @@ Ideas:
 - napisy typu tytuly misji na custscenkach jak w gta
 - popup: nowa ocena w dzienniku
 
-
-- fix: atak musi czekac na koniec animacji OPUSZCZANIA bloku
 
 - bug: interakcja z npc nie znika gdy to npc do nas zagada a nie my do niego.
 
