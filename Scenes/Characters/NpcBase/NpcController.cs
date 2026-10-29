@@ -18,6 +18,8 @@ public partial class NpcController : Node
 
     [Export] public Node3D PatrolPointA { get; set; }
     [Export] public Node3D PatrolPointB { get; set; }
+    [Export] public NpcStunIndicator _stunIndicator { get; set; }
+
 
     [Export] public float Speed { get; set; } = 3f;
     [Export] public float ArrivalDistance { get; set; } = 0.4f;
@@ -46,6 +48,7 @@ public partial class NpcController : Node
 
     [Export]
     public float MultiHitAttackCooldown { get; set; } = 5.0f;
+
 
     [ExportGroup("Combat Improvements")]
 
@@ -754,6 +757,7 @@ public partial class NpcController : Node
             _stunTimer = Mathf.Max(_stunTimer, stunDuration);
 
             _spriteAnimator?.PlayStunned(_stunTimer);
+            _stunIndicator?.ApplyStun(stunDuration);
 
             if (_isAttacking)
             {

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://vn624lqyy45p"]
+
+[ext_resource type="Script" uid="uid://b3s6dnmgag2r4" path="res://Scenes/UI/HUD/NpcStunIndicator.cs" id="1_i7n4p"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_crm6m"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7n4p"]
+bg_color = Color(0, 0, 0, 0.7372549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hk5e"]
+bg_color = Color(0.8403535, 0.5137814, 0.033267014, 1)
+
+[node name="NpcStunIndicator" type="Sprite3D" unique_id=1649321529 node_paths=PackedStringArray("_viewport", "_progressBar")]
+billboard = 1
+texture_filter = 0
+texture = SubResource("ViewportTexture_crm6m")
+script = ExtResource("1_i7n4p")
+_viewport = NodePath("SubViewport")
+_progressBar = NodePath("SubViewport/ProgressBar")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=104805483]
+transparent_bg = true
+size = Vector2i(160, 24)
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport" unique_id=1167917646]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_i7n4p")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8hk5e")
+show_percentage = false
+
+[node name="Label" type="Label" parent="SubViewport/ProgressBar" unique_id=440692850]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.5
+offset_top = -18.0
+offset_right = 92.5
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Oszołomienie"
+horizontal_alignment = 1
+vertical_alignment = 1

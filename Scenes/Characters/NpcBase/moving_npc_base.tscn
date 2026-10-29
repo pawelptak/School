@@ -2,11 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://bj8cm6n6qddsa" path="res://Scenes/UI/HUD/npc_healthbar.tscn" id="1_0hgkt"]
 [ext_resource type="Texture2D" uid="uid://bp5hqdw2luey0" path="res://Scenes/Characters/Mate/mate.png" id="1_h4uqc"]
+[ext_resource type="PackedScene" uid="uid://vn624lqyy45p" path="res://Scenes/UI/HUD/npc_stun_indicator.tscn" id="1_wxlht"]
 [ext_resource type="Script" uid="uid://dj5d6mo7gaock" path="res://Scripts/SpriteAnimator.cs" id="2_0hgkt"]
 [ext_resource type="Script" uid="uid://d15q0r5gw66wh" path="res://Scenes/Characters/NpcBase/NpcController.cs" id="2_6egfp"]
 [ext_resource type="Script" uid="uid://caa5q6sded5qx" path="res://Scenes/Characters/NpcBase/NpcHealthController.cs" id="4_wxlht"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_0hgkt"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_wxlht"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v4mla"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
@@ -17,9 +21,14 @@ radius = 1.0
 
 [node name="MovingNpcBase" type="CharacterBody3D" unique_id=664278660]
 
-[node name="NpcHealthBar" parent="." unique_id=1649321529 instance=ExtResource("1_0hgkt")]
+[node name="NpcStunIndicator" parent="." unique_id=1649321529 instance=ExtResource("1_wxlht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1123047, 0)
+pixel_size = 0.0025
+texture = SubResource("ViewportTexture_wxlht")
+
+[node name="NpcHealthBar" parent="." unique_id=125246646 instance=ExtResource("1_0hgkt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0192933, 0)
-texture = SubResource("ViewportTexture_0hgkt")
+texture = SubResource("ViewportTexture_v4mla")
 
 [node name="Sprite" type="Sprite3D" parent="." unique_id=274662881]
 transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1, 0, 0, 0)
@@ -45,8 +54,9 @@ script = ExtResource("2_0hgkt")
 Sprite = NodePath("../Sprite")
 IdleFrameDuration = 0.3
 
-[node name="NpcController" type="Node" parent="." unique_id=991182570]
+[node name="NpcController" type="Node" parent="." unique_id=991182570 node_paths=PackedStringArray("_stunIndicator")]
 script = ExtResource("2_6egfp")
+_stunIndicator = NodePath("../NpcStunIndicator")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1207255180]
 path_desired_distance = 0.5
