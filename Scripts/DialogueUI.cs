@@ -56,10 +56,23 @@ public partial class DialogueUI : Control
 		return Visible;
 	}
 
-	private void ShowCurrentMessage()
-	{
-		var message = _messages[_currentMessage];
+    private void ShowCurrentMessage()
+    {
+        var message = _messages[_currentMessage];
 
-		_text.Text = !string.IsNullOrWhiteSpace(message.Text) ? $"[color=#ff9900]{message.SpeakerName}:[/color] {message.Text}" : string.Empty;
-	}
+        if (string.IsNullOrWhiteSpace(message.Text))
+        {
+            _text.Text = string.Empty;
+            return;
+        }
+
+        if (message.Speaker == DialogueSpeaker.Player)
+        {
+            _text.Text = $"[color=#4da6ff]{message.SpeakerName}:[/color] {message.Text}";
+        }
+        else
+        {
+            _text.Text = $"[color=#ff9900]{message.SpeakerName}:[/color] {message.Text}";
+        }
+    }
 }
