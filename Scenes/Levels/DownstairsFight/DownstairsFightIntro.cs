@@ -17,6 +17,8 @@ public partial class DownstairsFightIntro : LevelBase
     private NpcController _lewyKrzysController;
     private NpcController _prawyKrzysController;
 
+    private Area3D _triggerArea;
+
 
     public override async void _Ready()
     {
@@ -45,11 +47,26 @@ public partial class DownstairsFightIntro : LevelBase
         _prawyKrzys = GetNode<BullyMinion2>("PrawyKrzys");
         _prawyKrzysController = _prawyKrzys.GetNode<NpcController>("NpcController");
 
-        _bullyController.MoveToFinished += TalkToPlayer;
+        //_bullyController.MoveToFinished += TalkToPlayer;
 
-        await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+        //await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 
-        _bullyController.MoveTo(_bullyGoToMarker);
+        //_bullyController.MoveTo(_bullyGoToMarker);
+
+        _triggerArea = GetNode<Area3D>("TriggerArea");
+        _triggerArea.BodyEntered += OnTriggerAreaBodyEntered;
+    }
+
+    private void OnTriggerAreaBodyEntered(Node3D body)
+    {
+        if (body is Player)
+        {
+            _triggerArea.BodyEntered -= OnTriggerAreaBodyEntered;
+
+            _bullyController.MoveToFinished += TalkToPlayer;
+
+            _bullyController.MoveTo(_bullyGoToMarker);
+        }
     }
 
     private void OnCeilingDoorInteracted()

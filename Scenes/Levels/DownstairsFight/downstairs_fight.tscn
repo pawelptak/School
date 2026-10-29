@@ -305,14 +305,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_tsq1v")
 
 [node name="GymnasiumDoorLeft" parent="." index="33" unique_id=2091377026 instance=ExtResource("7_b0prn")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.7144575, -1.0533043, 8.262328)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.714, -1.053, 10.656)
 
 [node name="MeshInstance3D" parent="GymnasiumDoorLeft/Door" parent_id_path=PackedInt32Array(2091377026, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_j4aw7")
 
 [node name="GymnasiumDoorRight" parent="." index="34" unique_id=1260148443 instance=ExtResource("7_b0prn")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.7144575, -1.0533043, 9.834951)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.714, -1.053, 12.228)
 
 [node name="MeshInstance3D" parent="GymnasiumDoorRight/Door" parent_id_path=PackedInt32Array(1260148443, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)

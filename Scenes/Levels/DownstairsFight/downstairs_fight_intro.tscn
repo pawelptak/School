@@ -104,11 +104,14 @@ uv1_offset = Vector3(0.5, 0.5, 0)
 uv1_triplanar = true
 texture_filter = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3w50"]
+size = Vector3(4.755371, 3.7509766, 0.06542969)
+
 [node name="DownstairsFightIntro" unique_id=513644933 instance=ExtResource("1_l4mlx")]
 script = ExtResource("2_rlecb")
 
 [node name="Player" parent="." index="1" unique_id=195847836]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.368742, -1.6561714, 8.793074)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.368742, -1.6561714, 11.059646)
 
 [node name="Ceiling" type="StaticBody3D" parent="." index="5" unique_id=909436222]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9027429, 0)
@@ -304,14 +307,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_tsq1v")
 
 [node name="GymnasiumDoorLeft" parent="." index="33" unique_id=2091377026 instance=ExtResource("7_bxsc0")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.7144575, -1.0533043, 8.262328)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.7144575, -1.0533043, 10.655801)
 
 [node name="MeshInstance3D" parent="GymnasiumDoorLeft/Door" parent_id_path=PackedInt32Array(2091377026, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_j4aw7")
 
 [node name="GymnasiumDoorRight" parent="." index="34" unique_id=1260148443 instance=ExtResource("7_bxsc0")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.7144575, -1.0533043, 9.834951)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.7144575, -1.0533043, 12.228424)
 
 [node name="MeshInstance3D" parent="GymnasiumDoorRight/Door" parent_id_path=PackedInt32Array(1260148443, 803142521) index="1" unique_id=501593287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036117792, 0)
@@ -345,6 +348,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4694934, -1.6764655, 4.5063
 
 [node name="PrawyKrzys" parent="." index="42" unique_id=1198252240 instance=ExtResource("12_tvx2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6334476, -1.6764657, 2.6919448)
+
+[node name="TriggerArea" type="Area3D" parent="." index="43" unique_id=2048078284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4097557, 0, 7.673319)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerArea" index="0" unique_id=130527720]
+shape = SubResource("BoxShape3D_u3w50")
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
