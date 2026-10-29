@@ -21,6 +21,7 @@ SceneTransition="*uid://cueht3wplbpc"
 Hud="*uid://pguuxp2w8q1t"
 GameManager="*uid://cc6bq7b5gcw5r"
 GradeJournal="*uid://bxvx2jtg01d6"
+NoteReader="*uid://c4vqg3ddabv8i"
 
 [display]
 

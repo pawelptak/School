@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://c4vqg3ddabv8i"]
+
+[ext_resource type="Script" uid="uid://1f0vcasupb3r" path="res://Scenes/UI/NoteReader/NoteReader.cs" id="1_5ph5f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc5oj"]
+bg_color = Color(0.9098039, 0.8627451, 0.7529412, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_u3w50"]
+thickness = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ph5f"]
+
+[node name="NoteReader" type="CanvasLayer" unique_id=276369491]
+process_mode = 3
+script = ExtResource("1_5ph5f")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1627071451]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5254902)
+
+[node name="CenterContainer" type="CenterContainer" parent="Background" unique_id=184368506]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Paper" type="Panel" parent="Background/CenterContainer" unique_id=1731398818]
+custom_minimum_size = Vector2(650, 750)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lc5oj")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/CenterContainer/Paper" unique_id=377738779]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/CenterContainer/Paper/MarginContainer" unique_id=912209688]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="Background/CenterContainer/Paper/MarginContainer/VBoxContainer" unique_id=86117068]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Header"
+vertical_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="Background/CenterContainer/Paper/MarginContainer/VBoxContainer" unique_id=231060027]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxLine_u3w50")
+
+[node name="Content" type="RichTextLabel" parent="Background/CenterContainer/Paper/MarginContainer/VBoxContainer" unique_id=862516160]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ligula ex, interdum ut lacus sed, euismod convallis magna. Maecenas vel odio vel quam tempus bibendum. Sed condimentum purus lorem, sit amet convallis odio condimentum sed. Cras scelerisque metus tortor, non ullamcorper ante condimentum in. Fusce faucibus finibus lacus a tincidunt. Sed blandit suscipit dignissim. Curabitur pulvinar enim et molestie hendrerit. Aliquam convallis dolor ac tortor hendrerit, ut sollicitudin nisl imperdiet."
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="Background" unique_id=2085289783]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -97.0
+offset_right = -59.0
+offset_bottom = -36.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5ph5f")
+text = "Zamknij [ESC]"

@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Objects/Sponge/sponge.tscn" id="10_nd4to"]
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Objects/TeacherDesk/teacher_desk.tscn" id="11_6np24"]
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="12_hhkke"]
+[ext_resource type="PackedScene" uid="uid://c6bnajeid6seu" path="res://Scenes/Objects/WallAnnouncement/wall_anouncement.tscn" id="13_0alk7"]
 [ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="13_yyx31"]
 [ext_resource type="PackedScene" uid="uid://cf7xdt2v7c84o" path="res://Scenes/Objects/SchoolWalls/school_wall_long.tscn" id="14_506ri"]
 [ext_resource type="Texture2D" uid="uid://cb1hpewofyux8" path="res://Assets/Textures/paint-basic-200.png" id="15_y2yoo"]
@@ -168,6 +169,9 @@ shape = SubResource("BoxShape3D_cqif2")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" index="1" unique_id=321963136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.4033203)
 mesh = SubResource("BoxMesh_wnmh5")
+
+[node name="WallAnouncement" parent="Floor" index="2" unique_id=924552851 instance=ExtResource("13_0alk7")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.9125543, 2.1541357, -5.989548)
 
 [node name="Ceiling" type="StaticBody3D" parent="." index="36" unique_id=1978347911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20393014, 2.8039978, 0)
