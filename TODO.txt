@@ -22,10 +22,10 @@ Ideas:
 - popup: nowa ocena w dzienniku
 
 
-- bug: interakcja z npc nie znika gdy to npc do nas zagada a nie my do niego.
 
 - bonusy do statow za oceny
 - rzucane obiekty znikają po trafieniu w cokolwiek
 - lustro w kiblu
 
 - bug: ekran śmierci nie usuwa blocku 
+- bug: można rozmiawiac z npc w trakcie walki

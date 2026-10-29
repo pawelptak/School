@@ -555,7 +555,7 @@ public partial class Player : CharacterBody3D
         UpdateThrowCharge((float)delta);
 
         if (_interactionCooldownTimer > 0.0f) _interactionCooldownTimer -= (float)delta;
-        if (!IsCinematicDialogueActive()) UpdateInteractionTarget();
+        UpdateInteractionTarget();
 
         HandleHoldInteraction((float)delta);
     }
@@ -683,6 +683,17 @@ public partial class Player : CharacterBody3D
 
     private void UpdateInteractionTarget()
     {
+        var cutsceneController = GetTree().CurrentScene?.GetNodeOrNull<CutsceneController>("CutsceneController");
+
+        if (cutsceneController?.IsDialogueVisible == true)
+        {
+            _currentInteractable = null;
+            ResetHoldInteraction();
+
+            _interactionUiCanvas.Hide();
+            return;
+        }
+
         if (_interactionUiBlocked)
         {
             _interactionUiCanvas.Hide();
