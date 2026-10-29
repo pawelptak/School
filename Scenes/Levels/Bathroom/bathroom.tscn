@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_0fju4"]
 [ext_resource type="Script" uid="uid://ci7vghnrt5xcn" path="res://Scenes/Levels/Bathroom/Bathroom.cs" id="2_v0bik"]
 [ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="3_2ywiy"]
+[ext_resource type="Texture2D" uid="uid://vkuvqqjgan1g" path="res://Scenes/Characters/Bully/dead_naked.png" id="3_ldlpi"]
 [ext_resource type="Texture2D" uid="uid://bl3wru4y2htei" path="res://Scenes/Objects/Door/white_door.jpg" id="4_64afw"]
 [ext_resource type="PackedScene" uid="uid://cyasgya14xhbh" path="res://Scenes/Objects/Door/door.tscn" id="4_tt6jl"]
 [ext_resource type="Texture2D" uid="uid://c3l2fwx1x56o" path="res://Scenes/Levels/Bathroom/bathroom_tiles.png" id="4_xix73"]
@@ -101,6 +102,7 @@ size = Vector3(0.005, 0.566, 0.567498)
 
 [node name="LevelBase" unique_id=513644933 instance=ExtResource("1_0fju4")]
 script = ExtResource("2_v0bik")
+_nakedTexture = ExtResource("3_ldlpi")
 
 [node name="ExitDoor" parent="." index="0" unique_id=519980075 instance=ExtResource("4_tt6jl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.9943132, 1.5617943, -1.3778543)
@@ -253,3 +255,4 @@ transform = Transform3D(0.47349003, 0.6935956, -0.5428926, -0.45589495, 0.720364
 [editable path="ExitDoor"]
 [editable path="Player"]
 [editable path="Player/LowHealth"]
+[editable path="BullyBody"]

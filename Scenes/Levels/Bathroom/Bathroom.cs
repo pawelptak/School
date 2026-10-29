@@ -8,6 +8,9 @@ public partial class Bathroom : LevelBase
     private Player _player;
     private Camera3D _camera;
 
+    [Export]
+    private Texture2D _nakedTexture;
+
     public override void _Ready()
     {
         base._Ready();
@@ -31,6 +34,8 @@ public partial class Bathroom : LevelBase
 
     private void OnBodyInteracted()
     {
+        var sprite = _bullyBody.GetNode<Sprite3D>("StaticBody3D/Sprite3D");
+        sprite.Texture = _nakedTexture;
 
         _door.InteractionEnabled = true;
         _bullyBody.InteractionEnabled = false;

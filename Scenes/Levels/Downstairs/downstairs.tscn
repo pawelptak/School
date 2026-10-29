@@ -334,7 +334,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4711914, -2.5717976, 3.524
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03351, -2.594254, 10.044529)
 
 [node name="GermanTeacher" parent="." index="39" unique_id=664278660 instance=ExtResource("12_6qd28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9982533, -1.6764657, 5.0009828)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9982533, -1.6764657, 4.545672)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
