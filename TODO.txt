@@ -26,7 +26,6 @@ Ideas:
 
 - dialogi gracza innym kolorem
 - bug: interakcja z npc nie znika gdy to npc do nas zagada a nie my do niego.
-- smolski - walk animation
 
 - bonusy do statow za oceny
 - rzucane obiekty znikają po trafieniu w cokolwiek

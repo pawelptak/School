@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://443af4ynyuxq" path="res://Scenes/Characters/GermanTeacher/german_teacher.tscn" id="18_421x3"]
 [ext_resource type="PackedScene" uid="uid://cyx70tcsd82rq" path="res://Scenes/Characters/Bully2/bully_2.tscn" id="19_nvvgx"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_qqyuo"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_nvvgx"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crm6m"]
@@ -29,13 +29,13 @@ radius = 0.35
 [sub_resource type="SphereShape3D" id="SphereShape3D_crm6m"]
 radius = 1.0
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_qqyuo"]
+viewport_path = NodePath("SubViewport")
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_1irh0"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6s88v"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_tcp0y"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_crm6m"]
@@ -66,7 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6159544, 0.92160004, 8.132
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="AsianStudentMale" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_qqyuo")
+texture = SubResource("ViewportTexture_nvvgx")
 
 [node name="CollisionShape3D" parent="AsianStudentMale" index="2" unique_id=2073062423]
 shape = SubResource("CapsuleShape3D_crm6m")
@@ -79,7 +79,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58185387, 0.92160004, 3.12
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Mate" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_1irh0")
+texture = SubResource("ViewportTexture_qqyuo")
 
 [node name="CollisionShape3D" parent="Mate" index="2" unique_id=2073062423]
 shape = SubResource("CapsuleShape3D_crm6m")
@@ -93,7 +93,7 @@ DefeatMode = 1
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="PolishTeacher" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_6s88v")
+texture = SubResource("ViewportTexture_1irh0")
 
 [node name="CollisionShape3D" parent="PolishTeacher" index="2" unique_id=2073062423]
 shape = SubResource("CapsuleShape3D_crm6m")
@@ -106,7 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.120674, 0.92160004, 4.3790
 RecoveryTime = 2.0
 
 [node name="NpcHealthBar" parent="Bully" index="0" unique_id=1649321529]
-texture = SubResource("ViewportTexture_tcp0y")
+texture = SubResource("ViewportTexture_6s88v")
 
 [node name="CollisionShape3D" parent="Bully" index="2" unique_id=2073062423]
 shape = SubResource("CapsuleShape3D_crm6m")
@@ -212,7 +212,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7148876, 0.9215998, -2.6175
 [node name="BullyMinion2" parent="." index="31" unique_id=1825251591 groups=["NPCs"] instance=ExtResource("17_xactb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3907585, 0.92159957, -4.2212076)
 
-[node name="GermanTeacher" parent="." index="32" unique_id=171752161 instance=ExtResource("18_421x3")]
+[node name="GermanTeacher" parent="." index="32" unique_id=171752161 groups=["NPCs"] instance=ExtResource("18_421x3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.196168, 0.92160004, -3.7267673)
 
 [node name="Bully2" parent="." index="33" unique_id=1474700203 groups=["NPCs"] instance=ExtResource("19_nvvgx")]
