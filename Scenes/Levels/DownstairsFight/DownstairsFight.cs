@@ -23,6 +23,10 @@ public partial class DownstairsFight : LevelBase
     private NpcController _mateController;
     private int _enemyDefeatedCount = 0;
 
+    private Door _germanDoor;
+
+    private Marker3D _mateGoToMarker;
+
     public override void _Ready()
     {
         base._Ready();
@@ -61,6 +65,11 @@ public partial class DownstairsFight : LevelBase
         _mate = GetNode<Mate>("Mate");
         _mateController = _mate.GetNode<NpcController>("NpcController");
         _mateController.MoveToFinished += StartMateDialogue;
+
+        _germanDoor = GetNode<Door>("GermanDoor");
+        _germanDoor.Interacted += ChangeScene;
+
+        _mateGoToMarker = GetNode<Marker3D>("MateGoToMarker");
     }
 
     public override void _Process(double delta)
@@ -81,9 +90,23 @@ public partial class DownstairsFight : LevelBase
              new DialogueLine(DialogueSpeaker.Mate, DownstairsFightText.MateAfterFight2, 3.0f),
              new DialogueLine(DialogueSpeaker.Mate, DownstairsFightText.MateAfterFight3, 3.0f),
              new DialogueLine(DialogueSpeaker.Mate, DownstairsFightText.MateAfterFight4, 3.0f)],
-            cinematic: true
-            //onFinished: () => SceneTransition.Instance.ChangeScene("res://Scenes/Levels/Downstairs/Downstairs.tscn")
+            cinematic: true,
+            onFinished: MateGoToDoor
         );
+
+        _germanDoor.InteractionEnabled = true;
+    }
+
+    private void MateGoToDoor()
+    {
+        _mateController.MoveToFinished -= StartMateDialogue;
+        _mateController.MoveToFinished += MateDisappear;
+        _mateController.MoveTo(_mateGoToMarker);
+    }
+
+    private void MateDisappear()
+    {
+        _mate.QueueFree();
     }
 
     private void OnCeilingDoorInteracted()
@@ -92,5 +115,10 @@ public partial class DownstairsFight : LevelBase
             _player,
             [new DialogueLine(DialogueSpeaker.Player, DownstairsText.CelingDoorInteraction, 2.0f)]
         );
+    }
+
+    private void ChangeScene()
+    {
+        SceneTransition.Instance.ChangeScene("res://Scenes/Levels/DemoEndScreen/demo_end_screen.tscn", duration: 2.0f);
     }
 }

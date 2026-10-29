@@ -338,8 +338,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.883, -1.676, 2.167)
 DefeatMode = 1
 
 [node name="Mate" parent="." index="39" unique_id=1470596956 instance=ExtResource("13_mdq4l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1799807, -1.6049503, 3.6649184)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9993045, -1.6049503, -0.9819319)
 visible = false
+
+[node name="GermanDoor" parent="." index="40" unique_id=20267720 instance=ExtResource("7_b0prn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1036885, -1.0829849, -1.7368064)
+
+[node name="MateGoToMarker" type="Marker3D" parent="." index="41" unique_id=302841469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1307793, -2.5818982, -1.6040102)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
