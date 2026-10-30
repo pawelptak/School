@@ -76,25 +76,25 @@ surface_material_override/1 = SubResource("StandardMaterial3D_uhj0i")
 surface_material_override/2 = SubResource("StandardMaterial3D_uhj0i")
 
 [node name="Leaves" type="Sprite3D" parent="." unique_id=1474228994]
-transform = Transform3D(1, 0, 0, 0, 0.99939084, -0.034899496, 0, 0.034899496, 0.99939084, 0, 0.30378705, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30378705, 0)
 pixel_size = 0.003
 texture_filter = 0
 texture = ExtResource("3_bivsl")
 
 [node name="Leaves2" type="Sprite3D" parent="." unique_id=1764691430]
-transform = Transform3D(0.7075372, -1.5033409e-05, 0.70667595, 0.03487823, 0.99878204, -0.03489949, -0.7058147, 0.049340308, 0.70667595, 0, 0.30378705, 0)
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071067, 0, 0.30378705, 0)
 pixel_size = 0.003
 texture_filter = 0
 texture = ExtResource("3_lpw5u")
 
 [node name="Leaves3" type="Sprite3D" parent="." unique_id=274116646]
-transform = Transform3D(-4.3711385e-08, 0.017452406, 0.99984765, 0, 0.9998477, -0.017452404, -0.99999994, -7.628689e-10, -4.3704727e-08, 0, 0.30378705, 0)
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 0, 0.30378705, 0)
 pixel_size = 0.003
 texture_filter = 0
 texture = ExtResource("3_bivsl")
 
 [node name="Leaves4" type="Sprite3D" parent="." unique_id=1845380979]
-transform = Transform3D(-0.7042008, 0.07396351, 0.7061376, 0.052264225, 0.9972609, -0.05233595, -0.7080744, 5.0716102e-05, -0.7061376, 0, 0.30378705, 0)
+transform = Transform3D(-0.70710665, 0, 0.70710665, 0, 0.99999994, 0, -0.70710665, 0, -0.70710665, 0, 0.30378705, 0)
 pixel_size = 0.003
 texture_filter = 0
 texture = ExtResource("3_lpw5u")
