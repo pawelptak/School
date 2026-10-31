@@ -32,6 +32,7 @@
 [ext_resource type="Script" uid="uid://cts0haix31v8o" path="res://Scripts/SaveData/WorldCleaner.cs" id="30_7qw68"]
 [ext_resource type="Texture2D" uid="uid://djyursap4iiqm" path="res://Assets/Textures/trees.png" id="31_fn4bt"]
 [ext_resource type="Texture2D" uid="uid://ctuifresbylq0" path="res://Assets/Textures/buildings.png" id="32_j7cuv"]
+[ext_resource type="PackedScene" uid="uid://ccg46spa73vad" path="res://Scenes/Objects/Book/book.tscn" id="33_uc8qi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yuyqe"]
 size = Vector3(10, 0.2, 14.840332)
@@ -457,6 +458,9 @@ light_volumetric_fog_energy = 8.03
 light_size = 0.643
 light_specular = 1.37
 spot_range = 109.342
+
+[node name="Book" parent="." index="58" unique_id=629327679 instance=ExtResource("33_uc8qi")]
+transform = Transform3D(0.9981848, 0, 0.06022573, 0, 1, 0, -0.06022573, 0, 0.9981848, 4.5478406, 0.16673651, -7.748042)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

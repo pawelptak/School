@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://cts0haix31v8o" path="res://Scripts/SaveData/WorldCleaner.cs" id="32_lf4xd"]
 [ext_resource type="Texture2D" uid="uid://djyursap4iiqm" path="res://Assets/Textures/trees.png" id="33_6scdk"]
 [ext_resource type="Texture2D" uid="uid://ctuifresbylq0" path="res://Assets/Textures/buildings.png" id="34_a7qkp"]
+[ext_resource type="PackedScene" uid="uid://ccg46spa73vad" path="res://Scenes/Objects/Book/book.tscn" id="36_38sec"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11icn"]
 transparency = 1
@@ -462,6 +463,9 @@ spot_range = 109.342
 
 [node name="PeTeacher" parent="." index="63" unique_id=1021834913 instance=ExtResource("28_6np24")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.33969, -7.084165, -16.860558)
+
+[node name="Book" parent="." index="64" unique_id=629327679 instance=ExtResource("36_38sec")]
+transform = Transform3D(0.9981848, 0, 0.06022573, 0, 1, 0, -0.06022573, 0, 0.9981848, 4.5478406, 0.16673651, -7.748042)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
