@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using Godot;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class PlayerSaveData
@@ -22,6 +23,7 @@ public class InventoryItemSaveData
     public string ItemName { get; set; }
     public string SceneFilePath { get; set; }
     public int Count { get; set; }
+    public List<string> WorldItemIDs { get; set; } = new();
 }
 
 [Serializable]

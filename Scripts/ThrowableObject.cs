@@ -39,6 +39,7 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
 
     public bool CanInteract(Player player) => !Freeze;
     public event Action<ThrowableObject, Node> HitSomething;
+    public bool DestroyOnHit { get; set; } = false;
 
     private NavigationObstacle3D _navObstacle;
 
@@ -145,5 +146,16 @@ public abstract partial class ThrowableObject : RigidBody3D, IInteractable
             character.NotifyHitByThrowable(this, ThrowForce);
 
         HitSomething?.Invoke(this, body);
+
+        if (IsEquippable && DestroyOnHit)
+        {
+            if (GameManager.Instance != null
+                && !string.IsNullOrEmpty(WorldItemID))
+            {
+                GameManager.Instance.CurrentSaveData.CollectedWorldItems.Remove(WorldItemID);
+            }
+
+            QueueFree();
+        }
     }
 }

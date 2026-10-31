@@ -24,8 +24,8 @@ Ideas:
 
 
 - bonusy do statow za oceny
-- rzucane obiekty znikają po trafieniu w cokolwiek
 - lustro w kiblu
 
 - bug: ekran śmierci nie usuwa blocku 
 - bug: można rozmiawiac z npc w trakcie walki
+- bug: nie da się podnosić przedmiot jak npc cos mowi

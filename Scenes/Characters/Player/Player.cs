@@ -58,6 +58,8 @@ public partial class Player : CharacterBody3D
         public PackedScene ObjectScene { get; set; }
         public Texture2D Icon { get; set; }
         public int Count { get; set; } = 1;
+
+        public List<string> WorldItemIDs { get; set; } = new();
     }
 
     private List<InventoryItem> _inventory = new List<InventoryItem>();
@@ -424,30 +426,35 @@ public partial class Player : CharacterBody3D
 
     private void AddToCartInventory(ThrowableObject obj)
     {
-        var itemKey = !string.IsNullOrEmpty(obj.SceneFilePath) ? obj.SceneFilePath : obj.Name.ToString();
+        var itemKey = !string.IsNullOrEmpty(obj.SceneFilePath)
+            ? obj.SceneFilePath
+            : obj.Name.ToString();
+
         var existing = _inventory.Find(i => i.ItemName == itemKey);
+
         if (existing != null)
         {
             existing.Count++;
+            existing.WorldItemIDs.Add(obj.WorldItemID);
         }
         else
         {
             PackedScene loadedScene = null;
+
             if (!string.IsNullOrEmpty(obj.SceneFilePath))
-            {
                 loadedScene = GD.Load<PackedScene>(obj.SceneFilePath);
-            }
 
             _inventory.Add(new InventoryItem
             {
                 ItemName = itemKey,
                 ObjectScene = loadedScene,
                 Icon = obj.Icon,
-                Count = 1
+                Count = 1,
+                WorldItemIDs = new List<string> { obj.WorldItemID }
             });
-
-            RegisterWorldItemAsCollected(obj);
         }
+
+        RegisterWorldItemAsCollected(obj);
     }
 
     private void EquipItemFromInventory(int index)
@@ -464,6 +471,10 @@ public partial class Player : CharacterBody3D
             return;
 
         var newObj = item.ObjectScene.Instantiate<ThrowableObject>();
+
+        if (item.WorldItemIDs.Count > 0)
+            newObj.WorldItemID = item.WorldItemIDs[0];
+
         GetTree().CurrentScene.AddChild(newObj);
 
         var holdPoint = _camera.GetNode<Node3D>("HoldPoint");
@@ -482,18 +493,28 @@ public partial class Player : CharacterBody3D
         if (_heldObjectFromInventory && _selectedInventoryIndex > 0)
         {
             _heldObjectFromInventory = false;
+
             var listIdx = _selectedInventoryIndex - 1;
+
             if (listIdx < _inventory.Count)
             {
-                _inventory[listIdx].Count--;
-                if (_inventory[listIdx].Count <= 0)
+                var item = _inventory[listIdx];
+
+                item.Count--;
+
+                if (item.WorldItemIDs.Count > 0)
+                    item.WorldItemIDs.RemoveAt(0);
+
+                if (item.Count <= 0)
                 {
                     _inventory.RemoveAt(listIdx);
                     return false;
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -562,15 +583,21 @@ public partial class Player : CharacterBody3D
 
     private void ThrowHeldObject(float force)
     {
-        if (_heldObjectController.HeldObject != null)
+        var heldObject = _heldObjectController.HeldObject;
+
+        if (heldObject != null)
         {
-            _heldObjectController.HeldObject.DroppedFromInventory = true;
+            heldObject.DroppedFromInventory = true;
+            heldObject.DestroyOnHit = true;
         }
 
         _heldObjectController.ThrowObject(force);
+
         var stackRemaining = RemoveCurrentSelectedInventoryItem();
+
         ResetThrowUI();
         _interactionCooldownTimer = 0.3f;
+
         EquipNextFromStackOrFist(stackRemaining);
     }
 
@@ -876,7 +903,8 @@ public partial class Player : CharacterBody3D
             {
                 ItemName = item.ItemName,
                 SceneFilePath = item.ObjectScene?.ResourcePath ?? "",
-                Count = item.Count
+                Count = item.Count,
+                WorldItemIDs = new List<string>(item.WorldItemIDs)
             });
         }
     }
@@ -906,7 +934,10 @@ public partial class Player : CharacterBody3D
                 ItemName = savedItem.ItemName,
                 ObjectScene = loadedScene,
                 Icon = icon,
-                Count = savedItem.Count
+                Count = savedItem.Count,
+                WorldItemIDs = savedItem.WorldItemIDs != null
+                    ? new List<string>(savedItem.WorldItemIDs)
+                    : new List<string>()
             });
         }
 
@@ -916,15 +947,16 @@ public partial class Player : CharacterBody3D
 
     private void RegisterWorldItemAsCollected(ThrowableObject obj)
     {
-        if (obj != null && GameManager.Instance != null)
-        {
-            string worldId = obj.WorldItemID;
+        if (obj == null || GameManager.Instance == null)
+            return;
 
-            if (!GameManager.Instance.CurrentSaveData.CollectedWorldItems.Contains(worldId))
-            {
-                GameManager.Instance.CurrentSaveData.CollectedWorldItems.Add(worldId);
-            }
-        }
+        string worldId = obj.WorldItemID;
+
+        if (string.IsNullOrEmpty(worldId))
+            return;
+
+        if (!GameManager.Instance.CurrentSaveData.CollectedWorldItems.Contains(worldId))
+            GameManager.Instance.CurrentSaveData.CollectedWorldItems.Add(worldId);
     }
 
     public bool IsAttackingFromFront(Node3D attacker)
