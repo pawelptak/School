@@ -19,6 +19,9 @@
 [ext_resource type="PackedScene" uid="uid://l2htoujkdksf" path="res://Scenes/CSG/ceiling_lamp_csg.tscn" id="17_5t51o"]
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Objects/TeacherDesk/teacher_desk.tscn" id="18_3emq4"]
 [ext_resource type="PackedScene" uid="uid://n0mv68fne0fi" path="res://Scenes/Objects/Mug/mug.tscn" id="19_7legc"]
+[ext_resource type="PackedScene" uid="uid://bahn7wap52uah" path="res://Scenes/Objects/Regal/regal.tscn" id="20_f57mr"]
+[ext_resource type="Texture2D" uid="uid://jrit7sq58m00" path="res://Scenes/Levels/Tutorial/wdz.png" id="21_jei0j"]
+[ext_resource type="PackedScene" uid="uid://c6xmbm1uhybr7" path="res://Scenes/Objects/CabinetNoDoors/cabinet_no_doors.tscn" id="22_ffhcr"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
 panorama = ExtResource("3_tkhkv")
@@ -91,6 +94,15 @@ albedo_texture = ExtResource("12_qs3pl")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkwcm"]
+transparency = 1
+albedo_texture = ExtResource("21_jei0j")
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_r4kmr"]
+material = SubResource("StandardMaterial3D_pkwcm")
+size = Vector2(2, 1.8)
 
 [node name="TutorialArea" type="Node3D" unique_id=513644933]
 script = ExtResource("1_a0b8w")
@@ -258,6 +270,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2118897, 0, -6.779463)
 
 [node name="Mug" parent="." unique_id=846729379 instance=ExtResource("19_7legc")]
 transform = Transform3D(-0.6612439, 0, -0.750171, 0, 1, 0, 0.750171, 0, -0.6612439, -2.7564154, 1.0900002, -6.9538713)
+
+[node name="Regal2" parent="." unique_id=1857211430 instance=ExtResource("20_f57mr")]
+transform = Transform3D(-5.2453668e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.2453668e-08, 4.8942394, 0.70214844, -7.7233562)
+
+[node name="Regal" parent="." unique_id=1443114974 instance=ExtResource("20_f57mr")]
+transform = Transform3D(-5.2453668e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.2453668e-08, 4.8942394, 0.70214844, -8.932335)
+
+[node name="BlackboardSketches" type="MeshInstance3D" parent="." unique_id=48329493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1727468, 2.3171709, -9.447562)
+mesh = SubResource("QuadMesh_r4kmr")
+
+[node name="CabinetNoDoors" parent="." unique_id=1252508007 instance=ExtResource("22_ffhcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.151308, 0.5815088, -9.605999)
+
+[node name="CabinetNoDoors2" parent="." unique_id=1325934862 instance=ExtResource("22_ffhcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1267166, 0.5815088, -9.605999)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
