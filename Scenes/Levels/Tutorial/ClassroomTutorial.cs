@@ -1,4 +1,5 @@
 using Godot;
+using System;
 public partial class ClassroomTutorial : LevelBase
 {
     private Mate _mate;
@@ -12,6 +13,8 @@ public partial class ClassroomTutorial : LevelBase
     private RigidBody3D _playerChair;
     private RigidBody3D _playerDesk;
     private int correctThrowCount = 0;
+
+    private ReadableNote _announcement;
 
     public override void _Ready()
     {
@@ -47,6 +50,9 @@ public partial class ClassroomTutorial : LevelBase
         SetupInitialCamera();
 
         PlayCameraIntroSequence();
+
+        _announcement = GetNode<ReadableNote>("WallAnnouncement");
+        _announcement.NoteContent = string.Format(_announcement.NoteContent, DateTime.Now.AddDays(1).ToString("dd.MM.yyyy"));
     }
 
     private void SetupInitialCamera()

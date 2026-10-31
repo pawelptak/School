@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bgdcko1n5xssa"]
+
+[ext_resource type="Script" uid="uid://cmfco25xw1o5v" path="res://Scenes/UI/NoteReader/ReadableNote.cs" id="1_n1jjk"]
+[ext_resource type="FontFile" uid="uid://chso5rhdoaro6" path="res://Assets/Fonts/Caveat-Regular.ttf" id="2_aas6y"]
+[ext_resource type="Texture2D" uid="uid://xlgkcyjn78y0" path="res://Assets/Textures/some_text.png" id="2_n1jjk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tc7ur"]
+albedo_texture = ExtResource("2_n1jjk")
+uv1_scale = Vector3(3.57, 2.34, 1)
+uv1_offset = Vector3(0.5, -0.455, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_tc7ur")
+size = Vector3(0.2673906, 0.38771874, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aas6y"]
+size = Vector3(0.2673906, 0.38771874, 0.01)
+
+[node name="SomeAnnouncement" type="StaticBody3D" unique_id=924552851]
+script = ExtResource("1_n1jjk")
+NoteContent = "W czwartek po WF zgubiono buty adidas białe skurzane. Prosze o oddanie gúwniarze zasrane
+
+Seba"
+NoteFont = ExtResource("2_aas6y")
+NoteFontSize = 45
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1380251481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045682624, -0.065990716, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2055593047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045682624, -0.065990716, 0)
+shape = SubResource("BoxShape3D_aas6y")

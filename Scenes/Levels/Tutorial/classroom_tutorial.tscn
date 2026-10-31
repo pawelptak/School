@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://wvxpdxn56chq" path="res://Scenes/Objects/Sponge/sponge.tscn" id="10_nd4to"]
 [ext_resource type="PackedScene" uid="uid://dpko27iuigqae" path="res://Scenes/Objects/TeacherDesk/teacher_desk.tscn" id="11_6np24"]
 [ext_resource type="Texture2D" uid="uid://b56x0yvb6m6s6" path="res://Assets/Textures/plank50.jpg" id="12_hhkke"]
-[ext_resource type="PackedScene" uid="uid://c6bnajeid6seu" path="res://Scenes/Objects/WallAnnouncement/wall_anouncement.tscn" id="13_0alk7"]
+[ext_resource type="PackedScene" uid="uid://c6bnajeid6seu" path="res://Scenes/Objects/TutorialWallAnnouncement/tutorial_wall_announcement.tscn" id="13_0alk7"]
 [ext_resource type="Texture2D" uid="uid://cu4s7o5hlmy06" path="res://Assets/Textures/plain-white-paint.png" id="13_yyx31"]
 [ext_resource type="PackedScene" uid="uid://bahn7wap52uah" path="res://Scenes/Objects/Regal/regal.tscn" id="14_8nvtj"]
 [ext_resource type="PackedScene" uid="uid://cf7xdt2v7c84o" path="res://Scenes/Objects/SchoolWalls/school_wall_long.tscn" id="14_506ri"]
@@ -24,14 +24,16 @@
 [ext_resource type="PackedScene" uid="uid://n0mv68fne0fi" path="res://Scenes/Objects/Mug/mug.tscn" id="19_183mx"]
 [ext_resource type="PackedScene" uid="uid://dlpgb5bd061n" path="res://Scenes/Objects/Clock/clock.tscn" id="20_s51k5"]
 [ext_resource type="PackedScene" uid="uid://c6xmbm1uhybr7" path="res://Scenes/Objects/CabinetNoDoors/cabinet_no_doors.tscn" id="23_pkwcm"]
+[ext_resource type="PackedScene" uid="uid://v3sx2nv10u6o" path="res://Scenes/Objects/CorkBoard/cork_board.tscn" id="25_vlfm1"]
+[ext_resource type="PackedScene" uid="uid://bgdcko1n5xssa" path="res://Scenes/Objects/TutorialWallAnnouncement/some_announcement.tscn" id="26_11icn"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkwcm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11icn"]
 transparency = 1
 albedo_texture = ExtResource("9_f3pb0")
 texture_filter = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_lc5oj"]
-material = SubResource("StandardMaterial3D_pkwcm")
+material = SubResource("StandardMaterial3D_11icn")
 size = Vector2(2, 1.8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cqif2"]
@@ -70,6 +72,18 @@ albedo_texture = ExtResource("15_y2yoo")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6np24"]
+albedo_color = Color(0.7786947, 0, 0.09256578, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_6np24")
+top_radius = 0.0126953125
+bottom_radius = 0.0126953125
+height = 0.00390625
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nd4to"]
+albedo_color = Color(0, 0, 0.73333335, 1)
 
 [node name="ClassroomTutorial" unique_id=513644933 instance=ExtResource("1_gluns")]
 script = ExtResource("2_183mx")
@@ -186,9 +200,6 @@ shape = SubResource("BoxShape3D_cqif2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.4033203)
 mesh = SubResource("BoxMesh_wnmh5")
 
-[node name="WallAnouncement" parent="Floor" index="2" unique_id=924552851 instance=ExtResource("13_0alk7")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.9125543, 2.1541357, -5.989548)
-
 [node name="Regal2" parent="." index="37" unique_id=1072777445 instance=ExtResource("14_8nvtj")]
 transform = Transform3D(-5.2453668e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.2453668e-08, 4.8942394, 0.70214844, -7.7233562)
 
@@ -268,6 +279,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.151308, 0.5815088, -9.6059
 
 [node name="CabinetNoDoors2" parent="." index="55" unique_id=2101610672 instance=ExtResource("23_pkwcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1267166, 0.5815088, -9.605999)
+
+[node name="CorkBoard" parent="." index="56" unique_id=689773553 instance=ExtResource("25_vlfm1")]
+transform = Transform3D(-4.371139e-08, 0, -1, -0.016028658, 0.99987155, 7.006349e-10, 0.99987155, 0.016028658, -4.3705775e-08, 4.937, 1.693, -4.616)
+
+[node name="Pin1" type="MeshInstance3D" parent="." index="57" unique_id=88882660]
+transform = Transform3D(-4.371136e-08, -1, 4.371139e-08, -0.016028658, -4.300517e-08, -0.99987155, 0.99987155, -4.440638e-08, -0.016028658, 4.909032, 1.9262264, -5.0035276)
+mesh = SubResource("CylinderMesh_lc5oj")
+
+[node name="Pin2" type="MeshInstance3D" parent="." index="58" unique_id=26227860]
+transform = Transform3D(-4.371136e-08, -1, 4.371139e-08, -0.016028658, -4.300517e-08, -0.99987155, 0.99987155, -4.440638e-08, -0.016028658, 4.9122996, 1.9106324, -4.2364173)
+mesh = SubResource("CylinderMesh_lc5oj")
+surface_material_override/0 = SubResource("StandardMaterial3D_nd4to")
+
+[node name="WallAnouncement" parent="." index="59" unique_id=924552851 instance=ExtResource("13_0alk7")]
+transform = Transform3D(-4.3692147e-08, -1.2967525e-09, -1, -0.029666245, 0.99955994, -5.551115e-17, 0.99955994, 0.029666245, -4.371139e-08, 4.9129367, 1.7054062, -5.010772)
+
+[node name="SomeAnnouncement" parent="." index="60" unique_id=95867958 instance=ExtResource("26_11icn")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0.06650903, 0.9977858, -2.907202e-09, 0.9977858, -0.06650903, -4.36146e-08, 4.9206953, 1.8116585, -4.174464)
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

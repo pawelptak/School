@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c6bnajeid6seu"]
+
+[ext_resource type="Script" uid="uid://cmfco25xw1o5v" path="res://Scenes/UI/NoteReader/ReadableNote.cs" id="1_bax8p"]
+[ext_resource type="Texture2D" uid="uid://djkl3bs4b6mx8" path="res://Scenes/Objects/TutorialWallAnnouncement/announcement.png" id="2_6sa8h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tc7ur"]
+albedo_texture = ExtResource("2_6sa8h")
+uv1_scale = Vector3(2.695, 1.47, 1)
+uv1_offset = Vector3(0.48, -0.35, 0)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_tc7ur")
+size = Vector3(0.359, 0.502, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6sa8h"]
+size = Vector3(0.359, 0.502, 0.01)
+
+[node name="TutorialWallAnnouncement" type="StaticBody3D" unique_id=924552851]
+script = ExtResource("1_bax8p")
+NoteTitle = "Wybory nowego dyrektora"
+NoteContent = "Dnia {0} na sali gimnastycznej odbędzie się ogłoszenie następcy obecnej Pani Dyrektor. 
+
+Zapraszamy wszystkich nauczycieli i uczniów!"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1380251481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, -0.008850098, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1841348733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, -0.008850098, 0)
+shape = SubResource("BoxShape3D_6sa8h")
