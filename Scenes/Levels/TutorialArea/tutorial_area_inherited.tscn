@@ -24,6 +24,14 @@
 [ext_resource type="PackedScene" uid="uid://v3sx2nv10u6o" path="res://Scenes/Objects/CorkBoard/cork_board.tscn" id="22_b5uy1"]
 [ext_resource type="PackedScene" uid="uid://c6bnajeid6seu" path="res://Scenes/Objects/TutorialWallAnnouncement/tutorial_wall_announcement.tscn" id="23_8n0gn"]
 [ext_resource type="PackedScene" uid="uid://bgdcko1n5xssa" path="res://Scenes/Objects/TutorialWallAnnouncement/some_announcement.tscn" id="24_8n0gn"]
+[ext_resource type="Script" uid="uid://dwrnlnfpqv6hj" path="res://Scenes/Levels/LevelBase/LevelBase.cs" id="25_t2026"]
+[ext_resource type="Texture2D" uid="uid://bg6rwpw428t7r" path="res://Assets/Textures/sky50.exr" id="26_uc8qi"]
+[ext_resource type="PackedScene" path="res://Scenes/cutscene_controller.tscn" id="27_udf20"]
+[ext_resource type="PackedScene" uid="uid://bexxx5hlgvvgn" path="res://Scenes/Objects/BasketballCourt/basketball_court.tscn" id="28_ebbyo"]
+[ext_resource type="Texture2D" uid="uid://bmwe5r8bj2q81" path="res://Scenes/Levels/OutsideCourt/paving.png" id="29_okmgo"]
+[ext_resource type="Script" uid="uid://cts0haix31v8o" path="res://Scripts/SaveData/WorldCleaner.cs" id="30_7qw68"]
+[ext_resource type="Texture2D" uid="uid://djyursap4iiqm" path="res://Assets/Textures/trees.png" id="31_fn4bt"]
+[ext_resource type="Texture2D" uid="uid://ctuifresbylq0" path="res://Assets/Textures/buildings.png" id="32_j7cuv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yuyqe"]
 size = Vector3(10, 0.2, 14.840332)
@@ -103,6 +111,53 @@ height = 0.00390625
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_taa4s"]
 albedo_color = Color(0, 0, 0.73333335, 1)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2rxog"]
+panorama = ExtResource("26_uc8qi")
+filter = false
+
+[sub_resource type="Sky" id="Sky_ghmdb"]
+sky_material = SubResource("PanoramaSkyMaterial_2rxog")
+
+[sub_resource type="Environment" id="Environment_4xgl2"]
+background_mode = 2
+background_color = Color(0, 0, 0.9529412, 1)
+sky = SubResource("Sky_ghmdb")
+sdfgi_read_sky_light = false
+sdfgi_bounce_feedback = 1.61
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh3gs"]
+albedo_texture = ExtResource("29_okmgo")
+uv1_scale = Vector3(80, 35, 60)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_dh3gs")
+size = Vector3(100, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdx7s"]
+transparency = 1
+albedo_texture = ExtResource("31_fn4bt")
+uv1_scale = Vector3(1, 1.99, 1)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_64awl"]
+material = SubResource("StandardMaterial3D_mdx7s")
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1hbe"]
+transparency = 1
+albedo_texture = ExtResource("32_j7cuv")
+uv1_scale = Vector3(1, 1.99, 1)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ieiqo"]
+material = SubResource("StandardMaterial3D_e1hbe")
+size = Vector2(30, 20)
+
+[sub_resource type="QuadMesh" id="QuadMesh_pqqo3"]
+material = SubResource("StandardMaterial3D_e1hbe")
+size = Vector2(45, 20)
 
 [node name="TutorialArea" unique_id=513644933 instance=ExtResource("1_34n5a")]
 script = ExtResource("2_v7oyc")
@@ -295,6 +350,113 @@ mesh = SubResource("CylinderMesh_8n0gn")
 transform = Transform3D(-4.371136e-08, -1, 4.371139e-08, -0.016028658, -4.300517e-08, -0.99987155, 0.99987155, -4.440638e-08, -0.016028658, 4.9122996, 1.9106324, -4.2364173)
 mesh = SubResource("CylinderMesh_8n0gn")
 surface_material_override/0 = SubResource("StandardMaterial3D_taa4s")
+
+[node name="OutsideCourt" type="Node3D" parent="." index="56" unique_id=574985841]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.48549, -8.204398, -9.291978)
+script = ExtResource("25_t2026")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="OutsideCourt" index="0" unique_id=1096299740]
+environment = SubResource("Environment_4xgl2")
+
+[node name="Light" type="DirectionalLight3D" parent="OutsideCourt" index="1" unique_id=404113648]
+transform = Transform3D(0.8660254, 0.3535534, -0.3535534, 0, 0.7071068, 0.7071068, 0.5, -0.61237246, 0.61237246, 0, 0, 0)
+visible = false
+
+[node name="CutsceneController" parent="OutsideCourt" index="2" unique_id=148774009 instance=ExtResource("27_udf20")]
+
+[node name="BasketballCourt" parent="OutsideCourt" index="3" unique_id=83723086 instance=ExtResource("28_ebbyo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+
+[node name="Ground" type="StaticBody3D" parent="OutsideCourt" index="4" unique_id=2124211250]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OutsideCourt/Ground" index="0" unique_id=1160091533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51743174, 0)
+mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="WorldCleaner" type="Node" parent="OutsideCourt" index="5" unique_id=1993814894]
+script = ExtResource("30_7qw68")
+
+[node name="Trees" type="MeshInstance3D" parent="OutsideCourt" index="6" unique_id=1578399206]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 0)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Buildings" type="MeshInstance3D" parent="OutsideCourt" index="7" unique_id=1323637164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.655567, 0, -24.025337)
+mesh = SubResource("QuadMesh_ieiqo")
+
+[node name="Buildings2" type="MeshInstance3D" parent="OutsideCourt" index="8" unique_id=1086159196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3610134, 0, -24.025337)
+mesh = SubResource("QuadMesh_pqqo3")
+
+[node name="Buildings3" type="MeshInstance3D" parent="OutsideCourt" index="9" unique_id=747090978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.64839, 0, -24.025337)
+mesh = SubResource("QuadMesh_ieiqo")
+
+[node name="Trees2" type="MeshInstance3D" parent="OutsideCourt" index="10" unique_id=1311105300]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 6.926675)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees3" type="MeshInstance3D" parent="OutsideCourt" index="11" unique_id=1557782195]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 13.998145)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees4" type="MeshInstance3D" parent="OutsideCourt" index="12" unique_id=498343931]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 20.81672)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees5" type="MeshInstance3D" parent="OutsideCourt" index="13" unique_id=607703792]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -19.931805)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees6" type="MeshInstance3D" parent="OutsideCourt" index="14" unique_id=259319253]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -13.005131)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees7" type="MeshInstance3D" parent="OutsideCourt" index="15" unique_id=282347268]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -5.9336596)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees8" type="MeshInstance3D" parent="OutsideCourt" index="16" unique_id=1333210031]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 0.8849144)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees9" type="MeshInstance3D" parent="OutsideCourt" index="17" unique_id=1180195709]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 6.926675)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees10" type="MeshInstance3D" parent="OutsideCourt" index="18" unique_id=1322716682]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 13.998145)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees11" type="MeshInstance3D" parent="OutsideCourt" index="19" unique_id=115452414]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 20.81672)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees12" type="MeshInstance3D" parent="OutsideCourt" index="20" unique_id=2050637922]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -19.931805)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees13" type="MeshInstance3D" parent="OutsideCourt" index="21" unique_id=1802504624]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -13.005131)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees14" type="MeshInstance3D" parent="OutsideCourt" index="22" unique_id=870928128]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -5.9336596)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="Trees15" type="MeshInstance3D" parent="OutsideCourt" index="23" unique_id=1022834017]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 0.8849144)
+mesh = SubResource("QuadMesh_64awl")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="57" unique_id=498665649]
+transform = Transform3D(-4.2773983e-08, -0.20598722, 0.97855467, -9.003987e-09, 0.97855467, 0.20598722, -1, 0, -4.371139e-08, -8.763187, 10.542818, 0)
+visible = false
+light_energy = 16.0
+light_indirect_energy = 3.785
+light_volumetric_fog_energy = 8.03
+light_size = 0.643
+light_specular = 1.37
+spot_range = 109.342
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]

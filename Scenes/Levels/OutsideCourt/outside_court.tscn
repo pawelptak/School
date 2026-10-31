@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bymnc5e5vfbpn" path="res://Scenes/Levels/LevelBase/level_base.tscn" id="1_dh3gs"]
 [ext_resource type="PackedScene" uid="uid://bexxx5hlgvvgn" path="res://Scenes/Objects/BasketballCourt/basketball_court.tscn" id="2_4qbhs"]
 [ext_resource type="Texture2D" uid="uid://bmwe5r8bj2q81" path="res://Scenes/Levels/OutsideCourt/paving.png" id="3_4qbhs"]
+[ext_resource type="Texture2D" uid="uid://djyursap4iiqm" path="res://Assets/Textures/trees.png" id="4_q1qk8"]
+[ext_resource type="Texture2D" uid="uid://ctuifresbylq0" path="res://Assets/Textures/buildings.png" id="5_pqqo3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh3gs"]
 albedo_texture = ExtResource("3_4qbhs")
@@ -12,6 +14,30 @@ texture_filter = 0
 [sub_resource type="BoxMesh" id="BoxMesh_lc5oj"]
 material = SubResource("StandardMaterial3D_dh3gs")
 size = Vector3(100, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3w50"]
+transparency = 1
+albedo_texture = ExtResource("4_q1qk8")
+uv1_scale = Vector3(1, 1.99, 1)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_lc5oj"]
+material = SubResource("StandardMaterial3D_u3w50")
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1hbe"]
+transparency = 1
+albedo_texture = ExtResource("5_pqqo3")
+uv1_scale = Vector3(1, 1.99, 1)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ieiqo"]
+material = SubResource("StandardMaterial3D_e1hbe")
+size = Vector2(30, 20)
+
+[sub_resource type="QuadMesh" id="QuadMesh_pqqo3"]
+material = SubResource("StandardMaterial3D_e1hbe")
+size = Vector2(45, 20)
 
 [node name="OutsideCourt" unique_id=513644933 instance=ExtResource("1_dh3gs")]
 
@@ -26,6 +52,78 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" index="0" unique_id=1160091533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51743174, 0)
 mesh = SubResource("BoxMesh_lc5oj")
+
+[node name="Trees" type="MeshInstance3D" parent="." index="7" unique_id=1578399206]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 0)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Buildings" type="MeshInstance3D" parent="." index="8" unique_id=1323637164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.655567, 0, -24.025337)
+mesh = SubResource("QuadMesh_ieiqo")
+
+[node name="Buildings2" type="MeshInstance3D" parent="." index="9" unique_id=1086159196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3610134, 0, -24.025337)
+mesh = SubResource("QuadMesh_pqqo3")
+
+[node name="Buildings3" type="MeshInstance3D" parent="." index="10" unique_id=747090978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.64839, 0, -24.025337)
+mesh = SubResource("QuadMesh_ieiqo")
+
+[node name="Trees2" type="MeshInstance3D" parent="." index="11" unique_id=1311105300]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 6.926675)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees3" type="MeshInstance3D" parent="." index="12" unique_id=1557782195]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 13.998145)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees4" type="MeshInstance3D" parent="." index="13" unique_id=498343931]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 20.81672)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees5" type="MeshInstance3D" parent="." index="14" unique_id=607703792]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -19.931805)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees6" type="MeshInstance3D" parent="." index="15" unique_id=259319253]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -13.005131)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees7" type="MeshInstance3D" parent="." index="16" unique_id=282347268]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, -5.9336596)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees8" type="MeshInstance3D" parent="." index="17" unique_id=1333210031]
+transform = Transform3D(0.017452383, 0, 0.9998477, 0, 1, 0, -0.9998477, 0, 0.017452383, -47.845375, 0, 0.8849144)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees9" type="MeshInstance3D" parent="." index="18" unique_id=1180195709]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 6.926675)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees10" type="MeshInstance3D" parent="." index="19" unique_id=1322716682]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 13.998145)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees11" type="MeshInstance3D" parent="." index="20" unique_id=115452414]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 20.81672)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees12" type="MeshInstance3D" parent="." index="21" unique_id=2050637922]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -19.931805)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees13" type="MeshInstance3D" parent="." index="22" unique_id=1802504624]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -13.005131)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees14" type="MeshInstance3D" parent="." index="23" unique_id=870928128]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, -5.9336596)
+mesh = SubResource("QuadMesh_lc5oj")
+
+[node name="Trees15" type="MeshInstance3D" parent="." index="24" unique_id=1022834017]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 49.644753, 0, 0.8849144)
+mesh = SubResource("QuadMesh_lc5oj")
 
 [editable path="Player"]
 [editable path="Player/LowHealth"]
